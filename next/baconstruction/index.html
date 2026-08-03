@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>B&A Construction – Bruno Salgado & Alex Freitas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="preload" as="image" href="Photos/Hero.webp">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --sand:#e8dcc8;--brown:#7a5c3e;--dark-brown:#3d2b1a;
+      --cream:#f5f0e8;--accent:#c4944a;--text:#2a1f14;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'Raleway',sans-serif;color:var(--text);background:var(--cream);overflow-x:hidden}
+
+    /* ── PAGE VIEWS ── */
+    .page{display:none}
+    .page.active{display:block}
+
+    /* ── NAV ── */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:16px 5%;
+      background:rgba(26,18,10,0.88);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(196,148,74,0.25);
+    }
+    .nav-logo{display:flex;align-items:center;gap:13px;text-decoration:none;cursor:pointer}
+    .nav-brand{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--sand);letter-spacing:.04em;line-height:1.2}
+    .nav-brand em{font-style:normal;color:var(--accent)}
+    .nav-logo-img{width:46px;height:46px;border-radius:50%;object-fit:cover;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;color:#fff;font-size:1rem;flex-shrink:0}
+
+    /* Main nav links (home page) */
+    .nav-links{display:flex;gap:28px;list-style:none}
+    .nav-links a{text-decoration:none;color:var(--sand);font-size:.78rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;transition:color .25s;cursor:pointer}
+    .nav-links a:hover{color:var(--accent)}
+
+    /* Gallery back link */
+    .nav-back{
+      display:flex;align-items:center;gap:8px;
+      text-decoration:none;color:var(--sand);
+      font-size:.76rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+      transition:color .25s;cursor:pointer;background:none;border:none;
+    }
+    .nav-back:hover{color:var(--accent)}
+    .nav-back svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+    /* ── HERO ── */
+    .hero{position:relative;height:100vh;min-height:600px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+    .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;animation:hZoom 16s ease-in-out infinite alternate;background-color:var(--dark-brown)}
+    @keyframes hZoom{from{transform:scale(1.03)}to{transform:scale(1.1)}}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,18,10,.5) 0%,rgba(26,18,10,.35) 40%,rgba(26,18,10,.78) 100%)}
+    .hero-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:18px;animation:fadeUp 1.2s ease both}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+    .hero-logo-circle{width:96px;height:96px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;color:#fff;font-size:2rem;box-shadow:0 0 40px rgba(196,148,74,.45)}
+    .hero-logo{width:96px;height:96px;border-radius:50%;border:none solid var(--accent);box-shadow:0 0 40px rgba(196,148,74,.45);object-fit:cover}
+    .hero-eyebrow{font-size:.75rem;letter-spacing:.26em;text-transform:uppercase;color:var(--sand);font-weight:600}
+    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,6.5vw,5.5rem);font-weight:900;line-height:1.05;color:var(--sand);text-shadow:0 4px 30px rgba(0,0,0,.55)}
+    .hero h1 em{font-style:normal;color:var(--accent)}
+    .hero-sub{font-size:clamp(.9rem,1.8vw,1.1rem);color:var(--sand);font-weight:300;letter-spacing:.05em;max-width:520px}
+    .hero-names{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(232,220,200,.65)}
+    .hero-cta{margin-top:6px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+    .btn-primary{padding:13px 36px;background:var(--accent);color:#fff;border:none;cursor:pointer;font-family:'Raleway',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:background .25s,transform .2s;display:inline-block}
+    .btn-primary:hover{background:#a87836;transform:translateY(-2px)}
+    .btn-outline{padding:13px 36px;background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5);cursor:pointer;font-family:'Raleway',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:border-color .25s,color .25s,transform .2s;display:inline-block}
+    .btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+    .scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;opacity:.6}
+    .scroll-hint span{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sand)}
+    .scroll-line{width:1px;height:44px;background:var(--accent);animation:sLine 2s ease-in-out infinite}
+    @keyframes sLine{0%,100%{opacity:.3;transform:scaleY(.4)}50%{opacity:1;transform:scaleY(1)}}
+
+    /* ── SECTIONS ── */
+    section{padding:90px 5%}
+    .section-label{font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px}
+    .section-title{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,4vw,2.9rem);font-weight:700;line-height:1.15;color:var(--dark-brown);margin-bottom:18px}
+    .section-desc{font-size:.97rem;line-height:1.85;color:#5a4535;max-width:560px}
+
+    /* ── SERVICES ── */
+    #services{background:var(--dark-brown)}
+    #services .section-title{color:var(--sand)}
+    .services-intro{color:rgba(232,220,200,.65);font-size:.97rem;line-height:1.85;max-width:540px;margin-bottom:52px}
+    .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px}
+    .service-card{background:rgba(255,255,255,.04);border:1px solid rgba(196,148,74,.18);padding:38px 30px;transition:background .3s,transform .3s}
+    .service-card:hover{background:rgba(196,148,74,.1);transform:translateY(-4px)}
+    .service-icon{font-size:1.9rem;margin-bottom:16px}
+    .service-card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--sand);margin-bottom:10px}
+    .service-card p{font-size:.86rem;line-height:1.78;color:rgba(232,220,200,.6)}
+
+    /* ── GALLERY PREVIEW ── */
+    #realisations{background:var(--cream)}
+    .gallery-link-banner{
+      display:flex;flex-direction:column;align-items:flex-start;gap:4px;
+      margin-top:36px;margin-bottom:20px;padding:18px 28px;
+      border:1px solid rgba(196,148,74,.4);background:var(--accent);
+      text-decoration:none;transition:background .25s,border-color .25s,transform .2s;
+      max-width:420px;cursor:pointer;
+    }
+    .gallery-link-banner:hover{background:#a87836;border-color:var(--accent);transform:translateX(4px)}
+    .gallery-link-text{font-family:'Raleway',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--cream)}
+    .gallery-link-sub{font-size:.75rem;color:var(--cream);letter-spacing:.06em}
+
+    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .gallery-preview .gallery-item{aspect-ratio:4/3}
+    .gallery-item{overflow:hidden;position:relative;cursor:pointer}
+    .gallery-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s cubic-bezier(.25,.46,.45,.94)}
+    .gallery-item:hover img{transform:scale(1.07)}
+    .gallery-caption{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(26,18,10,.78) 100%);opacity:0;transition:opacity .3s;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:18px;gap:4px}
+    .gallery-item:hover .gallery-caption{opacity:1}
+    .gallery-caption span{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sand);font-weight:500}
+    .gallery-caption em{font-style:normal;font-size:.65rem;letter-spacing:.08em;color:var(--accent);text-transform:uppercase}
+
+    /* Photo placeholder (quand pas d'image réelle) */
+    .photo-placeholder{width:100%;height:100%;background:linear-gradient(135deg,var(--dark-brown) 0%,var(--brown) 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:rgba(232,220,200,.4);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase}
+    .photo-placeholder svg{width:36px;height:36px;opacity:.4;stroke:currentColor;fill:none;stroke-width:1.5}
+
+    /* ── PROCESS ── */
+    #process{background:var(--sand)}
+    .process-steps{margin-top:52px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+    .process-step{padding:38px 28px;border-left:1px solid rgba(122,92,62,.25);position:relative}
+    .step-num{font-family:'Playfair Display',serif;font-size:3.8rem;font-weight:900;line-height:1;color:rgba(122,92,62,.1);position:absolute;top:22px;right:18px}
+    .process-step h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--dark-brown);margin-bottom:10px}
+    .process-step p{font-size:.85rem;line-height:1.78;color:var(--brown)}
+
+    /* ── ABOUT ── */
+    #about{background:var(--dark-brown);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .about-img-wrap{position:relative}
+    .about-img-wrap img{width:100%;display:block;filter:sepia(15%) contrast(1.05)}
+    .about-img-placeholder{width:100%;aspect-ratio:4/3;background:linear-gradient(135deg,rgba(61,43,26,.8) 0%,rgba(122,92,62,.6) 100%);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.2rem;color:rgba(232,220,200,.3);letter-spacing:.1em;border:1px solid rgba(196,148,74,.15)}
+    .about-badge{position:absolute;bottom:-22px;right:-22px;width:108px;height:108px;background:var(--accent);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+    .about-badge strong{font-size:2rem;font-weight:900;color:#fff;line-height:1}
+    .about-badge span{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.82)}
+    .about-text .section-title{color:var(--sand)}
+    .about-names{margin-top:30px;display:flex;gap:28px}
+    .about-name-card{border-left:3px solid var(--accent);padding-left:15px}
+    .about-name-card strong{display:block;font-size:.98rem;color:var(--sand);font-family:'Playfair Display',serif}
+    .about-name-card span{font-size:.76rem;color:var(--accent);letter-spacing:.1em}
+
+    /* ── STATS ── */
+    #stats{background:var(--accent);padding:65px 5%;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));text-align:center}
+    .stat{padding:18px;border-right:1px solid rgba(255,255,255,.25)}
+    .stat:last-child{border-right:none}
+    .stat-num{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:#fff;line-height:1}
+    .stat-label{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.82);margin-top:7px}
+
+    /* ── CONTACT ── */
+    #contact{background:var(--cream)}
+    .contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+    .contact-info{display:flex;flex-direction:column;gap:26px;margin-top:38px}
+    .contact-item{display:flex;gap:16px;align-items:flex-start}
+    .contact-icon{font-size:1.3rem;margin-top:2px}
+    .contact-item strong{display:block;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+    .contact-item p{font-size:.93rem;color:var(--brown);line-height:1.65}
+    .contact-form{display:flex;flex-direction:column;gap:14px;margin-top:38px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .contact-form input,.contact-form textarea,.contact-form select{width:100%;padding:13px 17px;border:1px solid rgba(122,92,62,.28);background:#fff;font-family:'Raleway',sans-serif;font-size:.88rem;color:var(--text);outline:none;transition:border-color .25s;appearance:none}
+    .contact-form input:focus,.contact-form textarea:focus,.contact-form select:focus{border-color:var(--accent)}
+    .contact-form textarea{resize:vertical;min-height:120px}
+
+    /* ── FOOTER ── */
+    footer{background:var(--dark-brown);padding:36px 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px;border-top:1px solid rgba(196,148,74,.2)}
+    .footer-brand{display:flex;align-items:center;gap:14px}
+    .footer-logo-circle{width:42px;height:42px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;color:#fff;font-size:.9rem;flex-shrink:0;opacity:.9}
+    .footer-brand strong{display:block;color:var(--sand);font-family:'Playfair Display',serif;font-size:.92rem}
+    .footer-brand p{font-size:.76rem;color:rgba(232,220,200,.45)}
+    .footer-copy{font-size:.72rem;color:rgba(232,220,200,.32);letter-spacing:.08em}
+
+    /* ── GALERIE PAGE ── */
+    .page-header{
+      padding:130px 5% 60px;
+      background:var(--dark-brown);
+      border-bottom:1px solid rgba(196,148,74,.2);
+    }
+    .page-header .section-label{font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px}
+    .page-header h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;color:var(--sand);line-height:1.1;margin-bottom:14px}
+    .page-header h1 em{font-style:normal;color:var(--accent)}
+    .page-header p{font-size:.97rem;line-height:1.85;color:rgba(232,220,200,.6);max-width:520px}
+
+    .gallery-section{padding:60px 5% 90px}
+
+    .gallery-filters{
+      display:flex;gap:10px;flex-wrap:wrap;
+      margin-bottom:36px;padding-bottom:28px;
+      border-bottom:1px solid rgba(122,92,62,.18);
+    }
+    .filter-btn{
+      padding:10px 26px;background:transparent;color:var(--brown);
+      border:1px solid rgba(122,92,62,.35);cursor:pointer;
+      font-family:'Raleway',sans-serif;font-size:.74rem;font-weight:600;
+      letter-spacing:.14em;text-transform:uppercase;
+      transition:background .22s,color .22s,border-color .22s,transform .18s;
+    }
+    .filter-btn:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+    .filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+    .gallery-count{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--brown);opacity:.6;margin-bottom:18px}
+
+    .gallery-full-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .gallery-full-grid .gallery-item{aspect-ratio:4/3;transition:opacity .35s}
+    .gallery-full-grid .gallery-item.hidden{display:none}
+
+    .gallery-empty{display:none;grid-column:1/-1;padding:60px 0;text-align:center;color:var(--brown);font-size:.92rem;opacity:.6}
+
+    /* ── LIGHTBOX MODAL ── */
+    #lightbox{
+      position:fixed;inset:0;z-index:999;
+      background:rgba(10,6,3,.92);
+      backdrop-filter:blur(10px);
+      display:flex;align-items:center;justify-content:center;
+      opacity:0;pointer-events:none;
+      transition:opacity .3s ease;
+    }
+    #lightbox.open{opacity:1;pointer-events:all}
+
+    /* Conteneur image zoomable */
+    .lb-stage{
+      position:relative;width:100%;height:100%;
+      display:flex;align-items:center;justify-content:center;
+      overflow:hidden;
+      cursor:zoom-in;
+      touch-action:none;
+    }
+    .lb-stage.zoomed{cursor:grab}
+    .lb-stage.zoomed:active{cursor:grabbing}
+
+    .lb-img{
+      max-width:90vw;max-height:85vh;
+      object-fit:contain;
+      transform-origin:center center;
+      transform:scale(1) translate(0,0);
+      transition:transform .35s cubic-bezier(.25,.46,.45,.94);
+      user-select:none;
+      border:1px solid rgba(196,148,74,.15);
+      box-shadow:0 30px 80px rgba(0,0,0,.7);
+      display:block;
+    }
+    .lb-stage.zoomed .lb-img{transition:none}
+
+    /* Placeholder dans la modale */
+    .lb-placeholder{
+      width:min(80vw,700px);height:min(70vh,500px);
+      background:linear-gradient(135deg,var(--dark-brown),var(--brown));
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:14px;color:rgba(232,220,200,.35);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;
+      border:1px solid rgba(196,148,74,.15);box-shadow:0 30px 80px rgba(0,0,0,.7);
+    }
+    .lb-placeholder svg{width:52px;height:52px;opacity:.35;stroke:currentColor;fill:none;stroke-width:1.2}
+
+    /* Barre inférieure */
+    .lb-bar{
+      position:fixed;bottom:0;left:0;right:0;
+      padding:16px 5%;
+      background:linear-gradient(0deg,rgba(10,6,3,.85) 0%,transparent 100%);
+      display:flex;align-items:center;justify-content:space-between;
+      z-index:1001;pointer-events:none;opacity:0;
+      transition:opacity .3s;
+    }
+    #lightbox.open .lb-bar{opacity:1;pointer-events:all}
+    .lb-caption{display:flex;flex-direction:column;gap:3px}
+    .lb-caption span{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sand);font-weight:500}
+    .lb-caption em{font-style:normal;font-size:.68rem;letter-spacing:.1em;color:var(--accent);text-transform:uppercase}
+    .lb-hint{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(232,220,200,.3)}
+
+    /* Boutons de navigation */
+    .lb-btn{
+      position:fixed;top:50%;transform:translateY(-50%);
+      z-index:1001;background:rgba(196,148,74,.12);border:1px solid rgba(196,148,74,.3);
+      color:var(--sand);width:48px;height:48px;
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;transition:background .2s,border-color .2s,transform .2s;
+      font-size:1.2rem;
+    }
+    .lb-btn:hover{background:rgba(196,148,74,.3);border-color:var(--accent);transform:translateY(-50%) scale(1.05)}
+    #lb-prev{left:18px}
+    #lb-next{right:18px}
+
+    /* Bouton fermer */
+    #lb-close{
+      position:fixed;top:18px;right:22px;z-index:1001;
+      background:rgba(196,148,74,.12);border:1px solid rgba(196,148,74,.3);
+      color:var(--sand);width:42px;height:42px;
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;font-size:1.1rem;transition:background .2s,border-color .2s;
+    }
+    #lb-close:hover{background:rgba(196,148,74,.3);border-color:var(--accent)}
+
+    /* Compteur */
+    #lb-counter{
+      position:fixed;top:24px;left:50%;transform:translateX(-50%);
+      z-index:1001;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+      color:rgba(232,220,200,.4);
+    }
+
+    /* Zoom hint – masqué sur écrans tactiles */
+    .lb-zoom-hint{
+      position:fixed;top:22px;left:22px;z-index:1001;
+      font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;
+      color:rgba(232,220,200,.28);pointer-events:none;
+      display:flex;align-items:center;gap:6px;
+    }
+    @media(hover:none),(pointer:coarse){
+      .lb-zoom-hint{display:none}
+      .lb-hint{display:none}
+    }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){
+      #about{grid-template-columns:1fr;gap:50px}
+      .about-badge{right:0}
+      .contact-wrap{grid-template-columns:1fr;gap:40px}
+      .form-row{grid-template-columns:1fr}
+      .gallery-grid,.gallery-full-grid{grid-template-columns:1fr 1fr}
+      .gallery-preview .gallery-item{aspect-ratio:4/3}
+      .nav-links{display:none}
+    }
+    @media(max-width:560px){
+      .gallery-grid,.gallery-full-grid{grid-template-columns:1fr}
+      .gallery-preview .gallery-item{aspect-ratio:16/9}
+      .gallery-filters{gap:8px}
+      .filter-btn{padding:9px 18px;font-size:.7rem}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVIGATION (commune aux deux pages)
+═══════════════════════════════════════════ -->
+<nav id="main-nav">
+  <a class="nav-logo" onclick="showPage('home')">
+    <img src="Photos/Logo simplifié.webp" style="width:50px;height:50pw">
+    <div class="nav-brand">B<em>&amp;</em>A Construction</div>
+  </a>
+  <!-- liens page d'accueil -->
+  <ul class="nav-links" id="nav-home-links">
+    <li><a onclick="showPage('home');scrollToSection('services')">Services</a></li>
+    <li><a onclick="showPage('home');scrollToSection('realisations')">Réalisations</a></li>
+    <li><a onclick="showPage('home');scrollToSection('process')">Méthode</a></li>
+    <li><a onclick="showPage('home');scrollToSection('about')">À propos</a></li>
+    <li><a onclick="showPage('home');scrollToSection('contact')">Contact</a></li>
+  </ul>
+  <!-- bouton retour page galerie -->
+  <button class="nav-back" id="nav-gallery-back" style="display:none" onclick="showPage('home')">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Retour au site
+  </button>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE ACCUEIL
+═══════════════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg" style="background-image:url('Photos/Hero.webp')"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <img class="hero-logo" src="Photos/Logo simplifié.webp" alt="Logo B&A Construction"/>
+      <!--<div class="hero-logo-circle">B&amp;A</div>-->
+      <p class="hero-eyebrow">Maçonnerie générale &nbsp;·&nbsp; Valence</p>
+      <h1>B<em>&amp;</em>A<br>Construction</h1>
+      <p class="hero-names">Bruno Salgado &nbsp;·&nbsp; Alex Freitas</p>
+      <p class="hero-sub">Terrasses, allées et plages de piscine qui allient robustesse et élégance. Béton imprimé, ciré, désactivé — entièrement sur mesure.</p>
+      <div class="hero-cta">
+        <a href="#realisations" class="btn-primary">Voir nos réalisations</a>
+        <a href="#contact" class="btn-outline">Demander un devis</a>
+      </div>
+    </div>
+    <div class="scroll-hint"><span>Découvrir</span><div class="scroll-line"></div></div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <p class="section-label">Notre savoir-faire</p>
+    <h2 class="section-title">Des finitions d'exception<br>pour chaque projet</h2>
+    <p class="services-intro">Spécialistes du béton décoratif, B&amp;A Construction réalise tous vos projets extérieurs avec soin et précision. De la dalle au motif sur mesure.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <img src="Photos/Béton imprimé.webp" style="width:50px;height:50px" loading="lazy">
+        <h3>Béton Imprimé</h3>
+        <p>Terrasses, allées et plages avec textures bois, pierre ou ardoise. Un rendu naturel et une durabilité exemplaire.</p>
+      </div>
+      <div class="service-card">
+        <img src="Photos/Béton ciré.webp" style="width:50px;height:50px" loading="lazy">
+        <h3>Béton Ciré</h3>
+        <p>Finition lisse et brillante pour vos sols intérieurs et extérieurs. Aspect luxueux, résistance maximale.</p>
+      </div>
+      <div class="service-card">
+        <img src="Photos/Béton désactivé.webp" style="width:50px;height:50px" loading="lazy">
+        <h3>Béton Désactivé</h3>
+        <p>Surface granuleuse antidérapante, idéale pour allées de garage, entrées et abords de piscine.</p>
+      </div>
+      <div class="service-card">
+        <img src="Photos/Grue.webp" style="width:50px;height:50px" loading="lazy">
+        <h3>Gros Œuvre</h3>
+        <p>Dalles, fondations et structures en béton armé. Maîtrise totale des coulages et ferraillages complexes.</p>
+      </div>
+      <div class="service-card">
+        <img src="Photos/Logo simplifié.webp" style="width:50px;height:50px" loading="lazy">
+        <h3>Motifs Sur Mesure</h3>
+        <p>Médaillons, rosaces, rose des vents… Nous intégrons des éléments décoratifs uniques dans vos sols.</p>
+      </div>
+      <div class="service-card">
+        <img src="Photos/Piscine 2.webp" style="width:50px;height:50px" loading="lazy">
+        <h3>Plages de Piscine</h3>
+        <p>Réalisation complète des plages et margelles, antidérapant résistant aux UV et au chlore.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RÉALISATIONS (preview) -->
+  <section id="realisations">
+    <p class="section-label">Portfolio</p>
+    <h2 class="section-title">Nos dernières réalisations</h2>
+    <p class="section-desc">Chaque projet est une signature. Découvrez quelques-unes de nos réalisations récentes.</p>
+    <a class="gallery-link-banner" onclick="showPage('gallery')">
+      <span class="gallery-link-text">Voir toute la galerie →</span>
+      <span class="gallery-link-sub">Béton ciré · Béton désactivé · Piscine · et plus</span>
+    </a>
+    <div class="gallery-grid gallery-preview">
+      <div class="gallery-item" data-src="Photos/Gallerie/full/1.webp">
+        <img src="Photos/Gallerie/thumb/1.webp" alt="Terrasse béton imprimé – Effet bois" loading="lazy" width="600" height="450">
+        <div class="gallery-caption"><span>Terrasse béton imprimé – Effet bois</span></div>
+      </div>
+      <div class="gallery-item" data-src="Photos/Gallerie/full/2.webp">
+        <img src="Photos/Gallerie/thumb/2.webp" alt="Rosaces - motifs" loading="lazy" width="600" height="450">
+        <div class="gallery-caption"><span>Rosaces - Motifs</span></div>
+      </div>
+      <div class="gallery-item" data-src="Photos/Gallerie/full/3.webp">
+        <img src="Photos/Gallerie/thumb/3.webp" alt="Terrasse béton imprimé - Effet parquet" loading="lazy" width="600" height="450">
+        <div class="gallery-caption"><span>Terrasse béton imprimé - Effet parquet</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <p class="section-label">Notre méthode</p>
+    <h2 class="section-title">Un accompagnement<br>de A à Z</h2>
+    <div class="process-steps">
+      <div class="process-step"><div class="step-num">01</div><h3>Étude &amp; Devis</h3><p>Visite sur site, écoute de vos besoins, conseils personnalisés. Devis détaillé et gratuit sous 48h.</p></div>
+      <div class="process-step"><div class="step-num">02</div><h3>Préparation</h3><p>Terrassement, coffrage, ferraillage. Chaque base est soigneusement préparée pour garantir la longévité.</p></div>
+      <div class="process-step"><div class="step-num">03</div><h3>Réalisation</h3><p>Coulage, finition décorative, séchage contrôlé. Un travail minutieux pour un résultat parfait.</p></div>
+      <div class="process-step"><div class="step-num">04</div><h3>Livraison</h3><p>Visite de réception, conseils d'entretien et garantie sur nos travaux. Votre satisfaction est notre priorité.</p></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-img-wrap">
+    <img src="Photos/Travail.webp" loading="lazy">
+      <div class="about-badge"><strong>10+</strong><span>ans d'expérience</span></div>
+    </div>
+    <div class="about-text">
+      <p class="section-label">À propos</p>
+      <h2 class="section-title">Une équipe passionnée,<br>un travail soigné</h2>
+      <p class="section-desc" style="color:rgba(232,220,200,.72);max-width:470px">B&amp;A Construction, c'est l'alliance du savoir-faire de Bruno Salgado et Alex Freitas — deux artisans qui ont fait du béton décoratif leur art. Chaque chantier est abordé avec rigueur, créativité et le souci constant du détail.</p>
+      <p class="section-desc" style="color:rgba(232,220,200,.5);max-width:470px;margin-top:14px;font-size:.9rem">Implantés dans la région de Valence (26), nous intervenons sur tous types de projets résidentiels et professionnels.</p>
+      <div class="about-names">
+        <div class="about-name-card"><strong>Bruno Salgado</strong><span>Co-fondateur</span></div>
+        <div class="about-name-card"><strong>Alex Freitas</strong><span>Co-fondateur</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div id="stats">
+    <div class="stat"><div class="stat-num">200+</div><div class="stat-label">Projets réalisés</div></div>
+    <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Années d'expérience</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Clients satisfaits</div></div>
+    <div class="stat"><div class="stat-num">5★</div><div class="stat-label">Note moyenne</div></div>
+  </div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-wrap">
+      <div>
+        <p class="section-label">Contact</p>
+        <h2 class="section-title">Parlons de<br>votre projet</h2>
+        <p class="section-desc">Besoin d'un devis ou d'un renseignement ? Contactez-nous, nous répondons rapidement.</p>
+        <div class="contact-info">
+          <div class="contact-item"><span class="contact-icon">📞</span><div><strong>Téléphone</strong><p>Bruno : 06 69 01 92 39<br>Alex : 06 68 11 90 63</p></div></div>
+          <div class="contact-item"><span class="contact-icon">📧</span><div><strong>E-mail</strong><p>salgadobati@hotmail.fr</p></div></div>
+          <div class="contact-item"><span class="contact-icon">📍</span><div><strong>Zone d'intervention</strong><p>Région de Valence<br>26 000</p></div></div>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="return false">
+        <div class="form-row">
+          <input type="text" placeholder="Prénom"/>
+          <input type="text" placeholder="Nom"/>
+        </div>
+        <input type="email" placeholder="Adresse e-mail"/>
+        <input type="tel" placeholder="Téléphone"/>
+        <select><option value="" disabled selected>Type de projet</option><option>Terrasse béton imprimé</option><option>Plage de piscine</option><option>Allée béton désactivé</option><option>Béton ciré</option><option>Gros œuvre / Dalle</option><option>Autre</option></select>
+        <textarea placeholder="Décrivez votre projet (surface, délais, contraintes…)"></textarea>
+        <button type="submit" class="btn-primary">Envoyer ma demande →</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <div class="footer-logo-circle">B&amp;A</div>
+      <div><strong>B&amp;A Construction</strong><p>Bruno Salgado · Alex Freitas</p></div>
+    </div>
+    <p class="footer-copy">© 2026 B&amp;A Construction — Tous droits réservés</p>
+  </footer>
+
+</div><!-- /page-home -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE GALERIE
+═══════════════════════════════════════════ -->
+<div id="page-gallery" class="page">
+
+  <div class="page-header">
+    <p class="section-label">Portfolio complet</p>
+    <h1>Nos <em>réalisations</em></h1>
+    <p>Parcourez l'ensemble de nos projets. Filtrez par type de prestation pour trouver l'inspiration pour votre chantier.</p>
+  </div>
+
+  <div class="gallery-section">
+    <div class="gallery-filters">
+      <button class="filter-btn active" data-filter="all">Tous</button>
+      <button class="filter-btn" data-filter="beton-cire">Béton ciré</button>
+      <button class="filter-btn" data-filter="beton-desactive">Béton désactivé</button>
+      <button class="filter-btn" data-filter="piscine">Piscine</button>
+      <button class="filter-btn" data-filter="beton-imprime">Béton imprimé</button>
+    </div>
+
+    <p class="gallery-count" id="gallery-count">6 réalisations</p>
+
+    <div class="gallery-full-grid" id="gallery-grid">
+      <div class="gallery-item"
+        data-src="Photos/Gallerie/full/1.webp"
+        data-category="beton-imprime">
+        <img src="Photos/Gallerie/thumb/1.webp"
+        loading="lazy" width="600" height="450"
+        alt="Terrasse béton imprimé – effet bois">
+      
+        <div class="gallery-caption"><span>Terrasse – effet bois</span><em>Béton imprimé</em></div>
+      </div>
+      <div class="gallery-item" data-src="Photos/Gallerie/full/2.webp" data-category="beton-imprime">
+        <img src="Photos/Gallerie/thumb/2.webp" alt="Rosaces" loading="lazy" width="600" height="450">
+        <div class="gallery-caption"><span>Rosaces</span><em>Béton imprimé</em></div>
+      </div>
+      <div class="gallery-item" data-src="Photos/Gallerie/full/3.webp" data-category="beton-cire">
+        <img src="Photos/Gallerie/thumb/3.webp" alt="Terrasse - Effet parquet" loading="lazy" width="600" height="450">
+        <div class="gallery-caption"><span>Terrasse- Effet parquet</span><em>Béton imprimé</em></div>
+      </div>
+      <div class="gallery-item" data-src="Photos/Gallerie/full/4.webp" data-category="beton-desactive">
+        <img src="Photos/Gallerie/thumb/4.webp" alt="Béton désactivé coloré" loading="lazy" width="600" height="450">
+        <div class="gallery-caption"><span>Béton désactivé coloré</span><em>Béton désactivé</em></div>
+      </div>
+      <div class="gallery-item" data-src="Photos/Gallerie/full/5.webp" data-category="piscine">
+        <img src="Photos/Gallerie/thumb/5.webp" alt="Margelle piscine" loading="lazy" width="600" height="450">
+        <div class="gallery-caption"><span>Margelle piscine</span><em>Piscine</em></div>
+      </div>
+      <div class="gallery-item" data-src="Photos/Gallerie/full/6.webp" data-category="beton-imprime">
+        <img src="Photos/Gallerie/thumb/6.webp" alt="Béton imprimé – effet carrelage" loading="lazy" width="600" height="450">
+        <div class="gallery-caption"><span>Béton imprimé – Effet parquet</span><em>Béton imprimé</em></div>
+      </div>
+      <div class="gallery-empty" id="gallery-empty">Aucune réalisation dans cette catégorie pour le moment.</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <div class="footer-logo-circle">B&amp;A</div>
+      <div><strong>B&amp;A Construction</strong><p>Bruno Salgado · Alex Freitas</p></div>
+    </div>
+    <p class="footer-copy">© 2026 B&amp;A Construction — Tous droits réservés</p>
+  </footer>
+
+</div><!-- /page-gallery -->
+
+<!-- ═══════════════════════════════════════════
+     LIGHTBOX (commune aux deux pages)
+═══════════════════════════════════════════ -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Image agrandie">
+  <div class="lb-stage" id="lb-stage">
+    <!-- contenu injecté par JS -->
+  </div>
+  <button id="lb-close" title="Fermer (Échap)">✕</button>
+  <button class="lb-btn" id="lb-prev" title="Précédent (←)">&#8592;</button>
+  <button class="lb-btn" id="lb-next" title="Suivant (→)">&#8594;</button>
+  <div id="lb-counter"></div>
+  <div class="lb-zoom-hint" id="lb-zoom-hint">🔍 Clic pour zoomer · Molette pour zoomer · Glisser pour naviguer</div>
+  <div class="lb-bar">
+    <div class="lb-caption" id="lb-caption"></div>
+    <div class="lb-hint">Échap pour fermer</div>
+  </div>
+</div>
+
+<script>
+/* ── Navigation entre pages ── */
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  const isGallery = name === 'gallery';
+  document.getElementById('nav-home-links').style.display = isGallery ? 'none' : '';
+  document.getElementById('nav-gallery-back').style.display = isGallery ? '' : 'none';
+}
+
+function scrollToSection(id) {
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({behavior: 'smooth'});
+  }, 50);
+}
+
+/* ── Filtre galerie ── */
+(function(){
+  const btns  = document.querySelectorAll('.filter-btn');
+  const items = document.querySelectorAll('#gallery-grid .gallery-item[data-category]');
+  const count = document.getElementById('gallery-count');
+  const empty = document.getElementById('gallery-empty');
+
+  const labels = {
+    'all':'réalisations',
+    'beton-cire':'réalisation(s) en béton ciré',
+    'beton-desactive':'réalisation(s) en béton désactivé',
+    'piscine':'réalisation(s) piscine',
+    'beton-imprime':'réalisation(s) en béton imprimé'
+  };
+
+  function updateCount(filter) {
+    const n = filter === 'all'
+      ? items.length
+      : Array.from(items).filter(el => el.dataset.category === filter).length;
+    count.textContent = n + ' ' + (labels[filter] || 'réalisations');
+    empty.style.display = n === 0 ? 'block' : 'none';
+  }
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      btns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const filter = this.dataset.filter;
+      items.forEach(item => {
+        item.classList.toggle('hidden', filter !== 'all' && item.dataset.category !== filter);
+      });
+      updateCount(filter);
+    });
+  });
+
+  updateCount('all');
+})();
+
+/* ── Remplacement des images manquantes par les placeholders ── */
+/* Si vous ajoutez vos images (1.jpg, 2.jpg…) dans le même dossier,
+   remplacez les div.photo-placeholder par des balises <img src="X.jpg"> */
+
+/* ═══════════════════════════════════════════
+   LIGHTBOX – zoom + navigation + glisser
+═══════════════════════════════════════════ */
+(function(){
+  const lb       = document.getElementById('lightbox');
+  const stage    = document.getElementById('lb-stage');
+  const caption  = document.getElementById('lb-caption');
+  const counter  = document.getElementById('lb-counter');
+  const closeBtn = document.getElementById('lb-close');
+  const prevBtn  = document.getElementById('lb-prev');
+  const nextBtn  = document.getElementById('lb-next');
+
+  let items = [];   // liste des .gallery-item visibles
+  let idx   = 0;   // index courant
+  let scale = 1;
+  let tx = 0, ty = 0;  // translation lors du drag
+  let dragging = false, startX = 0, startY = 0, lastTx = 0, lastTy = 0;
+
+  /* ── Construire la liste des items cliquables ── */
+  function collectItems() {
+    return Array.from(document.querySelectorAll('.gallery-item:not(.hidden)'));
+  }
+
+  /* ── Ouvrir la modale ── */
+  function openLightbox(item, list) {
+    items = list;
+    idx   = items.indexOf(item);
+    render();
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  /* ── Fermer ── */
+  function closeLightbox() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    resetZoom();
+  }
+
+  /* ── Afficher l'image courante ── */
+  function render() {
+    resetZoom();
+    const item = items[idx];
+    if (!item) return;
+
+    // Titre et catégorie
+    const captSpan = item.querySelector('.gallery-caption span');
+    const captEm   = item.querySelector('.gallery-caption em');
+    caption.innerHTML = (captSpan ? `<span>${captSpan.textContent}</span>` : '') +
+                        (captEm   ? `<em>${captEm.textContent}</em>`       : '');
+    counter.textContent = (idx + 1) + ' / ' + items.length;
+
+    // Image haute qualité via data-src, fallback sur img.src
+    const fullSrc = item.dataset.src;
+    const img     = item.querySelector('img');
+    const src     = fullSrc || (img ? img.src : null);
+    const alt     = img ? (img.alt || '') : '';
+    if (src) {
+      stage.innerHTML = `<img class="lb-img" src="${src}" alt="${alt}" draggable="false" style="opacity:0;transition:opacity .3s ease"/>`;
+      const lbImg = stage.querySelector('.lb-img');
+      lbImg.onload = () => { lbImg.style.opacity = '1'; };
+    } else {
+      stage.innerHTML = `
+        <div class="lb-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>Photo à venir</span>
+        </div>`;
+    }
+    // Afficher / masquer flèches
+    prevBtn.style.opacity = idx === 0 ? '0.2' : '1';
+    nextBtn.style.opacity = idx === items.length - 1 ? '0.2' : '1';
+
+    // Rebind zoom events
+    bindZoom();
+  }
+
+  /* ── Navigation ── */
+  function prev() { if (idx > 0) { idx--; render(); } }
+  function next() { if (idx < items.length - 1) { idx++; render(); } }
+
+  /* ── Reset zoom ── */
+  function resetZoom() {
+    scale = 1; tx = 0; ty = 0;
+    stage.classList.remove('zoomed');
+    applyTransform();
+  }
+
+  /* ── Appliquer la transformation à l'image ── */
+  function applyTransform() {
+    const el = stage.querySelector('.lb-img');
+    if (!el) return;
+    el.style.transform = `scale(${scale}) translate(${tx/scale}px, ${ty/scale}px)`;
+  }
+
+  /* ── Zoom au clic / double-clic ── */
+  function bindZoom() {
+    const el = stage.querySelector('.lb-img');
+    if (!el) return;
+
+    // Double-clic pour basculer zoom
+    stage.addEventListener('dblclick', function(e) {
+      e.stopPropagation();
+      if (scale > 1) { resetZoom(); }
+      else           { zoomAt(e.clientX, e.clientY, 2.5); }
+    });
+
+    // Clic simple : zoom si non zoomé, sinon rien (le drag gère)
+    stage.addEventListener('click', function(e) {
+      if (!stage.classList.contains('zoomed') && !dragging) {
+        zoomAt(e.clientX, e.clientY, 2.5);
+      }
+    });
+  }
+
+  function zoomAt(cx, cy, targetScale) {
+    const rect = stage.getBoundingClientRect();
+    const ox = cx - rect.left - rect.width / 2;
+    const oy = cy - rect.top  - rect.height / 2;
+    scale = targetScale;
+    tx = -ox * (scale - 1);
+    ty = -oy * (scale - 1);
+    stage.classList.add('zoomed');
+    applyTransform();
+  }
+
+  /* ── Molette pour zoomer ── */
+  stage.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -0.3 : 0.3;
+    const newScale = Math.max(1, Math.min(5, scale + delta));
+    if (newScale === 1) { resetZoom(); return; }
+    const rect  = stage.getBoundingClientRect();
+    const ox    = e.clientX - rect.left - rect.width  / 2;
+    const oy    = e.clientY - rect.top  - rect.height / 2;
+    const ratio = newScale / scale;
+    tx = tx * ratio + ox * (1 - ratio);
+    ty = ty * ratio + oy * (1 - ratio);
+    scale = newScale;
+    stage.classList.toggle('zoomed', scale > 1);
+    applyTransform();
+  }, {passive: false});
+
+  /* ── Drag pour se déplacer quand zoomé ── */
+  stage.addEventListener('mousedown', function(e) {
+    if (scale <= 1) return;
+    dragging = true;
+    startX = e.clientX - tx;
+    startY = e.clientY - ty;
+    lastTx = tx; lastTy = ty;
+    e.preventDefault();
+  });
+  window.addEventListener('mousemove', function(e) {
+    if (!dragging) return;
+    tx = e.clientX - startX;
+    ty = e.clientY - startY;
+    applyTransform();
+  });
+  window.addEventListener('mouseup', function() { dragging = false; });
+
+  /* ── Touch : pinch-to-zoom + drag + double-tap + swipe ── */
+  let lastDist    = 0;
+  let pinching    = false;
+  let lastTapTime = 0;
+  let touchStartX = 0, touchStartY = 0;
+  let touchMoved  = false;
+
+  stage.addEventListener('touchstart', function(e) {
+    const ts = e.touches;
+    if (ts.length === 2) {
+      pinching = true;
+      dragging = false;
+      lastDist = Math.hypot(ts[1].clientX - ts[0].clientX, ts[1].clientY - ts[0].clientY);
+    } else if (ts.length === 1) {
+      pinching    = false;
+      touchMoved  = false;
+      touchStartX = ts[0].clientX;
+      touchStartY = ts[0].clientY;
+      if (scale > 1) {
+        dragging = true;
+        startX = ts[0].clientX - tx;
+        startY = ts[0].clientY - ty;
+      } else {
+        dragging = false;
+      }
+    }
+    e.preventDefault();
+  }, {passive: false});
+
+  stage.addEventListener('touchmove', function(e) {
+    const ts = e.touches;
+    e.preventDefault();
+
+    if (ts.length === 2) {
+      const dist     = Math.hypot(ts[1].clientX - ts[0].clientX, ts[1].clientY - ts[0].clientY);
+      const ratio    = dist / lastDist;
+      const newScale = Math.max(1, Math.min(5, scale * ratio));
+      // Point central du pinch
+      const cx = (ts[0].clientX + ts[1].clientX) / 2;
+      const cy = (ts[0].clientY + ts[1].clientY) / 2;
+      const rect = stage.getBoundingClientRect();
+      const ox   = cx - rect.left - rect.width  / 2;
+      const oy   = cy - rect.top  - rect.height / 2;
+      const sr   = newScale / scale;
+      tx = tx * sr + ox * (1 - sr);
+      ty = ty * sr + oy * (1 - sr);
+      scale = newScale;
+      lastDist = dist;
+      stage.classList.toggle('zoomed', scale > 1);
+      applyTransform();
+      touchMoved = true;
+    } else if (ts.length === 1) {
+      const dx = ts[0].clientX - touchStartX;
+      const dy = ts[0].clientY - touchStartY;
+      if (Math.abs(dx) > 5 || Math.abs(dy) > 5) touchMoved = true;
+      if (dragging && scale > 1) {
+        tx = ts[0].clientX - startX;
+        ty = ts[0].clientY - startY;
+        applyTransform();
+      }
+    }
+  }, {passive: false});
+
+  stage.addEventListener('touchend', function(e) {
+    const ts = e.changedTouches;
+    pinching = false;
+    dragging = false;
+
+    if (!touchMoved && ts.length === 1) {
+      // Double-tap
+      const now = Date.now();
+      if (now - lastTapTime < 300) {
+        lastTapTime = 0;
+        if (scale > 1) { resetZoom(); }
+        else           { zoomAt(ts[0].clientX, ts[0].clientY, 2.5); }
+        return;
+      }
+      lastTapTime = now;
+    }
+
+    // Swipe pour changer de photo (seulement si pas zoomé)
+    if (scale <= 1 && touchMoved && ts.length === 1) {
+      const dx = ts[0].clientX - touchStartX;
+      const dy = ts[0].clientY - touchStartY;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        dx < 0 ? next() : prev();
+      }
+    }
+
+    if (scale <= 1) resetZoom();
+  }, {passive: false});
+
+  /* ── Événements clavier ── */
+  document.addEventListener('keydown', function(e) {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape')           closeLightbox();
+    else if (e.key === 'ArrowLeft')   prev();
+    else if (e.key === 'ArrowRight')  next();
+    else if (e.key === '+' || e.key === '=') { scale = Math.min(5, scale + 0.5); stage.classList.add('zoomed'); applyTransform(); }
+    else if (e.key === '-')           { scale = Math.max(1, scale - 0.5); if (scale === 1) resetZoom(); else applyTransform(); }
+  });
+
+  /* ── Clic sur backdrop pour fermer ── */
+  lb.addEventListener('click', function(e) {
+    if (e.target === lb) closeLightbox();
+  });
+  closeBtn.addEventListener('click', closeLightbox);
+  prevBtn.addEventListener('click', function(e){ e.stopPropagation(); prev(); });
+  nextBtn.addEventListener('click', function(e){ e.stopPropagation(); next(); });
+
+  /* ── Délégation : tap/clic sur .gallery-item ── */
+  document.addEventListener('click', function(e) {
+    const item = e.target.closest('.gallery-item');
+    if (!item || lb.classList.contains('open')) return;
+    if (e.target.closest('#lightbox')) return;
+    const list = collectItems();
+    openLightbox(item, list);
+  });
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin — Corentin Vallet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Mono:wght@300;400&family=Syne:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ── TOKENS ── */
+:root {
+  --bg:        #f5f2ec;
+  --bg2:       #eee9df;
+  --surface:   #ffffff;
+  --border:    rgba(0,0,0,0.10);
+  --border2:   rgba(0,0,0,0.06);
+  --text:      #1a1714;
+  --text2:     #5a5046;
+  --text3:     #9a8f82;
+  --accent:    #c45c2a;
+  --accent-light: rgba(196,92,42,0.08);
+  --accent2:   #e8a97e;
+  --green:     #2a7a4b;
+  --green-bg:  rgba(42,122,75,0.08);
+  --red:       #c0392b;
+  --red-bg:    rgba(192,57,43,0.08);
+  --shadow:    0 2px 16px rgba(0,0,0,0.07);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+  --radius:    6px;
+  --sidebar-w: 240px;
+  --t:         0.25s cubic-bezier(.4,0,.2,1);
+}
+[data-theme="dark"] {
+  --bg:        #141210;
+  --bg2:       #1c1916;
+  --surface:   #201d1a;
+  --border:    rgba(255,255,255,0.09);
+  --border2:   rgba(255,255,255,0.05);
+  --text:      #f0ece4;
+  --text2:     #a89d91;
+  --text3:     #6e6358;
+  --shadow:    0 2px 16px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.5);
+  --accent-light: rgba(196,92,42,0.15);
+  --green-bg:  rgba(42,122,75,0.15);
+  --red-bg:    rgba(192,57,43,0.15);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; }
+body {
+  font-family: 'Syne', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  transition: background var(--t), color var(--t);
+}
+button, input, textarea, select { font-family: inherit; }
+a { color: inherit; text-decoration: none; }
+
+/* ── LOGIN ── */
+#login-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.45s ease, visibility 0.45s ease;
+}
+#login-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+#login-box {
+  width: 100%; max-width: 360px;
+  padding: 48px 40px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  display: flex; flex-direction: column; gap: 18px;
+}
+.login-logo {
+  font-family: 'Fraunces', serif;
+  font-size: 1.4rem; font-weight: 400;
+  text-align: center; letter-spacing: -0.02em;
+  color: var(--text); margin-bottom: 2px;
+}
+.login-logo em { color: var(--accent); font-style: italic; }
+.login-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--text3);
+  text-align: center; margin-bottom: 4px;
+}
+.lf { display: flex; flex-direction: column; gap: 6px; }
+.lf label {
+  font-family: 'DM Mono', monospace; font-size: 0.62rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2);
+}
+.lf input {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 3px; padding: 10px 12px;
+  font-size: 0.9rem; color: var(--text); outline: none;
+  transition: border 0.2s;
+}
+.lf input:focus { border-color: var(--accent); }
+#l-err {
+  font-family: 'DM Mono', monospace; font-size: 0.62rem;
+  color: var(--red); text-align: center; min-height: 14px;
+}
+#l-btn {
+  width: 100%; background: var(--accent); color: #fff;
+  border: none; padding: 12px; border-radius: 3px;
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; cursor: pointer;
+  transition: opacity 0.2s;
+}
+#l-btn:hover { opacity: 0.88; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: var(--sidebar-w);
+  min-height: 100vh;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  position: fixed; top: 0; left: 0; z-index: 100;
+  transition: transform var(--t), background var(--t), border var(--t);
+}
+.sidebar-logo {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Fraunces', serif;
+  font-size: 1.05rem; font-weight: 400; letter-spacing: -0.01em;
+}
+.sidebar-logo em { color: var(--accent); font-style: italic; }
+.sidebar-badge {
+  display: inline-block; margin-top: 6px;
+  font-family: 'DM Mono', monospace; font-size: 0.55rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--accent-light); color: var(--accent);
+  padding: 2px 8px; border-radius: 2px;
+}
+.sidebar-nav { flex: 1; padding: 16px 12px; display: flex; flex-direction: column; gap: 2px; }
+.nav-group-label {
+  font-family: 'DM Mono', monospace; font-size: 0.55rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text3); padding: 10px 12px 6px;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: 4px;
+  font-size: 0.82rem; font-weight: 500; color: var(--text2);
+  cursor: pointer; transition: background 0.15s, color 0.15s;
+  border: none; background: none; width: 100%; text-align: left;
+}
+.nav-item:hover { background: var(--bg2); color: var(--text); }
+.nav-item.active { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+.nav-item svg { flex-shrink: 0; opacity: 0.7; }
+.nav-item.active svg { opacity: 1; }
+
+.sidebar-footer {
+  padding: 16px 12px;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.theme-toggle-btn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; border-radius: 4px; border: none;
+  background: var(--bg2); color: var(--text2);
+  font-family: 'DM Mono', monospace; font-size: 0.62rem;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  cursor: pointer; transition: background 0.2s; flex: 1;
+}
+.theme-toggle-btn:hover { background: var(--border); }
+
+/* ── MOBILE HEADER ── */
+.mobile-header {
+  display: none;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px;
+  align-items: center; justify-content: space-between;
+}
+.mobile-logo {
+  font-family: 'Fraunces', serif; font-size: 1rem;
+  font-weight: 400; letter-spacing: -0.01em;
+}
+.mobile-logo em { color: var(--accent); font-style: italic; }
+.hamburger {
+  background: none; border: none; cursor: pointer;
+  color: var(--text); padding: 4px;
+  display: flex; align-items: center; justify-content: center;
+}
+.sidebar-overlay {
+  display: none;
+  position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 99;
+}
+
+/* ── MAIN CONTENT ── */
+.main {
+  margin-left: var(--sidebar-w);
+  flex: 1; min-height: 100vh;
+  display: flex; flex-direction: column;
+}
+.topbar {
+  padding: 24px 36px 0;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+}
+.page-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.6rem; font-weight: 300; letter-spacing: -0.02em;
+  color: var(--text); line-height: 1.2;
+}
+.page-title em { color: var(--accent); font-style: italic; }
+.page-subtitle {
+  font-family: 'DM Mono', monospace; font-size: 0.62rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text3); margin-top: 6px;
+}
+.save-btn {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 3px;
+  padding: 10px 20px; font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+  transition: opacity 0.2s; white-space: nowrap; flex-shrink: 0;
+}
+.save-btn:hover { opacity: 0.88; }
+.save-btn.saved { background: var(--green); }
+
+.content { padding: 28px 36px 60px; flex: 1; }
+
+/* ── PANELS ── */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  margin-bottom: 20px; overflow: hidden;
+  transition: background var(--t), border var(--t);
+}
+.card-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.card-title {
+  font-family: 'DM Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--text2);
+  display: flex; align-items: center; gap: 8px;
+}
+.card-title-icon { font-size: 0.9rem; }
+.card-body { padding: 24px; }
+
+/* ── FORM ELEMENTS ── */
+.field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 20px; }
+.field:last-child { margin-bottom: 0; }
+.field label {
+  font-family: 'DM Mono', monospace; font-size: 0.6rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2);
+}
+.field-hint {
+  font-family: 'DM Mono', monospace; font-size: 0.58rem;
+  color: var(--text3); letter-spacing: 0.04em;
+}
+.field input, .field textarea, .field select {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 3px; padding: 10px 14px;
+  font-size: 0.88rem; color: var(--text); outline: none;
+  transition: border 0.2s, background var(--t); width: 100%;
+}
+.field input:focus, .field textarea:focus { border-color: var(--accent); background: var(--surface); }
+.field textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+/* ── PHOTO UPLOAD ── */
+.photo-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px;
+}
+.photo-item {
+  aspect-ratio: 4/3;
+  border: 1px solid var(--border);
+  border-radius: 4px; overflow: hidden;
+  position: relative; cursor: pointer;
+  background: var(--bg2);
+  display: flex; align-items: center; justify-content: center;
+  transition: border 0.2s;
+}
+.photo-item:hover { border-color: var(--accent); }
+.photo-item img { width: 100%; height: 100%; object-fit: cover; }
+.photo-item .photo-del {
+  position: absolute; top: 6px; right: 6px;
+  background: rgba(0,0,0,0.6); color: #fff;
+  border: none; border-radius: 2px; padding: 3px 6px;
+  font-size: 0.65rem; cursor: pointer; opacity: 0;
+  transition: opacity 0.15s;
+}
+.photo-item:hover .photo-del { opacity: 1; }
+.photo-add {
+  aspect-ratio: 4/3; border: 1.5px dashed var(--border);
+  border-radius: 4px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 6px;
+  cursor: pointer; color: var(--text3);
+  transition: border-color 0.2s, color 0.2s; background: none;
+}
+.photo-add:hover { border-color: var(--accent); color: var(--accent); }
+.photo-add-icon { font-size: 1.4rem; }
+.photo-add-label {
+  font-family: 'DM Mono', monospace; font-size: 0.58rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+
+/* ── SITE ENTRIES ── */
+.site-list { display: flex; flex-direction: column; gap: 12px; }
+.site-entry {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 4px; padding: 18px 20px;
+  display: grid; grid-template-columns: 1fr 1fr auto;
+  gap: 14px; align-items: start;
+  transition: background var(--t);
+}
+.site-entry-left { display: flex; flex-direction: column; gap: 10px; }
+.site-entry-right { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+.entry-del-btn {
+  background: var(--red-bg); color: var(--red);
+  border: 1px solid rgba(192,57,43,0.15); border-radius: 3px;
+  padding: 6px 10px; font-size: 0.7rem; cursor: pointer;
+  font-family: 'DM Mono', monospace; letter-spacing: 0.04em;
+  text-transform: uppercase; transition: opacity 0.2s;
+  white-space: nowrap;
+}
+.entry-del-btn:hover { opacity: 0.8; }
+.add-entry-btn {
+  display: flex; align-items: center; gap: 8px;
+  background: none; border: 1.5px dashed var(--border);
+  border-radius: 4px; padding: 12px 20px;
+  color: var(--text3); font-size: 0.78rem; cursor: pointer;
+  width: 100%; justify-content: center;
+  font-family: 'DM Mono', monospace; letter-spacing: 0.06em;
+  text-transform: uppercase; transition: border-color 0.2s, color 0.2s;
+}
+.add-entry-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── BADGE / STATUS ── */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: 'DM Mono', monospace; font-size: 0.58rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 2px;
+}
+.badge-green { background: var(--green-bg); color: var(--green); }
+.badge-accent { background: var(--accent-light); color: var(--accent); }
+
+/* ── TABS (admin sections) ── */
+.section-tabs {
+  display: flex; gap: 2px; border-bottom: 1px solid var(--border);
+  margin-bottom: 28px; overflow-x: auto;
+}
+.sec-tab {
+  padding: 10px 18px; border: none; background: none;
+  font-family: 'DM Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text2); cursor: pointer; white-space: nowrap;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.sec-tab:hover { color: var(--accent); }
+.sec-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.sec-panel { display: none; }
+.sec-panel.active { display: block; }
+
+/* ── TOAST ── */
+#toast {
+  position: fixed; bottom: 28px; right: 28px; z-index: 9998;
+  background: var(--green); color: #fff;
+  padding: 12px 20px; border-radius: 4px;
+  font-family: 'DM Mono', monospace; font-size: 0.68rem;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(20px); opacity: 0;
+  transition: transform 0.3s, opacity 0.3s;
+  pointer-events: none;
+}
+#toast.show { transform: translateY(0); opacity: 1; }
+
+/* ── PHOTO UPLOAD HIDDEN INPUT ── */
+.photo-file-input { display: none; }
+
+/* ── TOGGLE SWITCH ── */
+.toggle-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 0; border-bottom: 1px solid var(--border2);
+}
+.toggle-row:last-child { border-bottom: none; }
+.toggle-label { font-size: 0.85rem; color: var(--text); }
+.toggle-sub {
+  font-family: 'DM Mono', monospace; font-size: 0.58rem;
+  color: var(--text3); letter-spacing: 0.04em; margin-top: 2px;
+}
+.toggle {
+  position: relative; width: 38px; height: 22px; flex-shrink: 0;
+}
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-track {
+  position: absolute; inset: 0; background: var(--border);
+  border-radius: 22px; cursor: pointer; transition: background 0.2s;
+}
+.toggle input:checked + .toggle-track { background: var(--accent); }
+.toggle-track::after {
+  content: ''; position: absolute;
+  top: 3px; left: 3px; width: 16px; height: 16px;
+  background: #fff; border-radius: 50%;
+  transition: left 0.2s;
+}
+.toggle input:checked + .toggle-track::after { left: 19px; }
+
+/* ── STATS ROW ── */
+.stats-row {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px 24px;
+  box-shadow: var(--shadow);
+}
+.stat-label {
+  font-family: 'DM Mono', monospace; font-size: 0.58rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3);
+  margin-bottom: 8px;
+}
+.stat-value {
+  font-family: 'Fraunces', serif; font-size: 1.8rem;
+  font-weight: 300; color: var(--text); line-height: 1;
+}
+.stat-sub { font-size: 0.72rem; color: var(--text3); margin-top: 4px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); box-shadow: var(--shadow-lg); }
+  .sidebar-overlay.open { display: block; }
+  .mobile-header { display: flex; }
+  .main { margin-left: 0; padding-top: 60px; }
+  .topbar { padding: 20px 20px 0; flex-wrap: wrap; }
+  .content { padding: 20px 20px 60px; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .site-entry { grid-template-columns: 1fr; }
+  .site-entry-right { justify-content: flex-start; }
+}
+@media (max-width: 480px) {
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  #login-box { padding: 36px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-overlay">
+  <div id="login-box">
+    <div class="login-logo">Corentin <em>Vallet</em></div>
+    <p class="login-sub">Espace administration</p>
+    <div class="lf">
+      <label for="lu">Identifiant</label>
+      <input id="lu" type="text" autocomplete="username" placeholder="identifiant"/>
+    </div>
+    <div class="lf">
+      <label for="lp">Mot de passe</label>
+      <input id="lp" type="password" autocomplete="current-password" placeholder="••••••"/>
+    </div>
+    <div id="l-err" aria-live="polite"></div>
+    <button id="l-btn" onclick="doLogin()">Accéder →</button>
+  </div>
+</div>
+
+<!-- MOBILE HEADER -->
+<div class="mobile-header">
+  <div class="mobile-logo">CV <em>Admin</em></div>
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    Corentin <em>Vallet</em>
+    <div><span class="sidebar-badge">Admin</span></div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-group-label">Navigation</div>
+
+    <button class="nav-item active" onclick="goTo('dashboard', this)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Tableau de bord
+    </button>
+
+    <div class="nav-group-label">Contenu</div>
+
+    <button class="nav-item" onclick="goTo('hero', this)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+      Hero & Accroche
+    </button>
+    <button class="nav-item" onclick="goTo('approche', this)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
+      Approche
+    </button>
+    <button class="nav-item" onclick="goTo('services', this)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+      Services
+    </button>
+    <button class="nav-item" onclick="goTo('realisations', this)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      Réalisations
+    </button>
+    <button class="nav-item" onclick="goTo('profil', this)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Profil & Bio
+    </button>
+    <button class="nav-item" onclick="goTo('photos', this)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      Médiathèque
+    </button>
+
+    <div class="nav-group-label">Paramètres</div>
+    <button class="nav-item" onclick="goTo('contact', this)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Contact & Infos
+    </button>
+    <button class="nav-item" onclick="goTo('settings', this)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      Paramètres
+    </button>
+  </nav>
+
+  <div class="sidebar-footer">
+    <button class="theme-toggle-btn" onclick="toggleTheme()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+      <span id="theme-label">Mode clair</span>
+    </button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- ══ DASHBOARD ══ -->
+  <div id="panel-dashboard" class="panel active">
+    <div class="topbar">
+      <div>
+        <div class="page-title">Tableau de <em>bord</em></div>
+        <div class="page-subtitle">Vue d'ensemble du portfolio</div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Secteurs</div>
+          <div class="stat-value">4</div>
+          <div class="stat-sub">Restaurateurs, Artisans, Artistes, Immo</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Démos en ligne</div>
+          <div class="stat-value">6</div>
+          <div class="stat-sub">4 vitrines · 2 admins</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Photos</div>
+          <div class="stat-value" id="dash-photos">0</div>
+          <div class="stat-sub">Dans la médiathèque</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Statut</div>
+          <div class="stat-value" style="font-size:1.1rem;color:var(--green)">● En ligne</div>
+          <div class="stat-sub">Portfolio actif</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><span class="card-title-icon">⚡</span> Accès rapides</div>
+        </div>
+        <div class="card-body" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;">
+          <button onclick="goTo('hero', document.querySelector('[onclick*=hero]'))" style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:14px 16px;text-align:left;cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+            <div style="font-size:1.2rem;margin-bottom:6px;">🏠</div>
+            <div style="font-size:0.82rem;font-weight:600;">Hero & Accroche</div>
+            <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--text3);letter-spacing:0.04em;margin-top:3px;">Titre · Sous-titre · CTA</div>
+          </button>
+          <button onclick="goTo('realisations', document.querySelector('[onclick*=realisations]'))" style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:14px 16px;text-align:left;cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+            <div style="font-size:1.2rem;margin-bottom:6px;">🗂️</div>
+            <div style="font-size:0.82rem;font-weight:600;">Réalisations</div>
+            <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--text3);letter-spacing:0.04em;margin-top:3px;">Secteurs · Sites · Admins</div>
+          </button>
+          <button onclick="goTo('photos', document.querySelector('[onclick*=photos]'))" style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:14px 16px;text-align:left;cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+            <div style="font-size:1.2rem;margin-bottom:6px;">🖼️</div>
+            <div style="font-size:0.82rem;font-weight:600;">Médiathèque</div>
+            <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--text3);letter-spacing:0.04em;margin-top:3px;">Photos · Imports · Tri</div>
+          </button>
+          <button onclick="goTo('contact', document.querySelector('[onclick*=contact]'))" style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:14px 16px;text-align:left;cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+            <div style="font-size:1.2rem;margin-bottom:6px;">✉️</div>
+            <div style="font-size:0.82rem;font-weight:600;">Contact</div>
+            <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--text3);letter-spacing:0.04em;margin-top:3px;">Email · Tél · LinkedIn</div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ HERO ══ -->
+  <div id="panel-hero" class="panel">
+    <div class="topbar">
+      <div>
+        <div class="page-title">Hero & <em>Accroche</em></div>
+        <div class="page-subtitle">Textes de la section d'entrée</div>
+      </div>
+      <button class="save-btn" onclick="saveSection(this)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Sauvegarder
+      </button>
+    </div>
+    <div class="content">
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">✍️</span> Titre principal</div></div>
+        <div class="card-body">
+          <div class="field">
+            <label>Accroche (eyebrow)</label>
+            <input type="text" data-key="hero_eyebrow" value="Concepteur de sites web"/>
+            <span class="field-hint">Petit texte au-dessus du titre</span>
+          </div>
+          <div class="field">
+            <label>Titre ligne 1</label>
+            <input type="text" data-key="hero_title1" value="Votre site,"/>
+          </div>
+          <div class="field">
+            <label>Titre ligne 2 (italique)</label>
+            <input type="text" data-key="hero_title2" value="prêt à vivre"/>
+            <span class="field-hint">Affiché en italique avec la couleur accent</span>
+          </div>
+          <div class="field">
+            <label>Titre ligne 3</label>
+            <input type="text" data-key="hero_title3" value="et à convaincre."/>
+          </div>
+          <div class="field">
+            <label>Description</label>
+            <textarea data-key="hero_desc">Je conçois des sites clé en main pour les artistes, commerçants et artisans — avec une vraie réflexion sur votre communication, pas seulement du code.</textarea>
+          </div>
+          <div class="field">
+            <label>Texte du bouton CTA</label>
+            <input type="text" data-key="hero_cta" value="Démarrer un projet"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">🃏</span> Cartes statistiques</div></div>
+        <div class="card-body">
+          <div class="grid-2">
+            <div class="field"><label>Carte 1 — Label</label><input type="text" data-key="hero_c1_label" value="Livraison"/></div>
+            <div class="field"><label>Carte 1 — Valeur</label><input type="text" data-key="hero_c1_value" value="Clé en main"/></div>
+          </div>
+          <div class="field"><label>Carte 1 — Sous-texte</label><input type="text" data-key="hero_c1_sub" value="Site fonctionnel, hébergé, prêt à l'emploi dès la remise."/></div>
+          <hr style="border:none;border-top:1px solid var(--border2);margin:16px 0;">
+          <div class="grid-2">
+            <div class="field"><label>Carte 2 — Label</label><input type="text" data-key="hero_c2_label" value="Expérience"/></div>
+            <div class="field"><label>Carte 2 — Valeur</label><input type="text" data-key="hero_c2_value" value="+10 ans"/></div>
+          </div>
+          <div class="field"><label>Carte 2 — Sous-texte</label><input type="text" data-key="hero_c2_sub" value="Ingénieur avant-ventes, diplômé INSA."/></div>
+          <hr style="border:none;border-top:1px solid var(--border2);margin:16px 0;">
+          <div class="grid-2">
+            <div class="field"><label>Carte 3 — Label</label><input type="text" data-key="hero_c3_label" value="Clients"/></div>
+            <div class="field"><label>Carte 3 — Valeur</label><input type="text" data-key="hero_c3_value" value="Indépendants"/></div>
+          </div>
+          <div class="field"><label>Carte 3 — Sous-texte</label><input type="text" data-key="hero_c3_sub" value="Artistes, artisans, commerçants de proximité."/></div>
+          <hr style="border:none;border-top:1px solid var(--border2);margin:16px 0;">
+          <div class="grid-2">
+            <div class="field"><label>Carte 4 — Label</label><input type="text" data-key="hero_c4_label" value="Accompagnement"/></div>
+            <div class="field"><label>Carte 4 — Valeur</label><input type="text" data-key="hero_c4_value" value="Stratégie incluse"/></div>
+          </div>
+          <div class="field"><label>Carte 4 — Sous-texte</label><input type="text" data-key="hero_c4_sub" value="Conseil sur le message, le positionnement et la communication en ligne."/></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ APPROCHE ══ -->
+  <div id="panel-approche" class="panel">
+    <div class="topbar">
+      <div>
+        <div class="page-title">Section <em>Approche</em></div>
+        <div class="page-subtitle">Les 3 étapes de la méthode</div>
+      </div>
+      <button class="save-btn" onclick="saveSection(this)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Sauvegarder
+      </button>
+    </div>
+    <div class="content">
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">📝</span> En-tête de section</div></div>
+        <div class="card-body">
+          <div class="field"><label>Label (petit texte)</label><input type="text" data-key="approche_label" value="Comment je travaille"/></div>
+          <div class="grid-2">
+            <div class="field"><label>Titre partie 1</label><input type="text" data-key="approche_title1" value="Pas juste un site —"/></div>
+            <div class="field"><label>Titre partie 2 (italique)</label><input type="text" data-key="approche_title2" value="une présence"/></div>
+          </div>
+          <div class="field"><label>Introduction</label><textarea data-key="approche_intro">Mon approche combine technique et stratégie. Avant d'écrire une ligne de code, je comprends votre métier, votre public, et ce que vous voulez qu'ils ressentent.</textarea></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">1️⃣</span> Étape 01</div></div>
+        <div class="card-body">
+          <div class="field"><label>Titre</label><input type="text" data-key="approche_step1_title" value="Écoute & cadrage"/></div>
+          <div class="field"><label>Description</label><textarea data-key="approche_step1_desc">On commence par parler de vous : qui sont vos clients, comment vous vous différenciez, quel ton vous voulez donner. Ce travail de fond évite les allers-retours et les sites génériques.</textarea></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">2️⃣</span> Étape 02</div></div>
+        <div class="card-body">
+          <div class="field"><label>Titre</label><input type="text" data-key="approche_step2_title" value="Conception sur mesure"/></div>
+          <div class="field"><label>Description</label><textarea data-key="approche_step2_desc">Chaque site est pensé pour un seul client. Ni template bas de gamme, ni copier-coller. La structure, les mots, le design reflètent votre identité réelle.</textarea></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">3️⃣</span> Étape 03</div></div>
+        <div class="card-body">
+          <div class="field"><label>Titre</label><input type="text" data-key="approche_step3_title" value="Remise & autonomie"/></div>
+          <div class="field"><label>Description</label><textarea data-key="approche_step3_desc">Je vous livre un site entièrement finalisé, avec une prise en main expliquée. Vous êtes autonome pour les mises à jour simples, et je reste disponible si besoin.</textarea></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SERVICES ══ -->
+  <div id="panel-services" class="panel">
+    <div class="topbar">
+      <div>
+        <div class="page-title">Section <em>Services</em></div>
+        <div class="page-subtitle">Prestations proposées</div>
+      </div>
+      <button class="save-btn" onclick="saveSection(this)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Sauvegarder
+      </button>
+    </div>
+    <div class="content">
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">📝</span> En-tête</div></div>
+        <div class="card-body">
+          <div class="field"><label>Label</label><input type="text" data-key="services_label" value="Ce que je propose"/></div>
+          <div class="grid-2">
+            <div class="field"><label>Titre partie 1</label><input type="text" data-key="services_title1" value="Des prestations claires,"/></div>
+            <div class="field"><label>Titre partie 2 (italique)</label><input type="text" data-key="services_title2" value="sans jargon technique."/></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="services-list">
+        <!-- Service 1 -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">🖥️</span> Service 1</div>
+            <span class="badge badge-green">Actif</span>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="field"><label>Icône (emoji)</label><input type="text" data-key="svc1_icon" value="🖥️" style="font-size:1.2rem;"/></div>
+              <div class="field"><label>Nom du service</label><input type="text" data-key="svc1_name" value="Site vitrine clé en main"/></div>
+            </div>
+            <div class="field"><label>Description</label><textarea data-key="svc1_desc">Un site complet, soigné, livré prêt à l'emploi. Design, textes, mise en ligne, nom de domaine : je gère tout. Vous n'avez rien à installer ni à bricoler.</textarea></div>
+            <div class="field"><label>Tags (séparés par des virgules)</label><input type="text" data-key="svc1_tags" value="Design sur mesure, Hébergement, Mobile-first"/></div>
+          </div>
+        </div>
+        <!-- Service 2 -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">🗺️</span> Service 2</div>
+            <span class="badge badge-green">Actif</span>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="field"><label>Icône (emoji)</label><input type="text" data-key="svc2_icon" value="🗺️" style="font-size:1.2rem;"/></div>
+              <div class="field"><label>Nom du service</label><input type="text" data-key="svc2_name" value="Conseil en communication"/></div>
+            </div>
+            <div class="field"><label>Description</label><textarea data-key="svc2_desc">Avant même de construire le site, on définit ensemble votre message, votre positionnement et la façon dont vous voulez vous adresser à vos clients.</textarea></div>
+            <div class="field"><label>Tags (séparés par des virgules)</label><input type="text" data-key="svc2_tags" value="Stratégie de contenu, Tone of voice, Positionnement"/></div>
+          </div>
+        </div>
+        <!-- Service 3 -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">✍️</span> Service 3</div>
+            <span class="badge badge-green">Actif</span>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="field"><label>Icône (emoji)</label><input type="text" data-key="svc3_icon" value="✍️" style="font-size:1.2rem;"/></div>
+              <div class="field"><label>Nom du service</label><input type="text" data-key="svc3_name" value="Rédaction & textes"/></div>
+            </div>
+            <div class="field"><label>Description</label><textarea data-key="svc3_desc">Je rédige les textes de votre site à votre place — ou je retravaille les vôtres. Des mots qui vous ressemblent, qui convainquent et qui référencent bien.</textarea></div>
+            <div class="field"><label>Tags (séparés par des virgules)</label><input type="text" data-key="svc3_tags" value="Copywriting, SEO de base, Reformulation"/></div>
+          </div>
+        </div>
+        <!-- Service 4 -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">🔧</span> Service 4</div>
+            <span class="badge badge-green">Actif</span>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="field"><label>Icône (emoji)</label><input type="text" data-key="svc4_icon" value="🔧" style="font-size:1.2rem;"/></div>
+              <div class="field"><label>Nom du service</label><input type="text" data-key="svc4_name" value="Refonte & évolution"/></div>
+            </div>
+            <div class="field"><label>Description</label><textarea data-key="svc4_desc">Vous avez déjà un site qui vieillit ou qui ne vous représente plus ? Je reprends l'existant, diagnostique, et modernise avec une approche cohérente.</textarea></div>
+            <div class="field"><label>Tags (séparés par des virgules)</label><input type="text" data-key="svc4_tags" value="Audit, Modernisation, Performance"/></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ RÉALISATIONS ══ -->
+  <div id="panel-realisations" class="panel">
+    <div class="topbar">
+      <div>
+        <div class="page-title">Section <em>Réalisations</em></div>
+        <div class="page-subtitle">Secteurs, démos et liens admin</div>
+      </div>
+      <button class="save-btn" onclick="saveSection(this)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Sauvegarder
+      </button>
+    </div>
+    <div class="content">
+
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">📝</span> En-tête de section</div></div>
+        <div class="card-body">
+          <div class="field"><label>Label</label><input type="text" value="Exemples de réalisations"/></div>
+          <div class="field"><label>Introduction</label><textarea>Ces démos illustrent ce que je réalise pour chaque type de client — site vitrine et espace d'administration inclus. Cliquez sur « Voir la démo » pour explorer chaque projet complet.</textarea></div>
+        </div>
+      </div>
+
+      <!-- Secteurs tabs -->
+      <div class="section-tabs">
+        <button class="sec-tab active" onclick="switchSecTab(this,'real-restau')">🍷 Restaurateurs</button>
+        <button class="sec-tab" onclick="switchSecTab(this,'real-artisan')">🧱 Artisans</button>
+        <button class="sec-tab" onclick="switchSecTab(this,'real-artiste')">🪵 Artistes</button>
+        <button class="sec-tab" onclick="switchSecTab(this,'real-immo')">🏡 Agents immo</button>
+      </div>
+
+      <!-- Restaurateurs -->
+      <div class="sec-panel active" id="real-restau">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">🍷</span> Restaurateurs — Identité du secteur</div>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="field"><label>Icône secteur (emoji)</label><input type="text" value="🍷"/></div>
+              <div class="field"><label>Nom du secteur</label><input type="text" value="Restaurateurs"/></div>
+            </div>
+            <div class="field"><label>Sous-titre (nom de la démo)</label><input type="text" value="Le Zinc — Bistrot parisien"/></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">🌐</span> Site vitrine</div>
+            <span class="badge badge-green">● Actif</span>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="field"><label>Fichier / URL de la démo</label><input type="text" value="le-zinc.html"/></div>
+              <div class="field"><label>Titre de la modale</label><input type="text" value="Le Zinc — Démo Restaurateur · Site vitrine"/></div>
+            </div>
+            <div class="field"><label>Description affichée</label><textarea>Identité visuelle forte, carte du jour mise en avant, réservation intégrée. Atmosphère conviviale et authentique, pensée pour donner envie de pousser la porte.</textarea></div>
+            <div class="field"><label>Emoji de prévisualisation</label><input type="text" value="🍷"/></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">🛠️</span> Espace admin</div>
+            <span class="badge badge-green">● Actif</span>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="field"><label>Fichier / URL de la démo</label><input type="text" value="le-zinc-admin.html"/></div>
+              <div class="field"><label>Titre de la modale</label><input type="text" value="Le Zinc — Démo Restaurateur · Espace admin"/></div>
+            </div>
+            <div class="field"><label>Description affichée</label><textarea>Mise à jour de la carte, gestion des réservations, suivi des avis clients. Un tableau de bord simple, sans aucune compétence technique requise.</textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Artisans -->
+      <div class="sec-panel" id="real-artisan">
+        <div class="card">
+          <div class="card-header"><div class="card-title"><span class="card-title-icon">🧱</span> Artisans — Identité du secteur</div></div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="field"><label>Icône secteur (emoji)</label><input type="text" value="🧱"/></div>
+              <div class="field"><label>Nom du secteur</label><input type="text" value="Artisans"/></div>
+            </div>
+            <div class="field"><label>Sous-titre (nom de la démo)</label><input type="text" value="Pierrard Maçonnerie"/></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">🌐</span> Site vitrine</div>
+            <span class="badge badge-green">● Actif</span>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="field"><label>Fichier / URL</label><input type="text" value="Artisan/index.html"/></div>
+              <div class="field"><label>Titre modale</label><input type="text" value="Pierrard Maçonnerie — Démo Artisan · Site vitrine"/></div>
+            </div>
+            <div class="field"><label>Description</label><textarea>Galerie de chantiers, devis en ligne, témoignages clients et labels mis en avant. Un site qui inspire confiance avant même le premier appel.</textarea></div>
+            <div class="field"><label>Emoji prévisualisation</label><input type="text" value="🧱"/></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">🛠️</span> Espace admin</div>
+            <span class="badge badge-green">● Actif</span>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="field"><label>Fichier / URL</label><input type="text" value="Demomaconadmin.html"/></div>
+              <div class="field"><label>Titre modale</label><input type="text" value="Pierrard Maçonnerie — Démo Artisan · Espace admin"/></div>
+            </div>
+            <div class="field"><label>Description</label><textarea>Ajout de réalisations, gestion des demandes de devis reçues, mise à jour des services. Tout le contenu du site maîtrisé depuis un seul endroit.</textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Artistes -->
+      <div class="sec-panel" id="real-artiste">
+        <div class="card">
+          <div class="card-header"><div class="card-title"><span class="card-title-icon">🪵</span> Artistes — Identité du secteur</div></div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="field"><label>Icône secteur (emoji)</label><input type="text" value="🪵"/></div>
+              <div class="field"><label>Nom du secteur</label><input type="text" value="Artistes"/></div>
+            </div>
+            <div class="field"><label>Sous-titre (nom de la démo)</label><input type="text" value="Francis Ferret — Sculpteur sur bois"/></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">🌐</span> Site vitrine</div>
+            <span class="badge badge-green">● Actif</span>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="field"><label>Fichier / URL</label><input type="text" value="Francis_Ferret_v2.html"/></div>
+              <div class="field"><label>Titre modale</label><input type="text" value="Francis Ferret — Démo Artiste · Site vitrine"/></div>
+            </div>
+            <div class="field"><label>Description</label><textarea>Portfolio immersif, galerie des œuvres, biographie et prise de contact directe. Un site à l'image du travail : soigné, singulier, mémorable.</textarea></div>
+            <div class="field"><label>Emoji prévisualisation</label><input type="text" value="🪵"/></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">🛠️</span> Espace admin</div>
+            <span class="badge badge-accent">Pas encore configuré</span>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="field"><label>Fichier / URL (laisser vide si absent)</label><input type="text" value="" placeholder="ex: ferret-admin.html"/></div>
+              <div class="field"><label>Titre modale</label><input type="text" value="" placeholder="Francis Ferret — Admin"/></div>
+            </div>
+            <div class="field"><label>Description</label><textarea placeholder="Description de l'espace admin artiste…"></textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agents immo -->
+      <div class="sec-panel" id="real-immo">
+        <div class="card">
+          <div class="card-header"><div class="card-title"><span class="card-title-icon">🏡</span> Agents immobiliers — Identité du secteur</div></div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="field"><label>Icône secteur (emoji)</label><input type="text" value="🏡"/></div>
+              <div class="field"><label>Nom du secteur</label><input type="text" value="Agents immobiliers"/></div>
+            </div>
+            <div class="field"><label>Sous-titre (nom de la démo)</label><input type="text" value="Agence immobilière"/></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">🌐</span> Site vitrine</div>
+            <span class="badge badge-green">● Actif</span>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="field"><label>Fichier / URL</label><input type="text" value="agence-immobiliere.html"/></div>
+              <div class="field"><label>Titre modale</label><input type="text" value="Agence Immobilière — Démo Agent · Site vitrine"/></div>
+            </div>
+            <div class="field"><label>Description</label><textarea>Catalogue de biens, fiches de présentation détaillées et formulaire de contact par annonce. Un site conçu pour générer des leads qualifiés.</textarea></div>
+            <div class="field"><label>Emoji prévisualisation</label><input type="text" value="🏡"/></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">🛠️</span> Espace admin</div>
+            <span class="badge badge-accent">Pas encore configuré</span>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div class="field"><label>Fichier / URL (laisser vide si absent)</label><input type="text" value="" placeholder="ex: immo-admin.html"/></div>
+              <div class="field"><label>Titre modale</label><input type="text" value="" placeholder="Agence — Admin"/></div>
+            </div>
+            <div class="field"><label>Description</label><textarea placeholder="Description de l'espace admin immo…"></textarea></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ PROFIL ══ -->
+  <div id="panel-profil" class="panel">
+    <div class="topbar">
+      <div>
+        <div class="page-title">Profil & <em>Bio</em></div>
+        <div class="page-subtitle">Votre présentation personnelle</div>
+      </div>
+      <button class="save-btn" onclick="saveSection(this)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Sauvegarder
+      </button>
+    </div>
+    <div class="content">
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">👤</span> Identité</div></div>
+        <div class="card-body">
+          <div class="grid-3">
+            <div class="field"><label>Nom complet</label><input type="text" value="Corentin Vallet"/></div>
+            <div class="field"><label>Rôle / Statut</label><input type="text" value="Indépendant · né en 1992"/></div>
+            <div class="field"><label>Badge (diplôme, etc.)</label><input type="text" value="🎓 Diplômé INSA"/></div>
+          </div>
+          <div class="field"><label>Emoji avatar</label><input type="text" value="👨‍💻" style="font-size:1.4rem;max-width:80px;"/><span class="field-hint">Affiché dans l'encart de profil</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">📖</span> Parcours</div></div>
+        <div class="card-body">
+          <div class="field"><label>Paragraphe 1</label><textarea style="min-height:80px;">Ingénieur de formation (INSA, promotion 2015), j'ai passé plusieurs années en avant-ventes techniques — un poste qui m'a appris à écouter, à comprendre vite les enjeux d'un client, et à traduire des besoins complexes en solutions simples et convaincantes.</textarea></div>
+          <div class="field"><label>Paragraphe 2</label><textarea style="min-height:80px;">Aujourd'hui, j'applique cette même rigueur à la conception de sites web pour les indépendants. Ma formation d'ingénieur garantit un code propre et fiable ; mon expérience commerciale m'a donné le sens du message et du client.</textarea></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">⭐</span> Ce qui me différencie</div></div>
+        <div class="card-body">
+          <div class="field"><label>Paragraphe 1</label><textarea style="min-height:80px;">Je ne vends pas des heures de développement. Je vends un résultat : un site qui tourne, qui se présente bien, et qui vous aide à décrocher des clients. Pas de surprise, pas de devis qui s'allonge. Un projet cadré, un prix fixé, une livraison.</textarea></div>
+          <div class="field"><label>Paragraphe 2</label><textarea style="min-height:80px;">Et parce que je viens de l'avant-ventes, je peux aussi vous aider à formuler ce que vous faites, à trouver le bon angle pour vous adresser à votre public, à bâtir une cohérence entre votre site et votre communication globale.</textarea></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">🏷️</span> Compétences (tags)</div></div>
+        <div class="card-body">
+          <div class="field">
+            <label>Tags (séparés par des virgules)</label>
+            <textarea style="min-height:60px;">HTML / CSS / JS, Design UI/UX, Référencement local, Rédaction web, Stratégie de contenu, Hébergement, Identité visuelle, Accompagnement client</textarea>
+            <span class="field-hint">Chaque valeur séparée par une virgule devient un tag affiché dans le profil</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PHOTOS ══ -->
+  <div id="panel-photos" class="panel">
+    <div class="topbar">
+      <div>
+        <div class="page-title"><em>Médiathèque</em></div>
+        <div class="page-subtitle">Photos et visuels du portfolio</div>
+      </div>
+      <button class="save-btn" onclick="triggerUpload()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Importer
+      </button>
+    </div>
+    <div class="content">
+      <input type="file" id="photo-input" class="photo-file-input" accept="image/*" multiple onchange="handlePhotos(event)"/>
+
+      <div class="section-tabs">
+        <button class="sec-tab active" onclick="switchSecTab(this,'photos-all')">Toutes</button>
+        <button class="sec-tab" onclick="switchSecTab(this,'photos-hero')">Hero</button>
+        <button class="sec-tab" onclick="switchSecTab(this,'photos-realisations')">Réalisations</button>
+        <button class="sec-tab" onclick="switchSecTab(this,'photos-profil')">Profil</button>
+      </div>
+
+      <div class="sec-panel active" id="photos-all">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">🖼️</span> Toutes les photos</div>
+            <span id="photo-count" class="badge badge-accent">0 photo</span>
+          </div>
+          <div class="card-body">
+            <div class="photo-grid" id="photo-grid">
+              <button class="photo-add" onclick="triggerUpload()">
+                <span class="photo-add-icon">+</span>
+                <span class="photo-add-label">Ajouter</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-panel" id="photos-hero">
+        <div class="card">
+          <div class="card-header"><div class="card-title"><span class="card-title-icon">🏠</span> Photos Hero</div></div>
+          <div class="card-body">
+            <div class="photo-grid" id="photo-grid-hero">
+              <button class="photo-add" onclick="triggerUpload()">
+                <span class="photo-add-icon">+</span>
+                <span class="photo-add-label">Ajouter</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-panel" id="photos-realisations">
+        <div class="card">
+          <div class="card-header"><div class="card-title"><span class="card-title-icon">🗂️</span> Photos Réalisations</div></div>
+          <div class="card-body">
+            <div class="photo-grid" id="photo-grid-real">
+              <button class="photo-add" onclick="triggerUpload()">
+                <span class="photo-add-icon">+</span>
+                <span class="photo-add-label">Ajouter</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-panel" id="photos-profil">
+        <div class="card">
+          <div class="card-header"><div class="card-title"><span class="card-title-icon">👤</span> Photos Profil</div></div>
+          <div class="card-body">
+            <div class="photo-grid" id="photo-grid-profil">
+              <button class="photo-add" onclick="triggerUpload()">
+                <span class="photo-add-icon">+</span>
+                <span class="photo-add-label">Ajouter</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CONTACT ══ -->
+  <div id="panel-contact" class="panel">
+    <div class="topbar">
+      <div>
+        <div class="page-title">Contact & <em>Infos</em></div>
+        <div class="page-subtitle">Coordonnées et section contact</div>
+      </div>
+      <button class="save-btn" onclick="saveSection(this)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Sauvegarder
+      </button>
+    </div>
+    <div class="content">
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">📝</span> En-tête de section</div></div>
+        <div class="card-body">
+          <div class="field"><label>Label</label><input type="text" data-key="contact_label" value="Me contacter"/></div>
+          <div class="grid-2">
+            <div class="field"><label>Titre partie 1</label><input type="text" data-key="contact_title1" value="Un projet ?"/></div>
+            <div class="field"><label>Titre partie 2 (italique)</label><input type="text" data-key="contact_title2" value="Parlons-en."/></div>
+          </div>
+          <div class="field"><label>Texte d'introduction</label><textarea data-key="contact_intro">Que vous ayez une idée précise ou que vous partiez de zéro, un premier échange de 30 minutes suffit souvent à y voir clair. C'est gratuit, sans engagement.</textarea></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">📞</span> Coordonnées</div></div>
+        <div class="card-body">
+          <div class="grid-2">
+            <div class="field"><label>Email</label><input type="email" data-key="contact_email" value="corentin@vallet.fr"/></div>
+            <div class="field"><label>Téléphone</label><input type="tel" data-key="contact_tel" value="06 00 00 00 00"/></div>
+          </div>
+          <div class="field"><label>URL LinkedIn</label><input type="url" data-key="contact_linkedin" value="#" placeholder="https://linkedin.com/in/..."/></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">📋</span> Formulaire de contact</div></div>
+        <div class="card-body">
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-label">Afficher le formulaire</div>
+              <div class="toggle-sub">Section formulaire visible sur le portfolio</div>
+            </div>
+            <label class="toggle"><input type="checkbox" checked/><span class="toggle-track"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-label">Activer les notifications email</div>
+              <div class="toggle-sub">Recevoir un email à chaque soumission</div>
+            </div>
+            <label class="toggle"><input type="checkbox" checked/><span class="toggle-track"></span></label>
+          </div>
+          <div style="margin-top:16px;" class="field">
+            <label>Email de réception des formulaires</label>
+            <input type="email" value="corentin@vallet.fr"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">🔗</span> Footer</div></div>
+        <div class="card-body">
+          <div class="field"><label>Texte copyright</label><input type="text" data-key="footer_copy" value="© 2024 · Tous droits réservés · Sites clé en main pour indépendants"/></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SETTINGS ══ -->
+  <div id="panel-settings" class="panel">
+    <div class="topbar">
+      <div>
+        <div class="page-title"><em>Paramètres</em></div>
+        <div class="page-subtitle">Configuration du portfolio</div>
+      </div>
+      <button class="save-btn" onclick="saveSection(this)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Sauvegarder
+      </button>
+    </div>
+    <div class="content">
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">🔒</span> Accès au portfolio</div></div>
+        <div class="card-body">
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-label">Protection par mot de passe</div>
+              <div class="toggle-sub">Demander un identifiant à l'ouverture</div>
+            </div>
+            <label class="toggle"><input type="checkbox" checked/><span class="toggle-track"></span></label>
+          </div>
+          <div style="margin-top:16px;" class="grid-2">
+            <div class="field"><label>Identifiant</label><input type="text" value="cva"/></div>
+            <div class="field"><label>Mot de passe</label><input type="password" value="cva"/></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">🎨</span> Apparence</div></div>
+        <div class="card-body">
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-label">Thème sombre disponible</div>
+              <div class="toggle-sub">Afficher le bouton de bascule thème sur le portfolio</div>
+            </div>
+            <label class="toggle"><input type="checkbox" checked/><span class="toggle-track"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-label">Animations au scroll</div>
+              <div class="toggle-sub">Effets d'apparition des sections</div>
+            </div>
+            <label class="toggle"><input type="checkbox" checked/><span class="toggle-track"></span></label>
+          </div>
+          <div style="margin-top:16px;" class="grid-2">
+            <div class="field">
+              <label>Couleur d'accent</label>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <input type="color" value="#c45c2a" style="width:40px;height:36px;padding:2px;border-radius:3px;border:1px solid var(--border);background:var(--bg);cursor:pointer;"/>
+                <input type="text" value="#c45c2a" style="font-family:'DM Mono',monospace;font-size:0.8rem;"/>
+              </div>
+            </div>
+            <div class="field">
+              <label>Titre du portfolio</label>
+              <input type="text" value="Corentin Vallet — Sites clé en main pour indépendants"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">⚠️</span> Zone de danger</div></div>
+        <div class="card-body">
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-label" style="color:var(--red)">Réinitialiser tous les contenus</div>
+              <div class="toggle-sub">Restaure les textes d'origine. Irréversible.</div>
+            </div>
+            <button style="background:var(--red-bg);color:var(--red);border:1px solid rgba(192,57,43,0.2);border-radius:3px;padding:7px 14px;font-size:0.7rem;font-family:'DM Mono',monospace;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;">Réinitialiser</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- TOAST -->
+<div id="toast">✓ Sauvegardé</div>
+
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBnoKWp3k4WFUfsLU-9Szh0CKyBFE_Yijg",
+  authDomain: "cvallet-web.firebaseapp.com",
+  projectId: "cvallet-web",
+  storageBucket: "cvallet-web.firebasestorage.app",
+  messagingSenderId: "243954944061",
+  appId: "1:243954944061:web:118dbdc4a02c6ea4530254"
+};
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+const DOC = doc(db, 'cva', 'content');
+
+/* ── Cache local (évite les lectures inutiles) ── */
+let _cache = {};
+
+/* ── Charger depuis Firestore ── */
+async function loadData() {
+  try {
+    const snap = await getDoc(DOC);
+    _cache = snap.exists() ? snap.data() : {};
+    return _cache;
+  } catch(e) {
+    console.warn('Firestore read error:', e);
+    return _cache;
+  }
+}
+
+/* ── Sauvegarder dans Firestore (merge pour ne pas écraser) ── */
+async function saveData(data) {
+  try {
+    await setDoc(DOC, data, { merge: true });
+    _cache = Object.assign(_cache, data);
+  } catch(e) {
+    console.error('Firestore write error:', e);
+    showToastError();
+  }
+}
+
+/* ── Lire tous les champs [data-key] d'un panel ── */
+function readPanel(panelId) {
+  const panel = document.getElementById('panel-' + panelId);
+  if (!panel) return {};
+  const result = {};
+  panel.querySelectorAll('[data-key]').forEach(el => {
+    result[el.dataset.key] = el.value;
+  });
+  return result;
+}
+
+/* ── Remplir les champs [data-key] depuis le cache ── */
+function fillPanel(panelId) {
+  const data = _cache;
+  const panel = document.getElementById('panel-' + panelId);
+  if (!panel) return;
+  panel.querySelectorAll('[data-key]').forEach(el => {
+    if (data[el.dataset.key] !== undefined) el.value = data[el.dataset.key];
+  });
+}
+
+/* ══ LOGIN ══ */
+(function(){
+  if (sessionStorage.getItem('cva_admin') === '1') {
+    document.getElementById('login-overlay').classList.add('hidden');
+  }
+  const lp = document.getElementById('lp');
+  const lu = document.getElementById('lu');
+  lu.addEventListener('keydown', e => { if (e.key === 'Enter') lp.focus(); });
+  lp.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+})();
+
+window.doLogin = function() {
+  const u = document.getElementById('lu').value.trim();
+  const p = document.getElementById('lp').value;
+  const err = document.getElementById('l-err');
+  if (u === 'cva' && p === 'cva') {
+    sessionStorage.setItem('cva_admin', '1');
+    document.getElementById('login-overlay').classList.add('hidden');
+  } else {
+    err.textContent = 'Identifiant ou mot de passe incorrect.';
+    document.getElementById('lp').value = '';
+    document.getElementById('lp').focus();
+  }
+};
+
+/* ══ NAVIGATION ══ */
+window.goTo = function(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  if (el) el.classList.add('active');
+  fillPanel(id);
+  if (window.innerWidth < 900) closeSidebar();
+};
+
+/* ══ SIDEBAR MOBILE ══ */
+window.toggleSidebar = function() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+};
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+/* ══ THEME (localStorage conservé : c'est une préférence UI, pas du contenu) ══ */
+window.toggleTheme = function() {
+  const h = document.documentElement;
+  const dark = h.dataset.theme === 'dark';
+  h.dataset.theme = dark ? 'light' : 'dark';
+  document.getElementById('theme-label').textContent = dark ? 'Mode clair' : 'Mode sombre';
+  localStorage.setItem('cva_admin_theme', h.dataset.theme);
+};
+(function(){
+  const t = localStorage.getItem('cva_admin_theme');
+  if (t) {
+    document.documentElement.dataset.theme = t;
+    document.getElementById('theme-label').textContent = t === 'dark' ? 'Mode sombre' : 'Mode clair';
+  }
+})();
+
+/* ══ SECTION TABS ══ */
+window.switchSecTab = function(btn, panelId) {
+  const bar = btn.closest('.section-tabs');
+  bar.querySelectorAll('.sec-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const container = btn.closest('.content') || btn.parentElement.parentElement;
+  container.querySelectorAll('.sec-panel').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById(panelId);
+  if (target) target.classList.add('active');
+};
+
+/* ══ SAVE ══ */
+window.saveSection = async function(btn) {
+  const panel = btn.closest('.panel');
+  const panelId = panel ? panel.id.replace('panel-', '') : null;
+  const orig = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-dasharray="30" stroke-dashoffset="0"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="0.8s" repeatCount="indefinite"/></circle></svg> Envoi…';
+
+  if (panelId) {
+    const panelData = readPanel(panelId);
+    await saveData(panelData);
+  }
+
+  btn.disabled = false;
+  btn.classList.add('saved');
+  btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Sauvegardé';
+  showToast();
+  setTimeout(() => { btn.classList.remove('saved'); btn.innerHTML = orig; }, 2500);
+};
+
+function showToast() {
+  const t = document.getElementById('toast');
+  t.textContent = '✓ Sauvegardé dans Firestore';
+  t.style.background = '';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function showToastError() {
+  const t = document.getElementById('toast');
+  t.textContent = '✗ Erreur de sauvegarde';
+  t.style.background = 'var(--red)';
+  t.classList.add('show');
+  setTimeout(() => { t.classList.remove('show'); t.style.background = ''; }, 3000);
+}
+
+/* ══ PHOTOS ══ */
+let photos = [];
+
+window.triggerUpload = function() {
+  document.getElementById('photo-input').click();
+};
+
+window.handlePhotos = function(e) {
+  const files = Array.from(e.target.files);
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = async ev => {
+      const id = Date.now() + Math.random();
+      photos.push({ id, src: ev.target.result, name: file.name });
+      renderPhotos();
+      await saveData({ photos: photos.map(p => ({ src: p.src, name: p.name })) });
+    };
+    reader.readAsDataURL(file);
+  });
+  e.target.value = '';
+};
+
+window.deletePhoto = async function(id) {
+  photos = photos.filter(p => p.id !== id);
+  renderPhotos();
+  await saveData({ photos: photos.map(p => ({ src: p.src, name: p.name })) });
+};
+
+function renderPhotos() {
+  const grid  = document.getElementById('photo-grid');
+  const count = document.getElementById('photo-count');
+  const dash  = document.getElementById('dash-photos');
+  count.textContent = photos.length + (photos.length === 1 ? ' photo' : ' photos');
+  dash.textContent  = photos.length;
+  grid.innerHTML = '';
+  photos.forEach(p => {
+    const item = document.createElement('div');
+    item.className = 'photo-item';
+    item.innerHTML = `<img src="${p.src}" alt="${p.name}" loading="lazy"/><button class="photo-del" onclick="deletePhoto(${p.id})">✕</button>`;
+    grid.appendChild(item);
+  });
+  const addBtn = document.createElement('button');
+  addBtn.className = 'photo-add';
+  addBtn.onclick = window.triggerUpload;
+  addBtn.innerHTML = '<span class="photo-add-icon">+</span><span class="photo-add-label">Ajouter</span>';
+  grid.appendChild(addBtn);
+}
+
+/* ══ INIT : charger depuis Firestore au démarrage ══ */
+(async function(){
+  const data = await loadData();
+  // Photos
+  if (data.photos && data.photos.length) {
+    photos = data.photos.map((p, i) => ({ id: i, src: p.src, name: p.name }));
+    renderPhotos();
+  }
+  // Pré-remplir le panel actif (dashboard ne contient pas de data-key, c'est ok)
+  fillPanel('dashboard');
+})();
+</script>
+</body>
+</html>

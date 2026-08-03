@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Admin – B&A Construction</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --sand:#e8dcc8;--brown:#7a5c3e;--dark-brown:#3d2b1a;
+      --cream:#f5f0e8;--accent:#c4944a;--text:#2a1f14;
+      --sidebar-w:260px;
+      --danger:#c0392b;--success:#27ae60;--warn:#e67e22;
+      --surface:#fff;--border:rgba(122,92,62,.18);
+      --shadow:0 2px 16px rgba(61,43,26,.08);
+    }
+    html{scroll-behavior:smooth;height:100%}
+    body{font-family:'Raleway',sans-serif;color:var(--text);background:#f0ebe0;min-height:100%;display:flex;flex-direction:column}
+
+    /* ──────── LOGIN ──────── */
+    #login-screen{
+      display:flex;align-items:center;justify-content:center;
+      min-height:100vh;background:var(--dark-brown);
+      background-image:radial-gradient(ellipse at 20% 50%,rgba(196,148,74,.12) 0%,transparent 60%),
+                        radial-gradient(ellipse at 80% 20%,rgba(122,92,62,.18) 0%,transparent 50%);
+    }
+    .login-card{
+      background:rgba(255,255,255,.05);border:1px solid rgba(196,148,74,.25);
+      backdrop-filter:blur(20px);padding:48px 44px;width:min(400px,90vw);
+      animation:fadeUp .7s ease both;
+    }
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+    .login-logo{display:flex;align-items:center;gap:14px;margin-bottom:36px}
+    .login-logo-circle{width:52px;height:52px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;color:#fff;font-size:1.1rem;flex-shrink:0}
+    .login-logo-text{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--sand);line-height:1.2}
+    .login-logo-text small{display:block;font-family:'Raleway',sans-serif;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-top:2px}
+    .login-title{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--sand);margin-bottom:6px}
+    .login-sub{font-size:.8rem;color:rgba(232,220,200,.5);letter-spacing:.08em;margin-bottom:32px}
+    .field{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+    .field label{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600}
+    .field input{padding:13px 16px;background:rgba(255,255,255,.07);border:1px solid rgba(196,148,74,.2);color:var(--sand);font-family:'Raleway',sans-serif;font-size:.9rem;outline:none;transition:border-color .25s}
+    .field input:focus{border-color:var(--accent)}
+    .field input::placeholder{color:rgba(232,220,200,.3)}
+    .btn-login{width:100%;padding:14px;background:var(--accent);border:none;color:#fff;font-family:'Raleway',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:background .25s,transform .2s;margin-top:8px}
+    .btn-login:hover{background:#a87836;transform:translateY(-1px)}
+    #login-error{display:none;margin-top:14px;padding:10px 14px;background:rgba(192,57,43,.15);border:1px solid rgba(192,57,43,.4);color:#f1948a;font-size:.82rem;letter-spacing:.04em}
+
+    /* ──────── LAYOUT ──────── */
+    #app{display:none;flex:1}
+
+    /* ──────── SIDEBAR ──────── */
+    .sidebar{
+      position:fixed;left:0;top:0;bottom:0;width:var(--sidebar-w);
+      background:var(--dark-brown);border-right:1px solid rgba(196,148,74,.18);
+      display:flex;flex-direction:column;z-index:200;
+      transition:transform .3s cubic-bezier(.25,.46,.45,.94);
+    }
+    .sidebar-header{padding:24px 22px 20px;border-bottom:1px solid rgba(196,148,74,.15)}
+    .sidebar-logo{display:flex;align-items:center;gap:12px}
+    .sidebar-logo-circle{width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;color:#fff;font-size:.88rem;flex-shrink:0}
+    .sidebar-logo-text{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--sand);line-height:1.2}
+    .sidebar-logo-text small{display:block;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(196,148,74,.7);font-family:'Raleway',sans-serif;font-weight:500}
+    .sidebar-badge{margin-top:12px;display:inline-block;padding:4px 10px;background:rgba(196,148,74,.15);border:1px solid rgba(196,148,74,.25);color:var(--accent);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600}
+
+    .sidebar-nav{flex:1;overflow-y:auto;padding:20px 0}
+    .nav-section-label{padding:6px 22px 4px;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(196,148,74,.4);font-weight:600}
+    .nav-item{
+      display:flex;align-items:center;gap:13px;padding:11px 22px;
+      cursor:pointer;transition:background .2s,color .2s;
+      font-size:.8rem;font-weight:500;letter-spacing:.06em;color:rgba(232,220,200,.55);
+      border-left:3px solid transparent;
+    }
+    .nav-item:hover{background:rgba(196,148,74,.08);color:var(--sand)}
+    .nav-item.active{background:rgba(196,148,74,.12);color:var(--accent);border-left-color:var(--accent)}
+    .nav-item svg{width:17px;height:17px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+    .sidebar-footer{padding:18px 22px;border-top:1px solid rgba(196,148,74,.15)}
+    .logout-btn{display:flex;align-items:center;gap:10px;cursor:pointer;font-size:.76rem;color:rgba(232,220,200,.4);letter-spacing:.08em;transition:color .2s}
+    .logout-btn:hover{color:var(--danger)}
+
+    /* ──────── MAIN ──────── */
+    .main{margin-left:var(--sidebar-w);min-height:100vh;display:flex;flex-direction:column}
+    .topbar{
+      background:var(--surface);border-bottom:1px solid var(--border);
+      padding:0 28px;height:58px;display:flex;align-items:center;justify-content:space-between;
+      position:sticky;top:0;z-index:100;box-shadow:var(--shadow);
+    }
+    .topbar-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--dark-brown)}
+    .topbar-right{display:flex;align-items:center;gap:14px}
+    .topbar-save{
+      padding:8px 22px;background:var(--accent);border:none;color:#fff;
+      font-family:'Raleway',sans-serif;font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+      cursor:pointer;transition:background .2s,transform .18s;
+    }
+    .topbar-save:hover{background:#a87836;transform:translateY(-1px)}
+
+    .content{padding:28px;flex:1}
+
+    /* ──────── PANELS ──────── */
+    .panel{display:none;animation:fadeIn .3s ease}
+    .panel.active{display:block}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+    /* ──────── DASHBOARD ──────── */
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:28px}
+    .stat-card{background:var(--surface);border:1px solid var(--border);padding:22px 24px;box-shadow:var(--shadow)}
+    .stat-card .stat-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--dark-brown);line-height:1}
+    .stat-card .stat-label{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brown);margin-top:6px;opacity:.7}
+    .stat-card .stat-icon{font-size:1.6rem;margin-bottom:10px}
+
+    .dashboard-notice{background:rgba(196,148,74,.08);border:1px solid rgba(196,148,74,.25);padding:18px 22px;margin-bottom:24px;display:flex;gap:14px;align-items:flex-start}
+    .dashboard-notice svg{width:18px;height:18px;flex-shrink:0;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;margin-top:1px}
+    .dashboard-notice p{font-size:.84rem;line-height:1.65;color:var(--brown)}
+    .dashboard-notice strong{color:var(--dark-brown)}
+
+    /* ──────── SECTION CARDS ──────── */
+    .section-card{background:var(--surface);border:1px solid var(--border);margin-bottom:20px;box-shadow:var(--shadow)}
+    .section-card-header{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none}
+    .section-card-header h3{font-family:'Playfair Display',serif;font-size:1rem;color:var(--dark-brown);flex:1}
+    .section-card-header .chevron{width:16px;height:16px;stroke:var(--brown);fill:none;stroke-width:2;stroke-linecap:round;transition:transform .25s}
+    .section-card.open .chevron{transform:rotate(180deg)}
+    .section-card-body{padding:22px;display:none}
+    .section-card.open .section-card-body{display:block}
+
+    /* ──────── FORM ELEMENTS ──────── */
+    .form-group{margin-bottom:18px}
+    .form-group label{display:block;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px}
+    .form-group input,.form-group textarea,.form-group select{
+      width:100%;padding:11px 14px;border:1px solid var(--border);
+      background:#faf8f4;font-family:'Raleway',sans-serif;font-size:.88rem;
+      color:var(--text);outline:none;transition:border-color .25s;
+    }
+    .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--accent)}
+    .form-group textarea{resize:vertical;min-height:90px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .form-hint{font-size:.72rem;color:var(--brown);opacity:.7;margin-top:5px}
+
+    /* ──────── CLOUDINARY UPLOAD ──────── */
+    .upload-zone{
+      border:2px dashed rgba(196,148,74,.35);padding:30px 20px;text-align:center;
+      background:rgba(196,148,74,.03);transition:border-color .25s,background .25s;cursor:pointer;
+      position:relative;
+    }
+    .upload-zone:hover,.upload-zone.dragover{border-color:var(--accent);background:rgba(196,148,74,.06)}
+    .upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .upload-zone svg{width:32px;height:32px;stroke:var(--accent);fill:none;stroke-width:1.5;margin-bottom:10px;opacity:.6}
+    .upload-zone p{font-size:.82rem;color:var(--brown);line-height:1.6}
+    .upload-zone strong{color:var(--accent)}
+
+    /* Config Cloudinary */
+    .cloudinary-config{background:#faf8f4;border:1px solid var(--border);padding:18px 20px;margin-bottom:20px}
+    .cloudinary-config h4{font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brown);font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+    .cloudinary-config h4 span{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--success)}
+    .config-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+    /* Galerie images manager */
+    .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:14px}
+    .photo-card{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--sand);border:1px solid var(--border)}
+    .photo-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+    .photo-card:hover img{transform:scale(1.04)}
+    .photo-card-overlay{position:absolute;inset:0;background:rgba(26,18,10,.7);opacity:0;transition:opacity .25s;display:flex;align-items:center;justify-content:center;gap:8px}
+    .photo-card:hover .photo-card-overlay{opacity:1}
+    .photo-card-info{position:absolute;bottom:0;left:0;right:0;padding:8px 10px;background:linear-gradient(0deg,rgba(26,18,10,.85),transparent);font-size:.65rem;color:var(--sand);letter-spacing:.08em;text-transform:uppercase}
+    .photo-card-cat{font-size:.6rem;color:var(--accent)}
+
+    .icon-btn{
+      width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.3);
+      background:rgba(255,255,255,.1);color:#fff;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;transition:background .2s;
+    }
+    .icon-btn:hover{background:rgba(255,255,255,.25)}
+    .icon-btn.danger:hover{background:rgba(192,57,43,.5)}
+    .icon-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+    /* ──────── GALERIE MANAGER ──────── */
+    .gallery-table{width:100%;border-collapse:collapse;font-size:.83rem}
+    .gallery-table th{text-align:left;padding:10px 14px;background:#faf8f4;font-size:.67rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brown);border-bottom:2px solid var(--border);font-weight:700}
+    .gallery-table td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
+    .gallery-table tr:hover td{background:#faf8f4}
+    .gallery-table img{width:60px;height:45px;object-fit:cover;border:1px solid var(--border)}
+
+    /* Cartes galerie mobile */
+    .gallery-cards{display:none;flex-direction:column;gap:10px}
+    .gallery-card{background:var(--surface);border:1px solid var(--border);padding:12px;display:flex;gap:12px;align-items:flex-start;box-shadow:var(--shadow)}
+    .gallery-card-thumb{width:72px;height:54px;object-fit:cover;flex-shrink:0;border:1px solid var(--border);background:var(--sand)}
+    .gallery-card-thumb-placeholder{width:72px;height:54px;flex-shrink:0;background:linear-gradient(135deg,var(--dark-brown),var(--brown));display:flex;align-items:center;justify-content:center;border:1px solid var(--border)}
+    .gallery-card-body{flex:1;min-width:0}
+    .gallery-card-title{font-weight:600;font-size:.85rem;color:var(--dark-brown);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .gallery-card-actions{display:flex;gap:6px;margin-top:8px}
+
+    @media(max-width:640px){
+      .gallery-table-wrap{display:none}
+      .gallery-cards{display:flex}
+    }
+    @media(min-width:641px){
+      .gallery-table-wrap{display:block;overflow-x:auto}
+      .gallery-cards{display:none}
+    }
+    .badge{display:inline-block;padding:3px 9px;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+    .badge-beton-imprime{background:rgba(196,148,74,.15);color:var(--accent);border:1px solid rgba(196,148,74,.3)}
+    .badge-beton-cire{background:rgba(39,174,96,.1);color:#1e8449;border:1px solid rgba(39,174,96,.25)}
+    .badge-beton-desactive{background:rgba(52,152,219,.1);color:#1a6a9c;border:1px solid rgba(52,152,219,.25)}
+    .badge-piscine{background:rgba(142,68,173,.1);color:#6c3483;border:1px solid rgba(142,68,173,.25)}
+
+    .table-actions{display:flex;gap:6px}
+    .tbl-btn{padding:5px 12px;font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border:1px solid;cursor:pointer;font-family:'Raleway',sans-serif;transition:background .2s,transform .15s}
+    .tbl-btn:hover{transform:translateY(-1px)}
+    .tbl-btn-edit{background:transparent;border-color:var(--accent);color:var(--accent)}
+    .tbl-btn-edit:hover{background:rgba(196,148,74,.1)}
+    .tbl-btn-del{background:transparent;border-color:rgba(192,57,43,.4);color:var(--danger)}
+    .tbl-btn-del:hover{background:rgba(192,57,43,.08)}
+
+    .add-photo-btn{
+      display:flex;align-items:center;gap:10px;padding:12px 22px;background:var(--accent);
+      border:none;color:#fff;font-family:'Raleway',sans-serif;font-size:.78rem;font-weight:700;
+      letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background .2s,transform .18s;
+      margin-bottom:20px;
+    }
+    .add-photo-btn:hover{background:#a87836;transform:translateY(-1px)}
+    .add-photo-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round}
+
+    /* ──────── MODAL ──────── */
+    .modal-backdrop{
+      position:fixed;inset:0;background:rgba(10,6,3,.6);z-index:500;
+      display:flex;align-items:center;justify-content:center;padding:20px;
+      opacity:0;pointer-events:none;transition:opacity .3s;
+    }
+    .modal-backdrop.open{opacity:1;pointer-events:all}
+    .modal{
+      background:var(--surface);width:min(560px,100%);max-height:90vh;overflow-y:auto;
+      box-shadow:0 30px 80px rgba(0,0,0,.3);transform:translateY(20px);transition:transform .3s;
+    }
+    .modal-backdrop.open .modal{transform:none}
+    .modal-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--dark-brown)}
+    .modal-header h3{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--sand)}
+    .modal-close{background:none;border:none;color:rgba(232,220,200,.5);font-size:1.3rem;cursor:pointer;transition:color .2s;line-height:1}
+    .modal-close:hover{color:var(--sand)}
+    .modal-body{padding:24px}
+    .modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end}
+
+    /* ──────── TOAST ──────── */
+    #toast-container{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px}
+    .toast{
+      padding:13px 20px;display:flex;align-items:center;gap:12px;
+      font-size:.82rem;font-weight:500;letter-spacing:.04em;min-width:220px;
+      animation:slideIn .3s ease;box-shadow:0 8px 30px rgba(0,0,0,.2);
+    }
+    @keyframes slideIn{from{transform:translateX(60px);opacity:0}to{transform:none;opacity:1}}
+    .toast.success{background:#1a4a2a;border-left:4px solid var(--success);color:#a8e6bc}
+    .toast.error{background:#4a1a1a;border-left:4px solid var(--danger);color:#f1948a}
+    .toast.info{background:var(--dark-brown);border-left:4px solid var(--accent);color:var(--sand)}
+
+    /* ──────── UPLOAD PROGRESS ──────── */
+    .progress-bar-wrap{margin-top:12px;background:#e8e0d0;height:5px;overflow:hidden;display:none}
+    .progress-bar{height:100%;background:var(--accent);width:0%;transition:width .3s}
+
+    /* ──────── PREVIEW ──────── */
+    .img-preview{margin-top:12px;display:none}
+    .img-preview img{max-width:100%;max-height:200px;object-fit:contain;border:1px solid var(--border)}
+
+    /* ──────── MOBILE MENU ──────── */
+    .mobile-menu-btn{display:none;align-items:center;justify-content:center;width:40px;height:40px;background:none;border:none;cursor:pointer;color:var(--dark-brown)}
+    .mobile-menu-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+    .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:199}
+
+    /* ──────── RESPONSIVE ──────── */
+    @media(max-width:768px){
+      :root{--sidebar-w:280px}
+      .sidebar{transform:translateX(-100%)}
+      .sidebar.mobile-open{transform:none}
+      .sidebar-overlay.mobile-open{display:block}
+      .main{margin-left:0}
+      .mobile-menu-btn{display:flex}
+      .form-row{grid-template-columns:1fr}
+      .config-row{grid-template-columns:1fr}
+      .content{padding:16px}
+      .stats-grid{grid-template-columns:1fr 1fr}
+      /* gallery handled via .gallery-cards */
+      .topbar{padding:0 16px}
+      .photo-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+    }
+    @media(max-width:480px){
+      .stats-grid{grid-template-columns:1fr}
+      .modal{width:100%}
+      .modal-backdrop{padding:0;align-items:flex-end}
+      .modal{max-height:95vh}
+    }
+
+    /* ──────── MISC ──────── */
+    .divider{height:1px;background:var(--border);margin:20px 0}
+    .empty-state{text-align:center;padding:44px 20px;color:var(--brown);opacity:.6}
+    .empty-state svg{width:42px;height:42px;stroke:currentColor;fill:none;stroke-width:1.2;margin-bottom:12px;opacity:.5}
+    .empty-state p{font-size:.9rem}
+
+    .status-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px}
+    .status-dot.green{background:var(--success)}
+    .status-dot.red{background:var(--danger)}
+    .status-dot.orange{background:var(--warn)}
+
+    .tag{display:inline-block;padding:2px 8px;background:rgba(196,148,74,.12);border:1px solid rgba(196,148,74,.22);color:var(--brown);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;margin:2px}
+
+    .btn-secondary{padding:10px 20px;background:transparent;border:1px solid var(--border);color:var(--brown);font-family:'Raleway',sans-serif;font-size:.76rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:border-color .2s,color .2s}
+    .btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+    .btn-danger{padding:10px 20px;background:var(--danger);border:none;color:#fff;font-family:'Raleway',sans-serif;font-size:.76rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s}
+    .btn-danger:hover{background:#a93226}
+    .btn-primary{padding:10px 22px;background:var(--accent);border:none;color:#fff;font-family:'Raleway',sans-serif;font-size:.76rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s}
+    .btn-primary:hover{background:#a87836}
+  </style>
+</head>
+<body>
+
+<!-- ═══════════ LOGIN ═══════════ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-circle">B&A</div>
+      <div class="login-logo-text">B&A Construction<small>Panneau d'administration</small></div>
+    </div>
+    <h2 class="login-title">Connexion</h2>
+    <p class="login-sub">Accès réservé aux administrateurs</p>
+    <div class="field">
+      <label>Identifiant</label>
+      <input type="text" id="login-user" placeholder="admin" autocomplete="username"/>
+    </div>
+    <div class="field">
+      <label>Mot de passe</label>
+      <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password"/>
+    </div>
+    <button class="btn-login" onclick="doLogin()">Accéder au panneau →</button>
+    <div id="login-error">Identifiant ou mot de passe incorrect.</div>
+  </div>
+</div>
+
+<!-- ═══════════ APP ═══════════ -->
+<div id="app">
+
+  <!-- Sidebar overlay (mobile) -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeMobileMenu()"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-circle">B&A</div>
+        <div class="sidebar-logo-text">B&A Construction<small>Administration</small></div>
+      </div>
+      <div class="sidebar-badge"><span class="status-dot green"></span>En ligne</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Navigation</div>
+      <div class="nav-item active" onclick="showPanel('dashboard')">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Tableau de bord
+      </div>
+      <div class="nav-item" onclick="showPanel('hero')">
+        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/></svg>
+        Héro & Accueil
+      </div>
+      <div class="nav-item" onclick="showPanel('services')">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+        Services
+      </div>
+      <div class="nav-item" onclick="showPanel('galerie')">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        Galerie photos
+      </div>
+      <div class="nav-item" onclick="showPanel('process')">
+        <svg viewBox="0 0 24 24"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+        Processus
+      </div>
+      <div class="nav-item" onclick="showPanel('about')">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        À propos
+      </div>
+      <div class="nav-item" onclick="showPanel('stats')">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Statistiques
+      </div>
+      <div class="nav-item" onclick="showPanel('contact')">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.4 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.76a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+        Contact
+      </div>
+      <div class="divider" style="margin:10px 22px"></div>
+      <div class="nav-section-label">Configuration</div>
+      <div class="nav-item" onclick="showPanel('cloudinary')">
+        <svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+        Cloudinary
+      </div>
+      <div class="nav-item" onclick="showPanel('settings')">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Paramètres
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="logout-btn" onclick="doLogout()">
+        <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Déconnexion
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:14px">
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+          <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <span class="topbar-title" id="topbar-title">Tableau de bord</span>
+      </div>
+      <div class="topbar-right">
+        <button class="topbar-save" onclick="saveAll()">💾 Enregistrer</button>
+        <a href="indexba.html" target="_blank" style="font-size:.72rem;color:var(--brown);text-decoration:none;letter-spacing:.08em">↗ Voir le site</a>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ─── DASHBOARD ─── -->
+      <div class="panel active" id="panel-dashboard">
+        <div class="dashboard-notice">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <p><strong>Bienvenue dans le panneau d'administration B&A Construction.</strong><br>Modifiez les contenus, gérez vos photos via Cloudinary et sauvegardez les changements. Les modifications sont exportées en JSON pour intégration dans le site.</p>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-icon">🖼️</div><div class="stat-num" id="dash-photos">6</div><div class="stat-label">Photos en galerie</div></div>
+          <div class="stat-card"><div class="stat-icon">🏗️</div><div class="stat-num">6</div><div class="stat-label">Services actifs</div></div>
+          <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-num">4</div><div class="stat-label">Statistiques</div></div>
+          <div class="stat-card"><div class="stat-icon">☁️</div><div class="stat-num" id="dash-cloud">—</div><div class="stat-label">Cloud Name</div></div>
+        </div>
+        <div class="section-card open">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <h3>🚀 Guide de démarrage rapide</h3>
+            <svg class="chevron" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+          </div>
+          <div class="section-card-body">
+            <ol style="padding-left:18px;line-height:2.2;font-size:.85rem;color:var(--brown)">
+              <li>Rendez-vous dans <strong>Cloudinary</strong> pour configurer vos identifiants d'upload.</li>
+              <li>Allez dans <strong>Galerie photos</strong> pour ajouter, éditer ou supprimer des photos.</li>
+              <li>Modifiez les textes dans chaque section (Héro, Services, À propos…).</li>
+              <li>Cliquez sur <strong>Enregistrer</strong> pour exporter la configuration JSON.</li>
+              <li>Intégrez le JSON exporté dans votre site via le script de chargement.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── HERO ─── -->
+      <div class="panel" id="panel-hero">
+        <div class="section-card open">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <h3>📌 Image héro de fond</h3>
+            <svg class="chevron" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+          </div>
+          <div class="section-card-body">
+            <p class="form-hint" style="margin-bottom:14px">Image de fond plein écran de la page d'accueil.</p>
+            <div class="upload-zone" id="hero-upload-zone" onclick="triggerUpload('hero-file')">
+              <input type="file" id="hero-file" accept="image/*" onchange="uploadToCloudinary(this,'hero')">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <p>Glissez une image ou <strong>cliquez pour parcourir</strong><br><small>Formats : JPG, WebP, PNG · Recommandé : 1920×1080px</small></p>
+            </div>
+            <div class="progress-bar-wrap" id="hero-progress"><div class="progress-bar" id="hero-progress-bar"></div></div>
+            <div class="img-preview" id="hero-preview"></div>
+            <div class="form-group" style="margin-top:14px">
+              <label>URL actuelle (Cloudinary ou locale)</label>
+              <input type="text" id="hero-img-url" placeholder="Photos/Hero.webp ou https://res.cloudinary.com/..." value="Photos/Hero.webp">
+              <p class="form-hint">Sera mise à jour automatiquement après upload.</p>
+            </div>
+          </div>
+        </div>
+        <div class="section-card open">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <h3>✏️ Textes de la section héro</h3>
+            <svg class="chevron" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+          </div>
+          <div class="section-card-body">
+            <div class="form-group">
+              <label>Accroche (eyebrow)</label>
+              <input type="text" id="hero-eyebrow" value="Maçonnerie générale · Valence">
+            </div>
+            <div class="form-group">
+              <label>Titre principal</label>
+              <input type="text" id="hero-title" value="B&A Construction">
+            </div>
+            <div class="form-group">
+              <label>Sous-titre</label>
+              <textarea id="hero-sub">Terrasses, allées et plages de piscine qui allient robustesse et élégance. Béton imprimé, ciré, désactivé — entièrement sur mesure.</textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Texte bouton primaire</label>
+                <input type="text" id="hero-btn1" value="Voir nos réalisations">
+              </div>
+              <div class="form-group">
+                <label>Texte bouton secondaire</label>
+                <input type="text" id="hero-btn2" value="Demander un devis">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-card open">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <h3>🖼️ Logo</h3>
+            <svg class="chevron" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+          </div>
+          <div class="section-card-body">
+            <div class="upload-zone" onclick="triggerUpload('logo-file')">
+              <input type="file" id="logo-file" accept="image/*" onchange="uploadToCloudinary(this,'logo')">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+              <p>Uploader un nouveau logo<br><small>Recommandé : format carré, PNG transparent ou WebP</small></p>
+            </div>
+            <div class="form-group" style="margin-top:14px">
+              <label>URL du logo</label>
+              <input type="text" id="logo-url" value="Photos/Logo simplifié.webp">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── SERVICES ─── -->
+      <div class="panel" id="panel-services">
+        <p style="font-size:.82rem;color:var(--brown);margin-bottom:18px;opacity:.8">Modifiez les 6 cartes de services affichées sur la page d'accueil.</p>
+        <div id="services-list"></div>
+      </div>
+
+      <!-- ─── GALERIE ─── -->
+      <div class="panel" id="panel-galerie">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px">
+          <p id="gallery-count-label" style="font-size:.82rem;color:var(--brown)"></p>
+          <button class="add-photo-btn" onclick="openAddPhotoModal()">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Ajouter une photo
+          </button>
+        </div>
+        <div class="section-card open">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <h3>📷 Toutes les photos</h3>
+            <svg class="chevron" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+          </div>
+          <div class="section-card-body">
+            <!-- Vue table (desktop) -->
+            <div class="gallery-table-wrap">
+              <table class="gallery-table">
+                <thead><tr><th>Aperçu</th><th>Titre</th><th>Catégorie</th><th>URL thumb</th><th>Actions</th></tr></thead>
+                <tbody id="gallery-tbody"></tbody>
+              </table>
+            </div>
+            <!-- Vue cartes (mobile) -->
+            <div class="gallery-cards" id="gallery-cards"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── PROCESS ─── -->
+      <div class="panel" id="panel-process">
+        <p style="font-size:.82rem;color:var(--brown);margin-bottom:18px;opacity:.8">Modifiez les 4 étapes du processus de travail.</p>
+        <div id="process-list"></div>
+      </div>
+
+      <!-- ─── ABOUT ─── -->
+      <div class="panel" id="panel-about">
+        <div class="section-card open">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <h3>🖼️ Photo de l'équipe</h3>
+            <svg class="chevron" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+          </div>
+          <div class="section-card-body">
+            <div class="upload-zone" onclick="triggerUpload('about-file')">
+              <input type="file" id="about-file" accept="image/*" onchange="uploadToCloudinary(this,'about')">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <p>Uploader la photo de l'équipe<br><small>Recommandé : format paysage 4:3</small></p>
+            </div>
+            <div class="progress-bar-wrap" id="about-progress"><div class="progress-bar" id="about-progress-bar"></div></div>
+            <div class="form-group" style="margin-top:14px">
+              <label>URL de la photo</label>
+              <input type="text" id="about-img-url" value="Photos/Travail.webp">
+            </div>
+          </div>
+        </div>
+        <div class="section-card open">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <h3>✏️ Textes À propos</h3>
+            <svg class="chevron" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+          </div>
+          <div class="section-card-body">
+            <div class="form-group">
+              <label>Titre</label>
+              <input type="text" id="about-title" value="Une équipe passionnée, un travail soigné">
+            </div>
+            <div class="form-group">
+              <label>Paragraphe principal</label>
+              <textarea id="about-p1">B&A Construction, c'est l'alliance du savoir-faire de Bruno Salgado et Alex Freitas — deux artisans qui ont fait du béton décoratif leur art. Chaque chantier est abordé avec rigueur, créativité et le souci constant du détail.</textarea>
+            </div>
+            <div class="form-group">
+              <label>Paragraphe secondaire</label>
+              <textarea id="about-p2">Implantés dans la région de Valence (26), nous intervenons sur tous types de projets résidentiels et professionnels.</textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Années d'expérience (badge)</label>
+                <input type="text" id="about-years" value="10+">
+              </div>
+              <div class="form-group">
+                <label>Texte badge</label>
+                <input type="text" id="about-badge-text" value="ans d'expérience">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nom fondateur 1</label>
+                <input type="text" id="about-f1" value="Bruno Salgado">
+              </div>
+              <div class="form-group">
+                <label>Nom fondateur 2</label>
+                <input type="text" id="about-f2" value="Alex Freitas">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── STATS ─── -->
+      <div class="panel" id="panel-stats">
+        <p style="font-size:.82rem;color:var(--brown);margin-bottom:18px;opacity:.8">Bandeau de statistiques affiché entre les sections À propos et Contact.</p>
+        <div id="stats-list"></div>
+      </div>
+
+      <!-- ─── CONTACT ─── -->
+      <div class="panel" id="panel-contact">
+        <div class="section-card open">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <h3>📞 Informations de contact</h3>
+            <svg class="chevron" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+          </div>
+          <div class="section-card-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Téléphone Bruno</label>
+                <input type="tel" id="contact-tel1" value="06 69 01 92 39">
+              </div>
+              <div class="form-group">
+                <label>Téléphone Alex</label>
+                <input type="tel" id="contact-tel2" value="06 68 11 90 63">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Adresse e-mail</label>
+              <input type="email" id="contact-email" value="salgadobati@hotmail.fr">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Zone d'intervention</label>
+                <input type="text" id="contact-zone" value="Région de Valence">
+              </div>
+              <div class="form-group">
+                <label>Code postal</label>
+                <input type="text" id="contact-cp" value="26 000">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-card open">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <h3>✏️ Textes de la section contact</h3>
+            <svg class="chevron" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+          </div>
+          <div class="section-card-body">
+            <div class="form-group">
+              <label>Titre</label>
+              <input type="text" id="contact-title" value="Parlons de votre projet">
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea id="contact-desc">Besoin d'un devis ou d'un renseignement ? Contactez-nous, nous répondons rapidement.</textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── CLOUDINARY ─── -->
+      <div class="panel" id="panel-cloudinary">
+        <div class="dashboard-notice">
+          <svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          <p><strong>Configuration Cloudinary.</strong> Ces identifiants sont utilisés pour uploader vos photos directement depuis ce panneau. Créez un compte gratuit sur <strong>cloudinary.com</strong> et renseignez vos informations ci-dessous.</p>
+        </div>
+        <div class="section-card open">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <h3>☁️ Identifiants Cloudinary</h3>
+            <svg class="chevron" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+          </div>
+          <div class="section-card-body">
+            <div class="form-group">
+              <label>Cloud Name</label>
+              <input type="text" id="cld-cloud-name" placeholder="mon-cloud-name" oninput="updateDashCloud()">
+              <p class="form-hint">Trouvé dans Dashboard Cloudinary → Cloud Name</p>
+            </div>
+            <div class="form-group">
+              <label>Upload Preset (non signé)</label>
+              <input type="text" id="cld-preset" placeholder="ba_construction_upload">
+              <p class="form-hint">Settings → Upload → Upload presets → Ajouter un preset non signé</p>
+            </div>
+            <div class="form-group">
+              <label>Dossier de destination</label>
+              <input type="text" id="cld-folder" placeholder="ba_construction" value="ba_construction">
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">
+              <button class="btn-primary" onclick="testCloudinary()">🔌 Tester la connexion</button>
+              <button class="btn-secondary" onclick="saveCloudinaryConfig()">💾 Sauvegarder la config</button>
+            </div>
+            <div id="cloudinary-status" style="margin-top:14px;display:none"></div>
+          </div>
+        </div>
+        <div class="section-card open">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <h3>📖 Comment configurer Cloudinary</h3>
+            <svg class="chevron" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+          </div>
+          <div class="section-card-body">
+            <ol style="padding-left:18px;line-height:2.4;font-size:.84rem;color:var(--brown)">
+              <li>Créez un compte gratuit sur <strong><a href="https://cloudinary.com" target="_blank" style="color:var(--accent)">cloudinary.com</a></strong></li>
+              <li>Dans le Dashboard, copiez votre <strong>Cloud Name</strong></li>
+              <li>Allez dans <strong>Settings → Upload</strong></li>
+              <li>Sous "Upload presets", cliquez <strong>Add upload preset</strong></li>
+              <li>Choisissez <strong>Signing Mode : Unsigned</strong></li>
+              <li>Notez le nom du preset et collez-le ci-dessus</li>
+              <li>Dans "Folder", entrez <strong>ba_construction</strong> (ou votre dossier)</li>
+              <li>Sauvegardez et testez la connexion ✓</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── SETTINGS ─── -->
+      <div class="panel" id="panel-settings">
+        <div class="section-card open">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <h3>🔐 Sécurité & Accès</h3>
+            <svg class="chevron" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+          </div>
+          <div class="section-card-body">
+            <div class="form-group">
+              <label>Nouvel identifiant</label>
+              <input type="text" id="new-user" placeholder="admin">
+            </div>
+            <div class="form-group">
+              <label>Nouveau mot de passe</label>
+              <input type="password" id="new-pass" placeholder="Min. 6 caractères">
+            </div>
+            <button class="btn-primary" onclick="changeCredentials()">Changer les identifiants</button>
+            <p class="form-hint" style="margin-top:10px">⚠️ Ces identifiants sont stockés dans localStorage. Pour une sécurité renforcée, utilisez une solution backend.</p>
+          </div>
+        </div>
+        <div class="section-card open">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <h3>📤 Export / Import</h3>
+            <svg class="chevron" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+          </div>
+          <div class="section-card-body">
+            <p style="font-size:.84rem;color:var(--brown);margin-bottom:16px;line-height:1.7">Exportez toute la configuration du site en JSON pour l'intégrer dans votre site web, ou importez une configuration existante.</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <button class="btn-primary" onclick="exportJSON()">📥 Exporter la config JSON</button>
+              <button class="btn-secondary" onclick="triggerImport()">📤 Importer JSON</button>
+              <input type="file" id="import-file" accept=".json" style="display:none" onchange="importJSON(this)">
+            </div>
+          </div>
+        </div>
+        <div class="section-card open">
+          <div class="section-card-header" onclick="toggleCard(this)">
+            <h3>🗑️ Réinitialisation</h3>
+            <svg class="chevron" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+          </div>
+          <div class="section-card-body">
+            <p style="font-size:.84rem;color:var(--brown);margin-bottom:16px">Remet toutes les données à leurs valeurs par défaut. Cette action est irréversible.</p>
+            <button class="btn-danger" onclick="if(confirm('Réinitialiser toutes les données ?')){resetAll()}">🔄 Réinitialiser</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </main>
+</div><!-- /app -->
+
+<!-- ─── MODAL AJOUT / ÉDITION PHOTO ─── -->
+<div class="modal-backdrop" id="photo-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-title">Ajouter une photo</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Titre de la photo</label>
+        <input type="text" id="modal-photo-title" placeholder="Terrasse béton imprimé – Effet bois">
+      </div>
+      <div class="form-group">
+        <label>Catégorie</label>
+        <select id="modal-photo-cat">
+          <option value="beton-imprime">Béton imprimé</option>
+          <option value="beton-cire">Béton ciré</option>
+          <option value="beton-desactive">Béton désactivé</option>
+          <option value="piscine">Piscine</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Uploader depuis Cloudinary</label>
+        <div class="upload-zone" onclick="triggerUpload('modal-file')">
+          <input type="file" id="modal-file" accept="image/*" onchange="uploadModalPhoto(this)">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <p>Cliquez ou glissez une image ici<br><small>Sera uploadée sur Cloudinary automatiquement</small></p>
+        </div>
+        <div class="progress-bar-wrap" id="modal-progress"><div class="progress-bar" id="modal-progress-bar"></div></div>
+        <div class="img-preview" id="modal-preview"></div>
+      </div>
+      <div class="form-group">
+        <label>URL miniature (thumb)</label>
+        <input type="text" id="modal-thumb-url" placeholder="https://res.cloudinary.com/... ou Photos/Gallerie/thumb/1.webp">
+      </div>
+      <div class="form-group">
+        <label>URL pleine résolution (full)</label>
+        <input type="text" id="modal-full-url" placeholder="https://res.cloudinary.com/... ou Photos/Gallerie/full/1.webp">
+        <p class="form-hint">Si uploadé via Cloudinary, ces URLs sont remplies automatiquement.</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal()">Annuler</button>
+      <button class="btn-primary" onclick="savePhoto()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── TOAST CONTAINER ─── -->
+<div id="toast-container"></div>
+
+<script>
+/* ════════════════════════════════════
+   STATE
+════════════════════════════════════ */
+const DEFAULT_CREDS = { user:'admin', pass:'admin123' };
+
+const DEFAULT_DATA = {
+  hero:{
+    bgUrl:'Photos/Hero.webp', logoUrl:'Photos/Logo simplifié.webp',
+    eyebrow:'Maçonnerie générale · Valence', title:'B&A Construction',
+    sub:'Terrasses, allées et plages de piscine qui allient robustesse et élégance. Béton imprimé, ciré, désactivé — entièrement sur mesure.',
+    btn1:'Voir nos réalisations', btn2:'Demander un devis'
+  },
+  services:[
+    {icon:'Photos/Béton imprimé.webp', title:'Béton Imprimé', desc:'Terrasses, allées et plages avec textures bois, pierre ou ardoise. Un rendu naturel et une durabilité exemplaire.'},
+    {icon:'Photos/Béton ciré.webp', title:'Béton Ciré', desc:'Finition lisse et brillante pour vos sols intérieurs et extérieurs. Aspect luxueux, résistance maximale.'},
+    {icon:'Photos/Béton désactivé.webp', title:'Béton Désactivé', desc:'Surface granuleuse antidérapante, idéale pour allées de garage, entrées et abords de piscine.'},
+    {icon:'Photos/Grue.webp', title:'Gros Œuvre', desc:'Dalles, fondations et structures en béton armé. Maîtrise totale des coulages et ferraillages complexes.'},
+    {icon:'Photos/Logo simplifié.webp', title:'Motifs Sur Mesure', desc:'Médaillons, rosaces, rose des vents… Nous intégrons des éléments décoratifs uniques dans vos sols.'},
+    {icon:'Photos/Piscine 2.webp', title:'Plages de Piscine', desc:'Réalisation complète des plages et margelles, antidérapant résistant aux UV et au chlore.'}
+  ],
+  gallery:[
+    {id:1, title:'Terrasse – effet bois', cat:'beton-imprime', thumb:'Photos/Gallerie/thumb/1.webp', full:'Photos/Gallerie/full/1.webp'},
+    {id:2, title:'Rosaces', cat:'beton-imprime', thumb:'Photos/Gallerie/thumb/2.webp', full:'Photos/Gallerie/full/2.webp'},
+    {id:3, title:'Terrasse – Effet parquet', cat:'beton-cire', thumb:'Photos/Gallerie/thumb/3.webp', full:'Photos/Gallerie/full/3.webp'},
+    {id:4, title:'Béton désactivé coloré', cat:'beton-desactive', thumb:'Photos/Gallerie/thumb/4.webp', full:'Photos/Gallerie/full/4.webp'},
+    {id:5, title:'Margelle piscine', cat:'piscine', thumb:'Photos/Gallerie/thumb/5.webp', full:'Photos/Gallerie/full/5.webp'},
+    {id:6, title:'Béton imprimé – Effet parquet', cat:'beton-imprime', thumb:'Photos/Gallerie/thumb/6.webp', full:'Photos/Gallerie/full/6.webp'}
+  ],
+  process:[
+    {num:'01', title:'Étude & Devis', desc:'Visite sur site, écoute de vos besoins, conseils personnalisés. Devis détaillé et gratuit sous 48h.'},
+    {num:'02', title:'Préparation', desc:'Terrassement, coffrage, ferraillage. Chaque base est soigneusement préparée pour garantir la longévité.'},
+    {num:'03', title:'Réalisation', desc:'Coulage, finition décorative, séchage contrôlé. Un travail minutieux pour un résultat parfait.'},
+    {num:'04', title:'Livraison', desc:'Visite de réception, conseils d\'entretien et garantie sur nos travaux. Votre satisfaction est notre priorité.'}
+  ],
+  about:{
+    imgUrl:'Photos/Travail.webp', title:'Une équipe passionnée, un travail soigné',
+    p1:'B&A Construction, c\'est l\'alliance du savoir-faire de Bruno Salgado et Alex Freitas — deux artisans qui ont fait du béton décoratif leur art. Chaque chantier est abordé avec rigueur, créativité et le souci constant du détail.',
+    p2:'Implantés dans la région de Valence (26), nous intervenons sur tous types de projets résidentiels et professionnels.',
+    years:'10+', badgeText:'ans d\'expérience', f1:'Bruno Salgado', f2:'Alex Freitas'
+  },
+  stats:[
+    {num:'200+', label:'Projets réalisés'},
+    {num:'10+', label:'Années d\'expérience'},
+    {num:'100%', label:'Clients satisfaits'},
+    {num:'5★', label:'Note moyenne'}
+  ],
+  contact:{
+    tel1:'06 69 01 92 39', tel2:'06 68 11 90 63',
+    email:'salgadobati@hotmail.fr', zone:'Région de Valence', cp:'26 000',
+    title:'Parlons de votre projet',
+    desc:'Besoin d\'un devis ou d\'un renseignement ? Contactez-nous, nous répondons rapidement.'
+  }
+};
+
+let appData = JSON.parse(JSON.stringify(DEFAULT_DATA));
+let cloudConfig = { cloudName:'', preset:'', folder:'ba_construction' };
+let editingPhotoId = null;
+let nextPhotoId = 7;
+
+/* ════════════════════════════════════
+   INIT
+════════════════════════════════════ */
+function init() {
+  // Load saved data
+  const saved = localStorage.getItem('ba_admin_data');
+  if (saved) try { appData = JSON.parse(saved); } catch(e){}
+  const savedCloud = localStorage.getItem('ba_cloudinary');
+  if (savedCloud) try { cloudConfig = JSON.parse(savedCloud); } catch(e){}
+
+  renderServices();
+  renderGallery();
+  renderProcess();
+  renderStats();
+  fillForms();
+
+  if (cloudConfig.cloudName) {
+    document.getElementById('cld-cloud-name').value = cloudConfig.cloudName;
+    document.getElementById('cld-preset').value = cloudConfig.preset;
+    document.getElementById('cld-folder').value = cloudConfig.folder;
+    updateDashCloud();
+  }
+  nextPhotoId = appData.gallery.reduce((m,p)=>Math.max(m,p.id),0)+1;
+}
+
+/* ════════════════════════════════════
+   LOGIN
+════════════════════════════════════ */
+function doLogin() {
+  const savedCreds = localStorage.getItem('ba_admin_creds');
+  const creds = savedCreds ? JSON.parse(savedCreds) : DEFAULT_CREDS;
+  const u = document.getElementById('login-user').value.trim();
+  const p = document.getElementById('login-pass').value;
+  if (u === creds.user && p === creds.pass) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'flex';
+    init();
+    showToast('Bienvenue dans l\'administration !','info');
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    setTimeout(()=>document.getElementById('login-error').style.display='none', 3000);
+  }
+}
+
+document.getElementById('login-pass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+document.getElementById('login-user').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+function doLogout() {
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+}
+
+function changeCredentials() {
+  const u = document.getElementById('new-user').value.trim();
+  const p = document.getElementById('new-pass').value;
+  if (!u || p.length < 6) { showToast('Renseignez un identifiant et un mot de passe d\'au moins 6 caractères.','error'); return; }
+  localStorage.setItem('ba_admin_creds', JSON.stringify({user:u, pass:p}));
+  showToast('Identifiants mis à jour !','success');
+  document.getElementById('new-user').value = '';
+  document.getElementById('new-pass').value = '';
+}
+
+/* ════════════════════════════════════
+   PANEL NAVIGATION
+════════════════════════════════════ */
+const panelTitles = {
+  dashboard:'Tableau de bord', hero:'Héro & Accueil', services:'Services',
+  galerie:'Galerie photos', process:'Processus', about:'À propos',
+  stats:'Statistiques', contact:'Contact', cloudinary:'Cloudinary', settings:'Paramètres'
+};
+
+function showPanel(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.textContent.trim().toLowerCase().includes(panelTitles[name].toLowerCase().slice(0,5))) n.classList.add('active');
+  });
+  document.getElementById('topbar-title').textContent = panelTitles[name] || name;
+  closeMobileMenu();
+}
+
+/* ════════════════════════════════════
+   MOBILE MENU
+════════════════════════════════════ */
+function toggleMobileMenu() {
+  document.getElementById('sidebar').classList.toggle('mobile-open');
+  document.getElementById('sidebar-overlay').classList.toggle('mobile-open');
+}
+function closeMobileMenu() {
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('sidebar-overlay').classList.remove('mobile-open');
+}
+
+/* ════════════════════════════════════
+   FORM FILL
+════════════════════════════════════ */
+function fillForms() {
+  const h = appData.hero;
+  setVal('hero-img-url', h.bgUrl); setVal('logo-url', h.logoUrl);
+  setVal('hero-eyebrow', h.eyebrow); setVal('hero-title', h.title);
+  setVal('hero-sub', h.sub); setVal('hero-btn1', h.btn1); setVal('hero-btn2', h.btn2);
+
+  const a = appData.about;
+  setVal('about-img-url', a.imgUrl); setVal('about-title', a.title);
+  setVal('about-p1', a.p1); setVal('about-p2', a.p2);
+  setVal('about-years', a.years); setVal('about-badge-text', a.badgeText);
+  setVal('about-f1', a.f1); setVal('about-f2', a.f2);
+
+  const c = appData.contact;
+  setVal('contact-tel1', c.tel1); setVal('contact-tel2', c.tel2);
+  setVal('contact-email', c.email); setVal('contact-zone', c.zone);
+  setVal('contact-cp', c.cp); setVal('contact-title', c.title); setVal('contact-desc', c.desc);
+}
+
+function setVal(id, v) { const el = document.getElementById(id); if(el) el.value = v || ''; }
+function getVal(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+/* ════════════════════════════════════
+   RENDER SERVICES
+════════════════════════════════════ */
+function renderServices() {
+  const list = document.getElementById('services-list');
+  list.innerHTML = appData.services.map((s,i) => `
+    <div class="section-card open">
+      <div class="section-card-header" onclick="toggleCard(this)">
+        <h3>🏗️ Service ${i+1} — ${s.title}</h3>
+        <svg class="chevron" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+      </div>
+      <div class="section-card-body">
+        <div class="form-group">
+          <label>Icône (URL image)</label>
+          <input type="text" id="svc-icon-${i}" value="${s.icon||''}" placeholder="Photos/Béton imprimé.webp ou URL Cloudinary">
+          <p class="form-hint">Image 50×50px affichée en icône de la carte service.</p>
+        </div>
+        <div class="form-group">
+          <label>Titre</label>
+          <input type="text" id="svc-title-${i}" value="${s.title||''}">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="svc-desc-${i}">${s.desc||''}</textarea>
+        </div>
+        <div class="upload-zone" style="padding:16px 14px" onclick="triggerUpload('svc-file-${i}')">
+          <input type="file" id="svc-file-${i}" accept="image/*" onchange="uploadServiceIcon(this,${i})">
+          <svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:var(--accent);fill:none;stroke-width:1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <p style="font-size:.75rem">Changer l'icône via Cloudinary</p>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+/* ════════════════════════════════════
+   RENDER GALLERY
+════════════════════════════════════ */
+const catLabels = {
+  'beton-imprime':'Béton imprimé','beton-cire':'Béton ciré',
+  'beton-desactive':'Béton désactivé','piscine':'Piscine'
+};
+function renderGallery() {
+  document.getElementById('gallery-count-label').textContent = `${appData.gallery.length} photo(s) en galerie`;
+  document.getElementById('dash-photos').textContent = appData.gallery.length;
+  const tbody  = document.getElementById('gallery-tbody');
+  const cards  = document.getElementById('gallery-cards');
+  const empty  = `<div class="empty-state"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/></svg><p>Aucune photo. Ajoutez-en une !</p></div>`;
+
+  if (!appData.gallery.length) {
+    tbody.innerHTML = `<tr><td colspan="5">${empty}</td></tr>`;
+    cards.innerHTML = empty;
+    return;
+  }
+
+  // ── Table desktop ──
+  tbody.innerHTML = appData.gallery.map(p => `
+    <tr>
+      <td><img src="${p.thumb}" alt="${p.title}" onerror="this.style.background='var(--sand)';this.removeAttribute('src')"></td>
+      <td style="font-weight:500">${p.title}</td>
+      <td><span class="badge badge-${p.cat}">${catLabels[p.cat]||p.cat}</span></td>
+      <td style="font-size:.74rem;color:var(--brown);max-width:180px;word-break:break-all">${p.thumb}</td>
+      <td>
+        <div class="table-actions">
+          <button class="tbl-btn tbl-btn-edit" onclick="editPhoto(${p.id})">Éditer</button>
+          <button class="tbl-btn tbl-btn-del" onclick="deletePhoto(${p.id})">Suppr.</button>
+        </div>
+      </td>
+    </tr>`).join('');
+
+  // ── Cartes mobile ──
+  cards.innerHTML = appData.gallery.map(p => `
+    <div class="gallery-card">
+      ${p.thumb
+        ? `<img class="gallery-card-thumb" src="${p.thumb}" alt="${p.title}" onerror="this.style.display='none'">`
+        : `<div class="gallery-card-thumb-placeholder"><svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:rgba(232,220,200,.3);fill:none;stroke-width:1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/></svg></div>`}
+      <div class="gallery-card-body">
+        <div class="gallery-card-title">${p.title}</div>
+        <span class="badge badge-${p.cat}">${catLabels[p.cat]||p.cat}</span>
+        <div class="gallery-card-actions">
+          <button class="tbl-btn tbl-btn-edit" onclick="editPhoto(${p.id})">✏️ Éditer</button>
+          <button class="tbl-btn tbl-btn-del" onclick="deletePhoto(${p.id})">🗑 Suppr.</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+/* ════════════════════════════════════
+   RENDER PROCESS
+════════════════════════════════════ */
+function renderProcess() {
+  const list = document.getElementById('process-list');
+  list.innerHTML = appData.process.map((s,i) => `
+    <div class="section-card open">
+      <div class="section-card-header" onclick="toggleCard(this)">
+        <h3>📋 Étape ${s.num} — ${s.title}</h3>
+        <svg class="chevron" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+      </div>
+      <div class="section-card-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Numéro</label>
+            <input type="text" id="proc-num-${i}" value="${s.num}">
+          </div>
+          <div class="form-group">
+            <label>Titre</label>
+            <input type="text" id="proc-title-${i}" value="${s.title}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="proc-desc-${i}">${s.desc}</textarea>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+/* ════════════════════════════════════
+   RENDER STATS
+════════════════════════════════════ */
+function renderStats() {
+  const list = document.getElementById('stats-list');
+  list.innerHTML = appData.stats.map((s,i) => `
+    <div class="section-card open">
+      <div class="section-card-header" onclick="toggleCard(this)">
+        <h3>📊 Statistique ${i+1} — ${s.label}</h3>
+        <svg class="chevron" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+      </div>
+      <div class="section-card-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Valeur (nombre)</label>
+            <input type="text" id="stat-num-${i}" value="${s.num}" placeholder="200+">
+          </div>
+          <div class="form-group">
+            <label>Libellé</label>
+            <input type="text" id="stat-label-${i}" value="${s.label}" placeholder="Projets réalisés">
+          </div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+/* ════════════════════════════════════
+   COLLECTS FORM DATA → appData
+════════════════════════════════════ */
+function collectData() {
+  appData.hero = {
+    bgUrl: getVal('hero-img-url'), logoUrl: getVal('logo-url'),
+    eyebrow: getVal('hero-eyebrow'), title: getVal('hero-title'),
+    sub: getVal('hero-sub'), btn1: getVal('hero-btn1'), btn2: getVal('hero-btn2')
+  };
+  appData.services = appData.services.map((s,i) => ({
+    ...s,
+    icon: getVal(`svc-icon-${i}`)||s.icon,
+    title: getVal(`svc-title-${i}`)||s.title,
+    desc: getVal(`svc-desc-${i}`)||s.desc
+  }));
+  appData.process = appData.process.map((s,i) => ({
+    num: getVal(`proc-num-${i}`)||s.num,
+    title: getVal(`proc-title-${i}`)||s.title,
+    desc: getVal(`proc-desc-${i}`)||s.desc
+  }));
+  appData.stats = appData.stats.map((s,i) => ({
+    num: getVal(`stat-num-${i}`)||s.num,
+    label: getVal(`stat-label-${i}`)||s.label
+  }));
+  appData.about = {
+    imgUrl: getVal('about-img-url'), title: getVal('about-title'),
+    p1: getVal('about-p1'), p2: getVal('about-p2'),
+    years: getVal('about-years'), badgeText: getVal('about-badge-text'),
+    f1: getVal('about-f1'), f2: getVal('about-f2')
+  };
+  appData.contact = {
+    tel1: getVal('contact-tel1'), tel2: getVal('contact-tel2'),
+    email: getVal('contact-email'), zone: getVal('contact-zone'),
+    cp: getVal('contact-cp'), title: getVal('contact-title'), desc: getVal('contact-desc')
+  };
+}
+
+/* ════════════════════════════════════
+   SAVE
+════════════════════════════════════ */
+function saveAll() {
+  collectData();
+  localStorage.setItem('ba_admin_data', JSON.stringify(appData));
+  renderGallery();
+  showToast('Configuration sauvegardée !','success');
+}
+
+/* ════════════════════════════════════
+   CLOUDINARY UPLOAD
+════════════════════════════════════ */
+async function uploadToCloudinary(input, context) {
+  const file = input.files[0];
+  if (!file) return;
+  if (!cloudConfig.cloudName || !cloudConfig.preset) {
+    showToast('Configurez d\'abord Cloudinary dans la section Configuration.','error');
+    return;
+  }
+  const progressWrap = document.getElementById(`${context}-progress`);
+  const progressBar  = document.getElementById(`${context}-progress-bar`);
+  const preview      = document.getElementById(`${context}-preview`);
+  if (progressWrap) { progressWrap.style.display='block'; progressBar.style.width='0%'; }
+
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', cloudConfig.preset);
+  if (cloudConfig.folder) formData.append('folder', cloudConfig.folder);
+
+  try {
+    showToast('Upload en cours…','info');
+    // Simulate progress
+    let prog = 0;
+    const intv = setInterval(() => {
+      prog = Math.min(prog+12, 90);
+      if (progressBar) progressBar.style.width = prog+'%';
+    }, 150);
+
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudConfig.cloudName}/image/upload`, {
+      method:'POST', body:formData
+    });
+    clearInterval(intv);
+    if (progressBar) progressBar.style.width = '100%';
+
+    const data = await res.json();
+    if (data.error) throw new Error(data.error.message);
+
+    const url = data.secure_url;
+    const thumbUrl = url.replace('/upload/', '/upload/c_thumb,w_600,h_450,q_auto,f_webp/');
+    const fullUrl  = url.replace('/upload/', '/upload/q_auto,f_webp/');
+
+    // Set URL in the right field
+    if (context === 'hero')  { document.getElementById('hero-img-url').value = fullUrl; showPreview('hero-preview', fullUrl); }
+    if (context === 'logo')  { document.getElementById('logo-url').value = fullUrl; }
+    if (context === 'about') { document.getElementById('about-img-url').value = fullUrl; showPreview('about-preview', fullUrl); }
+
+    setTimeout(() => { if (progressWrap) progressWrap.style.display='none'; }, 600);
+    showToast('Image uploadée sur Cloudinary ✓','success');
+    return { url, thumbUrl, fullUrl };
+  } catch(err) {
+    if (progressWrap) progressWrap.style.display='none';
+    showToast('Erreur upload : '+err.message,'error');
+    console.error(err);
+  }
+}
+
+async function uploadServiceIcon(input, index) {
+  const file = input.files[0];
+  if (!file) return;
+  if (!cloudConfig.cloudName || !cloudConfig.preset) {
+    showToast('Configurez d\'abord Cloudinary.','error'); return;
+  }
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', cloudConfig.preset);
+  if (cloudConfig.folder) formData.append('folder', cloudConfig.folder+'/services');
+  showToast('Upload icône…','info');
+  try {
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudConfig.cloudName}/image/upload`, {method:'POST',body:formData});
+    const data = await res.json();
+    if (data.error) throw new Error(data.error.message);
+    const url = data.secure_url.replace('/upload/','/upload/c_thumb,w_100,h_100,q_auto,f_webp/');
+    document.getElementById(`svc-icon-${index}`).value = url;
+    showToast('Icône uploadée ✓','success');
+  } catch(e) { showToast('Erreur : '+e.message,'error'); }
+}
+
+async function uploadModalPhoto(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (!cloudConfig.cloudName || !cloudConfig.preset) {
+    // Fallback: read locally
+    const reader = new FileReader();
+    reader.onload = e => {
+      showPreview('modal-preview', e.target.result);
+      document.getElementById('modal-thumb-url').value = e.target.result;
+      document.getElementById('modal-full-url').value = e.target.result;
+    };
+    reader.readAsDataURL(file);
+    showToast('Cloudinary non configuré — image en prévisualisation locale uniquement.','error');
+    return;
+  }
+  const progressWrap = document.getElementById('modal-progress');
+  const progressBar  = document.getElementById('modal-progress-bar');
+  progressWrap.style.display='block'; progressBar.style.width='0%';
+
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', cloudConfig.preset);
+  if (cloudConfig.folder) formData.append('folder', cloudConfig.folder+'/gallery');
+
+  showToast('Upload en cours…','info');
+  let prog = 0;
+  const intv = setInterval(()=>{ prog=Math.min(prog+10,90); progressBar.style.width=prog+'%'; },120);
+  try {
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudConfig.cloudName}/image/upload`,{method:'POST',body:formData});
+    clearInterval(intv); progressBar.style.width='100%';
+    const data = await res.json();
+    if (data.error) throw new Error(data.error.message);
+    const url = data.secure_url;
+    const thumbUrl = url.replace('/upload/','/upload/c_fill,w_600,h_450,q_auto,f_webp/');
+    const fullUrl  = url.replace('/upload/','/upload/q_auto,f_webp/');
+    document.getElementById('modal-thumb-url').value = thumbUrl;
+    document.getElementById('modal-full-url').value  = fullUrl;
+    showPreview('modal-preview', thumbUrl);
+    setTimeout(()=>{ progressWrap.style.display='none'; },600);
+    showToast('Photo uploadée ✓','success');
+  } catch(e) { clearInterval(intv); progressWrap.style.display='none'; showToast('Erreur : '+e.message,'error'); }
+}
+
+function showPreview(id, url) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.display = 'block';
+  el.innerHTML = `<img src="${url}" alt="preview">`;
+}
+
+/* ════════════════════════════════════
+   PHOTO MODAL
+════════════════════════════════════ */
+function openAddPhotoModal() {
+  editingPhotoId = null;
+  document.getElementById('modal-title').textContent = 'Ajouter une photo';
+  document.getElementById('modal-photo-title').value = '';
+  document.getElementById('modal-photo-cat').value = 'beton-imprime';
+  document.getElementById('modal-thumb-url').value = '';
+  document.getElementById('modal-full-url').value  = '';
+  document.getElementById('modal-preview').style.display='none';
+  document.getElementById('modal-preview').innerHTML='';
+  document.getElementById('photo-modal').classList.add('open');
+}
+
+function editPhoto(id) {
+  const photo = appData.gallery.find(p=>p.id===id);
+  if (!photo) return;
+  editingPhotoId = id;
+  document.getElementById('modal-title').textContent = 'Éditer la photo';
+  document.getElementById('modal-photo-title').value = photo.title;
+  document.getElementById('modal-photo-cat').value = photo.cat;
+  document.getElementById('modal-thumb-url').value = photo.thumb;
+  document.getElementById('modal-full-url').value  = photo.full;
+  document.getElementById('modal-preview').style.display='block';
+  document.getElementById('modal-preview').innerHTML=`<img src="${photo.thumb}" alt="">`;
+  document.getElementById('photo-modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('photo-modal').classList.remove('open');
+}
+
+function savePhoto() {
+  const title = document.getElementById('modal-photo-title').value.trim();
+  const cat   = document.getElementById('modal-photo-cat').value;
+  const thumb = document.getElementById('modal-thumb-url').value.trim();
+  const full  = document.getElementById('modal-full-url').value.trim();
+  if (!title) { showToast('Renseignez un titre.','error'); return; }
+
+  if (editingPhotoId) {
+    const idx = appData.gallery.findIndex(p=>p.id===editingPhotoId);
+    if (idx>=0) appData.gallery[idx] = {...appData.gallery[idx], title, cat, thumb, full};
+    showToast('Photo mise à jour ✓','success');
+  } else {
+    appData.gallery.push({id:nextPhotoId++, title, cat, thumb: thumb||'', full: full||thumb||''});
+    showToast('Photo ajoutée ✓','success');
+  }
+  collectData();
+  localStorage.setItem('ba_admin_data', JSON.stringify(appData));
+  renderGallery();
+  closeModal();
+}
+
+function deletePhoto(id) {
+  if (!confirm('Supprimer cette photo ?')) return;
+  appData.gallery = appData.gallery.filter(p=>p.id!==id);
+  collectData();
+  localStorage.setItem('ba_admin_data', JSON.stringify(appData));
+  renderGallery();
+  showToast('Photo supprimée.','info');
+}
+
+/* ════════════════════════════════════
+   CLOUDINARY CONFIG
+════════════════════════════════════ */
+function saveCloudinaryConfig() {
+  cloudConfig.cloudName = document.getElementById('cld-cloud-name').value.trim();
+  cloudConfig.preset    = document.getElementById('cld-preset').value.trim();
+  cloudConfig.folder    = document.getElementById('cld-folder').value.trim();
+  localStorage.setItem('ba_cloudinary', JSON.stringify(cloudConfig));
+  updateDashCloud();
+  showToast('Configuration Cloudinary sauvegardée !','success');
+}
+
+function updateDashCloud() {
+  const v = document.getElementById('cld-cloud-name').value.trim();
+  document.getElementById('dash-cloud').textContent = v || '—';
+}
+
+async function testCloudinary() {
+  const cn = document.getElementById('cld-cloud-name').value.trim();
+  const pr = document.getElementById('cld-preset').value.trim();
+  const statusEl = document.getElementById('cloudinary-status');
+  if (!cn || !pr) { showToast('Renseignez le Cloud Name et le preset.','error'); return; }
+  statusEl.style.display='block';
+  statusEl.innerHTML='<span style="color:var(--brown);font-size:.82rem">🔄 Test en cours…</span>';
+  // Test with a tiny 1×1 pixel PNG
+  const tiny1x1 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==';
+  try {
+    const blob = await (await fetch(tiny1x1)).blob();
+    const fd = new FormData();
+    fd.append('file', blob, 'test.png');
+    fd.append('upload_preset', pr);
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${cn}/image/upload`,{method:'POST',body:fd});
+    const d = await res.json();
+    if (d.error) throw new Error(d.error.message);
+    statusEl.innerHTML='<span style="color:var(--success);font-size:.82rem">✅ Connexion réussie ! Cloud : '+d.asset_id?.slice(0,8)+'…</span>';
+    showToast('Cloudinary connecté avec succès !','success');
+  } catch(e) {
+    statusEl.innerHTML=`<span style="color:var(--danger);font-size:.82rem">❌ Erreur : ${e.message}</span>`;
+    showToast('Connexion échouée.','error');
+  }
+}
+
+/* ════════════════════════════════════
+   EXPORT / IMPORT
+════════════════════════════════════ */
+function exportJSON() {
+  collectData();
+  const json = JSON.stringify({site: appData, cloudinary: cloudConfig}, null, 2);
+  const blob = new Blob([json], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'ba_construction_config.json';
+  a.click();
+  showToast('Configuration exportée !','success');
+}
+
+function triggerImport() { document.getElementById('import-file').click(); }
+
+function importJSON(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      if (parsed.site) appData = parsed.site;
+      if (parsed.cloudinary) cloudConfig = parsed.cloudinary;
+      localStorage.setItem('ba_admin_data', JSON.stringify(appData));
+      localStorage.setItem('ba_cloudinary', JSON.stringify(cloudConfig));
+      renderServices(); renderGallery(); renderProcess(); renderStats(); fillForms();
+      showToast('Configuration importée avec succès !','success');
+    } catch(err) { showToast('Fichier JSON invalide.','error'); }
+  };
+  reader.readAsText(file);
+}
+
+function resetAll() {
+  appData = JSON.parse(JSON.stringify(DEFAULT_DATA));
+  localStorage.removeItem('ba_admin_data');
+  renderServices(); renderGallery(); renderProcess(); renderStats(); fillForms();
+  showToast('Données réinitialisées.','info');
+}
+
+/* ════════════════════════════════════
+   UTILS
+════════════════════════════════════ */
+function toggleCard(header) {
+  const card = header.closest('.section-card');
+  card.classList.toggle('open');
+}
+
+function triggerUpload(id) { document.getElementById(id)?.click(); }
+
+function showToast(msg, type='info') {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.textContent = msg;
+  container.appendChild(toast);
+  setTimeout(() => { toast.style.opacity='0'; toast.style.transform='translateX(40px)'; toast.style.transition='all .3s'; setTimeout(()=>toast.remove(), 300); }, 3000);
+}
+
+// Close modal on backdrop click
+document.getElementById('photo-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// Drag & drop on upload zones
+document.querySelectorAll('.upload-zone').forEach(zone => {
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault(); zone.classList.remove('dragover');
+    const fileInput = zone.querySelector('input[type=file]');
+    if (fileInput && e.dataTransfer.files.length) {
+      const dt = new DataTransfer();
+      dt.items.add(e.dataTransfer.files[0]);
+      fileInput.files = dt.files;
+      fileInput.dispatchEvent(new Event('change'));
+    }
+  });
+});
+</script>
+</body>
+</html>

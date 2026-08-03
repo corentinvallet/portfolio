@@ -1,0 +1,7 @@
+/* =====================================================================
+   common.css — Styles partagés entre tous mes sites.
+   Hébergé sur corentinvallet.fr, à charger AVANT le theme.css du site.
+   ===================================================================== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--scrollbar-track, #eee); }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb, #999); border-radius: 3px; }

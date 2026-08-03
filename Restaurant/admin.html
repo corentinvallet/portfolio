@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le Zinc — Back-office réservations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:wght@400;700&family=Petit+Formal+Script&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --noir:     #1a1208;
+      --brun:     #2e1c0a;
+      --or:       #c8922a;
+      --or-clair: #e8b96a;
+      --creme:    #f5ede0;
+      --creme-f:  #e8d8c0;
+      --rouge:    #8b1a1a;
+      --vert:     #1a5c2e;
+      --vert-c:   #27ae60;
+      --ivoire:   #faf6ef;
+      --surface:  #ffffff;
+      --border:   rgba(200,146,42,0.2);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 15px; }
+
+    body {
+      font-family: 'Libre Baskerville', serif;
+      background: var(--ivoire);
+      color: var(--noir);
+      min-height: 100vh;
+    }
+
+    /* ── TOP BAR ── */
+    header {
+      background: var(--noir);
+      border-bottom: 1px solid var(--or);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-logo-name {
+      font-family: 'Petit Formal Script', cursive;
+      color: var(--or-clair);
+      font-size: 1.6rem;
+      line-height: 1;
+    }
+
+    .header-badge {
+      font-size: .65rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(232,185,106,0.55);
+      margin-top: .2rem;
+    }
+
+    .header-date {
+      font-size: .78rem;
+      color: rgba(245,237,224,0.5);
+      letter-spacing: .06em;
+    }
+
+    /* ── STATS BANNER ── */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat-item {
+      background: var(--surface);
+      padding: 1.2rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+    }
+
+    .stat-label {
+      font-size: .65rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--or);
+    }
+
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--brun);
+      line-height: 1;
+    }
+
+    .stat-sub {
+      font-size: .75rem;
+      color: #888;
+    }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* ── FILTERS ── */
+    .filters {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.8rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .filter-label {
+      font-size: .7rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #888;
+    }
+
+    .filter-select, .filter-input {
+      padding: .5rem .9rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-family: 'Libre Baskerville', serif;
+      font-size: .82rem;
+      color: var(--brun);
+      outline: none;
+      cursor: pointer;
+      transition: border-color .2s;
+    }
+
+    .filter-select:focus, .filter-input:focus { border-color: var(--or); }
+
+    .filters-right {
+      margin-left: auto;
+      display: flex;
+      gap: .7rem;
+    }
+
+    .btn-sm {
+      padding: .5rem 1.1rem;
+      font-family: 'Libre Baskerville', serif;
+      font-size: .75rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      transition: background .2s, color .2s;
+    }
+
+    .btn-gold { background: var(--or); color: var(--noir); font-weight: 700; }
+    .btn-gold:hover { background: var(--or-clair); }
+    .btn-outline-sm { background: transparent; border: 1px solid var(--or); color: var(--or); }
+    .btn-outline-sm:hover { background: var(--or); color: var(--noir); }
+
+    /* ── TABLE ── */
+    .table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead tr {
+      background: var(--noir);
+    }
+
+    thead th {
+      padding: .85rem 1.2rem;
+      text-align: left;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--or-clair);
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background .15s;
+    }
+
+    tbody tr:hover { background: rgba(200,146,42,0.04); }
+    tbody tr:last-child { border-bottom: none; }
+
+    td {
+      padding: .9rem 1.2rem;
+      font-size: .85rem;
+      color: var(--brun);
+      vertical-align: middle;
+    }
+
+    .td-nom {
+      font-weight: 700;
+      color: var(--noir);
+    }
+
+    .td-contact {
+      font-size: .78rem;
+      color: #888;
+      line-height: 1.5;
+    }
+
+    .td-date {
+      font-family: 'Playfair Display', serif;
+      font-size: .9rem;
+    }
+
+    .td-couverts {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--or);
+    }
+
+    /* ── BADGES STATUT ── */
+    .badge {
+      display: inline-block;
+      padding: .3rem .85rem;
+      font-size: .65rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      border-radius: 2px;
+    }
+
+    .badge-attente  { background: rgba(200,146,42,.12); color: #a07010; border: 1px solid rgba(200,146,42,.3); }
+    .badge-confirme { background: rgba(39,174,96,.1);   color: var(--vert); border: 1px solid rgba(39,174,96,.3); }
+    .badge-annule   { background: rgba(139,26,26,.08);  color: var(--rouge); border: 1px solid rgba(139,26,26,.2); }
+
+    /* ── ACTIONS ── */
+    .actions {
+      display: flex;
+      gap: .5rem;
+    }
+
+    .btn-action {
+      padding: .35rem .8rem;
+      font-size: .7rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-family: 'Libre Baskerville', serif;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: opacity .2s, transform .1s;
+    }
+
+    .btn-action:active { transform: scale(.96); }
+    .btn-confirmer { background: var(--vert-c); color: #fff; }
+    .btn-confirmer:hover { opacity: .85; }
+    .btn-annuler { background: transparent; border: 1px solid rgba(139,26,26,.4); color: var(--rouge); }
+    .btn-annuler:hover { background: var(--rouge); color: #fff; }
+    .btn-suppr { background: transparent; border: 1px solid rgba(0,0,0,.1); color: #aaa; font-size: .65rem; padding: .35rem .6rem; }
+    .btn-suppr:hover { background: #f0e0e0; color: var(--rouge); border-color: var(--rouge); }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      text-align: center;
+      padding: 5rem 2rem;
+      color: #bbb;
+    }
+
+    .empty-state-icon { font-size: 3rem; margin-bottom: 1rem; opacity: .4; }
+    .empty-state-text { font-size: .9rem; }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--noir);
+      color: var(--or-clair);
+      padding: .9rem 1.8rem;
+      border: 1px solid var(--or);
+      font-size: .82rem;
+      letter-spacing: .06em;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity .3s, transform .3s;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    #toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ── MODAL DÉTAIL ── */
+    .modal-bg {
+      position: fixed; inset: 0;
+      background: rgba(26,18,8,.75);
+      z-index: 500;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity .25s;
+    }
+
+    .modal-bg.open { opacity: 1; pointer-events: all; }
+
+    .modal-box {
+      background: var(--ivoire);
+      border: 1px solid var(--or);
+      padding: 2.5rem;
+      max-width: 460px;
+      width: 90%;
+      position: relative;
+    }
+
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--brun);
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-row {
+      display: flex;
+      justify-content: space-between;
+      padding: .65rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .88rem;
+    }
+
+    .modal-row:last-of-type { border-bottom: none; }
+    .modal-key { color: #888; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; }
+    .modal-val { color: var(--brun); font-weight: 700; }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: none; border: none;
+      font-size: 1.2rem; cursor: pointer; color: #aaa;
+    }
+
+    .modal-close:hover { color: var(--rouge); }
+
+    .modal-actions {
+      display: flex;
+      gap: .7rem;
+      margin-top: 1.8rem;
+    }
+
+    .modal-actions .btn-action { flex: 1; padding: .7rem; font-size: .75rem; }
+
+    /* ── SECTION TITLE ── */
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-head h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--brun);
+    }
+
+    .section-head .count-badge {
+      background: var(--or);
+      color: var(--noir);
+      font-size: .68rem;
+      font-weight: 700;
+      padding: .2rem .65rem;
+      letter-spacing: .08em;
+    }
+
+    /* ── MOBILE CARDS (remplace la table sur petit écran) ── */
+    .resa-card {
+      display: none; /* visible seulement en mobile via media query */
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      html { font-size: 14px; }
+
+      header { padding: .8rem 1rem; }
+      .header-date { display: none; }
+
+      main { padding: 1rem; }
+
+      /* Stats : 2 colonnes */
+      .stats-bar { grid-template-columns: 1fr 1fr; }
+      .stat-item { padding: .9rem 1rem; }
+      .stat-value { font-size: 1.5rem; }
+
+      /* Filtres empilés */
+      .filters { flex-direction: column; align-items: stretch; gap: .7rem; }
+      .filter-group { width: 100%; }
+      .filter-label { min-width: 52px; }
+      .filter-select, .filter-input { flex: 1; width: 100%; }
+      .filters-right { margin-left: 0; width: 100%; }
+      .filters-right .btn-sm { flex: 1; text-align: center; padding: .65rem; }
+
+      /* Cacher la table, montrer les cartes */
+      .table-wrap table { display: none; }
+      .table-wrap { background: transparent; border: none; }
+
+      .resa-card {
+        display: block;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 2px;
+        padding: 1rem 1.1rem;
+        margin-bottom: .7rem;
+      }
+
+      .resa-card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: .6rem;
+        gap: .5rem;
+      }
+
+      .resa-card-nom {
+        font-weight: 700;
+        font-size: .95rem;
+        color: var(--noir);
+        line-height: 1.3;
+      }
+
+      .resa-card-meta {
+        font-size: .78rem;
+        color: #888;
+        line-height: 1.6;
+        margin-bottom: .8rem;
+      }
+
+      .resa-card-meta strong { color: var(--brun); }
+
+      .resa-card-actions {
+        display: flex;
+        gap: .5rem;
+        flex-wrap: wrap;
+      }
+
+      .resa-card-actions .btn-action {
+        flex: 1;
+        min-width: 0;
+        padding: .55rem .4rem;
+        font-size: .68rem;
+        text-align: center;
+      }
+
+      /* Paramètres : 1 colonne */
+      .params-grid { grid-template-columns: 1fr; }
+
+      /* Tabs plus compacts */
+      .main-tab-btn { padding: .65rem 1rem; font-size: .72rem; }
+    }
+
+
+    /* ── TABS NAV ── */
+    .main-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 2rem;
+    }
+
+    .main-tab-btn {
+      padding: .75rem 1.8rem;
+      background: none;
+      border: none;
+      font-family: 'Libre Baskerville', serif;
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #999;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: color .2s, border-color .2s;
+    }
+
+    .main-tab-btn.active { color: var(--or); border-bottom-color: var(--or); }
+    .main-tab-btn:hover:not(.active) { color: var(--brun); }
+
+    .main-panel { display: none; }
+    .main-panel.active { display: block; }
+
+    /* ── PARAMÈTRES ── */
+    .params-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .param-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.8rem;
+    }
+
+    .param-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--brun);
+      margin-bottom: 1.4rem;
+      padding-bottom: .8rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .param-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .param-label {
+      font-size: .8rem;
+      color: var(--brun);
+    }
+
+    .param-label small {
+      display: block;
+      font-size: .68rem;
+      color: #aaa;
+      margin-top: .15rem;
+    }
+
+    .param-input {
+      width: 70px;
+      padding: .45rem .7rem;
+      border: 1px solid var(--border);
+      background: var(--ivoire);
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--brun);
+      text-align: center;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .param-input:focus { border-color: var(--or); }
+
+    .jours-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: .5rem;
+      margin-top: .5rem;
+    }
+
+    .jour-toggle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .4rem;
+      cursor: pointer;
+    }
+
+    .jour-toggle input { display: none; }
+
+    .jour-label {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border);
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: #bbb;
+      background: var(--ivoire);
+      cursor: pointer;
+      transition: background .2s, color .2s, border-color .2s;
+      user-select: none;
+    }
+
+    .jour-toggle input:checked + .jour-label {
+      background: var(--or);
+      color: var(--noir);
+      border-color: var(--or);
+    }
+
+    .param-save-btn {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: .75rem;
+      background: var(--or);
+      color: var(--noir);
+      border: none;
+      font-family: 'Libre Baskerville', serif;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .param-save-btn:hover { background: var(--or-clair); }
+
+    .param-info {
+      margin-top: 1rem;
+      font-size: .75rem;
+      color: #aaa;
+      line-height: 1.6;
+      padding: .8rem;
+      background: rgba(200,146,42,.05);
+      border-left: 2px solid var(--or);
+    }
+    /* ── MENU EDITOR ── */
+    .menu-editor { display: flex; flex-direction: column; gap: 2rem; }
+
+    .menu-cat-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .menu-cat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.4rem;
+      background: var(--noir);
+      gap: .8rem;
+    }
+
+    .menu-cat-name-input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(232,185,106,.3);
+      color: var(--or-clair);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: .2rem .4rem;
+      outline: none;
+      flex: 1;
+      min-width: 0;
+      transition: border-color .2s;
+    }
+
+    .menu-cat-name-input:focus { border-bottom-color: var(--or-clair); }
+    .menu-cat-name-input::placeholder { color: rgba(232,185,106,.35); }
+
+    .menu-cat-actions { display: flex; gap: .5rem; flex-shrink: 0; }
+
+    .btn-ico {
+      background: none;
+      border: 1px solid rgba(232,185,106,.25);
+      color: rgba(232,185,106,.6);
+      width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem;
+      cursor: pointer;
+      transition: background .15s, color .15s;
+      flex-shrink: 0;
+    }
+
+    .btn-ico:hover { background: rgba(232,185,106,.12); color: var(--or-clair); }
+    .btn-ico.danger:hover { background: rgba(139,26,26,.3); color: #e07070; border-color: rgba(139,26,26,.4); }
+
+    .menu-plats { padding: .5rem 0; }
+
+    .menu-plat-row {
+      display: grid;
+      grid-template-columns: 1fr 2fr 80px 30px;
+      gap: .7rem;
+      align-items: center;
+      padding: .65rem 1.4rem;
+      border-bottom: 1px solid var(--border);
+      transition: background .1s;
+    }
+
+    .menu-plat-row:last-child { border-bottom: none; }
+    .menu-plat-row:hover { background: rgba(200,146,42,.03); }
+
+    .plat-input {
+      padding: .4rem .6rem;
+      border: 1px solid transparent;
+      background: transparent;
+      font-family: 'Libre Baskerville', serif;
+      font-size: .82rem;
+      color: var(--brun);
+      outline: none;
+      width: 100%;
+      transition: border-color .2s, background .2s;
+      border-radius: 1px;
+    }
+
+    .plat-input:focus {
+      border-color: var(--border);
+      background: var(--ivoire);
+    }
+
+    .plat-input.nom { font-weight: 700; color: var(--noir); }
+    .plat-input.prix {
+      text-align: right;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: var(--or);
+      font-size: .9rem;
+    }
+
+    .plat-input::placeholder { color: #ccc; font-weight: 400; }
+
+    .add-plat-btn {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .7rem 1.4rem;
+      background: none;
+      border: none;
+      border-top: 1px dashed var(--border);
+      color: var(--or);
+      font-family: 'Libre Baskerville', serif;
+      font-size: .75rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      width: 100%;
+      transition: background .15s;
+    }
+
+    .add-plat-btn:hover { background: rgba(200,146,42,.05); }
+
+    .add-cat-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .7rem;
+      padding: 1rem;
+      background: transparent;
+      border: 2px dashed var(--border);
+      color: var(--or);
+      font-family: 'Libre Baskerville', serif;
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      width: 100%;
+      transition: background .15s, border-color .15s;
+    }
+
+    .add-cat-btn:hover { background: rgba(200,146,42,.05); border-color: var(--or); }
+
+    .menu-save-bar {
+      position: sticky;
+      bottom: 0;
+      background: var(--noir);
+      border-top: 1px solid var(--or);
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      z-index: 50;
+    }
+
+    .menu-save-info {
+      font-size: .75rem;
+      color: rgba(232,185,106,.5);
+      letter-spacing: .06em;
+    }
+
+    .menu-save-btn {
+      padding: .7rem 2rem;
+      background: var(--or);
+      color: var(--noir);
+      border: none;
+      font-family: 'Libre Baskerville', serif;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .2s;
+      white-space: nowrap;
+    }
+
+    .menu-save-btn:hover { background: var(--or-clair); }
+
+    .col-label {
+      font-size: .62rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: #bbb;
+      padding: .4rem 1.4rem;
+      display: grid;
+      grid-template-columns: 1fr 2fr 80px 30px;
+      gap: .7rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(200,146,42,.02);
+    }
+
+    @media (max-width: 700px) {
+      .menu-plat-row { grid-template-columns: 1fr 56px 28px; }
+      .menu-plat-row .desc-col { display: none; }
+      .col-label { grid-template-columns: 1fr 56px 28px; }
+      .col-label .desc-col { display: none; }
+      .menu-cat-header { flex-wrap: wrap; }
+    }
+    /* ── GALERIE ADMIN ── */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      background: var(--surface);
+      padding: 3rem 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      margin-bottom: 1.5rem;
+    }
+
+    .upload-zone:hover, .upload-zone.drag-over {
+      border-color: var(--or);
+      background: rgba(200,146,42,.04);
+    }
+
+    .upload-zone-icon { font-size: 2.5rem; margin-bottom: .8rem; opacity: .5; }
+    .upload-zone-text { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--brun); margin-bottom: .3rem; }
+    .upload-zone-sub  { font-size: .75rem; color: #aaa; letter-spacing: .04em; }
+
+    .galerie-admin-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 5rem;
+    }
+
+    .galerie-admin-item {
+      position: relative;
+      background: #eee;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      cursor: grab;
+      transition: box-shadow .2s, opacity .2s;
+    }
+
+    .galerie-admin-item.dragging { opacity: .4; cursor: grabbing; }
+    .galerie-admin-item.drag-target { box-shadow: 0 0 0 3px var(--or); }
+
+    .galerie-admin-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+    }
+
+    .galerie-admin-overlay {
+      position: absolute; inset: 0;
+      background: rgba(26,18,8,.6);
+      opacity: 0;
+      transition: opacity .2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: .7rem;
+      gap: .5rem;
+    }
+
+    .galerie-admin-item:hover .galerie-admin-overlay { opacity: 1; }
+
+    .galerie-legende-input {
+      width: 100%;
+      background: rgba(0,0,0,.5);
+      border: 1px solid rgba(232,185,106,.3);
+      color: var(--creme);
+      font-family: 'Libre Baskerville', serif;
+      font-size: .72rem;
+      padding: .35rem .5rem;
+      outline: none;
+      text-align: center;
+    }
+
+    .galerie-legende-input::placeholder { color: rgba(245,237,224,.4); }
+    .galerie-legende-input:focus { border-color: var(--or-clair); }
+
+    .galerie-del-btn {
+      position: absolute;
+      top: .4rem; right: .4rem;
+      background: rgba(139,26,26,.85);
+      color: #fff;
+      border: none;
+      width: 26px; height: 26px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .75rem;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity .2s;
+      border-radius: 1px;
+    }
+
+    .galerie-admin-item:hover .galerie-del-btn { opacity: 1; }
+
+    .galerie-admin-item .drag-handle {
+      position: absolute;
+      top: .4rem; left: .4rem;
+      color: rgba(255,255,255,.6);
+      font-size: .9rem;
+      opacity: 0;
+      transition: opacity .2s;
+      pointer-events: none;
+    }
+
+    .galerie-admin-item:hover .drag-handle { opacity: 1; }
+
+    .upload-spinner {
+      position: absolute; inset: 0;
+      background: rgba(26,18,8,.7);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--or-clair);
+      font-size: .8rem;
+      letter-spacing: .08em;
+    }
+
+    .cl-status-ok  { background:rgba(39,174,96,.12);color:var(--vert);border:1px solid rgba(39,174,96,.3); }
+    .cl-status-no  { background:rgba(200,146,42,.1);color:#a07010;border:1px solid rgba(200,146,42,.3); }
+
+    @media (max-width: 700px) {
+      .galerie-admin-grid { grid-template-columns: repeat(2, 1fr); }
+      .upload-zone { padding: 2rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-logo">
+    <div>
+      <div class="header-logo-name">Le Zinc</div>
+      <div class="header-badge">Back-office</div>
+    </div>
+  </div>
+  <div class="header-date" id="header-date"></div>
+</header>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-label">Total réservations</div>
+    <div class="stat-value" id="stat-total">—</div>
+    <div class="stat-sub">toutes dates</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-label">Aujourd'hui</div>
+    <div class="stat-value" id="stat-today">—</div>
+    <div class="stat-sub">réservations</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-label">En attente</div>
+    <div class="stat-value" id="stat-attente">—</div>
+    <div class="stat-sub">à confirmer</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-label">Couverts aujourd'hui</div>
+    <div class="stat-value" id="stat-couverts">—</div>
+    <div class="stat-sub">personnes</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+  <!-- ONGLETS -->
+  <div class="main-tabs">
+    <button class="main-tab-btn active" onclick="switchTab('reservations', this)">Réservations</button>
+    <button class="main-tab-btn" onclick="switchTab('menu', this)">Menu</button>
+    <button class="main-tab-btn" onclick="switchTab('galerie', this)">Galerie</button>
+    <button class="main-tab-btn" onclick="switchTab('parametres', this)">Paramètres</button>
+  </div>
+
+  <!-- PANEL RÉSERVATIONS -->
+  <div id="panel-reservations" class="main-panel active">
+  <div class="filters">
+    <div class="filter-group">
+      <span class="filter-label">Date</span>
+      <input type="date" class="filter-input" id="filter-date" />
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Statut</span>
+      <select class="filter-select" id="filter-statut">
+        <option value="">Tous</option>
+        <option value="en_attente">En attente</option>
+        <option value="confirme">Confirmées</option>
+        <option value="annule">Annulées</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Service</span>
+      <select class="filter-select" id="filter-service">
+        <option value="">Tous</option>
+        <option value="midi">Midi</option>
+        <option value="soir">Soir</option>
+      </select>
+    </div>
+    <div class="filters-right">
+      <button class="btn-sm btn-outline-sm" onclick="clearFilters()">Réinitialiser</button>
+      <button class="btn-sm btn-gold" onclick="loadReservations()">↻ Actualiser</button>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Réservations</h2>
+    <span class="count-badge" id="count-badge">0</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Client</th>
+          <th>Contact</th>
+          <th>Date & Heure</th>
+          <th>Couverts</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+      </tbody>
+    </table>
+    <div id="cards-wrap"></div>
+    <div class="empty-state" id="empty-state" style="display:none;">
+      <div class="empty-state-icon">✦</div>
+      <div class="empty-state-text">Aucune réservation trouvée</div>
+    </div>
+  </div>
+
+  </div><!-- /panel-reservations -->
+
+  <!-- PANEL MENU -->
+  <div id="panel-menu" class="main-panel">
+    <div class="menu-editor" id="menu-editor"></div>
+    <button class="add-cat-btn" id="add-cat-btn" onclick="addCategorie()" style="margin-top:1rem;">
+      + Ajouter une catégorie
+    </button>
+    <div class="menu-save-bar">
+      <span class="menu-save-info" id="menu-save-info">Les modifications s'affichent en temps réel sur le site client.</span>
+      <button class="menu-save-btn" onclick="saveMenu()">Enregistrer le menu</button>
+    </div>
+  </div><!-- /panel-menu -->
+
+  <!-- PANEL GALERIE -->
+  <div id="panel-galerie" class="main-panel">
+
+    <!-- CONFIG CLOUDINARY (collapsible) -->
+    <div class="param-card" id="cloudinary-config-card" style="margin-bottom:1.5rem;">
+      <div class="param-card-title" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;" onclick="toggleCloudinaryConfig()">
+        <span>⚙️ Configuration Cloudinary</span>
+        <span id="cloudinary-status-badge" style="font-size:.7rem;letter-spacing:.1em;padding:.25rem .7rem;"></span>
+      </div>
+      <div id="cloudinary-config-body" style="display:none;margin-top:1.2rem;">
+        <div style="background:rgba(200,146,42,.06);border-left:3px solid var(--or);padding:1rem;margin-bottom:1.2rem;font-size:.8rem;line-height:1.7;color:#888;">
+          <strong style="color:var(--brun);">1 seule configuration à faire :</strong><br>
+          Créer un compte gratuit sur <strong>cloudinary.com</strong> → Dashboard → copier le <em>Cloud name</em>.<br>
+          Ensuite : Settings → Upload → Add upload preset → Mode <strong>Unsigned</strong> → copier le nom du preset.
+        </div>
+        <div class="params-grid" style="grid-template-columns:1fr 1fr;gap:1rem;">
+          <div>
+            <div class="param-label" style="margin-bottom:.4rem;">Cloud name</div>
+            <input type="text" class="filter-input" id="cl-cloud" placeholder="ex: mon-bistrot" style="width:100%;" />
+          </div>
+          <div>
+            <div class="param-label" style="margin-bottom:.4rem;">Upload preset (unsigned)</div>
+            <input type="text" class="filter-input" id="cl-preset" placeholder="ex: zinc_unsigned" style="width:100%;" />
+          </div>
+        </div>
+        <button class="param-save-btn" style="max-width:220px;margin-top:1rem;" onclick="saveCloudinaryConfig()">Enregistrer</button>
+      </div>
+    </div>
+
+    <!-- ZONE D'UPLOAD -->
+    <div id="upload-zone" class="upload-zone" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)" onclick="document.getElementById('file-input').click()">
+      <input type="file" id="file-input" accept="image/*" multiple style="display:none" onchange="onFilesSelected(event)" />
+      <div class="upload-zone-icon">📷</div>
+      <div class="upload-zone-text">Glissez vos photos ici</div>
+      <div class="upload-zone-sub">ou cliquez pour sélectionner · JPG, PNG, WebP · max 10 Mo</div>
+    </div>
+
+    <!-- BARRE DE PROGRESSION -->
+    <div id="upload-progress" style="display:none;margin-bottom:1.5rem;">
+      <div style="font-size:.78rem;color:#888;margin-bottom:.5rem;" id="upload-progress-label">Upload en cours…</div>
+      <div style="background:var(--border);height:4px;border-radius:2px;">
+        <div id="upload-progress-bar" style="background:var(--or);height:4px;border-radius:2px;width:0%;transition:width .3s;"></div>
+      </div>
+    </div>
+
+    <!-- GRILLE PHOTOS -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+      <div class="section-head" style="margin-bottom:0;">
+        <h2>Photos en ligne</h2>
+        <span class="count-badge" id="galerie-count">0</span>
+      </div>
+      <button class="btn-sm btn-gold" onclick="saveGalerie()" id="galerie-save-btn" style="display:none;">Enregistrer l'ordre</button>
+    </div>
+
+    <div class="galerie-admin-grid" id="galerie-admin-grid">
+      <div class="empty-state" style="grid-column:1/-1;padding:3rem;">
+        <div class="empty-state-icon">🖼️</div>
+        <div class="empty-state-text">Aucune photo · Uploadez votre première image ci-dessus</div>
+      </div>
+    </div>
+
+  </div><!-- /panel-galerie -->
+
+  <!-- PANEL PARAMÈTRES -->
+  <div id="panel-parametres" class="main-panel">
+    <div class="params-grid">
+
+      <!-- MAX PAR SERVICE -->
+      <div class="param-card">
+        <div class="param-card-title">Capacité par service</div>
+        <div class="param-row">
+          <div class="param-label">
+            Service du midi
+            <small>12h00 — 13h30</small>
+          </div>
+          <input type="number" class="param-input" id="p-maxMidi" min="1" max="100" value="8" />
+        </div>
+        <div class="param-row">
+          <div class="param-label">
+            Service du soir
+            <small>19h00 — 21h00</small>
+          </div>
+          <input type="number" class="param-input" id="p-maxSoir" min="1" max="100" value="10" />
+        </div>
+        <div class="param-info">
+          Quand le maximum est atteint, les créneaux du service apparaissent comme « complet » sur le site client.
+        </div>
+      </div>
+
+      <!-- JOURS D'OUVERTURE -->
+      <div class="param-card">
+        <div class="param-card-title">Jours d'ouverture</div>
+        <div class="jours-grid">
+          <label class="jour-toggle">
+            <input type="checkbox" class="jour-cb" data-jour="0" />
+            <span class="jour-label">Dim</span>
+          </label>
+          <label class="jour-toggle">
+            <input type="checkbox" class="jour-cb" data-jour="1" />
+            <span class="jour-label">Lun</span>
+          </label>
+          <label class="jour-toggle">
+            <input type="checkbox" class="jour-cb" data-jour="2" />
+            <span class="jour-label">Mar</span>
+          </label>
+          <label class="jour-toggle">
+            <input type="checkbox" class="jour-cb" data-jour="3" />
+            <span class="jour-label">Mer</span>
+          </label>
+          <label class="jour-toggle">
+            <input type="checkbox" class="jour-cb" data-jour="4" />
+            <span class="jour-label">Jeu</span>
+          </label>
+          <label class="jour-toggle">
+            <input type="checkbox" class="jour-cb" data-jour="5" />
+            <span class="jour-label">Ven</span>
+          </label>
+          <label class="jour-toggle">
+            <input type="checkbox" class="jour-cb" data-jour="6" />
+            <span class="jour-label">Sam</span>
+          </label>
+        </div>
+        <div class="param-info" style="margin-top:1.2rem;">
+          Les jours non cochés sont bloqués dans le formulaire de réservation client.
+        </div>
+      </div>
+
+    </div>
+    <button class="param-save-btn" style="max-width:300px;margin-top:1.5rem;" onclick="saveConfig()">Enregistrer les paramètres</button>
+  </div><!-- /panel-parametres -->
+
+</main>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- MODAL DÉTAIL -->
+<div class="modal-bg" id="modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title" id="modal-title">Détail réservation</div>
+    <div id="modal-content"></div>
+    <div class="modal-actions" id="modal-actions"></div>
+  </div>
+</div>
+
+<script>
+  // ── CONFIG PAR DÉFAUT ──
+  const DEFAULT_CONFIG = {
+    maxMidi: 8,
+    maxSoir: 10,
+    joursOuverture: [0, 2, 3, 4, 5, 6] // dim, mar→sam (lundi fermé)
+  };
+
+  const now = new Date();
+  const todayStr = now.toISOString().split('T')[0];
+  document.getElementById('header-date').textContent =
+    now.toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  document.getElementById('filter-date').value = todayStr;
+
+  let allResas = [];
+  let config = { ...DEFAULT_CONFIG };
+
+  // ── TABS ──
+  function switchTab(name, btn) {
+    document.querySelectorAll('.main-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.main-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + name).classList.add('active');
+  }
+
+  // ── LOAD ALL ──
+  async function loadAll() {
+    // Config
+    try {
+      const r = await window.storage.get('zinc-config', true);
+      if (r) config = { ...DEFAULT_CONFIG, ...JSON.parse(r.value) };
+    } catch(e) {}
+
+    // Réservations
+    try {
+      const r = await window.storage.get('zinc-reservations', true);
+      allResas = r ? JSON.parse(r.value) : [];
+    } catch(e) { allResas = []; }
+
+    renderConfig();
+    updateStats();
+    renderTable();
+  }
+
+  // ── RENDER CONFIG ──
+  function renderConfig() {
+    document.getElementById('p-maxMidi').value = config.maxMidi;
+    document.getElementById('p-maxSoir').value = config.maxSoir;
+    document.querySelectorAll('.jour-cb').forEach(cb => {
+      cb.checked = config.joursOuverture.includes(parseInt(cb.dataset.jour));
+    });
+  }
+
+  // ── SAVE CONFIG ──
+  async function saveConfig() {
+    const maxMidi = parseInt(document.getElementById('p-maxMidi').value) || 8;
+    const maxSoir = parseInt(document.getElementById('p-maxSoir').value) || 10;
+    const joursOuverture = [];
+    document.querySelectorAll('.jour-cb:checked').forEach(cb => {
+      joursOuverture.push(parseInt(cb.dataset.jour));
+    });
+    config = { maxMidi, maxSoir, joursOuverture };
+    await window.storage.set('zinc-config', JSON.stringify(config), true);
+    toast('✓ Paramètres enregistrés');
+  }
+
+  // ── STATS ──
+  function updateStats() {
+    const total    = allResas.length;
+    const today    = allResas.filter(r => r.date === todayStr);
+    const attente  = allResas.filter(r => r.statut === 'en_attente').length;
+    const couverts = today.reduce((sum, r) => sum + (parseInt(r.couverts) || 1), 0);
+    document.getElementById('stat-total').textContent    = total;
+    document.getElementById('stat-today').textContent    = today.length;
+    document.getElementById('stat-attente').textContent  = attente;
+    document.getElementById('stat-couverts').textContent = couverts;
+  }
+
+  // ── RENDER TABLE ──
+  function renderTable() {
+    const filterDate    = document.getElementById('filter-date').value;
+    const filterStatut  = document.getElementById('filter-statut').value;
+    const filterService = document.getElementById('filter-service').value;
+    const MIDI = ['12h00','12h30','13h00','13h30'];
+    const SOIR = ['19h00','19h30','20h00','20h30','21h00'];
+
+    let filtered = [...allResas];
+    if (filterDate)    filtered = filtered.filter(r => r.date === filterDate);
+    if (filterStatut)  filtered = filtered.filter(r => r.statut === filterStatut);
+    if (filterService === 'midi') filtered = filtered.filter(r => MIDI.includes(r.heure));
+    if (filterService === 'soir') filtered = filtered.filter(r => SOIR.includes(r.heure));
+
+    filtered.sort((a, b) => a.date !== b.date ? a.date.localeCompare(b.date) : a.heure.localeCompare(b.heure));
+
+    document.getElementById('count-badge').textContent = filtered.length;
+    const tbody = document.getElementById('table-body');
+    const cardsWrap = document.getElementById('cards-wrap');
+    const empty = document.getElementById('empty-state');
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '';
+      cardsWrap.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+
+    // ── LIGNES TABLE (desktop) ──
+    tbody.innerHTML = filtered.map(r => {
+      const dateF = new Date(r.date + 'T12:00:00').toLocaleDateString('fr-FR', { day:'numeric', month:'short' });
+      const badge = badgeHtml(r.statut);
+      return `
+        <tr>
+          <td><div class="td-nom">${r.prenom} ${r.nom}</div></td>
+          <td><div class="td-contact">${r.email}<br>${r.tel}</div></td>
+          <td class="td-date">${dateF} · ${r.heure}</td>
+          <td class="td-couverts">${r.couverts}</td>
+          <td>${badge}</td>
+          <td>
+            <div class="actions">
+              <button class="btn-action" style="background:rgba(200,146,42,.1);color:var(--or);border:1px solid rgba(200,146,42,.3);font-size:.7rem;" onclick="openDetail('${r.id}')">Voir</button>
+              ${r.statut !== 'confirme' ? `<button class="btn-action btn-confirmer" onclick="changeStatut('${r.id}','confirme')">✓</button>` : ''}
+              ${r.statut !== 'annule'   ? `<button class="btn-action btn-annuler"   onclick="changeStatut('${r.id}','annule')">✕</button>` : ''}
+              <button class="btn-action btn-suppr" onclick="supprimer('${r.id}')">🗑</button>
+            </div>
+          </td>
+        </tr>`;
+    }).join('');
+
+    // ── CARTES MOBILE ──
+    cardsWrap.innerHTML = filtered.map(r => {
+      const dateF = new Date(r.date + 'T12:00:00').toLocaleDateString('fr-FR', { weekday:'short', day:'numeric', month:'short' });
+      const badge = badgeHtml(r.statut);
+      return `
+        <div class="resa-card">
+          <div class="resa-card-top">
+            <div>
+              <div class="resa-card-nom">${r.prenom} ${r.nom}</div>
+              <div style="font-size:.72rem;color:#aaa;margin-top:.2rem;">${r.email}</div>
+            </div>
+            ${badge}
+          </div>
+          <div class="resa-card-meta">
+            <strong>${dateF} · ${r.heure}</strong> &nbsp;·&nbsp; ${r.couverts}<br>
+            ${r.tel}
+          </div>
+          <div class="resa-card-actions">
+            <button class="btn-action" style="background:rgba(200,146,42,.1);color:var(--or);border:1px solid rgba(200,146,42,.3);" onclick="openDetail('${r.id}')">Détail</button>
+            ${r.statut !== 'confirme' ? `<button class="btn-action btn-confirmer" onclick="changeStatut('${r.id}','confirme')">✓ Confirmer</button>` : ''}
+            ${r.statut !== 'annule'   ? `<button class="btn-action btn-annuler"   onclick="changeStatut('${r.id}','annule')">✕ Annuler</button>` : ''}
+            <button class="btn-action btn-suppr" onclick="supprimer('${r.id}')">🗑</button>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function badgeHtml(statut) {
+    const map = { en_attente: ['badge-attente','En attente'], confirme: ['badge-confirme','Confirmée'], annule: ['badge-annule','Annulée'] };
+    const [cls, label] = map[statut] || ['badge-attente', statut];
+    return `<span class="badge ${cls}">${label}</span>`;
+  }
+
+  async function changeStatut(id, statut) {
+    const r = allResas.find(r => r.id === id);
+    if (!r) return;
+    r.statut = statut;
+    await save();
+    renderTable();
+    updateStats();
+    toast(statut === 'confirme' ? '✓ Réservation confirmée' : '✕ Réservation annulée');
+  }
+
+  async function supprimer(id) {
+    if (!confirm('Supprimer définitivement cette réservation ?')) return;
+    allResas = allResas.filter(r => r.id !== id);
+    await save();
+    renderTable();
+    updateStats();
+    toast('Réservation supprimée');
+  }
+
+  async function save() {
+    await window.storage.set('zinc-reservations', JSON.stringify(allResas), true);
+  }
+
+  function openDetail(id) {
+    const r = allResas.find(r => r.id === id);
+    if (!r) return;
+    const dateF = new Date(r.date + 'T12:00:00').toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+    const creeF = new Date(r.cree_le).toLocaleString('fr-FR');
+    document.getElementById('modal-title').textContent = `${r.prenom} ${r.nom}`;
+    document.getElementById('modal-content').innerHTML = `
+      <div class="modal-row"><span class="modal-key">Email</span><span class="modal-val">${r.email}</span></div>
+      <div class="modal-row"><span class="modal-key">Téléphone</span><span class="modal-val">${r.tel}</span></div>
+      <div class="modal-row"><span class="modal-key">Date</span><span class="modal-val">${dateF}</span></div>
+      <div class="modal-row"><span class="modal-key">Heure</span><span class="modal-val">${r.heure}</span></div>
+      <div class="modal-row"><span class="modal-key">Couverts</span><span class="modal-val">${r.couverts}</span></div>
+      <div class="modal-row"><span class="modal-key">Statut</span><span class="modal-val">${badgeHtml(r.statut)}</span></div>
+      <div class="modal-row"><span class="modal-key">Reçue le</span><span class="modal-val" style="font-weight:400;font-size:.8rem">${creeF}</span></div>
+    `;
+    document.getElementById('modal-actions').innerHTML = `
+      ${r.statut !== 'confirme' ? `<button class="btn-action btn-confirmer" style="flex:1;padding:.7rem;" onclick="changeStatut('${r.id}','confirme');closeModal()">✓ Confirmer</button>` : ''}
+      ${r.statut !== 'annule'   ? `<button class="btn-action btn-annuler"   style="flex:1;padding:.7rem;" onclick="changeStatut('${r.id}','annule');closeModal()">✕ Annuler</button>` : ''}
+    `;
+    document.getElementById('modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+  }
+  document.getElementById('modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+
+  document.getElementById('filter-date').addEventListener('change', renderTable);
+  document.getElementById('filter-statut').addEventListener('change', renderTable);
+  document.getElementById('filter-service').addEventListener('change', renderTable);
+
+  function clearFilters() {
+    document.getElementById('filter-date').value = todayStr;
+    document.getElementById('filter-statut').value = '';
+    document.getElementById('filter-service').value = '';
+    renderTable();
+  }
+
+  function loadReservations() { loadAll(); }
+
+  function toast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2800);
+  }
+
+  // ── MENU PAR DÉFAUT ──
+  const DEFAULT_MENU = [
+    {
+      id: 'cat-1', nom: 'Entrées',
+      plats: [
+        { id: 'p-1', nom: 'Œuf parfait, espuma de lard', desc: 'Oeuf cuit basse température, mousse de lard fumé, ciboulette', prix: '12€' },
+        { id: 'p-2', nom: 'Terrine de campagne maison', desc: 'Cornichons, moutarde à l\'ancienne, pain de campagne grillé', prix: '10€' },
+        { id: 'p-3', nom: 'Soupe à l\'oignon gratinée', desc: 'Oignons caramélisés, bouillon de bœuf, gruyère fondu', prix: '11€' },
+        { id: 'p-4', nom: 'Salade frisée aux lardons', desc: 'Lardons fumés, croutons, œuf mollet, vinaigrette moutardée', prix: '13€' },
+      ]
+    },
+    {
+      id: 'cat-2', nom: 'Plats',
+      plats: [
+        { id: 'p-5', nom: 'Steak frites, beurre Maître d\'Hôtel', desc: 'Entrecôte race Aubrac, frites maison, beurre persillé', prix: '26€' },
+        { id: 'p-6', nom: 'Blanquette de veau à l\'ancienne', desc: 'Riz pilaf, champignons, carottes, sauce crémée citronnée', prix: '22€' },
+        { id: 'p-7', nom: 'Filet de cabillaud beurre blanc', desc: 'Échalotes, beurre blanc au muscadet, pommes vapeur', prix: '24€' },
+        { id: 'p-8', nom: 'Confit de canard, sarladaise', desc: 'Cuisse confite maison, pommes sarladaises à l\'ail et persil', prix: '23€' },
+      ]
+    },
+    {
+      id: 'cat-3', nom: 'Desserts',
+      plats: [
+        { id: 'p-9',  nom: 'Crème brûlée à la vanille', desc: 'Vanille de Madagascar, caramel craquant', prix: '8€' },
+        { id: 'p-10', nom: 'Tarte Tatin, crème fraîche', desc: 'Pommes caramélisées, pâte feuilletée, crème fraîche épaisse', prix: '9€' },
+        { id: 'p-11', nom: 'Profiteroles au chocolat chaud', desc: 'Choux à la crème, sauce chocolat Valrhona maison', prix: '10€' },
+        { id: 'p-12', nom: 'Île flottante, caramel', desc: 'Blanc-manger léger, crème anglaise, amandes effilées', prix: '8€' },
+      ]
+    }
+  ];
+
+  let menuData = [];
+
+  async function loadMenu() {
+    try {
+      const r = await window.storage.get('zinc-menu', true);
+      menuData = r ? JSON.parse(r.value) : JSON.parse(JSON.stringify(DEFAULT_MENU));
+    } catch(e) {
+      menuData = JSON.parse(JSON.stringify(DEFAULT_MENU));
+    }
+    renderMenu();
+  }
+
+  function renderMenu() {
+    const editor = document.getElementById('menu-editor');
+    editor.innerHTML = menuData.map((cat, ci) => `
+      <div class="menu-cat-block" id="block-${cat.id}">
+        <div class="menu-cat-header">
+          <input class="menu-cat-name-input" value="${escHtml(cat.nom)}" placeholder="Nom de la catégorie"
+            oninput="menuData[${ci}].nom = this.value" />
+          <div class="menu-cat-actions">
+            ${ci > 0 ? `<button class="btn-ico" title="Monter" onclick="moveCat(${ci}, -1)">↑</button>` : ''}
+            ${ci < menuData.length-1 ? `<button class="btn-ico" title="Descendre" onclick="moveCat(${ci}, 1)">↓</button>` : ''}
+            <button class="btn-ico danger" title="Supprimer" onclick="deleteCat(${ci})">✕</button>
+          </div>
+        </div>
+        <div class="col-label">
+          <span>Nom du plat</span>
+          <span class="desc-col">Description</span>
+          <span style="text-align:right">Prix</span>
+          <span></span>
+        </div>
+        <div class="menu-plats" id="plats-${cat.id}">
+          ${cat.plats.map((p, pi) => platRowHtml(ci, pi, p)).join('')}
+        </div>
+        <button class="add-plat-btn" onclick="addPlat(${ci})">+ Ajouter un plat</button>
+      </div>
+    `).join('');
+  }
+
+  function platRowHtml(ci, pi, p) {
+    return `
+      <div class="menu-plat-row" id="row-${p.id}">
+        <input class="plat-input nom" value="${escHtml(p.nom)}" placeholder="Nom du plat"
+          oninput="menuData[${ci}].plats[${pi}].nom = this.value" />
+        <input class="plat-input desc-col" value="${escHtml(p.desc)}" placeholder="Description (optionnelle)"
+          oninput="menuData[${ci}].plats[${pi}].desc = this.value" />
+        <input class="plat-input prix" value="${escHtml(p.prix)}" placeholder="Prix"
+          oninput="menuData[${ci}].plats[${pi}].prix = this.value" />
+        <button class="btn-ico danger" onclick="deletePlat(${ci}, ${pi})">✕</button>
+      </div>`;
+  }
+
+  function addCategorie() {
+    const id = 'cat-' + Date.now();
+    menuData.push({ id, nom: 'Nouvelle catégorie', plats: [] });
+    renderMenu();
+    // Focus sur le nom
+    const input = document.querySelector(`#block-${id} .menu-cat-name-input`);
+    if (input) { input.focus(); input.select(); }
+  }
+
+  function deleteCat(ci) {
+    if (menuData[ci].plats.length > 0 && !confirm(`Supprimer la catégorie "${menuData[ci].nom}" et ses ${menuData[ci].plats.length} plat(s) ?`)) return;
+    menuData.splice(ci, 1);
+    renderMenu();
+  }
+
+  function moveCat(ci, dir) {
+    const tmp = menuData[ci];
+    menuData[ci] = menuData[ci + dir];
+    menuData[ci + dir] = tmp;
+    renderMenu();
+  }
+
+  function addPlat(ci) {
+    const id = 'p-' + Date.now();
+    menuData[ci].plats.push({ id, nom: '', desc: '', prix: '' });
+    renderMenu();
+    // Focus sur le nouveau plat
+    const rows = document.querySelectorAll(`#plats-${menuData[ci].id} .plat-input.nom`);
+    if (rows.length) { rows[rows.length - 1].focus(); }
+  }
+
+  function deletePlat(ci, pi) {
+    menuData[ci].plats.splice(pi, 1);
+    renderMenu();
+  }
+
+  async function saveMenu() {
+    await window.storage.set('zinc-menu', JSON.stringify(menuData), true);
+    toast('✦ Menu enregistré');
+    document.getElementById('menu-save-info').textContent = 'Enregistré · ' + new Date().toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
+  }
+
+  function escHtml(str) {
+    return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ══════════════════════════════════════════
+  // ── GALERIE ──
+  // ══════════════════════════════════════════
+
+  let galeriePhotos = []; // [{id, url, legende}]
+  let clConfig = { cloud: '', preset: '' };
+  let dragSrcIdx = null;
+
+  async function loadGalerie() {
+    // Config Cloudinary
+    try {
+      const r = await window.storage.get('zinc-cloudinary', true);
+      if (r) clConfig = JSON.parse(r.value);
+    } catch(e) {}
+
+    // Photos
+    try {
+      const r = await window.storage.get('zinc-galerie', true);
+      if (r) galeriePhotos = JSON.parse(r.value);
+    } catch(e) { galeriePhotos = []; }
+
+    updateCloudinaryStatus();
+    renderGalerieAdmin();
+  }
+
+  function updateCloudinaryStatus() {
+    const badge = document.getElementById('cloudinary-status-badge');
+    const body  = document.getElementById('cloudinary-config-body');
+    if (clConfig.cloud && clConfig.preset) {
+      badge.textContent = '✓ Connecté';
+      badge.className = 'cl-status-ok';
+      document.getElementById('cl-cloud').value  = clConfig.cloud;
+      document.getElementById('cl-preset').value = clConfig.preset;
+    } else {
+      badge.textContent = '⚠ À configurer';
+      badge.className = 'cl-status-no';
+      body.style.display = 'block'; // auto-ouvre si pas configuré
+    }
+  }
+
+  function toggleCloudinaryConfig() {
+    const body = document.getElementById('cloudinary-config-body');
+    body.style.display = body.style.display === 'none' ? 'block' : 'none';
+  }
+
+  async function saveCloudinaryConfig() {
+    clConfig.cloud  = document.getElementById('cl-cloud').value.trim();
+    clConfig.preset = document.getElementById('cl-preset').value.trim();
+    await window.storage.set('zinc-cloudinary', JSON.stringify(clConfig), true);
+    updateCloudinaryStatus();
+    document.getElementById('cloudinary-config-body').style.display = 'none';
+    toast('✓ Configuration Cloudinary enregistrée');
+  }
+
+  // ── DRAG & DROP sur la zone upload ──
+  function onDragOver(e) {
+    e.preventDefault();
+    document.getElementById('upload-zone').classList.add('drag-over');
+  }
+  function onDragLeave(e) {
+    document.getElementById('upload-zone').classList.remove('drag-over');
+  }
+  function onDrop(e) {
+    e.preventDefault();
+    document.getElementById('upload-zone').classList.remove('drag-over');
+    const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+    if (files.length) uploadFiles(files);
+  }
+  function onFilesSelected(e) {
+    const files = Array.from(e.target.files);
+    if (files.length) uploadFiles(files);
+    e.target.value = '';
+  }
+
+  // ── UPLOAD CLOUDINARY ──
+  async function uploadFiles(files) {
+    if (!clConfig.cloud || !clConfig.preset) {
+      toast('⚠ Configurez d\'abord Cloudinary ci-dessus');
+      document.getElementById('cloudinary-config-body').style.display = 'block';
+      return;
+    }
+
+    const progressWrap = document.getElementById('upload-progress');
+    const progressBar  = document.getElementById('upload-progress-bar');
+    const progressLabel = document.getElementById('upload-progress-label');
+    progressWrap.style.display = 'block';
+
+    let done = 0;
+    for (const file of files) {
+      progressLabel.textContent = `Upload ${done + 1} / ${files.length} — ${file.name}`;
+      progressBar.style.width = ((done / files.length) * 100) + '%';
+
+      try {
+        const fd = new FormData();
+        fd.append('file', file);
+        fd.append('upload_preset', clConfig.preset);
+
+        const res  = await fetch(`https://api.cloudinary.com/v1_1/${clConfig.cloud}/image/upload`, { method: 'POST', body: fd });
+        const data = await res.json();
+
+        if (data.secure_url) {
+          galeriePhotos.push({ id: 'ph-' + Date.now() + '-' + done, url: data.secure_url, legende: '' });
+        } else {
+          toast('❌ Erreur upload : ' + (data.error?.message || 'inconnue'));
+        }
+      } catch(err) {
+        toast('❌ Erreur réseau : ' + err.message);
+      }
+      done++;
+    }
+
+    progressBar.style.width = '100%';
+    progressLabel.textContent = `${done} photo(s) uploadée(s)`;
+    setTimeout(() => { progressWrap.style.display = 'none'; progressBar.style.width = '0%'; }, 1800);
+
+    await saveGalerie();
+    renderGalerieAdmin();
+  }
+
+  // ── RENDER ──
+  function renderGalerieAdmin() {
+    const grid = document.getElementById('galerie-admin-grid');
+    document.getElementById('galerie-count').textContent = galeriePhotos.length;
+    document.getElementById('galerie-save-btn').style.display = galeriePhotos.length ? 'inline-block' : 'none';
+
+    if (galeriePhotos.length === 0) {
+      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;padding:3rem;">
+        <div class="empty-state-icon">🖼️</div>
+        <div class="empty-state-text">Aucune photo · Uploadez votre première image ci-dessus</div>
+      </div>`;
+      return;
+    }
+
+    grid.innerHTML = galeriePhotos.map((p, i) => `
+      <div class="galerie-admin-item" id="gitem-${i}"
+        draggable="true"
+        ondragstart="gDragStart(event, ${i})"
+        ondragover="gDragOver(event, ${i})"
+        ondrop="gDragDrop(event, ${i})"
+        ondragend="gDragEnd()">
+        <span class="drag-handle">⠿</span>
+        <img src="${p.url}" alt="${p.legende || ''}" loading="lazy" />
+        <button class="galerie-del-btn" onclick="deletePhoto(${i}, event)" title="Supprimer">✕</button>
+        <div class="galerie-admin-overlay">
+          <input class="galerie-legende-input" value="${p.legende || ''}" placeholder="Légende (optionnelle)"
+            oninput="galeriePhotos[${i}].legende = this.value"
+            onclick="event.stopPropagation()" />
+        </div>
+        ${i === 0 ? '<div style="position:absolute;top:.4rem;left:50%;transform:translateX(-50%);background:var(--or);color:var(--noir);font-size:.6rem;font-weight:700;letter-spacing:.1em;padding:.15rem .5rem;">COUVERTURE</div>' : ''}
+      </div>`
+    ).join('');
+  }
+
+  // ── RÉORDONNEMENT drag & drop ──
+  function gDragStart(e, i) {
+    dragSrcIdx = i;
+    e.dataTransfer.effectAllowed = 'move';
+    setTimeout(() => document.getElementById('gitem-' + i)?.classList.add('dragging'), 0);
+  }
+  function gDragOver(e, i) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    document.querySelectorAll('.galerie-admin-item').forEach(el => el.classList.remove('drag-target'));
+    document.getElementById('gitem-' + i)?.classList.add('drag-target');
+  }
+  function gDragDrop(e, i) {
+    e.preventDefault();
+    if (dragSrcIdx === null || dragSrcIdx === i) return;
+    const moved = galeriePhotos.splice(dragSrcIdx, 1)[0];
+    galeriePhotos.splice(i, 0, moved);
+    renderGalerieAdmin();
+    document.getElementById('galerie-save-btn').style.display = 'inline-block';
+  }
+  function gDragEnd() {
+    dragSrcIdx = null;
+    document.querySelectorAll('.galerie-admin-item').forEach(el => {
+      el.classList.remove('dragging', 'drag-target');
+    });
+  }
+
+  // ── SUPPRIMER ──
+  function deletePhoto(i, e) {
+    e.stopPropagation();
+    if (!confirm('Supprimer cette photo de la galerie ?')) return;
+    galeriePhotos.splice(i, 1);
+    saveGalerie();
+    renderGalerieAdmin();
+    toast('Photo supprimée');
+  }
+
+  // ── SAUVEGARDER ──
+  async function saveGalerie() {
+    await window.storage.set('zinc-galerie', JSON.stringify(galeriePhotos), true);
+    toast('✦ Galerie enregistrée');
+  }
+
+  // ── INIT ──
+  loadAll();
+  loadMenu();
+  loadGalerie();
+</script>
+</body>
+</html>

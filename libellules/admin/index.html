@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Administration — L'Abri des Libellules</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --deep: #1e1a16; --rich: #7a3f28; --mid: #c4714a; --warm: #d9876a;
+  --light: #e8b49a; --pale: #f5f0e8; --cream: #faf7f2; --gold: #c9a96e;
+  --gold-light: #e3caa0; --forest: #3d5a3e; --off-white: #faf7f2;
+  --line: #e5d9cb; --ok: #3f7d4f; --err: #b3402f;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{font-family:"Jost",system-ui,sans-serif;background:var(--pale);color:#3a2418;-webkit-tap-highlight-color:transparent}
+h1,h2,h3{font-family:"Cormorant Garamond",serif;font-weight:400}
+
+/* ---------- TOP BAR ---------- */
+#app{display:none}
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:.6rem;
+  padding:.7rem 1rem;padding-top:max(.7rem,env(safe-area-inset-top));
+  background:var(--deep);color:#fff;box-shadow:0 2px 14px rgba(30,26,22,.25)}
+.topbar .brand{font-family:"Cormorant Garamond",serif;color:var(--gold-light);font-size:.95rem;letter-spacing:.02em;line-height:1.1}
+.topbar .brand small{display:block;font-family:"Jost";font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--light)}
+.topbar .spacer{flex:1}
+.iconbtn{background:rgba(255,255,255,.08);border:1px solid rgba(201,169,110,.3);color:var(--gold-light);
+  width:40px;height:40px;border-radius:9px;display:grid;place-items:center;cursor:pointer;font-size:1.1rem;text-decoration:none}
+.iconbtn:active{transform:scale(.94)}
+.savebtn{display:inline-flex;align-items:center;gap:.45rem;background:var(--mid);border:1px solid var(--warm);
+  color:#fff;font-family:"Jost";font-weight:600;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:.65rem 1rem;border-radius:9px;cursor:pointer;transition:background .2s,opacity .2s}
+.savebtn:disabled{opacity:.45;cursor:default}
+.savebtn:not(:disabled):active{background:var(--warm)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--gold-light);display:none}
+body.dirty .dot{display:inline-block}
+
+/* ---------- TABS ---------- */
+.tabs{position:sticky;top:54px;z-index:20;display:flex;gap:.4rem;overflow-x:auto;padding:.6rem 1rem;
+  background:var(--off-white);border-bottom:1px solid var(--line);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{white-space:nowrap;border:1px solid var(--line);background:#fff;color:#7a4a32;font-family:"Jost";
+  font-weight:500;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:.55rem 1rem;border-radius:30px;cursor:pointer}
+.tab.active{background:var(--deep);color:var(--gold-light);border-color:var(--deep)}
+
+/* ---------- LAYOUT ---------- */
+.wrap{max-width:860px;margin:0 auto;padding:1.1rem 1rem 8rem}
+.panel{display:none}.panel.active{display:block}
+
+/* ---------- SOUS-ONGLETS "CONTENUS" ---------- */
+.subtabs{display:flex;gap:.4rem;overflow-x:auto;padding-bottom:.9rem;scrollbar-width:none;
+  scroll-snap-type:x proximity;
+  -webkit-mask-image:linear-gradient(to right,black 0,black calc(100% - 28px),transparent 100%);
+  mask-image:linear-gradient(to right,black 0,black calc(100% - 28px),transparent 100%)}
+.subtabs::-webkit-scrollbar{display:none}
+.subtab{scroll-snap-align:start;white-space:nowrap;border:1px solid var(--line);background:#fff;color:#7a4a32;font-family:"Jost";
+  font-weight:500;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:.55rem .9rem;border-radius:9px;cursor:pointer}
+.subtab.active{background:var(--mid);color:#fff;border-color:var(--mid)}
+#contenusBody .card{margin-bottom:0}
+
+/* ---------- MISE EN PAGE ORDINATEUR ---------- */
+@media(min-width:900px){
+  .wrap{max-width:96vw}
+  #panel-contenus.active{display:flex;align-items:flex-start;gap:2rem}
+  .subtabs{flex:0 0 210px;flex-direction:column;overflow:visible;padding-bottom:0;position:sticky;top:112px;
+  -webkit-mask-image:none;mask-image:none}
+  .subtab{text-align:left}
+  #contenusBody{flex:1;min-width:0}
+}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.1rem 1.25rem;margin-bottom:1.1rem;
+  box-shadow:0 1px 0 rgba(122,63,40,.03)}
+.card>h2{font-size:1.02rem;color:var(--rich);margin-bottom:.2rem}
+.card>.sub{font-family:"Cormorant Garamond",serif;font-style:italic;color:#9a6a4f;font-size:1.02rem;margin-bottom:1rem}
+.divider{height:1px;background:var(--line);margin:1rem 0}
+
+/* ---------- FIELDS ---------- */
+.field{margin-bottom:.95rem}
+.field>label{display:block;font-size:.64rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:#9a6a4f;margin-bottom:.4rem}
+.field>label .hint{display:block;text-transform:none;letter-spacing:normal;font-weight:400;font-size:.78rem;
+  font-family:"Cormorant Garamond",serif;font-style:italic;color:#b08a72;margin-top:.15rem}
+input[type=text],input[type=password],textarea,select{width:100%;font-family:"Cormorant Garamond",serif;
+  font-size:1.05rem;color:#3a2418;background:var(--off-white);border:1px solid var(--line);border-radius:9px;
+  padding:.7rem .85rem;outline:none;transition:border-color .15s,background .15s}
+input:focus,textarea:focus,select:focus{border-color:var(--mid);background:#fff}
+textarea{resize:vertical;line-height:1.5;min-height:84px}
+select{font-family:"Jost";font-size:.9rem;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239a6a4f'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right .6rem center;background-size:20px;padding-right:2.2rem}
+.row2{display:grid;grid-template-columns:1fr;gap:.6rem}
+@media(min-width:560px){.row2{grid-template-columns:1fr 1fr}}
+.switch-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.95rem}
+.switch-row input[type=checkbox]{width:auto}
+
+/* ---------- IMAGE SLOTS ---------- */
+.imgrow{display:flex;gap:.8rem;align-items:flex-start}
+.thumb{width:84px;height:84px;flex:0 0 auto;border-radius:10px;overflow:hidden;border:1px solid var(--line);
+  background:var(--pale);display:grid;place-items:center;color:#c69b80}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.imgctrl{flex:1;min-width:0;display:flex;flex-direction:column;gap:.5rem}
+.urlin{font-size:.85rem!important;font-family:"Jost"!important}
+
+/* ---------- BUTTONS ---------- */
+.btn{font-family:"Jost";font-weight:500;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--mid);background:var(--mid);color:#fff;border-radius:9px;padding:.6rem 1rem;cursor:pointer;transition:.15s}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:#fff;color:var(--rich)}
+.btn.small{padding:.5rem .8rem;font-size:.68rem}
+.btn.block{width:100%;justify-content:center;display:inline-flex;align-items:center;gap:.4rem}
+.addbtn{width:100%;border:1.5px dashed var(--warm);background:rgba(217,135,106,.08);color:var(--rich);
+  font-family:"Jost";font-weight:600;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:.8rem;border-radius:11px;cursor:pointer;margin-top:.3rem}
+.addbtn:active{background:rgba(217,135,106,.16)}
+
+/* ---------- LIST ITEMS ---------- */
+.item{border:1px solid var(--line);border-radius:12px;padding:.9rem;margin-bottom:.7rem;background:var(--off-white)}
+.item .head{display:flex;align-items:center;gap:.5rem;margin-bottom:.6rem}
+.item .head .num{font-family:"Cormorant Garamond",serif;color:var(--mid);font-size:.95rem}
+.item .head .spacer{flex:1}
+.minibtn{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:#fff;color:#7a4a32;
+  cursor:pointer;font-size:1rem;display:grid;place-items:center}
+.minibtn:active{transform:scale(.92)}
+.minibtn.del{color:var(--err);border-color:#e7b6ad}
+
+/* photos grid */
+.photogrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.7rem}
+.photocard{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+.photocard .ph{aspect-ratio:1;background:var(--pale)}
+.photocard .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.photocard .body{padding:.55rem}
+.photocard .body input{font-size:.78rem;padding:.45rem .55rem;margin-bottom:.4rem}
+.photocard .acts{display:flex;gap:.35rem}
+.photocard .acts .minibtn{flex:1;height:30px;font-size:.85rem}
+
+/* ---------- BANNERS / TOAST ---------- */
+.banner{display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;background:#fff7ec;border:1px solid var(--gold);
+  color:#8a5a1e;border-radius:11px;padding:.8rem 1rem;margin-bottom:1rem;font-size:.85rem;font-family:"Cormorant Garamond",serif;font-style:italic}
+.banner.warn{background:#fdecea;border-color:#e7b6ad;color:#9a3322}
+.banner .spacer{flex:1}
+#toast{position:fixed;left:50%;bottom:calc(1.4rem + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);
+  background:var(--deep);color:#fff;padding:.8rem 1.3rem;border-radius:30px;font-size:.85rem;letter-spacing:.03em;
+  opacity:0;pointer-events:none;transition:.3s;z-index:60;box-shadow:0 8px 30px rgba(0,0,0,.3);max-width:90vw;text-align:center}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast.err{background:var(--err)}
+
+/* sticky bottom save (mobile) */
+.savebar{position:fixed;left:0;right:0;bottom:0;z-index:25;display:flex;gap:.6rem;padding:.7rem 1rem;
+  padding-bottom:max(.7rem,env(safe-area-inset-bottom));background:rgba(250,247,242,.95);backdrop-filter:blur(8px);
+  border-top:1px solid var(--line)}
+.savebar .btn{flex:1;justify-content:center}
+.muted{font-size:.78rem;color:#9a6a4f;font-family:"Cormorant Garamond",serif;font-style:italic;margin-top:.5rem}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.8rem;background:var(--pale);padding:.15rem .4rem;border-radius:5px;word-break:break-all}
+</style>
+</head>
+<body>
+
+<!-- APP -->
+<div id="app">
+  <div class="topbar">
+    <div class="brand">Administration<small>L'Abri des Libellules</small></div>
+    <div class="spacer"></div>
+    <a class="iconbtn" id="viewSite" href="../index.html" target="_blank" title="Voir le site">↗</a>
+    <button class="savebtn" id="saveTop" disabled><span class="dot"></span>Enregistrer</button>
+  </div>
+
+  <div class="tabs">
+    <button class="tab" data-tab="galerie">Galerie</button>
+    <button class="tab active" data-tab="contenus">Contenus</button>
+    <button class="tab" data-tab="reglages">Réglages</button>
+  </div>
+
+  <div class="wrap">
+    <div id="cfgWarn"></div>
+    <div id="draftBanner"></div>
+
+    <div class="panel active" id="panel-contenus"></div>
+    <div class="panel" id="panel-galerie"></div>
+    <div class="panel" id="panel-reglages"></div>
+  </div>
+
+  <div class="savebar">
+    <button class="btn ghost" id="downloadBtn">⬇ content.json</button>
+    <button class="btn" id="saveBottom" disabled>Enregistrer</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+<input type="file" id="filePick" accept="image/*" hidden />
+<input type="file" id="multiPick" accept="image/*" multiple hidden />
+<input type="file" id="jsonPick" accept="application/json,.json" hidden />
+
+<script src="../config.js"></script>
+<script src="../site-core.js"></script>
+<script>
+const CFG = window.SITE_CONFIG || {};
+CFG.contentUrl = "../content.json";
+const DRAFT_KEY = "abri_admin_draft";
+let state = null, dirty = false;
+
+/* ---------- utils ---------- */
+const $ = (s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const escHtml = s => String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const escAttr = s => String(s??"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
+function getPath(o,p){return p.split(".").reduce((a,k)=>(a==null?a:a[k]),o);}
+function setPath(o,p,v){const k=p.split(".");const last=k.pop();let t=o;k.forEach(x=>t=t[x]);t[last]=v;}
+let toastT;
+function toast(msg,err){const t=$("#toast");t.textContent=msg;t.className=err?"err show":"show";
+  clearTimeout(toastT);toastT=setTimeout(()=>t.className="",2600);}
+function markDirty(){dirty=true;document.body.classList.add("dirty");$("#saveTop").disabled=false;$("#saveBottom").disabled=false;}
+window.addEventListener("beforeunload",e=>{if(dirty){e.preventDefault();e.returnValue="";}});
+
+/* ---------- Cloudinary upload (unsigned) ---------- */
+function cldReady(){return CFG.cloudName && CFG.cloudName!=="VOTRE_CLOUD_NAME" && CFG.uploadPreset && CFG.uploadPreset!=="VOTRE_UPLOAD_PRESET";}
+async function cldUpload(file){
+  if(!cldReady()) throw new Error("Cloudinary non configuré (voir Réglages).");
+  const fd=new FormData();
+  fd.append("file",file);
+  fd.append("upload_preset",CFG.uploadPreset);
+  if(CFG.folder) fd.append("folder",CFG.folder);
+  const res=await fetch(`https://api.cloudinary.com/v1_1/${CFG.cloudName}/image/upload`,{method:"POST",body:fd});
+  const d=await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error(d.error?.message||"Échec de l'envoi");
+  return d.secure_url;
+}
+
+/* ---------- BOOT ---------- */
+async function start(){
+  $("#app").style.display="block";
+  const remote = await loadContent();
+  state = remote || {};
+  if(!cldReady()){
+    $("#cfgWarn").innerHTML=`<div class="banner warn">⚠ Cloudinary n'est pas encore configuré : l'envoi de photos ne fonctionnera pas. Vous pouvez toujours coller une URL d'image directement. Pour activer l'envoi depuis le téléphone, renseignez <code>cloudName</code> et <code>uploadPreset</code> dans <code>config.js</code> (voir onglet Réglages).</div>`;
+  }
+  const draft = localStorage.getItem(DRAFT_KEY);
+  if(draft){
+    $("#draftBanner").innerHTML=`<div class="banner">Un brouillon non publié est enregistré sur cet appareil.
+      <span class="spacer"></span>
+      <button class="btn small" id="loadDraft">Reprendre</button>
+      <button class="btn small ghost" id="dropDraft">Ignorer</button></div>`;
+    $("#loadDraft").onclick=()=>{try{state=JSON.parse(draft);renderAll();markDirty();$("#draftBanner").innerHTML="";toast("Brouillon chargé");}catch(e){toast("Brouillon illisible",1);}};
+    $("#dropDraft").onclick=()=>{localStorage.removeItem(DRAFT_KEY);$("#draftBanner").innerHTML="";};
+  }
+  renderAll();
+}
+start();
+
+/* ---------- TABS ---------- */
+$$(".tab").forEach(t=>t.addEventListener("click",()=>{
+  $$(".tab").forEach(x=>x.classList.remove("active"));
+  $$(".panel").forEach(x=>x.classList.remove("active"));
+  t.classList.add("active");
+  $("#panel-"+t.dataset.tab).classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+}));
+
+/* ---------- generic field builders ---------- */
+function fTxt(label,path,opts={}){
+  const v=getPath(state,path);
+  const inp = opts.ta
+    ? `<textarea data-path="${path}" rows="${opts.rows||4}">${escHtml(v)}</textarea>`
+    : `<input type="text" data-path="${path}" value="${escAttr(v)}" placeholder="${escAttr(opts.ph||"")}">`;
+  return `<div class="field"><label>${label}${opts.hint?`<span class="hint">${opts.hint}</span>`:""}</label>${inp}</div>`;
+}
+function fImg(label,path){
+  const v=getPath(state,path)||"";
+  const tid="t_"+path.replace(/\W/g,"_");
+  return `<div class="field"><label>${label}</label><div class="imgrow">
+    <div class="thumb" id="${tid}">${v?`<img src="${escAttr(v)}">`:"<span>—</span>"}</div>
+    <div class="imgctrl">
+      <button class="btn small" data-upload="${path}" data-thumb="${tid}">Téléverser une photo…</button>
+      <input class="urlin" type="text" data-path="${path}" data-thumb="${tid}" value="${escAttr(v)}" placeholder="ou collez une URL / un chemin (ex: images/hero-bg.jpg)">
+    </div></div></div>`;
+}
+
+/* delegated input -> state (simple paths only) */
+document.addEventListener("input",e=>{
+  const el=e.target.closest("[data-path]");
+  if(!el||!state) return;
+  const val = el.type==="checkbox" ? el.checked : el.value;
+  setPath(state,el.dataset.path,val);
+  if(el.dataset.thumb){const t=$("#"+el.dataset.thumb);if(t)t.innerHTML=el.value?`<img src="${escAttr(el.value)}">`:"<span>—</span>";}
+  markDirty();
+});
+
+/* delegated upload buttons */
+let uploadCtx=null;
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-upload]");
+  if(!b) return;
+  uploadCtx={path:b.dataset.upload,thumb:b.dataset.thumb,btn:b};
+  $("#filePick").click();
+});
+$("#filePick").addEventListener("change",async e=>{
+  const f=e.target.files[0]; e.target.value="";
+  if(!f||!uploadCtx) return;
+  const {path,thumb,btn}=uploadCtx; const old=btn.textContent; btn.textContent="Envoi…"; btn.disabled=true;
+  try{
+    const url=await cldUpload(f);
+    setPath(state,path,url);
+    if(thumb)$("#"+thumb).innerHTML=`<img src="${escAttr(url)}">`;
+    const urlin=btn.parentElement.querySelector(".urlin"); if(urlin)urlin.value=url;
+    markDirty(); toast("Photo envoyée ✓");
+  }catch(err){toast(err.message,1);}
+  btn.textContent=old; btn.disabled=false;
+});
+
+/* ---------- RENDER: CONTENUS ---------- */
+const CONTENUS_SECTIONS = [
+  {key:"identite",  label:"Identité"},
+  {key:"hero",      label:"Bandeau d'accueil"},
+  {key:"intro",     label:"Bienvenue"},
+  {key:"amenities", label:"Confort"},
+  {key:"nature",    label:"Nature"},
+  {key:"pricing",   label:"Tarifs"},
+  {key:"location",  label:"Accès & lieu"},
+  {key:"contact",   label:"Contact"},
+  {key:"footer",    label:"Pied de page"},
+];
+let activeContenuSection = CONTENUS_SECTIONS[0].key;
+
+function renderContenus(){
+  const sections = {
+    identite: `
+      <div class="card">
+        <h2>Identité</h2><div class="sub">Nom affiché et signature du site</div>
+        ${fTxt("Nom du gîte","brand.name")}
+        ${fTxt("Accroche","brand.tagline",{hint:"Affichée sous le logo, en haut du site"})}
+      </div>`,
+    hero: `
+      <div class="card">
+        <h2>Bandeau d'accueil</h2><div class="sub">La grande image et le titre de la page d'accueil</div>
+        ${fImg("Image de fond (hero)","images.hero")}
+        ${fTxt("Étiquette","hero.tag",{hint:"Ex : Glamping · Dôme géodésique"})}
+        <div class="row2">${fTxt("Titre — ligne 1","hero.title1")}${fTxt("Titre — ligne 2 (en italique doré)","hero.title2")}</div>
+        ${fTxt("Sous-titre","hero.sub")}
+        ${fTxt("Texte du bouton de défilement","hero.scrollText")}
+      </div>`,
+    intro: `
+      <div class="card">
+        <h2>Bienvenue</h2><div class="sub">Section « Bienvenue » juste sous le bandeau d'accueil</div>
+        ${fTxt("Sur-titre","intro.label")}
+        ${fTxt("Citation","intro.quote",{ta:true,rows:2})}
+        ${fTxt("Paragraphe 1","intro.p1",{ta:true,hint:"Entourez un mot de *astérisques* pour le mettre en gras : *gîte insolite*"})}
+        ${fTxt("Paragraphe 2","intro.p2",{ta:true})}
+      </div>`,
+    amenities: `
+      <div class="card">
+        <h2>Confort</h2><div class="sub">Ce qui attend les voyageurs dans le dôme</div>
+        ${fTxt("Sur-titre","amenities.label")}
+        ${fTxt("Titre","amenities.title",{hint:"*mot* = italique doré"})}
+        ${listAmenities()}
+      </div>`,
+    nature: `
+      <div class="card">
+        <h2>Nature</h2><div class="sub">Présentation du territoire et activités à proximité</div>
+        ${fTxt("Sur-titre","nature.label")}
+        ${fTxt("Titre","nature.title",{hint:"*mot* = italique doré"})}
+        ${fTxt("Texte","nature.text",{ta:true})}
+        ${listStrings("nature.tags","Étiquettes nature","Ex : 🥾 Randonnées","+ Ajouter une étiquette")}
+      </div>`,
+    pricing: `
+      <div class="card">
+        <h2>Tarifs</h2><div class="sub">Prix, ce qui est inclus et lien de réservation</div>
+        ${fTxt("Sur-titre","pricing.label")}
+        ${fTxt("Titre","pricing.title")}
+        <div class="row2">
+          ${fTxt("Prix « à partir de »","pricing.priceFrom",{ph:"95"})}
+          ${fTxt("Période","pricing.pricePeriod",{ph:"par nuit / 2 personnes"})}
+        </div>
+        ${listStrings("pricing.includes","Ce qui est inclus","Ex : Linge de lit fourni","+ Ajouter une ligne")}
+        ${fTxt("Lien de réservation (Airbnb, etc.)","pricing.bookingUrl",{hint:"Utilisé aussi par le bouton de la section Contact"})}
+        ${fTxt("Texte du bouton","pricing.bookingText",{ph:"Voir les disponibilités"})}
+      </div>`,
+    location: `
+      <div class="card">
+        <h2>Accès & lieu</h2><div class="sub">Bloc « Comment nous trouver »</div>
+        ${fTxt("Sur-titre","location.label")}
+        ${fTxt("Titre","location.title",{hint:"*mot* = italique doré"})}
+        ${listLocation()}
+      </div>`,
+    contact: `
+      <div class="card">
+        <h2>Contact</h2><div class="sub">Bloc final d'appel à la réservation</div>
+        ${fTxt("Sur-titre","contact.label")}
+        ${fTxt("Titre","contact.title",{hint:"*mot* = italique doré"})}
+        ${fTxt("Texte d'intro","contact.text",{ta:true})}
+        ${fTxt("Texte du bouton de réservation","contact.bookingText",{ph:"Réserver sur Airbnb",hint:"Le lien utilisé est celui renseigné dans l'onglet Tarifs"})}
+        <div class="row2">
+          ${fTxt("E-mail de contact","contact.email")}
+          ${fTxt("Texte du bouton e-mail","contact.emailText",{ph:"Nous écrire"})}
+        </div>
+      </div>`,
+    footer: `
+      <div class="card">
+        <h2>Pied de page</h2><div class="sub">Bas de page et photo de mise en avant finale</div>
+        ${fTxt("Nom affiché","footer.logo")}
+        ${fTxt("Sous-titre","footer.sub")}
+        ${fTxt("Texte SEO (invisible)","footer.seoText",{ta:true,hint:"Non affiché à l'écran, aide au référencement local"})}
+        <div class="divider"></div>
+        ${fImg("Photo de mise en avant (bas de page)","photoFeature.url")}
+        ${fTxt("Texte affiché sur la photo","photoFeature.text",{ph:"Bonne arrivée 🌿"})}
+      </div>`,
+  };
+
+  $("#panel-contenus").innerHTML = `
+    <div class="subtabs" id="subtabsContenus">
+      ${CONTENUS_SECTIONS.map(s=>`<button class="subtab${s.key===activeContenuSection?" active":""}" data-sub="${s.key}">${s.label}</button>`).join("")}
+    </div>
+    <div id="contenusBody">${sections[activeContenuSection]}</div>`;
+
+  $$("#subtabsContenus .subtab").forEach(b=>b.addEventListener("click",()=>{
+    activeContenuSection = b.dataset.sub;
+    renderContenus();
+    $("#contenusBody").scrollIntoView({behavior:"smooth",block:"start"});
+  }));
+}
+
+/* ----- STRING LIST (generic: tags, includes…) ----- */
+function listStrings(path,label,ph,addLabel){
+  const arr=getPath(state,path)||setPathGet(path,[]);
+  const rows=arr.map((s,i)=>`<div class="item"><div class="head"><span class="num">${i+1}</span><span class="spacer"></span>
+    <button class="minibtn" onclick="moveArr('${path}',${i},-1)">↑</button>
+    <button class="minibtn" onclick="moveArr('${path}',${i},1)">↓</button>
+    <button class="minibtn del" onclick="rmArr('${path}',${i})">🗑</button></div>
+    <input type="text" value="${escAttr(s)}" placeholder="${escAttr(ph||"")}" oninput="upStr('${path}',${i},this.value)"></div>`).join("");
+  return `<div class="field"><label>${label}</label>${rows}
+    <button class="addbtn" onclick="addStr('${path}','')">${addLabel||"+ Ajouter"}</button></div>`;
+}
+
+/* ----- AMENITIES (icon,name,desc) ----- */
+function listAmenities(){
+  const arr=state.amenities.items||(state.amenities.items=[]);
+  const rows=arr.map((a,i)=>`<div class="item"><div class="head"><span class="num">${i+1}</span><span class="spacer"></span>
+    <button class="minibtn" onclick="moveArr('amenities.items',${i},-1)">↑</button>
+    <button class="minibtn" onclick="moveArr('amenities.items',${i},1)">↓</button>
+    <button class="minibtn del" onclick="rmArr('amenities.items',${i})">🗑</button></div>
+    <div class="row2" style="margin-bottom:.5rem">
+      <input type="text" value="${escAttr(a.icon)}" placeholder="Émoji (ex: 🔥)" oninput="upObj('amenities.items',${i},'icon',this.value)">
+      <input type="text" value="${escAttr(a.name)}" placeholder="Nom (ex: Poêle à bois)" oninput="upObj('amenities.items',${i},'name',this.value)">
+    </div>
+    <textarea rows="2" placeholder="Description" oninput="upObj('amenities.items',${i},'desc',this.value)">${escHtml(a.desc)}</textarea>
+  </div>`).join("");
+  return `<div class="field"><label>Éléments de confort</label>${rows}
+    <button class="addbtn" onclick="addObj('amenities.items',{icon:'',name:'',desc:''})">+ Ajouter un élément</button></div>`;
+}
+
+/* ----- LOCATION ITEMS (icon,title,text) ----- */
+function listLocation(){
+  const arr=state.location.items||(state.location.items=[]);
+  const rows=arr.map((it,i)=>`<div class="item"><div class="head"><span class="num">${i+1}</span><span class="spacer"></span>
+    <button class="minibtn" onclick="moveArr('location.items',${i},-1)">↑</button>
+    <button class="minibtn" onclick="moveArr('location.items',${i},1)">↓</button>
+    <button class="minibtn del" onclick="rmArr('location.items',${i})">🗑</button></div>
+    <div class="row2" style="margin-bottom:.5rem">
+      <input type="text" value="${escAttr(it.icon)}" placeholder="Émoji (ex: 📍)" oninput="upObj('location.items',${i},'icon',this.value)">
+      <input type="text" value="${escAttr(it.title)}" placeholder="Titre (ex: Ardèche (07))" oninput="upObj('location.items',${i},'title',this.value)">
+    </div>
+    <textarea rows="2" placeholder="Texte" oninput="upObj('location.items',${i},'text',this.value)">${escHtml(it.text)}</textarea>
+  </div>`).join("");
+  return `<div class="field"><label>Informations pratiques</label>${rows}
+    <button class="addbtn" onclick="addObj('location.items',{icon:'',title:'',text:''})">+ Ajouter une information</button></div>`;
+}
+
+/* ---------- RENDER: GALERIE ---------- */
+function renderGalerie(){
+  const g=state.gallery;
+  $("#panel-galerie").innerHTML=`
+  <div class="card">
+    <h2>Photos</h2><div class="sub">${(g.photos||[]).length} photo(s) — affichées dans l'ordre ci-dessous</div>
+    <button class="addbtn" id="addPhotos" style="margin-bottom:1rem">+ Ajouter des photos</button>
+    <div class="photogrid" id="photoGrid"></div>
+  </div>
+  <div class="card">
+    <h2>Textes de la galerie</h2><div class="sub">En-tête de la section galerie</div>
+    ${fTxt("Sur-titre","gallery.label")}
+    ${fTxt("Titre","gallery.title",{hint:"*mot* = italique doré"})}
+  </div>`;
+  renderPhotos();
+  $("#addPhotos").onclick=()=>$("#multiPick").click();
+}
+function renderPhotos(){
+  const photos=state.gallery.photos||(state.gallery.photos=[]);
+  $("#photoGrid").innerHTML = photos.map((p,i)=>`<div class="photocard">
+    <div class="ph">${p.url?`<img src="${escAttr(p.url)}" alt="">`:""}</div>
+    <div class="body">
+      <input type="text" value="${escAttr(p.label)}" placeholder="Légende (ex: Terrasse)" oninput="upObj('gallery.photos',${i},'label',this.value)">
+      <input type="text" value="${escAttr(p.alt)}" placeholder="Description SEO (alt)" oninput="upObj('gallery.photos',${i},'alt',this.value)">
+      <div class="acts">
+        <button class="minibtn" onclick="moveArr('gallery.photos',${i},-1)" title="Avancer">↑</button>
+        <button class="minibtn" onclick="moveArr('gallery.photos',${i},1)" title="Reculer">↓</button>
+        <button class="minibtn del" onclick="rmArr('gallery.photos',${i})" title="Supprimer">🗑</button>
+      </div>
+    </div></div>`).join("") || `<div class="muted">Aucune photo. Cliquez « Ajouter des photos ».</div>`;
+}
+$("#multiPick").addEventListener("change",async e=>{
+  const files=[...e.target.files]; e.target.value="";
+  if(!files.length) return;
+  if(!cldReady()){toast("Configurez Cloudinary d'abord (Réglages), ou ajoutez vos images sur le serveur puis collez leur chemin manuellement.",1);return;}
+  let done=0;
+  toast(`Envoi de ${files.length} photo(s)…`);
+  for(const f of files){
+    try{
+      const url=await cldUpload(f);
+      state.gallery.photos.push({id:"g"+Date.now()+Math.floor(Math.random()*999),url,label:"",alt:""});
+      done++; renderPhotos();
+    }catch(err){toast(err.message,1);}
+  }
+  markDirty(); toast(`${done} photo(s) ajoutée(s) ✓`);
+});
+
+/* ---------- RENDER: RÉGLAGES ---------- */
+function renderReglages(){
+  const mode = CFG.signEndpoint ? "Automatique (save.php)" : "Manuel (téléchargement)";
+  const acc = state.access || (state.access = {enabled:true,password:""});
+  $("#panel-reglages").innerHTML=`
+  <div class="card">
+    <h2>Protection du site</h2><div class="sub">Écran de mot de passe affiché aux visiteurs avant d'accéder au site</div>
+    <div class="switch-row">
+      <input type="checkbox" id="accEnabled" data-path="access.enabled" ${acc.enabled!==false?"checked":""}>
+      <label for="accEnabled" style="margin:0;text-transform:none;letter-spacing:normal;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:#3a2418">Activer la protection par mot de passe</label>
+    </div>
+    ${fTxt("Mot de passe du site","access.password",{hint:"Demandé aux visiteurs à l'arrivée sur le site — pas lié au mot de passe de cet espace admin"})}
+  </div>
+
+  <div class="card">
+    <h2>Configuration Cloudinary</h2><div class="sub">Définie dans le fichier <code>config.js</code></div>
+    <div class="field"><label>Cloud name</label><input type="text" value="${escAttr(CFG.cloudName||"")}" readonly></div>
+    <div class="field"><label>Upload preset (unsigned)</label><input type="text" value="${escAttr(CFG.uploadPreset||"")}" readonly></div>
+    <div class="field"><label>Dossier</label><input type="text" value="${escAttr(CFG.folder||"")}" readonly></div>
+    <div class="field"><label>Mode d'enregistrement</label><input type="text" value="${mode}" readonly></div>
+    <p class="muted">Pour modifier ces valeurs, éditez <code>config.js</code> à la racine du site.</p>
+  </div>
+
+  <div class="card">
+    <h2>Import / Export</h2><div class="sub">Sauvegarde manuelle du contenu</div>
+    <button class="btn block ghost" onclick="document.getElementById('jsonPick').click()" style="margin-bottom:.6rem">⬆ Importer un content.json</button>
+    <button class="btn block" onclick="downloadJson()">⬇ Exporter le content.json</button>
+    <p class="muted">L'export contient tous les textes, tarifs et la liste des photos.</p>
+  </div>`;
+}
+$("#jsonPick").addEventListener("change",e=>{
+  const f=e.target.files[0]; e.target.value=""; if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{try{state=JSON.parse(r.result);renderAll();markDirty();toast("Contenu importé ✓");}
+    catch(err){toast("Fichier JSON invalide",1);}};
+  r.readAsText(f);
+});
+
+/* ---------- array mutators (called from inline handlers) ---------- */
+function setPathGet(path,def){let v=getPath(state,path);if(v==null){setPath(state,path,def);v=def;}return v;}
+window.upStr=(path,i,val)=>{getPath(state,path)[i]=val;markDirty();};
+window.upObj=(path,i,key,val)=>{getPath(state,path)[i][key]=val;markDirty();};
+window.addStr=(path,val)=>{(getPath(state,path)||setPathGet(path,[])).push(val);markDirty();rerenderForPath(path);};
+window.addObj=(path,obj)=>{(getPath(state,path)||setPathGet(path,[])).push(JSON.parse(JSON.stringify(obj)));markDirty();rerenderForPath(path);};
+window.rmArr=(path,i)=>{getPath(state,path).splice(i,1);markDirty();rerenderForPath(path);};
+window.moveArr=(path,i,dir)=>{const a=getPath(state,path);const j=i+dir;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];markDirty();rerenderForPath(path);};
+function rerenderForPath(path){
+  if(path.startsWith("gallery.photos")) return renderPhotos();
+  if(path.startsWith("gallery")) return renderGalerie();
+  return renderContenus();
+}
+
+/* ---------- RENDER ALL ---------- */
+function renderAll(){ renderContenus(); renderGalerie(); renderReglages(); }
+
+/* ---------- SAVE ---------- */
+function normalize(){
+  (state.gallery.photos||[]).forEach((p,i)=>{if(!p.id)p.id="g"+i+Date.now();});
+}
+function downloadJson(){
+  normalize();
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="content.json";a.click();
+  URL.revokeObjectURL(a.href);
+}
+async function save(){
+  normalize();
+  const json=JSON.stringify(state,null,2);
+  localStorage.setItem(DRAFT_KEY,json);
+  if(CFG.signEndpoint){
+    $("#saveTop").disabled=true;$("#saveBottom").disabled=true;
+    try{
+      const res=await fetch(CFG.signEndpoint,{method:"POST",headers:{"Content-Type":"application/json","x-admin-token":CFG.saveToken||""},body:JSON.stringify({content:state})});
+      if(!res.ok) throw new Error("Serveur: "+res.status);
+      dirty=false;document.body.classList.remove("dirty");
+      localStorage.removeItem(DRAFT_KEY);
+      toast("Publié en ligne ✓");
+    }catch(err){toast("Échec publication : "+err.message,1);$("#saveTop").disabled=false;$("#saveBottom").disabled=false;}
+  }else{
+    downloadJson();
+    dirty=false;document.body.classList.remove("dirty");
+    toast("content.json téléchargé — placez-le sur votre site");
+  }
+}
+$("#saveTop").addEventListener("click",save);
+$("#saveBottom").addEventListener("click",save);
+$("#downloadBtn").addEventListener("click",downloadJson);
+</script>
+</body>
+</html>

@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Admin · Club Œnologie Découvertes</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://upload-widget.cloudinary.com/global/all.js" async></script>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --ink:#1B1440;--grape:#7A4BB0;--amber:#E2903F;--bordeaux:#7A1F3D;
+    --paper:#F7F2E7;--paper-2:#EFE6D3;--ink-soft:#4b4270;--line:rgba(27,20,64,.14);
+    --ok:#3f7d4f;--danger:#9c4a3c;
+  }
+  html{-webkit-text-size-adjust:100%}
+  body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--paper);line-height:1.5;padding-bottom:96px}
+
+  /* ── Topbar ── */
+  header{position:sticky;top:0;z-index:30;background:var(--ink);
+    padding:14px 18px;display:flex;align-items:center;gap:12px;
+    border-bottom:1px solid rgba(226,144,63,.3)}
+  .logo-dot{width:34px;height:34px;border-radius:50%;background:var(--amber);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    font-family:'Fraunces',serif;font-weight:700;color:var(--ink);font-size:.8rem}
+  header h1{font-family:'Fraunces',serif;font-size:1.02rem;color:var(--paper);font-weight:700;line-height:1.1}
+  header p{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amber)}
+
+  main{max-width:680px;margin:0 auto;padding:16px}
+
+  .intro{background:#fff;border:1px solid var(--line);border-left:3px solid var(--grape);
+    padding:14px 16px;margin-bottom:16px;font-size:.85rem;color:var(--ink-soft)}
+  .intro strong{color:var(--ink)}
+
+  /* ── Accordéon sections ── */
+  .section{background:#fff;border:1px solid var(--line);margin-bottom:12px;overflow:hidden}
+  .section > summary{list-style:none;cursor:pointer;padding:16px 18px;
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    font-family:'Fraunces',serif;font-size:1.02rem;font-weight:700;color:var(--ink);
+    -webkit-tap-highlight-color:transparent}
+  .section > summary::-webkit-details-marker{display:none}
+  .section > summary .chev{transition:transform .25s;color:var(--grape);font-size:1.1rem;flex-shrink:0}
+  .section[open] > summary .chev{transform:rotate(90deg)}
+  .section > summary:hover{background:#faf7f1}
+  .section-body{padding:4px 18px 20px}
+
+  /* ── Champs ── */
+  .field{margin-bottom:16px}
+  label.lbl{display:block;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-soft);font-weight:600;margin-bottom:6px}
+  input[type=text],input[type=email],input[type=tel],textarea,select{
+    width:100%;padding:12px 14px;border:1px solid var(--line);background:#fff;
+    font-family:'Inter',sans-serif;font-size:1rem;color:var(--ink);outline:none;
+    transition:border-color .2s;border-radius:8px}
+  input:focus,textarea:focus,select:focus{border-color:var(--grape)}
+  textarea{resize:vertical;min-height:84px;line-height:1.55}
+  .hint{font-size:.72rem;color:var(--ink-soft);opacity:.8;margin-top:5px}
+
+  /* ── Boutons ── */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;
+    padding:11px 18px;border:none;cursor:pointer;font-family:'Inter',sans-serif;
+    font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    transition:background .2s,opacity .2s;border-radius:100px}
+  .btn-accent{background:var(--ink);color:var(--paper)}
+  .btn-accent:hover{background:var(--grape)}
+  .btn-ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--grape);color:var(--grape)}
+  .btn-danger{background:transparent;color:var(--danger);border:1px solid rgba(156,74,60,.4)}
+  .btn-danger:hover{background:rgba(156,74,60,.08)}
+  .btn-sm{padding:8px 12px;font-size:.68rem}
+  .btn[disabled]{opacity:.45;cursor:not-allowed}
+
+  /* ── Cartes répétables (items) ── */
+  .repeat{border:1px solid var(--line);background:#faf7f1;padding:14px;margin-bottom:12px;position:relative;border-radius:10px}
+  .repeat .rowtop{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .repeat .rowtop .tag{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--grape);font-weight:700}
+  .repeat .reorder{display:flex;gap:6px}
+  .miniadd{margin-top:4px}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+
+  /* ── Barre d'enregistrement ── */
+  .savebar{position:fixed;bottom:0;left:0;right:0;z-index:40;
+    background:rgba(27,20,64,.96);backdrop-filter:blur(10px);
+    border-top:1px solid rgba(226,144,63,.3);
+    padding:12px 16px;display:flex;align-items:center;gap:12px}
+  .savebar .status{flex:1;min-width:0;font-size:.74rem;color:var(--paper)}
+  .savebar .status.dirty{color:var(--amber)}
+  .savebar .status.ok{color:#8fd09c}
+  .savebar .status.err{color:#e3a499}
+  .savebar .btn-accent{flex-shrink:0}
+
+  @media(min-width:920px){
+    main{max-width:1500px}
+    .workspace{display:grid;grid-template-columns:240px 1fr;gap:28px;align-items:start}
+    .tabs{display:flex;flex-direction:column;gap:2px;position:sticky;top:80px;
+      background:#fff;border:1px solid var(--line);padding:8px;border-radius:10px}
+    .tabs button{display:block;width:100%;text-align:left;border:none;background:none;
+      font-family:'Inter',sans-serif;font-size:.86rem;font-weight:600;color:var(--ink-soft);
+      padding:11px 13px;cursor:pointer;border-left:3px solid transparent;border-radius:6px;
+      transition:background .15s,color .15s,border-color .15s;line-height:1.3}
+    .tabs button:hover{background:#faf7f1;color:var(--ink)}
+    .tabs button.active{background:#faf7f1;color:var(--ink);border-left-color:var(--grape)}
+
+    .section{display:none;margin-bottom:0;border:none;background:transparent}
+    .section.is-active{display:block}
+    .section > summary{display:none}
+    .section-body{padding:0}
+
+    .section-body > div:has(> .repeat){display:grid;grid-template-columns:1fr 1fr;
+      gap:16px;align-items:start}
+    .repeat{margin-bottom:0}
+    .miniadd{margin-top:16px}
+  }
+  @media(max-width:919px){ .tabs{display:none} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-dot">CŒD</div>
+  <div>
+    <h1>Administration du site</h1>
+    <p>Club Œnologie Découvertes</p>
+  </div>
+</header>
+
+<main>
+  <div class="intro">
+    Modifiez les <strong>textes</strong> du site, puis touchez <strong>Enregistrer</strong>
+    en bas. Les changements sont publiés immédiatement sur les 4 pages.
+  </div>
+
+  <div class="workspace">
+    <nav class="tabs" id="tabs"></nav>
+    <div id="app"></div>
+  </div>
+</main>
+
+<div class="savebar">
+  <div class="status" id="status">Chargement…</div>
+  <button class="btn btn-accent" id="saveBtn" disabled>Enregistrer</button>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   ÉTAT
+═══════════════════════════════════════════════════════════ */
+let state = null;
+let dirty = false;
+
+const $app    = document.getElementById('app');
+const $status = document.getElementById('status');
+const $save   = document.getElementById('saveBtn');
+const $tabs   = document.getElementById('tabs');
+
+const mqDesktop = window.matchMedia('(min-width:920px)');
+let activeTab = 0;
+
+/* ── Helpers DOM ── */
+function el(tag, attrs={}, ...kids){
+  const n = document.createElement(tag);
+  for(const k in attrs){
+    if(k==='class') n.className = attrs[k];
+    else if(k==='html') n.innerHTML = attrs[k];
+    else if(k.startsWith('on')) n.addEventListener(k.slice(2), attrs[k]);
+    else if(attrs[k]!=null) n.setAttribute(k, attrs[k]);
+  }
+  kids.flat().forEach(c=>n.appendChild(typeof c==='string'?document.createTextNode(c):c));
+  return n;
+}
+function markDirty(){
+  dirty = true;
+  $save.disabled = false;
+  $status.className = 'status dirty';
+  $status.textContent = 'Modifications non enregistrées';
+}
+
+/* ── Champ texte lié à une valeur ── */
+function textField(labelTxt, value, onChange, {multiline=false, hint='', placeholder=''}={}){
+  const input = multiline
+    ? el('textarea',{placeholder})
+    : el('input',{type:'text',placeholder});
+  input.value = value ?? '';
+  input.addEventListener('input', ()=>{ onChange(input.value); markDirty(); });
+  const f = el('div',{class:'field'}, el('label',{class:'lbl'},labelTxt), input);
+  if(hint) f.appendChild(el('div',{class:'hint'},hint));
+  return f;
+}
+
+/* ── Champ multivaleur (liste séparée par des virgules) lié à un tableau ── */
+function tagsField(labelTxt, arr, onChange, {hint='Séparez plusieurs valeurs par une virgule.'}={}){
+  const input = el('input',{type:'text'});
+  input.value = (arr||[]).join(', ');
+  input.addEventListener('input', ()=>{
+    onChange(input.value.split(',').map(s=>s.trim()).filter(Boolean));
+    markDirty();
+  });
+  const f = el('div',{class:'field'}, el('label',{class:'lbl'},labelTxt), input);
+  if(hint) f.appendChild(el('div',{class:'hint'},hint));
+  return f;
+}
+
+/* ── Champ photo (upload Cloudinary + URL manuelle) ── */
+function photoField(labelTxt, value, onChange){
+  const f = el('div',{class:'field'}, el('label',{class:'lbl'},labelTxt));
+
+  const preview = el('div',{style:'margin-bottom:10px;'});
+  function drawPreview(){
+    preview.innerHTML = '';
+    if(value){
+      preview.appendChild(el('img',{src:value,alt:'',
+        style:'max-width:140px;max-height:140px;border-radius:10px;border:1px solid var(--line);display:block;'}));
+    }
+  }
+  drawPreview();
+  f.appendChild(preview);
+
+  const row = el('div',{style:'display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;'});
+  const uploadBtn = el('button',{class:'btn btn-ghost btn-sm',type:'button'},'📷 Uploader une photo');
+  const clearBtn = el('button',{class:'btn btn-ghost btn-sm',type:'button',style:value?'':'display:none;'},'Supprimer la photo');
+  row.appendChild(uploadBtn); row.appendChild(clearBtn);
+  f.appendChild(row);
+
+  uploadBtn.addEventListener('click', ()=>{
+    const cfg = (state.settings && state.settings.cloudinary) || {};
+    if(!cfg.cloudName || !cfg.uploadPreset){
+      alert('Configurez d\u2019abord le Cloud name et l\u2019Upload preset Cloudinary dans la section « Réglages ».');
+      return;
+    }
+    if(typeof cloudinary === 'undefined'){
+      alert('Le module Cloudinary n\u2019a pas pu se charger (vérifiez la connexion internet).');
+      return;
+    }
+    const widget = cloudinary.createUploadWidget(
+      { cloudName: cfg.cloudName, uploadPreset: cfg.uploadPreset, multiple:false, sources:['local','camera','url'] },
+      (error, result) => {
+        if(!error && result && result.event === 'success'){
+          value = result.info.secure_url;
+          onChange(value);
+          markDirty();
+          drawPreview();
+          clearBtn.style.display = '';
+        }
+      }
+    );
+    widget.open();
+  });
+
+  clearBtn.addEventListener('click', ()=>{
+    value = '';
+    onChange('');
+    markDirty();
+    drawPreview();
+    clearBtn.style.display = 'none';
+  });
+
+  return f;
+}
+
+/* ── Sélecteur générique ── */
+function selectField(labelTxt, value, options, onChange){
+  const sel = el('select');
+  options.forEach(([v,lab])=>{
+    const o = el('option',{value:v}, lab);
+    if(v===value) o.selected = true;
+    sel.appendChild(o);
+  });
+  sel.addEventListener('change', ()=>{ onChange(sel.value); markDirty(); });
+  return el('div',{class:'field'}, el('label',{class:'lbl'},labelTxt), sel);
+}
+
+/* ── Carte répétable générique ──
+   fields: fonction qui reçoit l'item et retourne un tableau d'éléments de champ */
+function repeatList(container, arr, tagLabel, buildFields, newItem){
+  const list = el('div');
+  function draw(){
+    list.innerHTML='';
+    arr.forEach((item,i)=>{
+      const card = el('div',{class:'repeat'});
+      card.appendChild(el('div',{class:'rowtop'},
+        el('span',{class:'tag'}, tagLabel+' '+(i+1)),
+        el('div',{class:'reorder'},
+          el('button',{class:'btn btn-ghost btn-sm',type:'button',disabled:i===0||null,
+            onclick:()=>{ [arr[i-1],arr[i]]=[arr[i],arr[i-1]]; markDirty(); draw(); } },'↑'),
+          el('button',{class:'btn btn-ghost btn-sm',type:'button',disabled:i===arr.length-1||null,
+            onclick:()=>{ [arr[i+1],arr[i]]=[arr[i],arr[i+1]]; markDirty(); draw(); } },'↓'),
+          el('button',{class:'btn btn-danger btn-sm',type:'button',
+            onclick:()=>{ if(confirm('Supprimer ?')){ arr.splice(i,1); markDirty(); draw(); } }},'Supprimer')
+        )));
+      buildFields(item, i).forEach(f=>card.appendChild(f));
+      list.appendChild(card);
+    });
+  }
+  draw();
+  container.appendChild(list);
+  container.appendChild(el('button',{class:'btn btn-ghost miniadd',type:'button',
+    onclick:()=>{ arr.push(newItem()); markDirty(); draw(); }},'+ Ajouter'));
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTIONS / ONGLETS
+═══════════════════════════════════════════════════════════ */
+function section(title, openFirst, buildBody){
+  const det = el('details',{class:'section'});
+  if(openFirst) det.open = true;
+  det.appendChild(el('summary',{}, el('span',{},title), el('span',{class:'chev'},'›')));
+  const body = el('div',{class:'section-body'});
+  buildBody(body);
+  det.appendChild(body);
+  return det;
+}
+function setupTabs(){
+  const sections = [...$app.querySelectorAll(':scope > .section')];
+  $tabs.innerHTML = '';
+  sections.forEach((sec, i)=>{
+    const title = sec.querySelector(':scope > summary > span')?.textContent || ('Section '+(i+1));
+    $tabs.appendChild(el('button',{type:'button',onclick:()=>setActive(i)}, title));
+  });
+  if(activeTab >= sections.length) activeTab = 0;
+  applyMode();
+}
+function setActive(i){
+  activeTab = i;
+  const sections = [...$app.querySelectorAll(':scope > .section')];
+  const btns = [...$tabs.children];
+  sections.forEach((s,idx)=>s.classList.toggle('is-active', idx===i));
+  btns.forEach((b,idx)=>b.classList.toggle('active', idx===i));
+}
+function applyMode(){
+  const sections = [...$app.querySelectorAll(':scope > .section')];
+  if(mqDesktop.matches){
+    sections.forEach(s=>s.open = true);
+    setActive(activeTab);
+  } else {
+    sections.forEach((s,idx)=>{ s.classList.remove('is-active'); s.open = (idx===0); });
+  }
+}
+mqDesktop.addEventListener('change', applyMode);
+
+/* ═══════════════════════════════════════════════════════════
+   RENDU DE TOUTES LES SECTIONS
+═══════════════════════════════════════════════════════════ */
+function render(){
+  $app.innerHTML = '';
+
+  /* ── RÉGLAGES ── */
+  $app.appendChild(section('Réglages', true, b=>{
+    b.appendChild(textField('Titre du site (onglet navigateur / SEO)', state.meta?.title,
+      v=>{ state.meta=state.meta||{}; state.meta.title=v; }));
+    b.appendChild(textField('Chemin du logo', state.logo,
+      v=>state.logo=v, {hint:'Chemin relatif (ex: assets/logo-cod.png) ou URL complète.'}));
+
+    b.appendChild(el('div',{style:'margin-top:26px;font-weight:700;font-family:Fraunces,serif;'},'Cloudinary (photos des exposants)'));
+    const cloud = state.settings = state.settings || {};
+    cloud.cloudinary = cloud.cloudinary || {};
+    b.appendChild(textField('Cloud name', cloud.cloudinary.cloudName, v=>cloud.cloudinary.cloudName=v,
+      {hint:'Identifiant de votre compte Cloudinary.'}));
+    b.appendChild(textField('Upload preset (non signé)', cloud.cloudinary.uploadPreset, v=>cloud.cloudinary.uploadPreset=v,
+      {hint:'À créer dans Cloudinary : Settings → Upload → Add upload preset, en mode "Unsigned". Tant que ces deux champs sont vides, l\u2019upload de photo est désactivé.'}));
+  }));
+
+  /* ── HERO (accueil) ── */
+  $app.appendChild(section('Bannière d’accueil', false, b=>{
+    const h = state.hero = state.hero || {};
+    b.appendChild(textField('Petit titre (au-dessus)', h.eyebrow, v=>h.eyebrow=v));
+    b.appendChild(textField('Titre principal', h.title, v=>h.title=v, {multiline:true,
+      hint:'Entourez un mot de *astérisques* pour le mettre en italique (ex: *raconté*).'}));
+    b.appendChild(textField('Phrase d’accroche', h.lede, v=>h.lede=v, {multiline:true}));
+    b.appendChild(el('div',{class:'grid2'},
+      textField('Bouton principal', h.ctaPrimary, v=>h.ctaPrimary=v),
+      textField('Bouton secondaire', h.ctaSecondary, v=>h.ctaSecondary=v)));
+    b.appendChild(el('div',{class:'grid2'},
+      textField('Cachet — chiffre', h.sealNum, v=>h.sealNum=v),
+      textField('Cachet — légende', h.sealLabel, v=>h.sealLabel=v)));
+  }));
+
+  /* ── STATS ── */
+  $app.appendChild(section('Chiffres clés', false, b=>{
+    state.stats = state.stats || [];
+    repeatList(b, state.stats, 'Chiffre',
+      (st)=>[ el('div',{class:'grid2'},
+        textField('Chiffre', st.num, v=>st.num=v),
+        textField('Légende', st.label, v=>st.label=v)) ],
+      ()=>({num:'',label:''}));
+  }));
+
+  /* ── EXPOSANTS (accueil) ── */
+  $app.appendChild(section('Exposants — bloc accueil', false, b=>{
+    const x = state.exposantsHome = state.exposantsHome || {};
+    b.appendChild(textField('Petit titre', x.tag, v=>x.tag=v));
+    b.appendChild(textField('Titre', x.title, v=>x.title=v));
+    b.appendChild(textField('Introduction', x.intro, v=>x.intro=v, {multiline:true}));
+    x.cards = x.cards || [];
+    const wrap = el('div',{style:'margin-top:14px'});
+    repeatList(wrap, x.cards, 'Carte',
+      (card)=>[
+        el('div',{class:'grid2'},
+          textField('Icône (1 lettre/symbole)', card.icon, v=>card.icon=v),
+          textField('Titre', card.title, v=>card.title=v)),
+        textField('Texte', card.text, v=>card.text=v, {multiline:true}),
+        el('div',{class:'grid2'},
+          textField('Texte du lien', card.linkText, v=>card.linkText=v),
+          textField('Lien (URL)', card.linkHref, v=>card.linkHref=v))
+      ],
+      ()=>({icon:'',title:'',text:'',linkText:'En savoir plus →',linkHref:'#'}));
+    b.appendChild(wrap);
+  }));
+
+  /* ── ACTIVITÉS ── */
+  $app.appendChild(section('Activités du club', false, b=>{
+    const a = state.activites = state.activites || {};
+    b.appendChild(textField('Petit titre', a.tag, v=>a.tag=v));
+    b.appendChild(textField('Titre', a.title, v=>a.title=v));
+    b.appendChild(textField('Introduction', a.intro, v=>a.intro=v, {multiline:true}));
+    a.panels = a.panels || [];
+    const wrap = el('div',{style:'margin-top:14px'});
+    repeatList(wrap, a.panels, 'Panneau',
+      (p)=>[
+        textField('Petite légende manuscrite', p.tagline, v=>p.tagline=v),
+        textField('Titre', p.title, v=>p.title=v),
+        textField('Texte', p.text, v=>p.text=v, {multiline:true}),
+        el('div',{class:'grid2'},
+          textField('Bouton', p.cta, v=>p.cta=v),
+          textField('Lien (URL)', p.href, v=>p.href=v))
+      ],
+      ()=>({variant:'voyages',tagline:'',title:'',text:'',cta:'',href:'#'}));
+    b.appendChild(wrap);
+  }));
+
+  /* ── ÉQUIPE (aperçu accueil) ── */
+  $app.appendChild(section('Équipe — bloc accueil', false, b=>{
+    const eq = state.equipeHome = state.equipeHome || {};
+    b.appendChild(textField('Petit titre', eq.tag, v=>eq.tag=v));
+    b.appendChild(textField('Titre', eq.title, v=>eq.title=v));
+    b.appendChild(textField('Introduction', eq.intro, v=>eq.intro=v, {multiline:true}));
+    eq.members = eq.members || [];
+    const wrap = el('div',{style:'margin-top:14px'});
+    repeatList(wrap, eq.members, 'Membre',
+      (m)=>[ el('div',{class:'grid3'},
+        textField('Initiales', m.initials, v=>m.initials=v),
+        textField('Nom', m.name, v=>m.name=v),
+        textField('Rôle', m.role, v=>m.role=v)) ],
+      ()=>({initials:'',name:'',role:''}));
+    b.appendChild(wrap);
+  }));
+
+  /* ── PRESSE (aperçu accueil) ── */
+  $app.appendChild(section('Presse — bloc accueil', false, b=>{
+    const pr = state.presseHome = state.presseHome || {};
+    b.appendChild(textField('Petit titre', pr.tag, v=>pr.tag=v));
+    b.appendChild(textField('Titre', pr.title, v=>pr.title=v));
+    b.appendChild(textField('Introduction', pr.intro, v=>pr.intro=v, {multiline:true}));
+    pr.items = pr.items || [];
+    const wrap = el('div',{style:'margin-top:14px'});
+    repeatList(wrap, pr.items, 'Article',
+      (it)=>[ el('div',{class:'grid3'},
+        textField('Source', it.source, v=>it.source=v),
+        textField('Titre court', it.text, v=>it.text=v),
+        textField('Date', it.date, v=>it.date=v)) ],
+      ()=>({source:'',text:'',date:''}));
+    b.appendChild(wrap);
+  }));
+
+  /* ── CONTACT & PIED DE PAGE ── */
+  $app.appendChild(section('Contact & pied de page', false, b=>{
+    const ct = state.contact = state.contact || {};
+    b.appendChild(el('div',{class:'grid2'},
+      textField('Lien Facebook', ct.facebook, v=>ct.facebook=v),
+      textField('Lien Instagram', ct.instagram, v=>ct.instagram=v)));
+    b.appendChild(textField('Lien Mentions légales', ct.mentionsLegales, v=>ct.mentionsLegales=v));
+    b.appendChild(textField('Message d’avertissement (pied de page)', ct.warning, v=>ct.warning=v, {multiline:true}));
+  }));
+
+  /* ══════════════ PAGE ÉQUIPE ══════════════ */
+  $app.appendChild(section('Page « L’équipe »', false, b=>{
+    const p = state.equipePage = state.equipePage || {};
+    b.appendChild(textField('Petit titre (haut de page)', p.eyebrow, v=>p.eyebrow=v));
+    b.appendChild(textField('Titre de la page', p.title, v=>p.title=v));
+    b.appendChild(textField('Introduction', p.intro, v=>p.intro=v, {multiline:true}));
+
+    // Bureau
+    const bureau = p.bureau = p.bureau || {};
+    b.appendChild(el('div',{style:'margin-top:22px;font-weight:700;font-family:Fraunces,serif;'},'Le bureau'));
+    b.appendChild(textField('Petit titre', bureau.tag, v=>bureau.tag=v));
+    b.appendChild(textField('Titre', bureau.title, v=>bureau.title=v));
+    b.appendChild(textField('Introduction', bureau.intro, v=>bureau.intro=v, {multiline:true}));
+    bureau.members = bureau.members || [];
+    const bWrap = el('div',{style:'margin-top:10px'});
+    repeatList(bWrap, bureau.members, 'Membre du bureau',
+      (m)=>[
+        el('div',{class:'grid3'},
+          textField('Initiales', m.initials, v=>m.initials=v),
+          textField('Couleur (variable CSS)', m.color, v=>m.color=v, {hint:'ex: var(--grape)'}),
+          textField('Nom', m.name, v=>m.name=v)),
+        textField('Rôle', m.role, v=>m.role=v),
+        textField('Texte', m.text, v=>m.text=v, {multiline:true})
+      ],
+      ()=>({initials:'',color:'var(--ink)',name:'',role:'',text:''}));
+    b.appendChild(bWrap);
+
+    // Invités
+    const guests = p.guests = p.guests || {};
+    b.appendChild(el('div',{style:'margin-top:26px;font-weight:700;font-family:Fraunces,serif;'},'Invités d’honneur'));
+    b.appendChild(textField('Petit titre', guests.tag, v=>guests.tag=v));
+    b.appendChild(textField('Titre', guests.title, v=>guests.title=v));
+    b.appendChild(textField('Introduction', guests.intro, v=>guests.intro=v, {multiline:true}));
+    guests.items = guests.items || [];
+    const gWrap = el('div',{style:'margin-top:10px'});
+    repeatList(gWrap, guests.items, 'Invité',
+      (g)=>[
+        el('div',{class:'grid2'},
+          textField('Légende manuscrite', g.tagline, v=>g.tagline=v),
+          textField('Nom', g.name, v=>g.name=v)),
+        textField('Rôle', g.role, v=>g.role=v),
+        textField('Texte', g.text, v=>g.text=v, {multiline:true})
+      ],
+      ()=>({tagline:'',name:'',role:'',text:''}));
+    b.appendChild(gWrap);
+
+    // Bénévoles
+    const benevoles = p.benevoles = p.benevoles || {};
+    b.appendChild(el('div',{style:'margin-top:26px;font-weight:700;font-family:Fraunces,serif;'},'Bénévoles du week-end'));
+    b.appendChild(textField('Petit titre', benevoles.tag, v=>benevoles.tag=v));
+    b.appendChild(textField('Titre', benevoles.title, v=>benevoles.title=v));
+    b.appendChild(textField('Introduction', benevoles.intro, v=>benevoles.intro=v, {multiline:true}));
+    benevoles.items = benevoles.items || [];
+    const bnWrap = el('div',{style:'margin-top:10px'});
+    repeatList(bnWrap, benevoles.items, 'Bénévole',
+      (v0)=>[ el('div',{class:'grid3'},
+        textField('Initiales', v0.initials, v=>v0.initials=v),
+        textField('Nom', v0.name, v=>v0.name=v),
+        textField('Depuis', v0.since, v=>v0.since=v)) ],
+      ()=>({initials:'',name:'',since:''}));
+    b.appendChild(bnWrap);
+
+    // Rejoindre
+    const join = p.join = p.join || {};
+    b.appendChild(el('div',{style:'margin-top:26px;font-weight:700;font-family:Fraunces,serif;'},'Bloc « Rejoindre l’équipe »'));
+    b.appendChild(textField('Titre', join.title, v=>join.title=v));
+    b.appendChild(textField('Texte', join.text, v=>join.text=v, {multiline:true}));
+    b.appendChild(textField('Bouton', join.cta, v=>join.cta=v));
+  }));
+
+  /* ══════════════ PAGE EXPOSANTS ══════════════ */
+  $app.appendChild(section('Page « Exposants »', false, b=>{
+    const p = state.exposantsPage = state.exposantsPage || {};
+    b.appendChild(textField('Petit titre (haut de page)', p.eyebrow, v=>p.eyebrow=v));
+    b.appendChild(textField('Titre de la page', p.title, v=>p.title=v));
+    b.appendChild(textField('Introduction', p.intro, v=>p.intro=v, {multiline:true}));
+    p.list = p.list || [];
+    b.appendChild(el('div',{class:'hint',style:'margin:14px 0'},
+      p.list.length+' exposants. Le type détermine le badge et le filtre sur la page. La région et les appellations sont utilisées comme filtres.'));
+    const wrap = el('div');
+    repeatList(wrap, p.list, 'Exposant',
+      (x)=>[
+        el('div',{class:'grid2'},
+          textField('Nom', x.nom, v=>x.nom=v),
+          selectField('Type', x.type, [['Vigneron','Vigneron'],['Producteur','Producteur']], v=>x.type=v)),
+        textField('Région (laisser vide pour un producteur)', x.region, v=>x.region=v),
+        tagsField('Appellations (laisser vide pour un producteur)', x.appellations, v=>x.appellations=v),
+        textField('Description', x.desc, v=>x.desc=v, {multiline:true}),
+        photoField('Photo', x.photo, v=>x.photo=v),
+        el('div',{style:'margin-top:6px;font-weight:700;font-family:Fraunces,serif;font-size:0.92rem;'},'Fiche détaillée (fenêtre au clic sur la vignette)'),
+        el('div',{class:'hint',style:'margin-bottom:10px;'},'Seuls les champs renseignés seront affichés sur le site.'),
+        textField('Nom complet', x.nomComplet, v=>x.nomComplet=v, {hint:'Si différent du nom affiché sur la vignette.'}),
+        textField('Adresse', x.adresse, v=>x.adresse=v, {multiline:true}),
+        el('div',{class:'grid2'},
+          textField('Téléphone', x.telephone, v=>x.telephone=v),
+          textField('E-mail', x.email, v=>x.email=v)),
+        textField('Site web', x.siteWeb, v=>x.siteWeb=v)
+      ],
+      ()=>({nom:'',type:'Vigneron',region:'',appellations:[],desc:'',
+            nomComplet:'',adresse:'',telephone:'',email:'',siteWeb:'',photo:''}));
+    b.appendChild(wrap);
+  }));
+
+  /* ══════════════ PAGE PRESSE ══════════════ */
+  $app.appendChild(section('Page « Presse »', false, b=>{
+    const p = state.pressePage = state.pressePage || {};
+    b.appendChild(textField('Petit titre (haut de page)', p.eyebrow, v=>p.eyebrow=v));
+    b.appendChild(textField('Titre de la page', p.title, v=>p.title=v));
+    b.appendChild(textField('Introduction', p.intro, v=>p.intro=v, {multiline:true}));
+
+    const kit = p.kit = p.kit || {};
+    b.appendChild(el('div',{style:'margin-top:22px;font-weight:700;font-family:Fraunces,serif;'},'Bloc « Kit presse »'));
+    b.appendChild(textField('Titre', kit.title, v=>kit.title=v));
+    b.appendChild(textField('Texte', kit.text, v=>kit.text=v, {multiline:true}));
+    b.appendChild(textField('Bouton', kit.cta, v=>kit.cta=v));
+
+    p.articles = p.articles || [];
+    b.appendChild(el('div',{style:'margin-top:26px;font-weight:700;font-family:Fraunces,serif;'},'Articles'));
+    b.appendChild(el('div',{class:'hint',style:'margin:8px 0 14px'},
+      'L’année (« Annee ») pilote les boutons de filtre sur la page — utilisez 4 chiffres (ex: 2026).'));
+    const wrap = el('div');
+    repeatList(wrap, p.articles, 'Article',
+      (a)=>[
+        el('div',{class:'grid3'},
+          textField('Source', a.source, v=>a.source=v),
+          textField('Date (jj/mm/aaaa)', a.date, v=>a.date=v),
+          textField('Année', a.annee, v=>a.annee=v)),
+        textField('Titre de l’article', a.titre, v=>a.titre=v),
+        textField('Résumé', a.resume, v=>a.resume=v, {multiline:true})
+      ],
+      ()=>({source:'',titre:'',date:'',annee:'',resume:''}));
+    b.appendChild(wrap);
+  }));
+
+  setupTabs();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CHARGEMENT / ENREGISTREMENT
+═══════════════════════════════════════════════════════════ */
+async function load(){
+  try{
+    const res = await fetch('content.json?_='+Date.now());
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    state = await res.json();
+    render();
+    $status.className = 'status';
+    $status.textContent = 'Prêt';
+    $save.disabled = true;
+  }catch(e){
+    $status.className = 'status err';
+    $status.textContent = 'Impossible de charger content.json';
+    $app.appendChild(el('div',{class:'intro',style:'border-left-color:var(--danger)'},
+      'Vérifiez que content.json se trouve dans le même dossier que cette page.'));
+  }
+}
+
+$save.addEventListener('click', async ()=>{
+  $save.disabled = true;
+  $status.className = 'status';
+  $status.textContent = 'Enregistrement…';
+  try{
+    const res = await fetch('save.php', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(state)
+    });
+    const out = await res.json();
+    if(!res.ok || !out.ok) throw new Error(out.error || ('HTTP '+res.status));
+    dirty = false;
+    $status.className = 'status ok';
+    $status.textContent = '✓ Enregistré — le site est à jour';
+  }catch(e){
+    $status.className = 'status err';
+    $status.textContent = 'Échec : '+e.message;
+    $save.disabled = false;
+  }
+});
+
+window.addEventListener('beforeunload', e=>{
+  if(dirty){ e.preventDefault(); e.returnValue=''; }
+});
+
+load();
+</script>
+</body>
+</html>

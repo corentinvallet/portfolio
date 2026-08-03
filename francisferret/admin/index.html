@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Administration — Francis Ferret</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="../css/theme.css" />
+        <link rel="stylesheet" href="../css/admin.css" />
+</head>
+<body>
+
+<!-- APP -->
+<div id="app">
+  <div class="topbar">
+    <div class="brand">Administration<small>Francis Ferret</small></div>
+    <div class="spacer"></div>
+    <a class="iconbtn" id="viewSite" href="../index.html" target="_blank" title="Voir le site">↗</a>
+    <button class="savebtn" id="saveTop" disabled><span class="dot"></span>Enregistrer</button>
+  </div>
+
+  <div class="tabs">
+    <button class="tab" data-tab="galerie">Galerie</button>
+    <button class="tab active" data-tab="contenus">Contenus</button>
+    <button class="tab" data-tab="reglages">Réglages</button>
+  </div>
+
+  <div class="wrap">
+    <div id="cfgWarn"></div>
+    <div id="draftBanner"></div>
+
+    <div class="panel active" id="panel-contenus"></div>
+    <div class="panel" id="panel-galerie"></div>
+    <div class="panel" id="panel-reglages"></div>
+  </div>
+
+  <div class="savebar">
+    <button class="btn ghost" id="downloadBtn">⬇ content.json</button>
+    <button class="btn" id="saveBottom" disabled>Enregistrer</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+<input type="file" id="filePick" accept="image/*" hidden />
+<input type="file" id="multiPick" accept="image/*" multiple hidden />
+<input type="file" id="jsonPick" accept="application/json,.json" hidden />
+
+<script src="../config.js"></script>
+<script src="../site-core.js"></script>
+<script>
+const CFG = window.SITE_CONFIG || {};
+CFG.contentUrl = "../content.json";
+const DRAFT_KEY = "ff_admin_draft";
+let state = null, dirty = false;
+
+/* ---------- utils ---------- */
+const $ = (s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const escHtml = s => String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const escAttr = s => String(s??"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
+function getPath(o,p){return p.split(".").reduce((a,k)=>(a==null?a:a[k]),o);}
+function setPath(o,p,v){const k=p.split(".");const last=k.pop();let t=o;k.forEach(x=>t=t[x]);t[last]=v;}
+async function sha256(str){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(str));
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("");}
+function slug(s){return String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+  .replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")||("cat"+Date.now());}
+let toastT;
+function toast(msg,err){const t=$("#toast");t.textContent=msg;t.className=err?"err show":"show";
+  clearTimeout(toastT);toastT=setTimeout(()=>t.className="",2600);}
+function markDirty(){dirty=true;document.body.classList.add("dirty");$("#saveTop").disabled=false;$("#saveBottom").disabled=false;}
+window.addEventListener("beforeunload",e=>{if(dirty){e.preventDefault();e.returnValue="";}});
+
+/* ---------- Cloudinary upload (unsigned) ---------- */
+function cldReady(){return CFG.cloudName && CFG.cloudName!=="VOTRE_CLOUD_NAME" && CFG.uploadPreset && CFG.uploadPreset!=="VOTRE_UPLOAD_PRESET";}
+async function cldUpload(file){
+  if(!cldReady()) throw new Error("Cloudinary non configuré (voir Réglages).");
+  const fd=new FormData();
+  fd.append("file",file);
+  fd.append("upload_preset",CFG.uploadPreset);
+  if(CFG.folder) fd.append("folder",CFG.folder);
+  const res=await fetch(`https://api.cloudinary.com/v1_1/${CFG.cloudName}/image/upload`,{method:"POST",body:fd});
+  const d=await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error(d.error?.message||"Échec de l'envoi");
+  return d.secure_url;
+}
+
+/* ---------- BOOT ---------- */
+async function start(){
+  $("#app").style.display="block";
+  const remote = await loadContent();
+  state = remote || {};
+  // config warning
+  if(!cldReady()){
+    $("#cfgWarn").innerHTML=`<div class="banner warn">⚠ Cloudinary n'est pas encore configuré : l'envoi de photos ne fonctionnera pas. Renseignez <code>cloudName</code> et <code>uploadPreset</code> dans <code>config.js</code> (onglet Réglages).</div>`;
+  }
+  // local draft?
+  const draft = localStorage.getItem(DRAFT_KEY);
+  if(draft){
+    $("#draftBanner").innerHTML=`<div class="banner">Un brouillon non publié est enregistré sur cet appareil.
+      <span class="spacer"></span>
+      <button class="btn small" id="loadDraft">Reprendre</button>
+      <button class="btn small ghost" id="dropDraft">Ignorer</button></div>`;
+    $("#loadDraft").onclick=()=>{try{state=JSON.parse(draft);renderAll();markDirty();$("#draftBanner").innerHTML="";toast("Brouillon chargé");}catch(e){toast("Brouillon illisible",1);}};
+    $("#dropDraft").onclick=()=>{localStorage.removeItem(DRAFT_KEY);$("#draftBanner").innerHTML="";};
+  }
+  renderAll();
+}
+start();
+
+/* ---------- TABS ---------- */
+$$(".tab").forEach(t=>t.addEventListener("click",()=>{
+  $$(".tab").forEach(x=>x.classList.remove("active"));
+  $$(".panel").forEach(x=>x.classList.remove("active"));
+  t.classList.add("active");
+  $("#panel-"+t.dataset.tab).classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+}));
+
+/* ---------- generic field builders ---------- */
+function fTxt(label,path,opts={}){
+  const v=getPath(state,path);
+  const inp = opts.ta
+    ? `<textarea data-path="${path}" rows="${opts.rows||4}">${escHtml(v)}</textarea>`
+    : `<input type="text" data-path="${path}" value="${escAttr(v)}" placeholder="${escAttr(opts.ph||"")}">`;
+  return `<div class="field"><label>${label}${opts.hint?`<span class="hint">${opts.hint}</span>`:""}</label>${inp}</div>`;
+}
+function fImg(label,path){
+  const v=getPath(state,path)||"";
+  const tid="t_"+path.replace(/\W/g,"_");
+  return `<div class="field"><label>${label}</label><div class="imgrow">
+    <div class="thumb" id="${tid}">${v?`<img src="${escAttr(v)}">`:"<span>—</span>"}</div>
+    <div class="imgctrl">
+      <button class="btn small" data-upload="${path}" data-thumb="${tid}">Téléverser une photo…</button>
+      <input class="urlin" type="text" data-path="${path}" data-thumb="${tid}" value="${escAttr(v)}" placeholder="ou collez une URL">
+    </div></div></div>`;
+}
+
+/* delegated input -> state (simple paths only) */
+document.addEventListener("input",e=>{
+  const el=e.target.closest("[data-path]");
+  if(!el||!state) return;
+  setPath(state,el.dataset.path,el.value);
+  if(el.dataset.thumb){const t=$("#"+el.dataset.thumb);if(t)t.innerHTML=el.value?`<img src="${escAttr(el.value)}">`:"<span>—</span>";}
+  markDirty();
+});
+
+/* delegated upload buttons */
+let uploadCtx=null;
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-upload]");
+  if(!b) return;
+  uploadCtx={path:b.dataset.upload,thumb:b.dataset.thumb,btn:b};
+  $("#filePick").click();
+});
+$("#filePick").addEventListener("change",async e=>{
+  const f=e.target.files[0]; e.target.value="";
+  if(!f||!uploadCtx) return;
+  const {path,thumb,btn}=uploadCtx; const old=btn.textContent; btn.textContent="Envoi…"; btn.disabled=true;
+  try{
+    const url=await cldUpload(f);
+    setPath(state,path,url);
+    if(thumb)$("#"+thumb).innerHTML=`<img src="${escAttr(url)}">`;
+    const urlin=btn.parentElement.querySelector(".urlin"); if(urlin)urlin.value=url;
+    markDirty(); toast("Photo envoyée ✓");
+  }catch(err){toast(err.message,1);}
+  btn.textContent=old; btn.disabled=false;
+});
+
+/* ---------- RENDER: CONTENUS ---------- */
+const CONTENUS_SECTIONS = [
+  {key:"identite",    label:"Identité"},
+  {key:"hero",        label:"Bandeau d'accueil"},
+  {key:"portrait",    label:"Portrait"},
+  {key:"prestations", label:"Prestations"},
+  {key:"evenements",  label:"Événements"},
+  {key:"parcours",    label:"Parcours"},
+  {key:"contact",     label:"Contact"},
+];
+let activeContenuSection = CONTENUS_SECTIONS[0].key;
+
+function renderContenus(){
+  const c=state;
+  const sections = {
+    identite: `
+      <div class="card">
+        <h2>Identité</h2><div class="sub">Nom affiché et signatures du site</div>
+        ${fTxt("Nom","brand.name")}
+        ${fTxt("Accroche","brand.tagline")}
+      </div>`,
+    hero: `
+      <div class="card">
+        <h2>Bandeau d'accueil</h2><div class="sub">La grande image et le titre de la page d'accueil</div>
+        ${fImg("Image de fond (hero)","images.hero")}
+        <div class="row2">${fTxt("Titre — ligne 1","hero.title1")}${fTxt("Titre — ligne 2","hero.title2")}</div>
+        ${fTxt("Sous-titre","hero.sub")}
+        ${fTxt("Texte du bouton","hero.cta")}
+        ${listBadges()}
+      </div>`,
+    portrait: `
+      <div class="card">
+        <h2>Portrait</h2><div class="sub">Section « Portrait » de l'accueil</div>
+        ${fImg("Photo du portrait","images.portrait")}
+        ${fTxt("Sur-titre","about.label")}
+        ${fTxt("Titre","about.title",{hint:"Entourez un mot de *astérisques* pour le mettre en italique doré : *Francis* Ferret"})}
+        ${fTxt("Paragraphe 1","about.p1",{ta:true})}
+        ${fTxt("Paragraphe 2","about.p2",{ta:true})}
+        ${listStats("about.stats")}
+      </div>`,
+    prestations: `
+      <div class="card">
+        <h2>Prestations</h2><div class="sub">Les 3 domaines mis en avant</div>
+        ${fTxt("Sur-titre","savoir.label")}
+        ${fTxt("Titre","savoir.title",{hint:"*mot* = italique doré"})}
+        ${listCards()}
+      </div>`,
+    evenements: `
+      <div class="card">
+        <h2>Événements</h2><div class="sub">Agenda & réalisations</div>
+        ${fTxt("Sur-titre","evenements.label")}
+        ${fTxt("Titre","evenements.title",{hint:"*mot* = italique doré"})}
+        ${listEvents()}
+      </div>`,
+    parcours: `
+      <div class="card">
+        <h2>Parcours</h2><div class="sub">Biographie</div>
+        ${fTxt("Sur-titre","parcours.label")}
+        ${fTxt("Titre","parcours.title",{hint:"*mot* = italique doré"})}
+        ${fTxt("Paragraphe 1","parcours.p1",{ta:true,rows:5})}
+        ${fTxt("Paragraphe 2","parcours.p2",{ta:true,rows:5})}
+        ${listStats("parcours.stats")}
+      </div>`,
+    contact: `
+      <div class="card">
+        <h2>Contact</h2><div class="sub">Coordonnées et formulaire</div>
+        ${fTxt("Sur-titre","contact.label")}
+        ${fTxt("Titre","contact.title",{hint:"*mot* = italique doré"})}
+        ${fTxt("Texte d'intro","contact.text",{ta:true})}
+        ${listRows()}
+        ${listSubjects()}
+        ${fTxt("Adresse Formspree","contact.formspreeEndpoint",{hint:"URL de votre formulaire Formspree pour recevoir les messages"})}
+        ${fTxt("Message de confirmation","contact.successMessage")}
+      </div>`,
+  };
+
+  $("#panel-contenus").innerHTML = `
+    <div class="subtabs" id="subtabsContenus">
+      ${CONTENUS_SECTIONS.map(s=>`<button class="subtab${s.key===activeContenuSection?" active":""}" data-sub="${s.key}">${s.label}</button>`).join("")}
+    </div>
+    <div id="contenusBody">${sections[activeContenuSection]}</div>`;
+
+  $$("#subtabsContenus .subtab").forEach(b=>b.addEventListener("click",()=>{
+    activeContenuSection = b.dataset.sub;
+    renderContenus();
+    $("#contenusBody").scrollIntoView({behavior:"smooth",block:"start"});
+  }));
+}
+
+/* ----- BADGES (string array) ----- */
+function listBadges(){
+  const arr=state.hero.badges||(state.hero.badges=[]);
+  const rows=arr.map((b,i)=>`<div class="item"><div class="head"><span class="num">●</span>
+    <input type="text" value="${escAttr(b)}" oninput="upStr('hero.badges',${i},this.value)" style="flex:1">
+    <button class="minibtn del" onclick="rmArr('hero.badges',${i})">🗑</button></div></div>`).join("");
+  return `<div class="field"><label>Badges</label>${rows}
+    <button class="addbtn" onclick="addStr('hero.badges','Nouveau badge')">+ Ajouter un badge</button></div>`;
+}
+/* ----- STATS (num,label) ----- */
+function listStats(path){
+  const arr=getPath(state,path)||setPathGet(path,[]);
+  const rows=arr.map((s,i)=>`<div class="item"><div class="head"><span class="num">${i+1}</span><span class="spacer"></span>
+    <button class="minibtn" onclick="moveArr('${path}',${i},-1)">↑</button>
+    <button class="minibtn" onclick="moveArr('${path}',${i},1)">↓</button>
+    <button class="minibtn del" onclick="rmArr('${path}',${i})">🗑</button></div>
+    <div class="row2">
+      <input type="text" value="${escAttr(s.num)}" placeholder="2 x / 10+" oninput="upObj('${path}',${i},'num',this.value)">
+      <input type="text" value="${escAttr(s.label)}" placeholder="Libellé" oninput="upObj('${path}',${i},'label',this.value)">
+    </div></div>`).join("");
+  return `<div class="field"><label>Chiffres clés</label>${rows}
+    <button class="addbtn" onclick="addObj('${path}',{num:'',label:''})">+ Ajouter un chiffre</button></div>`;
+}
+/* ----- PRESTATION CARDS ----- */
+function listCards(){
+  const arr=state.savoir.cards||(state.savoir.cards=[]);
+  const rows=arr.map((card,i)=>{
+    const tid="cardimg_"+i;
+    return `<div class="item"><div class="head"><span class="num">${i+1}</span><span class="spacer"></span>
+      <button class="minibtn" onclick="moveArr('savoir.cards',${i},-1)">↑</button>
+      <button class="minibtn" onclick="moveArr('savoir.cards',${i},1)">↓</button>
+      <button class="minibtn del" onclick="rmArr('savoir.cards',${i})">🗑</button></div>
+      <div class="imgrow" style="margin-bottom:.6rem">
+        <div class="thumb" id="${tid}">${card.iconUrl?`<img src="${escAttr(card.iconUrl)}">`:"<span>icône</span>"}</div>
+        <div class="imgctrl">
+          <button class="btn small" data-upload="savoir.cards.${i}.iconUrl" data-thumb="${tid}">Téléverser l'icône…</button>
+          <input class="urlin" type="text" value="${escAttr(card.iconUrl)}" data-thumb="${tid}"
+            oninput="upObj('savoir.cards',${i},'iconUrl',this.value);document.getElementById('${tid}').innerHTML=this.value?'<img src=\\''+this.value+'\\'>':'<span>icône</span>'" placeholder="URL de l'icône">
+        </div></div>
+      <input type="text" value="${escAttr(card.name)}" placeholder="Titre" oninput="upObj('savoir.cards',${i},'name',this.value)" style="margin-bottom:.5rem">
+      <textarea rows="3" placeholder="Description" oninput="upObj('savoir.cards',${i},'desc',this.value)">${escHtml(card.desc)}</textarea>
+    </div>`;}).join("");
+  return `<div class="field"><label>Cartes</label>${rows}
+    <button class="addbtn" onclick="addObj('savoir.cards',{iconUrl:'',name:'',desc:''})">+ Ajouter une prestation</button></div>`;
+}
+/* ----- EVENTS ----- */
+function listEvents(){
+  const arr=state.evenements.items||(state.evenements.items=[]);
+  const rows=arr.map((it,i)=>`<div class="item"><div class="head"><span class="num">${i+1}</span><span class="spacer"></span>
+    <button class="minibtn" onclick="moveArr('evenements.items',${i},-1)">↑</button>
+    <button class="minibtn" onclick="moveArr('evenements.items',${i},1)">↓</button>
+    <button class="minibtn del" onclick="rmArr('evenements.items',${i})">🗑</button></div>
+    <input type="text" value="${escAttr(it.name)}" placeholder="Nom de l'événement" oninput="upObj('evenements.items',${i},'name',this.value)" style="margin-bottom:.5rem">
+    <textarea rows="3" placeholder="Description" oninput="upObj('evenements.items',${i},'detail',this.value)" style="margin-bottom:.5rem">${escHtml(it.detail)}</textarea>
+    <input type="text" value="${escAttr(it.tag)}" placeholder="Étiquette (ex: Compétition)" oninput="upObj('evenements.items',${i},'tag',this.value)">
+  </div>`).join("");
+  return `<div class="field"><label>Liste des événements</label>${rows}
+    <button class="addbtn" onclick="addObj('evenements.items',{name:'',detail:'',tag:''})">+ Ajouter un événement</button></div>`;
+}
+/* ----- CONTACT ROWS ----- */
+function listRows(){
+  const arr=state.contact.rows||(state.contact.rows=[]);
+  const labels=["📍 Lieu","📞 Téléphone","✉ E-mail"];
+  const rows=arr.map((r,i)=>`<div class="item"><div class="head"><span class="num">${labels[i]||"Ligne "+(i+1)}</span><span class="spacer"></span>
+    <button class="minibtn del" onclick="rmArr('contact.rows',${i})">🗑</button></div>
+    <input type="text" value="${escAttr(r)}" oninput="upStr('contact.rows',${i},this.value)"></div>`).join("");
+  return `<div class="field"><label>Coordonnées (3 lignes max recommandées)</label>${rows}
+    <button class="addbtn" onclick="addStr('contact.rows','')">+ Ajouter une ligne</button></div>`;
+}
+/* ----- SUBJECTS ----- */
+function listSubjects(){
+  const arr=state.contact.subjects||(state.contact.subjects=[]);
+  const rows=arr.map((s,i)=>`<div class="item"><div class="head"><span class="num">●</span>
+    <input type="text" value="${escAttr(s)}" oninput="upStr('contact.subjects',${i},this.value)" style="flex:1">
+    <button class="minibtn del" onclick="rmArr('contact.subjects',${i})">🗑</button></div></div>`).join("");
+  return `<div class="field"><label>Types de demande (menu déroulant)</label>${rows}
+    <button class="addbtn" onclick="addStr('contact.subjects','')">+ Ajouter un type</button></div>`;
+}
+
+/* ---------- RENDER: GALERIE ---------- */
+function renderGalerie(){
+  const g=state.galerie;
+  $("#panel-galerie").innerHTML=`
+
+  <div class="card">
+    <h2>Photos</h2><div class="sub">${(g.photos||[]).length} œuvre(s) —  les trois premières de la liste servent d'aperçu d'accueil</div>
+    <button class="addbtn" id="addPhotos" style="margin-bottom:1rem">+ Ajouter des photos</button>
+    <div class="photogrid" id="photoGrid"></div>
+  </div>
+  <div class="card">
+    <h2>Catégories</h2><div class="sub">Servent à filtrer les œuvres</div>
+    <div id="catList"></div>
+    <div class="row2" style="margin-top:.4rem">
+      <input type="text" id="newCat" placeholder="Nouvelle catégorie (ex: Mobilier)">
+      <button class="btn" onclick="addCategory()">Ajouter</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Textes de la galerie</h2><div class="sub">En-tête de la page galerie et de l'aperçu d'accueil</div>
+    ${fTxt("Titre (accueil)","galerie.title",{hint:"*mot* = italique doré"})}
+    ${fTxt("Bouton (accueil)","galerie.ctaPreview")}
+    <div class="divider"></div>
+    ${fTxt("Sur-titre (page galerie)","galerie.heroLabel")}
+    ${fTxt("Titre (page galerie)","galerie.heroTitle",{hint:"*mot* = italique doré"})}
+    ${fTxt("Sous-titre (page galerie)","galerie.heroSub")}
+  </div>`;
+  renderCats(); renderPhotos();
+  $("#addPhotos").onclick=()=>$("#multiPick").click();
+}
+function renderCats(){
+  const cats=state.galerie.categories||(state.galerie.categories=[]);
+  $("#catList").innerHTML = cats.map((cat,i)=>`<div class="item"><div class="head">
+    <span class="num">${escHtml(cat.key)}</span><span class="spacer"></span>
+    <button class="minibtn del" onclick="rmCategory(${i})">🗑</button></div>
+    <input type="text" value="${escAttr(cat.label)}" placeholder="Nom affiché" oninput="upObj('galerie.categories',${i},'label',this.value)">
+  </div>`).join("") || `<div class="muted">Aucune catégorie.</div>`;
+}
+function renderPhotos(){
+  const cats=state.galerie.categories||[];
+  const photos=state.galerie.photos||(state.galerie.photos=[]);
+  const opts=p=>cats.map(c=>`<option value="${escAttr(c.key)}" ${p.cat===c.key?"selected":""}>${escHtml(c.label)}</option>`).join("");
+  $("#photoGrid").innerHTML = photos.map((p,i)=>`<div class="photocard">
+    <div class="ph">${p.url?`<img src="${escAttr(p.url)}" alt="">`:""}</div>
+    <div class="body">
+      <input type="text" value="${escAttr(p.alt)}" placeholder="Description (alt)" oninput="upObj('galerie.photos',${i},'alt',this.value)">
+      <select onchange="upObj('galerie.photos',${i},'cat',this.value)">${opts(p)}</select>
+      <div class="acts">
+        <button class="minibtn" onclick="moveArr('galerie.photos',${i},-1)" title="Avancer">↑</button>
+        <button class="minibtn" onclick="moveArr('galerie.photos',${i},1)" title="Reculer">↓</button>
+        <button class="minibtn del" onclick="rmArr('galerie.photos',${i})" title="Supprimer">🗑</button>
+      </div>
+    </div></div>`).join("") || `<div class="muted">Aucune photo. Cliquez « Ajouter des photos ».</div>`;
+}
+$("#multiPick").addEventListener("change",async e=>{
+  const files=[...e.target.files]; e.target.value="";
+  if(!files.length) return;
+  if(!cldReady()){toast("Configurez Cloudinary d'abord (Réglages)",1);return;}
+  const cat=(state.galerie.categories[0]||{}).key||"";
+  let done=0;
+  toast(`Envoi de ${files.length} photo(s)…`);
+  for(const f of files){
+    try{
+      const url=await cldUpload(f);
+      state.galerie.photos.push({id:"p"+Date.now()+Math.floor(Math.random()*999),url,cat,alt:""});
+      done++; renderPhotos();
+    }catch(err){toast(err.message,1);}
+  }
+  markDirty(); toast(`${done} photo(s) ajoutée(s) ✓`);
+});
+
+/* ---------- RENDER: RÉGLAGES ---------- */
+function renderReglages(){
+  const mode = CFG.signEndpoint ? "Automatique (Cloudinary)" : "Manuel (téléchargement)";
+  $("#panel-reglages").innerHTML=`
+  <div class="card">
+    <h2>Configuration actuelle</h2><div class="sub">Définie dans le fichier <code>config.js</code></div>
+    <div class="field"><label>Cloud name</label><input type="text" value="${escAttr(CFG.cloudName||"")}" readonly></div>
+    <div class="field"><label>Upload preset (unsigned)</label><input type="text" value="${escAttr(CFG.uploadPreset||"")}" readonly></div>
+    <div class="field"><label>Dossier</label><input type="text" value="${escAttr(CFG.folder||"")}" readonly></div>
+    <div class="field"><label>Mode d'enregistrement</label><input type="text" value="${mode}" readonly></div>
+    <p class="muted">Pour modifier ces valeurs, éditez <code>config.js</code> à la racine du site.</p>
+  </div>
+
+  <div class="card">
+    <div class="field"><label>Nouveau mot de passe</label><input type="text" id="pwGen" placeholder="Tapez un mot de passe"></div>
+    <button class="btn" onclick="genHash()">Générer l'empreinte</button>
+    <div class="hashout" id="hashOut"></div>
+  </div>
+
+  <div class="card">
+    <h2>Import / Export</h2><div class="sub">Sauvegarde manuelle du contenu</div>
+    <button class="btn block ghost" onclick="document.getElementById('jsonPick').click()" style="margin-bottom:.6rem">⬆ Importer un content.json</button>
+    <button class="btn block" onclick="downloadJson()">⬇ Exporter le content.json</button>
+    <p class="muted">L'export contient tous les textes et la liste des photos.</p>
+  </div>`;
+}
+function genHash(){
+  const v=$("#pwGen").value; if(!v){toast("Saisissez un mot de passe",1);return;}
+  sha256(v).then(h=>{const o=$("#hashOut");o.style.display="block";
+    o.innerHTML=`adminPasswordSha256: "<b>${h}</b>"`;toast("Empreinte générée — copiez-la dans config.js");});
+}
+$("#jsonPick").addEventListener("change",e=>{
+  const f=e.target.files[0]; e.target.value=""; if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{try{state=JSON.parse(r.result);renderAll();markDirty();toast("Contenu importé ✓");}
+    catch(err){toast("Fichier JSON invalide",1);}};
+  r.readAsText(f);
+});
+
+/* ---------- array mutators (called from inline handlers) ---------- */
+function setPathGet(path,def){let v=getPath(state,path);if(v==null){setPath(state,path,def);v=def;}return v;}
+window.upStr=(path,i,val)=>{getPath(state,path)[i]=val;markDirty();};
+window.upObj=(path,i,key,val)=>{getPath(state,path)[i][key]=val;markDirty();};
+window.addStr=(path,val)=>{(getPath(state,path)||setPathGet(path,[])).push(val);markDirty();rerenderForPath(path);};
+window.addObj=(path,obj)=>{(getPath(state,path)||setPathGet(path,[])).push(JSON.parse(JSON.stringify(obj)));markDirty();rerenderForPath(path);};
+window.rmArr=(path,i)=>{getPath(state,path).splice(i,1);markDirty();rerenderForPath(path);};
+window.moveArr=(path,i,dir)=>{const a=getPath(state,path);const j=i+dir;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];markDirty();rerenderForPath(path);};
+function rerenderForPath(path){
+  if(path.startsWith("galerie.photos")) return renderPhotos();
+  if(path.startsWith("galerie.categories")){renderCats();renderPhotos();return;}
+  if(path.startsWith("galerie")) return renderGalerie();
+  return renderContenus();
+}
+window.addCategory=()=>{
+  const lab=$("#newCat").value.trim(); if(!lab){toast("Nom requis",1);return;}
+  state.galerie.categories.push({key:slug(lab),label:lab}); $("#newCat").value="";
+  markDirty(); renderCats(); renderPhotos(); toast("Catégorie ajoutée");
+};
+window.rmCategory=(i)=>{
+  const cats=state.galerie.categories; const removed=cats[i].key;
+  cats.splice(i,1);
+  const fallback=(cats[0]||{}).key||"";
+  (state.galerie.photos||[]).forEach(p=>{if(p.cat===removed)p.cat=fallback;});
+  markDirty(); renderCats(); renderPhotos();
+};
+
+/* ---------- RENDER ALL ---------- */
+function renderAll(){ renderContenus(); renderGalerie(); renderReglages(); }
+
+/* ---------- SAVE ---------- */
+function normalize(){
+  (state.galerie.photos||[]).forEach((p,i)=>{if(!p.id)p.id="p"+i+Date.now();});
+}
+function downloadJson(){
+  normalize();
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="content.json";a.click();
+  URL.revokeObjectURL(a.href);
+}
+async function save(){
+  normalize();
+  const json=JSON.stringify(state,null,2);
+  localStorage.setItem(DRAFT_KEY,json);
+  if(CFG.signEndpoint){
+    $("#saveTop").disabled=true;$("#saveBottom").disabled=true;
+    try{
+      const res=await fetch(CFG.signEndpoint,{method:"POST",headers:{"Content-Type":"application/json","x-admin-token":CFG.saveToken||""},body:JSON.stringify({content:state})});
+      if(!res.ok) throw new Error("Serveur: "+res.status);
+      dirty=false;document.body.classList.remove("dirty");
+      localStorage.removeItem(DRAFT_KEY);
+      toast("Publié en ligne ✓ (Cloudinary)");
+    }catch(err){toast("Échec publication : "+err.message,1);$("#saveTop").disabled=false;$("#saveBottom").disabled=false;}
+  }else{
+    downloadJson();
+    dirty=false;document.body.classList.remove("dirty");
+    toast("content.json téléchargé — placez-le sur votre site");
+  }
+}
+$("#saveTop").addEventListener("click",save);
+$("#saveBottom").addEventListener("click",save);
+$("#downloadBtn").addEventListener("click",downloadJson);
+</script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+{
+    "brand": {
+        "name": "L'Abri des Libellules",
+        "tagline": "Saint-Romain-de-Lerps · Ardèche"
+    },
+    "images": {
+        "hero": "images/hero-bg.jpg"
+    },
+    "hero": {
+        "tag": "Glamping · Dôme géodésique",
+        "title1": "L'Abri des",
+        "title2": "Libellules",
+        "sub": "Saint-Romain-de-Lerps, Ardèche · 07",
+        "scrollText": "Découvrir"
+    },
+    "intro": {
+        "label": "Bienvenue",
+        "quote": "Un cocon de nature, suspendu entre forêt et ciel.",
+        "p1": "Au cœur de l'Ardèche verte, à Saint-Romain-de-Lerps (07), L'Abri des Libellules est un *gîte insolite* qui vous invite à une parenthèse hors du temps. Nichée dans la verdure à 20 min de Valence, notre *dôme géodésique en Ardèche* allie le confort d'un hébergement chaleureux à la magie d'une immersion en pleine nature.",
+        "p2": "Que vous veniez chercher le silence, la lumière des étoiles ou simplement la chaleur d'un poêle à bois en pleine forêt ardéchoise — vous êtes ici chez vous. Un *gîte nature en Ardèche* unique, idéal pour un week-end en amoureux ou une escapade ressourçante."
+    },
+    "gallery": {
+        "label": "Découvrez",
+        "title": "Le dôme géodésique *en images*",
+        "photos": [
+            {
+                "id": "g1785091798081231",
+                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1785092188/abri-des-libellules/ijvk4abj0wjmb2qyrabu.jpg",
+                "label": "Cuisine",
+                "alt": "Expace cuisine"
+            },
+            {
+                "id": "g1785091813297514",
+                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1785092203/abri-des-libellules/pkwemif38s0grwnitfpd.jpg",
+                "label": "Entrée dôme",
+                "alt": "Entrée du dôme"
+            },
+            {
+                "id": "g1785091832324669",
+                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1785092222/abri-des-libellules/kuzyxpwhhac2shdbhnjf.jpg",
+                "label": "Coin salon",
+                "alt": "Au sein de la chambre, coin salon"
+            },
+            {
+                "id": "g1785091895729808",
+                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1785092286/abri-des-libellules/ynjaizujcwz0w7gs9q5a.jpg",
+                "label": "Cuisine",
+                "alt": "Espace cuisine avec évier"
+            },
+            {
+                "id": "g1785091874651523",
+                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1785092265/abri-des-libellules/w3dgjqqhlor1jrob4t56.jpg",
+                "label": "Poêle à bois",
+                "alt": "Mode de chauffage au bois"
+            },
+            {
+                "id": "g1785091924236392",
+                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1785092314/abri-des-libellules/onbr9w9cyksl84bvnmyg.jpg",
+                "label": "Toilettes",
+                "alt": "Toilettes sèches"
+            },
+            {
+                "id": "g1785091934696821",
+                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1785092325/abri-des-libellules/b9nubfayezxjwfyqkz2l.jpg",
+                "label": "Terrasse",
+                "alt": "Terrasse - Espace repas"
+            },
+            {
+                "id": "g1785091951456399",
+                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1785092341/abri-des-libellules/guy3dxsmdlikvzpdcnxq.jpg",
+                "label": "Dôme",
+                "alt": "Dôme géodésique"
+            },
+            {
+                "id": "g1785091977005493",
+                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1785092367/abri-des-libellules/wpmdxlvvu28kwh5vew6f.jpg",
+                "label": "Boîte à clefs",
+                "alt": "Mode de retrait - Boîte à clefs"
+            }
+        ]
+    },
+    "amenities": {
+        "label": "Le confort",
+        "title": "Votre gîte en Ardèche — ce qui vous *attend*",
+        "items": [
+            {
+                "icon": "🔥",
+                "name": "Poêle à bois",
+                "desc": "Poêle à bûches avec vitre — chaleur et ambiance garanties"
+            },
+            {
+                "icon": "🛏",
+                "name": "Lit double",
+                "desc": "Grand lit confortable sous la coupole"
+            },
+            {
+                "icon": "☕",
+                "name": "Cuisine équipée",
+                "desc": "Nespresso, bouilloire, micro-ondes, réfrigérateur, plaque induction"
+            },
+            {
+                "icon": "🚿",
+                "name": "Douche chaude",
+                "desc": "Douche extérieure avec chauffe-eau à gaz"
+            },
+            {
+                "icon": "🌿",
+                "name": "Toilettes sèches",
+                "desc": "Dans un abri en bois, au cœur de la nature"
+            },
+            {
+                "icon": "🌅",
+                "name": "Terrasse bois",
+                "desc": "Salon extérieur, transats, table & chaises"
+            }
+        ]
+    },
+    "nature": {
+        "label": "La nature",
+        "title": "Gîte en Ardèche, *grandeur nature*",
+        "text": "Saint-Romain-de-Lerps offre une vue panoramique exceptionnelle sur les Alpes, le Massif Central et le Rhône. Le village est un point de départ idéal pour explorer l'Ardèche à pied, à vélo ou en voiture.",
+        "tags": [
+            "🥾 Randonnées",
+            "🌄 Panoramas",
+            "🦋 Biodiversité",
+            "⭐ Ciel étoilé",
+            "🍷 Vignobles",
+            "🏞 Gorges"
+        ]
+    },
+    "pricing": {
+        "label": "Tarifs",
+        "title": "Réservez votre gîte à Saint-Romain-de-Lerps",
+        "priceFrom": "75",
+        "pricePeriod": "par nuit / 2 personnes",
+        "includes": [
+            "Nuit dans le dôme géodésique",
+            "Linge de lit fourni",
+            "Bois pour le poêle inclus",
+            "Accès douche chaude",
+            "Café & thé de bienvenue",
+            "Accès à la propriété et sentiers"
+        ],
+        "bookingUrl": "https://www.greengo.voyage/hote/l-abri-des-libellules?srsltid=AfmBOoqgzniSOgwueswZS1g21ddrZNxUdtj_i87mQihcDShtRRFChMmm",
+        "bookingText": "Voir les disponibilités"
+    },
+    "location": {
+        "label": "Comment nous trouver",
+        "title": "Accès — Saint-Romain-*de-Lerps*, Ardèche",
+        "items": [
+            {
+                "icon": "📍",
+                "title": "Ardèche (07)",
+                "text": "À 20 min de Valence · À 1h de Lyon · Accessible en voiture"
+            },
+            {
+                "icon": "🔑",
+                "title": "Accès autonome",
+                "text": "Boîte à clés sur l'arbre à l'entrée. Code communiqué après réservation."
+            }
+        ]
+    },
+    "contact": {
+        "label": "Nous contacter",
+        "title": "Réservez votre séjour *en Ardèche*",
+        "text": "Pour toute question ou réservation directe, n'hésitez pas à nous écrire. Nous répondons dans les 24h.",
+        "bookingText": "Réserver",
+        "email": "contact@abri-des-libellules.fr",
+        "emailText": "Nous écrire"
+    },
+    "photoFeature": {
+        "url": "images/photo-feature-bonne-arrivee.jpg",
+        "text": "Bonne arrivée 🌿"
+    },
+    "footer": {
+        "logo": "L'Abri des Libellules",
+        "sub": "Saint-Romain-de-Lerps · Ardèche · France",
+        "seoText": "Gîte Saint-Romain-de-Lerps Ardèche — Location dôme géodésique 07130 — Hébergement insolite Ardèche Verte — Glamping Ardèche — Week-end nature proche Valence — Gîte insolite Ardèche — Location vacances Ardèche — Séjour romantique Ardèche — Cabane dans les arbres Ardèche — Éco-lodge Ardèche"
+    },
+    "access": {
+        "enabled": false,
+        "password": "libellules07"
+    }
+}

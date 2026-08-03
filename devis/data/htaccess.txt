@@ -1,0 +1,9 @@
+# Interdit l'accès direct aux fichiers de données (store.json)
+# L'accès passe uniquement par api.php
+<IfModule mod_authz_core.c>
+  Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+  Order allow,deny
+  Deny from all
+</IfModule>

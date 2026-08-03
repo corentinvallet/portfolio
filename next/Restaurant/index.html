@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le Zinc — Bistrot Parisien</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Petit+Formal+Script&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --noir:        #1a1208;
+      --brun:        #2e1c0a;
+      --brun-mid:    #5c3a1e;
+      --or:          #c8922a;
+      --or-clair:    #e8b96a;
+      --creme:       #f5ede0;
+      --creme-fonce: #e8d8c0;
+      --rouge:       #8b1a1a;
+      --rouge-doux:  #c0392b;
+      --ivoire:      #faf6ef;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      background: var(--ivoire);
+      color: var(--noir);
+      overflow-x: hidden;
+    }
+
+    /* ── TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.5;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 5%;
+      background: rgba(26,18,8,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--or);
+    }
+
+    .nav-logo {
+      font-family: 'Petit Formal Script', cursive;
+      color: var(--or-clair);
+      font-size: 1.8rem;
+      letter-spacing: .02em;
+      line-height: 1;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    nav ul a {
+      color: var(--creme-fonce);
+      text-decoration: none;
+      font-family: 'Libre Baskerville', serif;
+      font-size: .78rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      transition: color .25s;
+    }
+
+    nav ul a:hover { color: var(--or-clair); }
+
+    .nav-resa {
+      background: var(--or) !important;
+      color: var(--noir) !important;
+      padding: .5rem 1.4rem;
+      border-radius: 2px;
+      font-weight: 700 !important;
+      letter-spacing: .08em !important;
+      transition: background .2s !important;
+    }
+
+    .nav-resa:hover { background: var(--or-clair) !important; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      background:
+        linear-gradient(to bottom, rgba(26,18,8,0.55) 0%, rgba(26,18,8,0.3) 40%, rgba(26,18,8,0.75) 100%),
+        url('https://images.unsplash.com/photo-1514190051997-0f6f39ca5cde?w=1600&q=80') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 5% 5rem;
+      position: relative;
+    }
+
+    .hero-ornement {
+      color: var(--or);
+      font-size: 1.1rem;
+      letter-spacing: .5em;
+      text-transform: uppercase;
+      font-family: 'Libre Baskerville', serif;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp .8s .2s forwards;
+    }
+
+    .hero-titre {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(4rem, 10vw, 8rem);
+      font-weight: 900;
+      color: var(--creme);
+      line-height: .95;
+      letter-spacing: -.01em;
+      margin-bottom: .5rem;
+      opacity: 0;
+      animation: fadeUp .8s .4s forwards;
+    }
+
+    .hero-titre em {
+      font-style: italic;
+      color: var(--or-clair);
+    }
+
+    .hero-sous {
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic;
+      color: var(--creme-fonce);
+      font-size: 1.1rem;
+      margin-top: 1.2rem;
+      letter-spacing: .06em;
+      opacity: 0;
+      animation: fadeUp .8s .6s forwards;
+    }
+
+    .hero-divider {
+      width: 80px;
+      height: 1px;
+      background: var(--or);
+      margin: 2rem auto;
+      opacity: 0;
+      animation: fadeUp .8s .7s forwards;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp .8s .9s forwards;
+    }
+
+    .btn-or {
+      background: var(--or);
+      color: var(--noir);
+      padding: .9rem 2.4rem;
+      font-family: 'Libre Baskerville', serif;
+      font-size: .85rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+    }
+
+    .btn-or:hover { background: var(--or-clair); transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--creme);
+      padding: .9rem 2.4rem;
+      font-family: 'Libre Baskerville', serif;
+      font-size: .85rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(200,170,100,0.5);
+      cursor: pointer;
+      transition: border-color .2s, color .2s;
+    }
+
+    .btn-outline:hover { border-color: var(--or-clair); color: var(--or-clair); }
+
+    .hero-infos {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 3rem;
+      color: rgba(245,237,224,0.8);
+      font-size: .78rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      opacity: 0;
+      animation: fadeUp .8s 1.1s forwards;
+    }
+
+    .hero-infos span { display: flex; align-items: center; gap: .5rem; }
+
+    /* ── SECTION GÉNÉRIQUE ── */
+    section { padding: 6rem 5%; }
+
+    .section-label {
+      font-size: .72rem;
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      color: var(--or);
+      margin-bottom: 1rem;
+      display: block;
+      font-family: 'Libre Baskerville', serif;
+    }
+
+    .section-titre {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: var(--brun);
+      line-height: 1.1;
+    }
+
+    .section-titre em {
+      font-style: italic;
+      color: var(--rouge);
+    }
+
+    .ornement-ligne {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1.5rem 0 2.5rem;
+    }
+
+    .ornement-ligne::before,
+    .ornement-ligne::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--or);
+      max-width: 60px;
+    }
+
+    .ornement-ligne span {
+      color: var(--or);
+      font-size: 1.2rem;
+    }
+
+    /* ── À PROPOS ── */
+    #apropos {
+      background: var(--noir);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .apropos-img {
+      position: relative;
+    }
+
+    .apropos-img img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      display: block;
+    }
+
+    .apropos-img::after {
+      content: '';
+      position: absolute;
+      inset: -12px 12px 12px -12px;
+      border: 1px solid var(--or);
+      z-index: -1;
+    }
+
+    .apropos-contenu .section-label { color: var(--or-clair); }
+    .apropos-contenu .section-titre { color: var(--creme); }
+
+    .apropos-texte {
+      color: rgba(245,237,224,0.75);
+      line-height: 1.9;
+      font-size: .95rem;
+      margin-top: 1.5rem;
+    }
+
+    .apropos-texte p + p { margin-top: 1rem; }
+
+    .signature {
+      margin-top: 2rem;
+      font-family: 'Petit Formal Script', cursive;
+      color: var(--or-clair);
+      font-size: 1.6rem;
+    }
+
+    /* ── MENU ── */
+    #menu {
+      background: var(--creme);
+      text-align: center;
+    }
+
+    .menu-header { margin-bottom: 4rem; }
+
+    .menu-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 3rem;
+      border: 1px solid var(--or);
+      width: fit-content;
+      margin: 0 auto 3rem;
+    }
+
+    .tab-btn {
+      padding: .7rem 2rem;
+      background: transparent;
+      border: none;
+      font-family: 'Libre Baskerville', serif;
+      font-size: .78rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: var(--brun-mid);
+      transition: background .2s, color .2s;
+      border-right: 1px solid var(--or);
+    }
+
+    .tab-btn:last-child { border-right: none; }
+    .tab-btn.active { background: var(--or); color: var(--noir); font-weight: 700; }
+    .tab-btn:hover:not(.active) { background: var(--creme-fonce); }
+
+    .menu-panel { display: none; }
+    .menu-panel.active { display: block; }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .menu-item {
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(200,146,42,0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+    }
+
+    .menu-item-info h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--brun);
+      margin-bottom: .3rem;
+    }
+
+    .menu-item-info p {
+      font-size: .82rem;
+      color: var(--brun-mid);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .menu-prix {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--rouge);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .formule-box {
+      background: var(--noir);
+      padding: 3rem;
+      max-width: 600px;
+      margin: 3rem auto 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .formule-box::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px solid rgba(200,146,42,0.3);
+      pointer-events: none;
+    }
+
+    .formule-box h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--or-clair);
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .formule-box p {
+      color: rgba(245,237,224,0.7);
+      font-size: .9rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .formule-prix {
+      font-size: 2.5rem;
+      font-family: 'Playfair Display', serif;
+      color: var(--or);
+      font-weight: 900;
+    }
+
+    .formule-prix sup { font-size: 1.2rem; vertical-align: super; }
+
+    /* ── GALERIE ── */
+    #galerie {
+      background: var(--noir);
+      padding: 6rem 0;
+    }
+
+    .galerie-header {
+      text-align: center;
+      padding: 0 5% 3rem;
+    }
+
+    .galerie-header .section-label { color: var(--or-clair); }
+    .galerie-header .section-titre { color: var(--creme); }
+
+    .galerie-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 280px 280px;
+      gap: 4px;
+    }
+
+    .galerie-item {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .galerie-item:first-child {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .galerie-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .6s ease;
+      display: block;
+    }
+
+    .galerie-item:hover img { transform: scale(1.05); }
+
+    .galerie-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(26,18,8,0.2);
+      transition: opacity .3s;
+    }
+
+    .galerie-item:hover::after { opacity: 0; }
+
+    /* ── RÉSERVATION ── */
+    #reservation {
+      background: var(--creme);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .resa-infos .section-titre { color: var(--brun); }
+
+    .resa-horaires {
+      margin-top: 2.5rem;
+    }
+
+    .resa-horaires h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--rouge);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .horaire-ligne {
+      display: flex;
+      justify-content: space-between;
+      padding: .7rem 0;
+      border-bottom: 1px solid rgba(200,146,42,0.25);
+      font-size: .9rem;
+      color: var(--brun-mid);
+    }
+
+    .horaire-ligne strong { color: var(--brun); }
+
+    .resa-adresse {
+      margin-top: 2.5rem;
+      padding: 1.5rem;
+      background: var(--creme-fonce);
+      border-left: 3px solid var(--or);
+    }
+
+    .resa-adresse p {
+      font-size: .9rem;
+      color: var(--brun-mid);
+      line-height: 1.8;
+    }
+
+    /* Formulaire */
+    .resa-form {
+      background: var(--noir);
+      padding: 3rem;
+      position: relative;
+    }
+
+    .resa-form::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px solid rgba(200,146,42,0.2);
+      pointer-events: none;
+    }
+
+    .resa-form h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--or-clair);
+      font-size: 1.4rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: .72rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(245,237,224,0.6);
+      margin-bottom: .5rem;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: .8rem 1rem;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(200,146,42,0.3);
+      color: var(--creme);
+      font-family: 'Libre Baskerville', serif;
+      font-size: .9rem;
+      outline: none;
+      transition: border-color .2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--or);
+    }
+
+    .form-group select option { background: var(--brun); }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .btn-resa {
+      width: 100%;
+      padding: 1rem;
+      background: var(--or);
+      color: var(--noir);
+      border: none;
+      font-family: 'Libre Baskerville', serif;
+      font-size: .85rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background .2s;
+    }
+
+    .btn-resa:hover { background: var(--or-clair); }
+
+    /* ── AVIS ── */
+    #avis {
+      background: var(--brun);
+      text-align: center;
+    }
+
+    #avis .section-label { color: var(--or-clair); }
+    #avis .section-titre { color: var(--creme); }
+
+    .avis-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .avis-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(200,146,42,0.2);
+      padding: 2rem;
+      text-align: left;
+      position: relative;
+    }
+
+    .avis-card::before {
+      content: '❝';
+      position: absolute;
+      top: -1rem;
+      left: 1.5rem;
+      font-size: 3rem;
+      color: var(--or);
+      line-height: 1;
+    }
+
+    .etoiles { color: var(--or); font-size: .9rem; margin-bottom: 1rem; }
+
+    .avis-texte {
+      color: rgba(245,237,224,0.75);
+      font-size: .9rem;
+      line-height: 1.8;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+
+    .avis-auteur {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+    }
+
+    .avis-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--or);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      color: var(--noir);
+      font-weight: 700;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .avis-nom {
+      font-size: .85rem;
+      color: var(--creme);
+      font-weight: 700;
+    }
+
+    .avis-date {
+      font-size: .75rem;
+      color: rgba(245,237,224,0.45);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--noir);
+      padding: 4rem 5% 2rem;
+      border-top: 1px solid rgba(200,146,42,0.3);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-logo {
+      font-family: 'Petit Formal Script', cursive;
+      color: var(--or-clair);
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-desc {
+      color: rgba(245,237,224,0.5);
+      font-size: .85rem;
+      line-height: 1.8;
+    }
+
+    .footer-titre {
+      font-family: 'Playfair Display', serif;
+      color: var(--creme);
+      font-size: .85rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-liens {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .8rem;
+    }
+
+    .footer-liens a {
+      color: rgba(245,237,224,0.55);
+      text-decoration: none;
+      font-size: .85rem;
+      transition: color .2s;
+    }
+
+    .footer-liens a:hover { color: var(--or-clair); }
+
+    .footer-bas {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: rgba(245,237,224,0.3);
+      font-size: .78rem;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      #apropos { grid-template-columns: 1fr; gap: 3rem; }
+      #reservation { grid-template-columns: 1fr; gap: 3rem; }
+      .avis-grid { grid-template-columns: 1fr; }
+      .galerie-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .galerie-item:first-child { grid-column: span 2; grid-row: span 1; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      nav ul { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Le Zinc</div>
+  <ul>
+    <li><a href="#apropos">Le bistrot</a></li>
+    <li><a href="#menu">La carte</a></li>
+    <li><a href="#galerie">Galerie</a></li>
+    <li><a href="#reservation" class="nav-resa">Réserver</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-ornement">✦ Paris, depuis 1974 ✦</p>
+  <h1 class="hero-titre">Le <em>Zinc</em></h1>
+  <p class="hero-sous">Bistrot parisien — Cuisine du marché</p>
+  <div class="hero-divider"></div>
+  <div class="hero-ctas">
+    <a href="#reservation" class="btn-or">Réserver une table</a>
+    <a href="#menu" class="btn-outline">Voir la carte</a>
+  </div>
+  <div class="hero-infos">
+    <span>📍 12 rue des Abbesses, Paris 18e</span>
+    <span>🕐 Mar–Dim : 12h–14h30 · 19h–22h30</span>
+    <span>📞 01 42 55 78 34</span>
+  </div>
+</section>
+
+<!-- À PROPOS -->
+<section id="apropos">
+  <div class="apropos-img reveal">
+    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80" alt="Intérieur du bistrot Le Zinc" />
+  </div>
+  <div class="apropos-contenu reveal">
+    <span class="section-label">Notre histoire</span>
+    <h2 class="section-titre">Un coin de Paris<br><em>comme avant</em></h2>
+    <div class="ornement-ligne"><span>✦</span></div>
+    <div class="apropos-texte">
+      <p>Depuis 1974, Le Zinc incarne l'âme du bistrot parisien : une cuisine franche, des produits du marché, et cette chaleur particulière qui fait qu'on s'attarde toujours plus longtemps que prévu.</p>
+      <p>Chaque matin, notre chef sélectionne les meilleurs produits chez les maraîchers et bouchers du quartier. Ici, la carte change au fil des saisons — parce que bien manger, c'est d'abord respecter la nature.</p>
+    </div>
+    <div class="signature">Marcel & Sylvie</div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="menu-header reveal">
+    <span class="section-label">La carte</span>
+    <h2 class="section-titre">Ce que nous<br><em>vous proposons</em></h2>
+    <div class="ornement-ligne"><span>✦</span></div>
+  </div>
+
+  <div class="menu-tabs reveal" id="menu-tabs"></div>
+  <div id="menu-panels"></div>
+
+  <div class="formule-box reveal">
+    <h3>Formule du Midi</h3>
+    <p>Entrée + Plat ou Plat + Dessert, du mardi au vendredi<br>Café offert · Verre de vin à 3€</p>
+    <div class="formule-prix"><sup>à partir de </sup>18€</div>
+  </div>
+</section>
+
+<!-- GALERIE -->
+<section id="galerie">
+  <div class="galerie-header reveal">
+    <span class="section-label">L'ambiance</span>
+    <h2 class="section-titre">Le <em>cadre</em></h2>
+  </div>
+  <div class="galerie-grid" id="galerie-grid">
+    <!-- chargé dynamiquement -->
+    <div class="galerie-item"><img src="https://images.unsplash.com/photo-1537047902294-62a40c20a6ae?w=800&q=80" alt="Salle du bistrot" /></div>
+    <div class="galerie-item"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Plat du bistrot" /></div>
+    <div class="galerie-item"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Plat gastronomique" /></div>
+    <div class="galerie-item"><img src="https://images.unsplash.com/photo-1510626176961-4b57d4fbad03?w=600&q=80" alt="Bar du bistrot" /></div>
+    <div class="galerie-item"><img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=80" alt="Dessert" /></div>
+  </div>
+</section>
+
+<!-- RÉSERVATION -->
+<section id="reservation">
+  <div class="resa-infos reveal">
+    <span class="section-label">Réservations</span>
+    <h2 class="section-titre">Venez nous<br><em>rendre visite</em></h2>
+    <div class="ornement-ligne"><span>✦</span></div>
+    <div class="resa-horaires">
+      <h4>Nos horaires</h4>
+      <div class="horaire-ligne"><strong>Lundi</strong><span>Fermé</span></div>
+      <div class="horaire-ligne"><strong>Mar — Ven</strong><span>12h–14h30 · 19h–22h30</span></div>
+      <div class="horaire-ligne"><strong>Samedi</strong><span>12h–15h · 19h–23h</span></div>
+      <div class="horaire-ligne"><strong>Dimanche</strong><span>12h–16h (brunch)</span></div>
+    </div>
+    <div class="resa-adresse">
+      <p>📍 12 rue des Abbesses<br>75018 Paris — Métro Abbesses (ligne 12)<br><br>📞 01 42 55 78 34<br>✉️ contact@le-zinc-paris.fr</p>
+    </div>
+  </div>
+
+  <div class="resa-form reveal" id="resa-form-wrapper">
+    <h3>Réserver une table</h3>
+
+    <!-- FORMULAIRE -->
+    <div id="form-fields">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Prénom</label>
+          <input type="text" id="f-prenom" placeholder="Marie" />
+        </div>
+        <div class="form-group">
+          <label>Nom</label>
+          <input type="text" id="f-nom" placeholder="Dupont" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="f-email" placeholder="marie@exemple.fr" />
+      </div>
+      <div class="form-group">
+        <label>Téléphone</label>
+        <input type="tel" id="f-tel" placeholder="06 12 34 56 78" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" id="f-date" />
+        </div>
+        <div class="form-group">
+          <label>Heure</label>
+          <select id="f-heure">
+            <option>12h00</option>
+            <option>12h30</option>
+            <option>13h00</option>
+            <option>13h30</option>
+            <option>19h00</option>
+            <option>19h30</option>
+            <option>20h00</option>
+            <option>20h30</option>
+            <option>21h00</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Nombre de couverts</label>
+        <select id="f-couverts">
+          <option>1 personne</option>
+          <option>2 personnes</option>
+          <option selected>3 personnes</option>
+          <option>4 personnes</option>
+          <option>5 personnes</option>
+          <option>6 personnes</option>
+          <option>7 personnes ou plus</option>
+        </select>
+      </div>
+      <div id="form-error" style="display:none;color:#e07070;font-size:.82rem;margin-bottom:1rem;padding:.7rem;border:1px solid rgba(220,80,80,.3);background:rgba(220,80,80,.08);">
+        Veuillez remplir tous les champs obligatoires.
+      </div>
+      <button class="btn-resa" id="btn-submit">Confirmer la réservation</button>
+    </div>
+
+    <!-- CONFIRMATION -->
+    <div id="form-confirm" style="display:none;text-align:center;padding:2rem 0;">
+      <div style="font-size:3rem;margin-bottom:1rem;">✦</div>
+      <div style="font-family:'Playfair Display',serif;color:var(--or-clair);font-size:1.4rem;margin-bottom:1rem;">Réservation enregistrée !</div>
+      <p style="color:rgba(245,237,224,0.7);font-size:.9rem;line-height:1.8;" id="confirm-recap"></p>
+      <button class="btn-resa" style="margin-top:2rem;width:auto;padding:.8rem 2rem;" onclick="resetForm()">Nouvelle réservation</button>
+    </div>
+  </div>
+</section>
+
+<!-- AVIS -->
+<section id="avis">
+  <span class="section-label reveal">Ce qu'ils disent</span>
+  <h2 class="section-titre reveal">Nos <em>clients</em></h2>
+
+  <div class="avis-grid">
+    <div class="avis-card reveal">
+      <div class="etoiles">★★★★★</div>
+      <p class="avis-texte">Un vrai bistrot comme on n'en fait plus. La blanquette de veau était parfaite, le service chaleureux et attentionné. On reviendra sans hésiter !</p>
+      <div class="avis-auteur">
+        <div class="avis-avatar">S</div>
+        <div>
+          <div class="avis-nom">Sophie M.</div>
+          <div class="avis-date">Google · il y a 2 semaines</div>
+        </div>
+      </div>
+    </div>
+    <div class="avis-card reveal">
+      <div class="etoiles">★★★★★</div>
+      <p class="avis-texte">L'adresse parfaite pour un déjeuner d'affaires ou en famille. Cuisine généreuse, produits frais, et une carte des vins très bien choisie. Le meilleur steak frites du 18e !</p>
+      <div class="avis-auteur">
+        <div class="avis-avatar">T</div>
+        <div>
+          <div class="avis-nom">Thomas L.</div>
+          <div class="avis-date">Google · il y a 1 mois</div>
+        </div>
+      </div>
+    </div>
+    <div class="avis-card reveal">
+      <div class="etoiles">★★★★☆</div>
+      <p class="avis-texte">Très belle découverte ! Le cadre est authentique, la cuisine soignée. La formule du midi est un excellent rapport qualité-prix. Je recommande chaudement.</p>
+      <div class="avis-auteur">
+        <div class="avis-avatar">C</div>
+        <div>
+          <div class="avis-nom">Camille R.</div>
+          <div class="avis-date">Google · il y a 3 semaines</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Le Zinc</div>
+      <p class="footer-desc">Bistrot parisien depuis 1974.<br>Cuisine du marché, produits frais,<br>ambiance authentique.</p>
+    </div>
+    <div>
+      <div class="footer-titre">Navigation</div>
+      <ul class="footer-liens">
+        <li><a href="#apropos">Notre histoire</a></li>
+        <li><a href="#menu">La carte</a></li>
+        <li><a href="#galerie">Galerie</a></li>
+        <li><a href="#reservation">Réservation</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-titre">Contact</div>
+      <ul class="footer-liens">
+        <li><a href="#">12 rue des Abbesses, 75018</a></li>
+        <li><a href="tel:0142557834">01 42 55 78 34</a></li>
+        <li><a href="mailto:contact@le-zinc-paris.fr">contact@le-zinc-paris.fr</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bas">
+    <span>© 2025 Le Zinc — Tous droits réservés</span>
+    <span>Site réalisé par <strong style="color: var(--or)">Corentin Vallet</strong></span>
+  </div>
+</footer>
+
+<script>
+  // ── TABS MENU ──
+  function showTab(id, btn) {
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // ── SCROLL REVEAL ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── PARAMÈTRES PAR DÉFAUT ──
+  const DEFAULT_CONFIG = {
+    maxMidi: 8,
+    maxSoir: 10,
+    joursOuverture: [2, 3, 4, 5, 6, 0] // 0=dim, 1=lun(fermé), 2=mar...6=sam
+  };
+
+  const HEURES_MIDI = ['12h00','12h30','13h00','13h30'];
+  const HEURES_SOIR = ['19h00','19h30','20h00','20h30','21h00'];
+
+  const today = new Date().toISOString().split('T')[0];
+  let config = { ...DEFAULT_CONFIG };
+  let allResas = [];
+
+  // ── INIT ──
+  async function init() {
+    // Charger config
+    try {
+      const r = await window.storage.get('zinc-config', true);
+      if (r) config = { ...DEFAULT_CONFIG, ...JSON.parse(r.value) };
+    } catch(e) {}
+
+    // Charger réservations
+    try {
+      const r = await window.storage.get('zinc-reservations', true);
+      if (r) allResas = JSON.parse(r.value);
+    } catch(e) {}
+
+    setupDatePicker();
+    setupHeurePicker();
+  }
+
+  // ── BLOQUE LES JOURS FERMÉS ──
+  function setupDatePicker() {
+    const input = document.getElementById('f-date');
+    input.min = today;
+
+    // Trouver la prochaine date ouverte à partir d'aujourd'hui
+    let d = new Date(today + 'T12:00:00');
+    for (let i = 0; i < 60; i++) {
+      if (config.joursOuverture.includes(d.getDay())) {
+        input.value = d.toISOString().split('T')[0];
+        break;
+      }
+      d.setDate(d.getDate() + 1);
+    }
+
+    input.addEventListener('change', () => {
+      const chosen = new Date(input.value + 'T12:00:00');
+      if (!config.joursOuverture.includes(chosen.getDay())) {
+        showError('Ce jour est fermé. Veuillez choisir une autre date.');
+        input.value = '';
+        return;
+      }
+      clearError();
+      updateHeureOptions();
+    });
+
+    updateHeureOptions();
+  }
+
+  // ── MET À JOUR LES CRÉNEAUX DISPONIBLES ──
+  function updateHeureOptions() {
+    const date = document.getElementById('f-date').value;
+    const select = document.getElementById('f-heure');
+
+    // Compter réservations actives (non annulées) par service pour cette date
+    const resasDate = allResas.filter(r => r.date === date && r.statut !== 'annule');
+    const countMidi = resasDate.filter(r => HEURES_MIDI.includes(r.heure)).length;
+    const countSoir = resasDate.filter(r => HEURES_SOIR.includes(r.heure)).length;
+
+    const pleinMidi = countMidi >= config.maxMidi;
+    const pleinSoir = countSoir >= config.maxSoir;
+
+    // Reconstruire les options
+    select.innerHTML = '';
+    const allHeures = [...HEURES_MIDI, ...HEURES_SOIR];
+    let firstAvailable = null;
+
+    allHeures.forEach(h => {
+      const isMidi = HEURES_MIDI.includes(h);
+      const complet = isMidi ? pleinMidi : pleinSoir;
+      const opt = document.createElement('option');
+      opt.value = h;
+      opt.textContent = complet ? `${h} — complet` : h;
+      opt.disabled = complet;
+      if (!complet && !firstAvailable) firstAvailable = h;
+      select.appendChild(opt);
+    });
+
+    if (firstAvailable) select.value = firstAvailable;
+
+    // Message si tout complet
+    const btnSubmit = document.getElementById('btn-submit');
+    if (pleinMidi && pleinSoir) {
+      btnSubmit.disabled = true;
+      btnSubmit.style.opacity = '0.4';
+      btnSubmit.style.cursor = 'not-allowed';
+      showError('Ce jour est complet. Veuillez choisir une autre date.');
+    } else {
+      btnSubmit.disabled = false;
+      btnSubmit.style.opacity = '';
+      btnSubmit.style.cursor = '';
+      clearError();
+    }
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('form-error');
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+  function clearError() {
+    document.getElementById('form-error').style.display = 'none';
+  }
+
+  // ── SOUMETTRE ──
+  document.getElementById('btn-submit').addEventListener('click', async () => {
+    const prenom   = document.getElementById('f-prenom').value.trim();
+    const nom      = document.getElementById('f-nom').value.trim();
+    const email    = document.getElementById('f-email').value.trim();
+    const tel      = document.getElementById('f-tel').value.trim();
+    const date     = document.getElementById('f-date').value;
+    const heure    = document.getElementById('f-heure').value;
+    const couverts = document.getElementById('f-couverts').value;
+
+    if (!prenom || !nom || !email || !tel || !date) {
+      showError('Veuillez remplir tous les champs obligatoires.');
+      return;
+    }
+    clearError();
+
+    // Vérifier une dernière fois la dispo (protection contre réservations simultanées)
+    let freshResas = [];
+    try {
+      const r = await window.storage.get('zinc-reservations', true);
+      if (r) freshResas = JSON.parse(r.value);
+    } catch(e) {}
+
+    const resasDate = freshResas.filter(r => r.date === date && r.statut !== 'annule');
+    const isMidi    = HEURES_MIDI.includes(heure);
+    const count     = resasDate.filter(r => (isMidi ? HEURES_MIDI : HEURES_SOIR).includes(r.heure)).length;
+    const max       = isMidi ? config.maxMidi : config.maxSoir;
+
+    if (count >= max) {
+      allResas = freshResas;
+      updateHeureOptions();
+      showError('Ce service vient de se remplir. Veuillez choisir un autre créneau.');
+      return;
+    }
+
+    const resa = {
+      id: Date.now().toString(),
+      prenom, nom, email, tel, date, heure, couverts,
+      statut: 'en_attente',
+      cree_le: new Date().toISOString()
+    };
+
+    freshResas.push(resa);
+    await window.storage.set('zinc-reservations', JSON.stringify(freshResas), true);
+    allResas = freshResas;
+
+    const dateFormatted = new Date(date + 'T12:00:00').toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+    document.getElementById('confirm-recap').innerHTML =
+      `<strong style="color:var(--or-clair)">${prenom} ${nom}</strong><br>
+       Le ${dateFormatted} à ${heure}<br>${couverts}<br><br>
+       Nous vous attendons au <strong style="color:var(--or-clair)">12 rue des Abbesses, Paris 18e</strong>`;
+    document.getElementById('form-fields').style.display = 'none';
+    document.getElementById('form-confirm').style.display = 'block';
+  });
+
+  function resetForm() {
+    document.getElementById('f-prenom').value = '';
+    document.getElementById('f-nom').value = '';
+    document.getElementById('f-email').value = '';
+    document.getElementById('f-tel').value = '';
+    setupDatePicker();
+    document.getElementById('form-fields').style.display = 'block';
+    document.getElementById('form-confirm').style.display = 'none';
+  }
+
+  // ── MENU DYNAMIQUE ──
+  const DEFAULT_MENU_CLIENT = [
+    { id:'cat-1', nom:'Entrées', plats:[
+      {id:'p-1',nom:'Œuf parfait, espuma de lard',desc:'Oeuf cuit basse température, mousse de lard fumé, ciboulette',prix:'12€'},
+      {id:'p-2',nom:'Terrine de campagne maison',desc:'Cornichons, moutarde à l\'ancienne, pain de campagne grillé',prix:'10€'},
+      {id:'p-3',nom:'Soupe à l\'oignon gratinée',desc:'Oignons caramélisés, bouillon de bœuf, gruyère fondu',prix:'11€'},
+      {id:'p-4',nom:'Salade frisée aux lardons',desc:'Lardons fumés, croutons, œuf mollet, vinaigrette moutardée',prix:'13€'},
+    ]},
+    { id:'cat-2', nom:'Plats', plats:[
+      {id:'p-5',nom:'Steak frites, beurre Maître d\'Hôtel',desc:'Entrecôte race Aubrac, frites maison, beurre persillé',prix:'26€'},
+      {id:'p-6',nom:'Blanquette de veau à l\'ancienne',desc:'Riz pilaf, champignons, carottes, sauce crémée citronnée',prix:'22€'},
+      {id:'p-7',nom:'Filet de cabillaud beurre blanc',desc:'Échalotes, beurre blanc au muscadet, pommes vapeur',prix:'24€'},
+      {id:'p-8',nom:'Confit de canard, sarladaise',desc:'Cuisse confite maison, pommes sarladaises à l\'ail et persil',prix:'23€'},
+    ]},
+    { id:'cat-3', nom:'Desserts', plats:[
+      {id:'p-9', nom:'Crème brûlée à la vanille',desc:'Vanille de Madagascar, caramel craquant',prix:'8€'},
+      {id:'p-10',nom:'Tarte Tatin, crème fraîche',desc:'Pommes caramélisées, pâte feuilletée, crème fraîche épaisse',prix:'9€'},
+      {id:'p-11',nom:'Profiteroles au chocolat chaud',desc:'Choux à la crème, sauce chocolat Valrhona maison',prix:'10€'},
+      {id:'p-12',nom:'Île flottante, caramel',desc:'Blanc-manger léger, crème anglaise, amandes effilées',prix:'8€'},
+    ]}
+  ];
+
+  async function loadMenuClient() {
+    let menu = DEFAULT_MENU_CLIENT;
+    try {
+      const r = await window.storage.get('zinc-menu', true);
+      if (r) menu = JSON.parse(r.value);
+    } catch(e) {}
+    renderMenuClient(menu);
+  }
+
+  function renderMenuClient(menu) {
+    if (!menu || menu.length === 0) return;
+    const tabsEl   = document.getElementById('menu-tabs');
+    const panelsEl = document.getElementById('menu-panels');
+
+    tabsEl.innerHTML = menu.map((cat, i) =>
+      `<button class="tab-btn${i===0?' active':''}" onclick="showTab('menu-cat-${cat.id}', this)">${cat.nom}</button>`
+    ).join('');
+
+    panelsEl.innerHTML = menu.map((cat, i) => `
+      <div id="menu-cat-${cat.id}" class="menu-panel${i===0?' active':''} reveal">
+        <div class="menu-grid">
+          ${cat.plats.map(p => `
+            <div class="menu-item">
+              <div class="menu-item-info">
+                <h4>${p.nom}</h4>
+                ${p.desc ? `<p>${p.desc}</p>` : ''}
+              </div>
+              <span class="menu-prix">${p.prix}</span>
+            </div>`).join('')}
+        </div>
+      </div>`).join('');
+
+    // Ré-observer les nouveaux éléments reveal
+    panelsEl.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  }
+
+  // ── GALERIE DYNAMIQUE ──
+  async function loadGalerieClient() {
+    try {
+      const r = await window.storage.get('zinc-galerie', true);
+      if (!r) return;
+      const photos = JSON.parse(r.value);
+      if (!photos || photos.length === 0) return;
+      const grid = document.getElementById('galerie-grid');
+      grid.innerHTML = photos.map((p, i) =>
+        `<div class="galerie-item${i===0?' galerie-item-first':''}">
+          <img src="${p.url}" alt="${p.legende || 'Photo Le Zinc'}" loading="lazy" />
+        </div>`
+      ).join('');
+    } catch(e) {}
+  }
+
+  loadGalerieClient();
+  loadMenuClient();
+
+  init();
+</script>
+</body>
+</html>

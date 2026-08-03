@@ -1,0 +1,10 @@
+Ok pour la couleur
+Sortir la galerie dans une autre page → Filtres par bouton comme dans le site de démo maçon
+Changer savoir faire pour prestations.
+Garder
+- Commandes publiques
+- Associations et entreprises
+- Démonstrations live
+Rajouter le numéro de téléphone pour le contact
+Domaine : www.francisferret.fr
+Faire une version sans photo embarquée

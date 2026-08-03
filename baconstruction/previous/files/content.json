@@ -1,0 +1,119 @@
+{
+  "cloudinary": {
+    "cloudName": "",
+    "uploadPreset": ""
+  },
+  "meta": {
+    "title": "B&A Construction – Bruno Salgado & Alex Freitas"
+  },
+  "logo": "Photos/Logo simplifié.webp",
+  "hero": {
+    "image": "Photos/Hero.webp",
+    "eyebrow": "Maçonnerie générale · Valence",
+    "names": "Bruno Salgado · Alex Freitas",
+    "sub": "Béton imprimé, ciré, désactivé — entièrement sur mesure. Caves à vins souterraines.",
+    "ctaPrimary": "Voir nos réalisations",
+    "ctaSecondary": "Demander un devis"
+  },
+  "services": {
+    "label": "Notre savoir-faire",
+    "title": "Des finitions d'exception\npour chaque projet",
+    "intro": "Spécialistes du béton décoratif, B&A Construction réalise tous vos projets extérieurs avec soin et précision. De la dalle au motif sur mesure.",
+    "items": [
+      {
+        "icon": "Photos/Béton imprimé.webp",
+        "title": "Béton Imprimé",
+        "text": "Terrasses, allées et plages avec textures bois, pierre ou ardoise. Un rendu naturel et une durabilité exemplaire."
+      },
+      {
+        "icon": "Photos/Béton ciré.webp",
+        "title": "Béton Ciré",
+        "text": "Finition lisse et brillante pour vos sols intérieurs et extérieurs. Aspect luxueux, résistance maximale."
+      },
+      {
+        "icon": "Photos/Bouteille vin.png",
+        "title": "Caves à vins",
+        "text": "Réalisation complète de caves à vins souterraines. Sous votre cuisine, sous votre salon, sur mesure."
+      },
+      {
+        "icon": "Photos/Béton désactivé.webp",
+        "title": "Béton Désactivé",
+        "text": "Surface granuleuse antidérapante, idéale pour allées de garage, entrées et abords de piscine."
+      },
+      {
+        "icon": "Photos/Grue.webp",
+        "title": "Gros Œuvre",
+        "text": "Dalles, fondations et structures en béton armé. Maîtrise totale des coulages et ferraillages complexes."
+      },
+      {
+        "icon": "Photos/Logo simplifié.webp",
+        "title": "Motifs Sur Mesure",
+        "text": "Médaillons, rosaces, rose des vents… Nous intégrons des éléments décoratifs uniques dans vos sols."
+      }
+    ]
+  },
+  "caveavin": {
+    "label": "Notre spécialité",
+    "title": "Des caves à vins,\nsur mesure",
+    "image": "Photos/CaveAVin1.jpg",
+    "p1": "Et si l'endroit idéal pour faire vieillir vos bouteilles se trouvait sous votre cuisine ou votre salon ? Spécialistes de la maçonnerie à Valence, en Drôme et en Ardèche, nous concevons des caves à vin souterraines entièrement personnalisées, creusées sous le sol de votre habitation et accessibles par une trappe discrète. Une solution élégante qui ne sacrifie rien à votre surface habitable.",
+    "p2": "Enterrée dans la terre, votre cave profite d'une fraîcheur naturelle et stable toute l'année, sans climatisation : les conditions parfaites pour conserver vos crus. De l'étude de faisabilité aux finitions, nous réalisons chaque cave avec la rigueur d'un artisan maçon local, pour un résultat robuste et durablement valorisant pour votre maison.",
+    "badge": "Finition d'exception",
+    "tags": ["Intégrée", "Discrète"]
+  },
+  "realisations": {
+    "label": "Portfolio",
+    "title": "Nos dernières réalisations",
+    "desc": "Chaque projet est une signature. Découvrez quelques-unes de nos réalisations récentes.",
+    "bannerText": "Voir toute la galerie →",
+    "bannerSub": "Béton ciré · Béton désactivé · Caves à vins · et plus"
+  },
+  "process": {
+    "label": "Notre méthode",
+    "title": "Un accompagnement\nde A à Z",
+    "steps": [
+      { "num": "01", "title": "Étude & Devis", "text": "Visite sur site, écoute de vos besoins, conseils personnalisés. Devis détaillé et gratuit sous 48h." },
+      { "num": "02", "title": "Préparation", "text": "Terrassement, coffrage, ferraillage. Chaque base est soigneusement préparée pour garantir la longévité." },
+      { "num": "03", "title": "Réalisation", "text": "Coulage, finition décorative, séchage contrôlé. Un travail minutieux pour un résultat parfait." },
+      { "num": "04", "title": "Livraison", "text": "Visite de réception, conseils d'entretien et garantie sur nos travaux. Votre satisfaction est notre priorité." }
+    ]
+  },
+  "about": {
+    "image": "Photos/Travail.webp",
+    "badgeNum": "10+",
+    "badgeLabel": "ans d'expérience",
+    "label": "À propos",
+    "title": "Une équipe passionnée,\nun travail soigné",
+    "p1": "B&A Construction, c'est l'alliance du savoir-faire de Bruno Salgado et Alex Freitas — deux artisans qui ont fait du béton décoratif leur art. Chaque chantier est abordé avec rigueur, créativité et le souci constant du détail.",
+    "p2": "Implantés dans la région de Valence (26), nous intervenons sur tous types de projets résidentiels et professionnels.",
+    "people": [
+      { "name": "Bruno Salgado", "role": "Co-fondateur" },
+      { "name": "Alex Freitas", "role": "Co-fondateur" }
+    ]
+  },
+  "stats": [
+    { "num": "200+", "label": "Projets réalisés" },
+    { "num": "10+", "label": "Années d'expérience" },
+    { "num": "100%", "label": "Clients satisfaits" },
+    { "num": "5★", "label": "Note moyenne" }
+  ],
+  "contact": {
+    "label": "Contact",
+    "title": "Parlons de\nvotre projet",
+    "desc": "Besoin d'un devis ou d'un renseignement ? Contactez-nous, nous répondons rapidement.",
+    "phone1": "Bruno : 06 69 01 92 39",
+    "phone2": "Alex : 06 68 11 90 63",
+    "email": "salgadobati@hotmail.fr",
+    "zone": "Région de Valence\n26 000"
+  },
+  "gallery": [
+    { "full": "Photos/Gallerie/full/1.webp", "thumb": "Photos/Gallerie/thumb/1.webp", "caption": "Terrasse – effet bois", "sub": "Béton imprimé", "category": "beton-imprime" },
+    { "full": "Photos/Gallerie/full/2.webp", "thumb": "Photos/Gallerie/thumb/2.webp", "caption": "Rosaces", "sub": "Béton imprimé", "category": "beton-imprime" },
+    { "full": "Photos/CaveAVin1.jpg", "thumb": "Photos/CaveAVin1.jpg", "caption": "Cave à vin", "sub": "souterraine", "category": "cave-a-vin" },
+    { "full": "Photos/Gallerie/full/3.webp", "thumb": "Photos/Gallerie/thumb/3.webp", "caption": "Terrasse - Effet parquet", "sub": "Béton imprimé", "category": "beton-cire" },
+    { "full": "Photos/Gallerie/full/4.webp", "thumb": "Photos/Gallerie/thumb/4.webp", "caption": "Béton désactivé coloré", "sub": "Béton désactivé", "category": "beton-desactive" },
+    { "full": "Photos/Gallerie/CaveAVin2.jpg", "thumb": "Photos/Gallerie/CaveAVin2.jpg", "caption": "Cave à vin", "sub": "souterraine", "category": "cave-a-vin" },
+    { "full": "Photos/Gallerie/full/5.webp", "thumb": "Photos/Gallerie/thumb/5.webp", "caption": "Margelle piscine", "sub": "Piscine", "category": "piscine" },
+    { "full": "Photos/Gallerie/full/6.webp", "thumb": "Photos/Gallerie/thumb/6.webp", "caption": "Béton imprimé – Effet parquet", "sub": "Béton imprimé", "category": "beton-imprime" }
+  ]
+}

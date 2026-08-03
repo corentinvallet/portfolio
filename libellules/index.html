@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ═══ SEO PRIMARY ═══ -->
+  <title>Gîte Saint-Romain-de-Lerps — L'Abri des Libellules | Dôme géodésique en Ardèche</title>
+  <meta name="description" content="Gîte insolite à Saint-Romain-de-Lerps en Ardèche : dôme géodésique avec poêle à bois, vue panoramique sur les Alpes et le Rhône. Week-end ou séjour nature à 20 min de Valence. Réservez L'Abri des Libellules.">
+  <meta name="keywords" content="gîte Saint-Romain-de-Lerps, gîte Ardèche, dôme géodésique Ardèche, hébergement insolite Ardèche, glamping Ardèche, week-end nature Ardèche, location insolite 07, séjour nature Ardèche Verte, gîte Valence, cabane Ardèche">
+  <meta name="robots" content="index, follow">
+  <meta name="geo.region" content="FR-07">
+  <meta name="geo.placename" content="Saint-Romain-de-Lerps, Ardèche">
+  <meta name="geo.position" content="44.9667;4.7833">
+  <meta name="ICBM" content="44.9667, 4.7833">
+  <meta name="author" content="L'Abri des Libellules">
+  <link rel="canonical" href="https://abri-des-libellules.netlify.app/">
+
+  <!-- ═══ OPEN GRAPH (partage réseaux sociaux) ═══ -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="L'Abri des Libellules">
+  <meta property="og:title" content="Gîte insolite à Saint-Romain-de-Lerps — Dôme géodésique en Ardèche">
+  <meta property="og:description" content="Dôme géodésique cosy niché dans la nature ardéchoise. Poêle à bois, vue panoramique, étoiles à portée de main. À 20 min de Valence.">
+  <meta property="og:url" content="https://abri-des-libellules.netlify.app/">
+
+  <!-- ═══ TWITTER CARD ═══ -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Gîte insolite à Saint-Romain-de-Lerps — Dôme géodésique Ardèche">
+  <meta name="twitter:description" content="Dôme géodésique cosy niché dans la nature ardéchoise. Poêle à bois, vue panoramique, étoiles à portée de main.">
+
+  <!-- ═══ SCHEMA.ORG JSON-LD ═══ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LodgingBusiness",
+    "name": "L'Abri des Libellules",
+    "description": "Gîte insolite en dôme géodésique à Saint-Romain-de-Lerps en Ardèche. Hébergement nature avec poêle à bois, vue panoramique sur les Alpes et le Rhône.",
+    "url": "https://abri-des-libellules.netlify.app/",
+    "image": "https://abri-des-libellules.netlify.app/",
+    "priceRange": "€€",
+    "currenciesAccepted": "EUR",
+    "paymentAccepted": "Carte de crédit, Airbnb",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Saint-Romain-de-Lerps",
+      "postalCode": "07130",
+      "addressRegion": "Ardèche",
+      "addressCountry": "FR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "44.9667",
+      "longitude": "4.7833"
+    },
+    "amenityFeature": [
+      {"@type": "LocationFeatureSpecification", "name": "Poêle à bois", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Douche chaude", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Cuisine équipée", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Terrasse", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Animaux acceptés", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Vue panoramique", "value": true}
+    ],
+    "checkinTime": "15:00",
+    "checkoutTime": "11:00",
+    "starRating": {"@type": "Rating", "ratingValue": "5"},
+    "containedInPlace": {
+      "@type": "Place",
+      "name": "Ardèche",
+      "address": {"@type": "PostalAddress", "addressRegion": "Ardèche", "addressCountry": "FR"}
+    }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="config.js"></script>
+  <script src="site-core.js"></script>
+  <style>
+    :root {
+      --cream: #f5f0e8;
+      --warm-white: #faf7f2;
+      --terracotta: #c4714a;
+      --terracotta-light: #d9876a;
+      --forest: #3d5a3e;
+      --forest-light: #5a7a5b;
+      --wood: #8b6343;
+      --wood-light: #b8896a;
+      --dark: #1e1a16;
+      --text: #3a332a;
+      --text-light: #6b5e52;
+      --gold: #c9a96e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--warm-white);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(250,247,242,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(196,113,74,0.15);
+      transition: all 0.3s;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--forest);
+      letter-spacing: 0.03em;
+      line-height: 1.2;
+    }
+    .nav-logo span {
+      display: block;
+      font-size: 0.65rem;
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+    }
+
+    .nav-cta {
+      background: var(--terracotta);
+      color: white;
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.2rem;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--terracotta-light); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('images/hero-bg.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      transform: scale(1.05);
+      animation: heroZoom 12s ease-out forwards;
+    }
+
+    @keyframes heroZoom {
+      from { transform: scale(1.05); }
+      to   { transform: scale(1.0); }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(30,26,22,0.5) 0%,
+        rgba(30,26,22,0.4) 40%,
+        rgba(30,26,22,0.92) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      padding: 2.5rem 1.5rem 3.5rem;
+      animation: fadeUp 1s 0.3s both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: rgba(196,113,74,0.85);
+      color: white;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.85rem;
+      margin-bottom: 1rem;
+      border-radius: 1px;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 11vw, 5rem);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.05;
+      margin-bottom: 0.6rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.85);
+      letter-spacing: 0.08em;
+      margin-bottom: 2rem;
+    }
+
+    .hero-scroll {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      color: rgba(245,240,232,0.6);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .hero-scroll-line {
+      width: 40px;
+      height: 1px;
+      background: rgba(245,240,232,0.4);
+      animation: lineGrow 1s 1.2s both;
+    }
+
+    @keyframes lineGrow {
+      from { width: 0; }
+      to { width: 40px; }
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 4rem 1.5rem; }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 0.8rem;
+      font-weight: 400;
+    }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 8vw, 3rem);
+      font-weight: 300;
+      color: var(--forest);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    h2 em {
+      font-style: italic;
+      color: var(--terracotta);
+    }
+
+    p {
+      font-size: 0.9rem;
+      line-height: 1.85;
+      color: var(--text-light);
+      font-weight: 300;
+    }
+
+    /* ── INTRO ── */
+    .intro {
+      background: var(--cream);
+      position: relative;
+    }
+
+    .intro::before {
+      content: '✦';
+      position: absolute;
+      top: 2.5rem;
+      right: 1.5rem;
+      color: var(--terracotta);
+      font-size: 1.2rem;
+      opacity: 0.4;
+    }
+
+    .intro-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.3rem, 5.5vw, 1.8rem);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--forest);
+      line-height: 1.5;
+      border-left: 2px solid var(--terracotta);
+      padding-left: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    /* ── GALLERY ── */
+    .gallery {
+      background: var(--forest);
+      padding: 3rem 0;
+      overflow: hidden;
+    }
+
+    .gallery-header {
+      padding: 0 1.5rem 2rem;
+    }
+
+    .gallery-header .section-label { color: var(--gold); }
+    .gallery-header h2 { color: var(--cream); }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      padding: 0 3px;
+    }
+
+    .gallery-item {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery-item.tall {
+      aspect-ratio: 3/4;
+      grid-row: span 2;
+    }
+
+    .gallery-item.wide {
+      grid-column: span 2;
+      aspect-ratio: 16/9;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .gallery-item:hover img { transform: scale(1.05); }
+
+    .gallery-item-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(30,26,22,0.7));
+      color: rgba(245,240,232,0.9);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 1rem 0.75rem 0.5rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .gallery-item:hover .gallery-item-label { opacity: 1; }
+
+    /* ── AMENITIES ── */
+    .amenities {
+      background: var(--warm-white);
+    }
+
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(139,99,67,0.12);
+      border: 1px solid rgba(139,99,67,0.12);
+      margin-top: 2.5rem;
+    }
+
+    .amenity-item {
+      background: var(--warm-white);
+      padding: 1.5rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+
+    .amenity-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--cream);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .amenity-name {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: 0.03em;
+    }
+
+    .amenity-desc {
+      font-size: 0.72rem;
+      color: var(--text-light);
+      line-height: 1.5;
+      font-weight: 300;
+    }
+
+    /* ── NATURE STRIP ── */
+    .nature-strip {
+      background: var(--forest);
+      padding: 3rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nature-strip::after {
+      content: '';
+      position: absolute;
+      bottom: -50px; right: -50px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .nature-strip .section-label { color: rgba(245,240,232,0.6); }
+    .nature-strip h2 { color: var(--cream); }
+    .nature-strip p { color: rgba(245,240,232,0.75); }
+
+    .nature-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    .nature-tag {
+      border: 1px solid rgba(245,240,232,0.25);
+      color: rgba(245,240,232,0.75);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      padding: 0.4rem 0.9rem;
+      border-radius: 20px;
+      font-weight: 300;
+    }
+
+    /* ── PHOTO FEATURE ── */
+    .photo-feature {
+      padding: 0;
+      height: 60vw;
+      max-height: 380px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .photo-feature img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+    }
+
+    .photo-feature-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(30,26,22,0.25);
+    }
+
+    .photo-feature-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 8vw, 3rem);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--cream);
+      text-align: center;
+      padding: 0 2rem;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+
+    /* ── PRICING ── */
+    .pricing {
+      background: var(--cream);
+    }
+
+    .pricing-card {
+      background: white;
+      border: 1px solid rgba(139,99,67,0.15);
+      padding: 2rem 1.5rem;
+      margin-top: 2.5rem;
+      position: relative;
+    }
+
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--terracotta);
+    }
+
+    .price-main {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--forest);
+      line-height: 1;
+    }
+
+    .price-main sup {
+      font-size: 1.2rem;
+      vertical-align: super;
+      color: var(--terracotta);
+    }
+
+    .price-period {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-top: 0.3rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .price-includes {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+
+    .price-includes li {
+      font-size: 0.82rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 300;
+    }
+
+    .price-includes li::before {
+      content: '—';
+      color: var(--terracotta);
+      font-size: 0.7rem;
+    }
+
+    .btn-primary {
+      display: block;
+      width: 100%;
+      background: var(--terracotta);
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 1rem;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover { background: var(--terracotta-light); }
+
+    /* ── HOW TO GET THERE ── */
+    .location {
+      background: var(--warm-white);
+    }
+
+    .location-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding: 1.2rem;
+      background: var(--cream);
+      border-radius: 4px;
+    }
+
+    .location-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .location-detail h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--forest);
+      margin-bottom: 0.3rem;
+    }
+
+    /* ── CONTACT / CTA ── */
+    .contact {
+      background: var(--forest);
+      text-align: center;
+      padding: 5rem 1.5rem;
+    }
+
+    .contact .section-label { color: var(--gold); }
+    .contact h2 { color: var(--cream); margin-bottom: 1rem; }
+    .contact p { color: rgba(245,240,232,0.65); margin-bottom: 2.5rem; }
+
+    .contact-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .btn-outline {
+      display: block;
+      border: 1px solid rgba(245,240,232,0.3);
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.95rem;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+
+    .btn-outline:hover {
+      background: rgba(245,240,232,0.1);
+      border-color: rgba(245,240,232,0.6);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--forest);
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.6);
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-sub {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.3);
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── TABLET+ ── */
+    @media (min-width: 600px) {
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .gallery-item.tall { grid-row: span 1; aspect-ratio: 4/3; }
+      .amenities-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .contact-buttons { flex-direction: row; justify-content: center; }
+    }
+
+    @media (min-width: 768px) {
+      section { padding: 5rem 3rem; }
+      .gallery-grid { grid-template-columns: repeat(4, 1fr); }
+      nav { padding: 1.5rem 3rem; }
+      .nature-strip, .contact { padding: 5rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <style>
+    #password-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #1e1a16;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      font-family: 'Jost', sans-serif;
+    }
+    #password-screen .ps-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: #f5f0e8;
+      text-align: center;
+      margin-bottom: 0.4rem;
+    }
+    #password-screen .ps-sub {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #c9a96e;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+    #password-screen input {
+      width: 100%;
+      max-width: 280px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(245,240,232,0.2);
+      color: #f5f0e8;
+      font-family: 'Jost', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+      padding: 0.9rem 1.2rem;
+      border-radius: 2px;
+      outline: none;
+      text-align: center;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s;
+    }
+    #password-screen input:focus {
+      border-color: rgba(196,113,74,0.7);
+    }
+    #password-screen input::placeholder {
+      color: rgba(245,240,232,0.3);
+      letter-spacing: 0.1em;
+    }
+    #password-screen button {
+      width: 100%;
+      max-width: 280px;
+      background: #c4714a;
+      color: white;
+      border: none;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.95rem;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    #password-screen button:hover { background: #d9876a; }
+    #password-screen .ps-error {
+      margin-top: 1rem;
+      font-size: 0.75rem;
+      color: #c4714a;
+      letter-spacing: 0.08em;
+      min-height: 1.2em;
+      text-align: center;
+    }
+    #password-screen .ps-lock {
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+      opacity: 0.5;
+    }
+
+    /* ═══ LIGHTBOX ═══ */
+    .gallery-item img { cursor: zoom-in; }
+
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(20, 17, 14, 0.94);
+      align-items: center;
+      justify-content: center;
+    }
+    #lightbox.open {
+      display: flex;
+      animation: lightboxFade 0.25s ease;
+    }
+    @keyframes lightboxFade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    #lightbox .lb-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #lightbox img {
+      max-width: 90vw;
+      max-height: 78vh;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    #lightbox .lb-caption {
+      color: #f2ede6;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      opacity: 0.85;
+      text-align: center;
+    }
+    #lightbox .lb-close {
+      position: absolute;
+      top: -2.5rem;
+      right: -0.5rem;
+      background: none;
+      border: none;
+      color: #f2ede6;
+      font-size: 2rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0.5rem;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+    #lightbox .lb-close:hover { opacity: 1; }
+    #lightbox .lb-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.08);
+      border: none;
+      color: #f2ede6;
+      font-size: 1.6rem;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    #lightbox .lb-nav:hover { background: rgba(255,255,255,0.18); }
+    #lightbox .lb-prev { left: -4.5rem; }
+    #lightbox .lb-next { right: -4.5rem; }
+    @media (max-width: 768px) {
+      #lightbox .lb-content { max-width: 94vw; }
+      #lightbox img { max-width: 94vw; max-height: 70vh; }
+      #lightbox .lb-close { top: -2.8rem; right: 0; }
+      #lightbox .lb-prev { left: 0.25rem; }
+      #lightbox .lb-next { right: 0.25rem; }
+      #lightbox .lb-nav { width: 2.4rem; height: 2.4rem; font-size: 1.2rem; background: rgba(0,0,0,0.35); }
+    }
+  </style>
+
+  <div id="password-screen">
+    <div class="ps-lock">🌿</div>
+    <div class="ps-logo">L'Abri des Libellules</div>
+    <div class="ps-sub">Saint-Romain-de-Lerps · Ardèche</div>
+    <input type="password" id="ps-input" placeholder="Mot de passe" autofocus
+      onkeydown="if(event.key==='Enter') checkPassword()">
+    <button onclick="checkPassword()">Entrer</button>
+    <div class="ps-error" id="ps-error"></div>
+  </div>
+
+  <script>
+    // Le mot de passe attendu est chargé depuis content.json (voir boot() plus bas).
+    window.__accessPassword = null;
+    window.__accessEnabled = true;
+
+    if (sessionStorage.getItem('abri_auth') === 'ok') {
+      document.getElementById('password-screen').style.display = 'none';
+    }
+
+    function checkPassword() {
+      const val = document.getElementById('ps-input').value;
+      if (window.__accessPassword !== null && val === window.__accessPassword) {
+        sessionStorage.setItem('abri_auth', 'ok');
+        const screen = document.getElementById('password-screen');
+        screen.style.transition = 'opacity 0.5s';
+        screen.style.opacity = '0';
+        setTimeout(() => screen.remove(), 500);
+      } else {
+        const err = document.getElementById('ps-error');
+        err.textContent = 'Mot de passe incorrect';
+        document.getElementById('ps-input').value = '';
+        document.getElementById('ps-input').focus();
+        setTimeout(() => err.textContent = '', 2500);
+      }
+    }
+  </script>
+
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo" id="navLogo">
+      L'Abri des Libellules
+      <span id="navTagline">Saint-Romain-de-Lerps · Ardèche</span>
+    </div>
+    <a class="nav-cta" href="#reserver">Réserver</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-tag" id="heroTag">Glamping · Dôme géodésique</div>
+      <h1><span id="heroTitle1">L'Abri des</span><br><em id="heroTitle2">Libellules</em></h1>
+      <p class="hero-sub" id="heroSub">Saint-Romain-de-Lerps, Ardèche · 07</p>
+      <div class="hero-scroll">
+        <div class="hero-scroll-line"></div>
+        <span id="heroScrollText">Découvrir</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="intro reveal">
+    <div class="section-label" id="introLabel">Bienvenue</div>
+    <blockquote class="intro-quote" id="introQuote"></blockquote>
+    <div id="introText"></div>
+  </section>
+
+  <!-- GALLERY -->
+  <div class="gallery reveal">
+    <div class="gallery-header">
+      <div class="section-label" id="galLabel">Découvrez</div>
+      <h2 id="galTitle"></h2>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+
+  <!-- AMENITIES -->
+  <section class="amenities reveal">
+    <div class="section-label" id="amLabel">Le confort</div>
+    <h2 id="amTitle"></h2>
+    <div class="amenities-grid" id="amenitiesGrid"></div>
+  </section>
+
+  <!-- NATURE -->
+  <section class="nature-strip reveal">
+    <div class="section-label" id="natLabel">La nature</div>
+    <h2 id="natTitle"></h2>
+    <p id="natText"></p>
+    <div class="nature-tags" id="natTags"></div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing reveal" id="reserver">
+    <div class="section-label" id="priceLabel">Tarifs</div>
+    <h2 id="priceTitle"></h2>
+    <div class="pricing-card">
+      <div class="price-main"><sup>À partir de </sup><span id="priceFrom">95</span><sup>€</sup></div>
+      <div class="price-period" id="pricePeriod">par nuit / 2 personnes</div>
+      <ul class="price-includes" id="priceIncludes"></ul>
+      <a class="btn-primary" id="priceBookingBtn" href="#" target="_blank">Voir les disponibilités</a>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="location reveal">
+    <div class="section-label" id="locLabel">Comment nous trouver</div>
+    <h2 id="locTitle"></h2>
+    <div id="locItems"></div>
+  </section>
+
+  <!-- CONTACT CTA -->
+  <section class="contact reveal">
+    <div class="section-label" id="contactLabel">Nous contacter</div>
+    <h2 id="contactTitle"></h2>
+    <p id="contactText"></p>
+    <div class="contact-buttons">
+      <a class="btn-primary" id="contactBookingBtn" href="#" target="_blank" style="max-width:280px; margin: 0 auto;">Réserver sur Airbnb</a>
+      <a class="btn-outline" id="contactEmailBtn" href="#" style="max-width:280px; margin: 0 auto;">Nous écrire</a>
+    </div>
+  </section>
+
+  <!-- PHOTO FEATURE -->
+  <div class="photo-feature reveal" style="max-height:240px;">
+    <img id="photoFeatureImg" src=""/>
+    <div class="photo-feature-overlay" style="background: rgba(30,26,22,0.35);">
+      <div class="photo-feature-text" id="photoFeatureText" style="font-size: clamp(1rem, 4vw, 1.6rem);"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo" id="footerLogo">L'Abri des Libellules</div>
+    <div class="footer-sub" id="footerSub">Saint-Romain-de-Lerps · Ardèche · France</div>
+  </footer>
+  <!-- Contenu sémantique pour SEO local -->
+  <div style="display:none" aria-hidden="true">
+    <p id="seoHidden"></p>
+  </div>
+
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Visionneuse d'images">
+    <div class="lb-content">
+      <button class="lb-close" aria-label="Fermer">&times;</button>
+      <button class="lb-nav lb-prev" aria-label="Image précédente">&#8249;</button>
+      <img id="lb-img" src="" alt="">
+      <button class="lb-nav lb-next" aria-label="Image suivante">&#8250;</button>
+      <div class="lb-caption" id="lb-caption"></div>
+    </div>
+  </div>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    reveals.forEach(r => revealObserver.observe(r));
+
+    const $ = (id) => document.getElementById(id);
+    const esc = s => String(s ?? '').replace(/</g, '&lt;');
+
+    function render(c) {
+      document.title = "Gîte " + c.brand.name + " — Dôme géodésique en Ardèche";
+
+      // NAV
+      $('navLogo').innerHTML = esc(c.brand.name) + '<span id="navTagline">' + esc(c.brand.tagline) + '</span>';
+
+      // HERO
+      $('heroBg').style.backgroundImage = `url("${c.images.hero}")`;
+      $('heroTag').textContent = c.hero.tag;
+      $('heroTitle1').textContent = c.hero.title1;
+      $('heroTitle2').textContent = c.hero.title2;
+      $('heroSub').textContent = c.hero.sub;
+      $('heroScrollText').textContent = c.hero.scrollText;
+
+      // INTRO
+      $('introLabel').textContent = c.intro.label;
+      $('introQuote').textContent = c.intro.quote;
+      $('introText').innerHTML = [c.intro.p1, c.intro.p2].filter(Boolean)
+        .map((p, i) => `<p${i ? ' style="margin-top:1rem"' : ''}>${fmtEm(p)}</p>`).join('');
+
+      // GALLERY
+      $('galLabel').textContent = c.gallery.label;
+      $('galTitle').innerHTML = fmtEm(c.gallery.title);
+      const photos = c.gallery.photos || [];
+      $('galleryGrid').innerHTML = photos.map(p => `
+        <div class="gallery-item">
+          <img src="${p.url}" alt="${esc(p.alt)}">
+          <div class="gallery-item-label">${esc(p.label)}</div>
+        </div>`).join('');
+
+      // AMENITIES
+      $('amLabel').textContent = c.amenities.label;
+      $('amTitle').innerHTML = fmtEm(c.amenities.title);
+      $('amenitiesGrid').innerHTML = (c.amenities.items || []).map(a => `
+        <div class="amenity-item">
+          <div class="amenity-icon">${esc(a.icon)}</div>
+          <div class="amenity-name">${esc(a.name)}</div>
+          <div class="amenity-desc">${esc(a.desc)}</div>
+        </div>`).join('');
+
+      // NATURE
+      $('natLabel').textContent = c.nature.label;
+      $('natTitle').innerHTML = fmtEm(c.nature.title);
+      $('natText').textContent = c.nature.text;
+      $('natTags').innerHTML = (c.nature.tags || []).map(t => `<span class="nature-tag">${esc(t)}</span>`).join('');
+
+      // PRICING
+      $('priceLabel').textContent = c.pricing.label;
+      $('priceTitle').textContent = c.pricing.title;
+      $('priceFrom').textContent = c.pricing.priceFrom;
+      $('pricePeriod').textContent = c.pricing.pricePeriod;
+      $('priceIncludes').innerHTML = (c.pricing.includes || []).map(i => `<li>${esc(i)}</li>`).join('');
+      $('priceBookingBtn').href = c.pricing.bookingUrl || '#';
+      $('priceBookingBtn').textContent = c.pricing.bookingText;
+
+      // LOCATION
+      $('locLabel').textContent = c.location.label;
+      $('locTitle').innerHTML = fmtEm(c.location.title);
+      $('locItems').innerHTML = (c.location.items || []).map(it => `
+        <div class="location-detail">
+          <div class="location-icon">${esc(it.icon)}</div>
+          <div><h3>${esc(it.title)}</h3><p>${esc(it.text)}</p></div>
+        </div>`).join('');
+
+      // CONTACT
+      $('contactLabel').textContent = c.contact.label;
+      $('contactTitle').innerHTML = fmtEm(c.contact.title);
+      $('contactText').textContent = c.contact.text;
+      $('contactBookingBtn').href = c.pricing.bookingUrl || '#';
+      $('contactBookingBtn').textContent = c.contact.bookingText;
+      $('contactEmailBtn').href = 'mailto:' + c.contact.email;
+      $('contactEmailBtn').textContent = c.contact.emailText;
+
+      // PHOTO FEATURE
+      $('photoFeatureImg').src = c.photoFeature.url;
+      $('photoFeatureText').textContent = c.photoFeature.text;
+
+      // FOOTER
+      $('footerLogo').textContent = c.footer.logo;
+      $('footerSub').textContent = c.footer.sub;
+      $('seoHidden').textContent = c.footer.seoText || '';
+
+      // ACCÈS (mot de passe du site)
+      window.__accessEnabled = c.access ? c.access.enabled !== false : true;
+      window.__accessPassword = c.access ? c.access.password : null;
+      if (!window.__accessEnabled) {
+        const screen = document.getElementById('password-screen');
+        if (screen) screen.remove();
+      } else if (sessionStorage.getItem('abri_auth') === 'ok') {
+        const screen = document.getElementById('password-screen');
+        if (screen) screen.style.display = 'none';
+      }
+
+      initGalleryLightbox();
+    }
+
+    function initGalleryLightbox() {
+      const galleryImgs = Array.from(document.querySelectorAll('.gallery-item img'));
+      if (!galleryImgs.length) return;
+
+      const lightbox = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lb-img');
+      const lbCaption = document.getElementById('lb-caption');
+      const btnClose = lightbox.querySelector('.lb-close');
+      const btnPrev = lightbox.querySelector('.lb-prev');
+      const btnNext = lightbox.querySelector('.lb-next');
+
+      let currentIndex = 0;
+
+      function getLabel(img) {
+        const item = img.closest('.gallery-item');
+        const label = item ? item.querySelector('.gallery-item-label') : null;
+        return label ? label.textContent.trim() : (img.alt || '');
+      }
+
+      function show(index) {
+        currentIndex = (index + galleryImgs.length) % galleryImgs.length;
+        const img = galleryImgs[currentIndex];
+        lbImg.src = img.src;
+        lbImg.alt = img.alt || '';
+        lbCaption.textContent = getLabel(img);
+      }
+
+      function open(index) {
+        show(index);
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function close() {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      galleryImgs.forEach((img, index) => {
+        img.addEventListener('click', () => open(index));
+      });
+
+      btnClose.addEventListener('click', close);
+      btnPrev.addEventListener('click', () => show(currentIndex - 1));
+      btnNext.addEventListener('click', () => show(currentIndex + 1));
+
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) close();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('open')) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowLeft') show(currentIndex - 1);
+        if (e.key === 'ArrowRight') show(currentIndex + 1);
+      });
+
+      let touchStartX = 0;
+      lightbox.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      });
+      lightbox.addEventListener('touchend', (e) => {
+        const diff = e.changedTouches[0].screenX - touchStartX;
+        if (Math.abs(diff) > 40) {
+          diff > 0 ? show(currentIndex - 1) : show(currentIndex + 1);
+        }
+      });
+    }
+
+    (async () => {
+      const c = await loadContent();
+      if (c) render(c);
+      else document.body.innerHTML = '<p style="padding:4rem;text-align:center;font-family:sans-serif">Impossible de charger le contenu (content.json).</p>';
+    })();
+  </script>
+</body>
+</html>

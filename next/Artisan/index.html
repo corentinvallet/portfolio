@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pierrard Maçonnerie — Artisan depuis 1987</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand-100: #f5f0e8;
+    --sand-200: #ede4d0;
+    --sand-300: #d9c9a8;
+    --sand-400: #c4ad82;
+    --sand-500: #a8895a;
+    --sand-600: #8a6e3f;
+    --stone-700: #5c4a2a;
+    --stone-800: #3d2f15;
+    --stone-900: #1e1608;
+    --mortar: #7a7065;
+    --mortar-light: #a09585;
+    --white: #faf8f4;
+    --accent: #c4621a;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'Libre Baskerville', Georgia, serif;
+    --font-ui: 'Barlow Condensed', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--sand-100);
+    color: var(--stone-800);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: .025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 200px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--stone-900);
+    border-bottom: 3px solid var(--sand-500);
+    padding: 0 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    transition: background .3s;
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: var(--sand-300);
+    letter-spacing: .02em;
+    text-decoration: none;
+    line-height: 1;
+  }
+  .nav-logo span {
+    display: block;
+    font-size: .6rem;
+    font-family: var(--font-ui);
+    font-weight: 300;
+    letter-spacing: .25em;
+    color: var(--sand-500);
+    text-transform: uppercase;
+  }
+
+  .nav-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 4px;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 26px;
+    height: 2px;
+    background: var(--sand-300);
+    transition: all .3s;
+    transform-origin: left;
+  }
+  .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(1px,-1px); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; width: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(1px,1px); }
+
+  .nav-menu {
+    position: fixed;
+    top: 60px; left: 0; right: 0;
+    background: var(--stone-900);
+    border-bottom: 3px solid var(--sand-500);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1.5rem 2rem;
+    gap: .5rem;
+    transform: translateY(-110%);
+    transition: transform .4s cubic-bezier(.77,0,.175,1);
+    z-index: 99;
+  }
+  .nav-menu.open { transform: translateY(0); }
+  .nav-menu a {
+    font-family: var(--font-ui);
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--sand-300);
+    text-decoration: none;
+    padding: .5rem 0;
+    border-bottom: 1px solid rgba(196,173,130,.15);
+    transition: color .2s;
+  }
+  .nav-menu a:hover { color: var(--accent); }
+
+  @media(min-width:768px) {
+    .nav-toggle { display: none; }
+    .nav-menu {
+      position: static;
+      flex-direction: row;
+      transform: none;
+      padding: 0;
+      gap: 2rem;
+      background: none;
+      border: none;
+    }
+    .nav-menu a { font-size: 1rem; border: none; padding: 0; }
+    nav { padding: 0 2.5rem; }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100svh;
+    padding-top: 60px;
+    background: var(--stone-900);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 4rem;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(160deg, rgba(30,22,8,.55) 0%, rgba(30,22,8,.92) 100%),
+      url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80') center/cover no-repeat;
+    transform: scale(1.05);
+    animation: zoomin 12s ease-out forwards;
+  }
+  @keyframes zoomin { from { transform:scale(1.05); } to { transform:scale(1); } }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, var(--stone-900) 0%, rgba(30,22,8,.35) 60%, transparent 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 1.5rem;
+    max-width: 720px;
+    animation: slidein .9s .2s both;
+  }
+  @keyframes slidein { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:none; } }
+
+  .hero-eyebrow {
+    font-family: var(--font-ui);
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--sand-500);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 2px;
+    background: var(--sand-500);
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 8vw, 5rem);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.05;
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--sand-400);
+  }
+
+  .hero-sub {
+    font-family: var(--font-ui);
+    font-size: 1.05rem;
+    font-weight: 300;
+    letter-spacing: .04em;
+    color: var(--sand-300);
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+    opacity: .9;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    background: var(--accent);
+    color: var(--white);
+    font-family: var(--font-ui);
+    font-size: .9rem;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    border: none;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+  }
+  .btn-primary:hover { background: #a84f12; transform: translateY(-2px); }
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    background: transparent;
+    color: var(--sand-300);
+    font-family: var(--font-ui);
+    font-size: .9rem;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1rem 1.5rem;
+    border: 2px solid rgba(196,173,130,.4);
+    transition: border-color .2s, color .2s;
+  }
+  .btn-secondary:hover { border-color: var(--sand-400); color: var(--sand-200); }
+
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 5rem 1.5rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-ui);
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--sand-500);
+    margin-bottom: .8rem;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+  }
+  .section-label::after {
+    content: '';
+    display: block;
+    flex: 1;
+    max-width: 40px;
+    height: 2px;
+    background: var(--sand-400);
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 700;
+    color: var(--stone-800);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .section-desc {
+    color: var(--mortar);
+    max-width: 560px;
+    margin-bottom: 3rem;
+    font-size: .95rem;
+  }
+
+  /* ── STATS BAND ── */
+  .stats-band {
+    background: var(--stone-800);
+    padding: 3rem 1.5rem;
+  }
+  .stats-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1rem;
+    text-align: center;
+  }
+  @media(min-width:600px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--sand-400);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: var(--font-ui);
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--mortar-light);
+    margin-top: .4rem;
+  }
+
+  /* ── SERVICES ── */
+  .services-bg { background: var(--sand-200); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  @media(min-width:600px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media(min-width:900px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .service-card {
+    background: var(--white);
+    border-left: 4px solid var(--sand-400);
+    padding: 2rem 1.5rem;
+    transition: border-color .2s, transform .2s, box-shadow .2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 80px; height: 80px;
+    background: var(--sand-200);
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    transition: opacity .2s;
+  }
+  .service-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(30,22,8,.1);
+  }
+  .service-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .service-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--stone-800);
+    margin-bottom: .6rem;
+  }
+  .service-card p {
+    font-size: .88rem;
+    color: var(--mortar);
+    line-height: 1.6;
+  }
+
+  /* ── GALLERY ── */
+  .gallery-section { background: var(--stone-900); }
+  .gallery-section .section-title { color: var(--sand-300); }
+  .gallery-section .section-desc { color: var(--mortar-light); }
+
+  .gallery-filters {
+    display: flex;
+    gap: .6rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  .filter-btn {
+    font-family: var(--font-ui);
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--sand-400);
+    border: 2px solid rgba(196,173,130,.3);
+    padding: .5rem 1.1rem;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .filter-btn.active, .filter-btn:hover {
+    background: var(--sand-500);
+    color: var(--stone-900);
+    border-color: var(--sand-500);
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3px;
+  }
+  @media(min-width:600px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media(min-width:900px) { .gallery-grid { grid-template-columns: repeat(4, 1fr); } }
+
+  .gallery-item {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--stone-800);
+  }
+  .gallery-item.wide { grid-column: span 2; aspect-ratio: 2/1; }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .5s cubic-bezier(.25,.46,.45,.94), filter .3s;
+    filter: brightness(.9) saturate(.8);
+  }
+  .gallery-item:hover img { transform: scale(1.08); filter: brightness(1) saturate(1); }
+  .gallery-item-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(30,22,8,.8) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity .3s;
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem;
+  }
+  .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+  .gallery-item-label {
+    font-family: var(--font-ui);
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--sand-300);
+  }
+  .gallery-item-tag {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: white;
+    padding: .15rem .5rem;
+    margin-bottom: .4rem;
+  }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(10,6,2,.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s;
+  }
+  .lightbox.open { opacity: 1; pointer-events: all; }
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border: 3px solid var(--sand-600);
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    background: none;
+    border: 2px solid var(--sand-500);
+    color: var(--sand-300);
+    font-size: 1.4rem;
+    width: 44px; height: 44px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s;
+  }
+  .lightbox-close:hover { background: var(--sand-600); }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media(min-width:768px) { .about-grid { grid-template-columns: 1fr 1fr; } }
+
+  .about-img-wrap {
+    position: relative;
+  }
+  .about-img-wrap img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    filter: sepia(.2) brightness(.95);
+  }
+  .about-badge {
+    position: absolute;
+    bottom: -1.5rem;
+    right: -1rem;
+    background: var(--stone-800);
+    color: var(--sand-300);
+    padding: 1.2rem 1.5rem;
+    font-family: var(--font-display);
+    font-size: .95rem;
+    font-weight: 700;
+    text-align: center;
+    border: 3px solid var(--sand-500);
+    line-height: 1.2;
+  }
+  .about-badge strong {
+    display: block;
+    font-size: 2rem;
+    color: var(--sand-400);
+  }
+
+  .about-text { padding-top: 1rem; }
+  .about-text p { color: var(--mortar); margin-bottom: 1rem; font-size: .95rem; }
+
+  .values-list {
+    list-style: none;
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+  }
+  .values-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: .8rem;
+    font-family: var(--font-ui);
+    font-size: .95rem;
+    font-weight: 600;
+    letter-spacing: .05em;
+    color: var(--stone-800);
+  }
+  .values-list li::before {
+    content: '◆';
+    color: var(--accent);
+    font-size: .7rem;
+    margin-top: .25rem;
+    flex-shrink: 0;
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-bg { background: var(--sand-200); }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  @media(min-width:700px) { .testimonials-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media(min-width:1000px) { .testimonials-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .testimonial-card {
+    background: var(--white);
+    padding: 2rem 1.5rem;
+    border-bottom: 4px solid var(--sand-400);
+    position: relative;
+  }
+  .testimonial-card::before {
+    content: '"';
+    position: absolute;
+    top: .5rem; right: 1rem;
+    font-family: var(--font-display);
+    font-size: 5rem;
+    color: var(--sand-300);
+    line-height: 1;
+  }
+  .testimonial-text {
+    font-style: italic;
+    color: var(--stone-700);
+    font-size: .9rem;
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+    position: relative;
+    z-index: 1;
+  }
+  .testimonial-author {
+    font-family: var(--font-ui);
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--stone-800);
+  }
+  .testimonial-location {
+    font-family: var(--font-ui);
+    font-size: .75rem;
+    color: var(--mortar);
+    letter-spacing: .08em;
+  }
+  .stars { color: var(--accent); font-size: .85rem; margin-bottom: .8rem; }
+
+  /* ── CONTACT ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  @media(min-width:768px) { .contact-grid { grid-template-columns: 1fr 1.4fr; } }
+
+  .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+  .contact-block {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .contact-icon {
+    width: 42px; height: 42px;
+    background: var(--stone-800);
+    color: var(--sand-400);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .contact-block h4 {
+    font-family: var(--font-ui);
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--mortar);
+    margin-bottom: .2rem;
+  }
+  .contact-block p, .contact-block a {
+    font-size: .9rem;
+    color: var(--stone-800);
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .contact-block a:hover { color: var(--accent); }
+
+  .contact-form-wrap {
+    background: var(--sand-200);
+    padding: 2rem 1.5rem;
+    border-top: 4px solid var(--sand-500);
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  @media(min-width:500px) { .form-row.two-col { grid-template-columns: 1fr 1fr; } }
+  .form-field { display: flex; flex-direction: column; gap: .4rem; }
+  .form-field label {
+    font-family: var(--font-ui);
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--stone-700);
+  }
+  .form-field input, .form-field textarea, .form-field select {
+    background: var(--white);
+    border: 2px solid var(--sand-300);
+    color: var(--stone-800);
+    font-family: var(--font-body);
+    font-size: .9rem;
+    padding: .75rem 1rem;
+    outline: none;
+    transition: border-color .2s;
+    width: 100%;
+    -webkit-appearance: none;
+  }
+  .form-field input:focus, .form-field textarea:focus, .form-field select:focus {
+    border-color: var(--sand-500);
+  }
+  .form-field textarea { min-height: 120px; resize: vertical; }
+  .form-submit {
+    margin-top: 1.5rem;
+    width: 100%;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--stone-900);
+    border-top: 4px solid var(--sand-600);
+    padding: 3rem 1.5rem 1.5rem;
+    color: var(--mortar-light);
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+  @media(min-width:600px) { .footer-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media(min-width:900px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+  .footer-brand-name {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--sand-300);
+    margin-bottom: .4rem;
+  }
+  .footer-brand-tagline {
+    font-family: var(--font-ui);
+    font-size: .75rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--sand-600);
+  }
+  .footer-desc {
+    font-size: .85rem;
+    line-height: 1.7;
+    margin-top: 1rem;
+    color: var(--mortar);
+  }
+  .footer-col h4 {
+    font-family: var(--font-ui);
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--sand-500);
+    margin-bottom: 1rem;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+  .footer-col ul li a {
+    font-size: .85rem;
+    color: var(--mortar);
+    text-decoration: none;
+    transition: color .2s;
+    font-family: var(--font-ui);
+    font-weight: 400;
+    letter-spacing: .05em;
+  }
+  .footer-col ul li a:hover { color: var(--sand-400); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,.08);
+    padding-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy {
+    font-family: var(--font-ui);
+    font-size: .75rem;
+    color: var(--mortar);
+    letter-spacing: .08em;
+  }
+  .footer-admin-link {
+    font-family: var(--font-ui);
+    font-size: .75rem;
+    color: var(--mortar);
+    text-decoration: none;
+    letter-spacing: .08em;
+    opacity: .5;
+    transition: opacity .2s;
+  }
+  .footer-admin-link:hover { opacity: 1; }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .7s .1s, transform .7s .1s;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-d2 { transition-delay: .25s !important; }
+  .reveal-d3 { transition-delay: .4s !important; }
+  .reveal-d4 { transition-delay: .55s !important; }
+
+  /* ── DIVIDER ── */
+  .stone-divider {
+    height: 24px;
+    background:
+      repeating-linear-gradient(90deg, var(--stone-800) 0px, var(--stone-800) 40px, var(--stone-900) 40px, var(--stone-900) 80px,
+      var(--stone-800) 80px, var(--stone-800) 120px, var(--stone-900) 120px, var(--stone-900) 140px);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Pierrard<span>Maçonnerie · Artisan</span></a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-menu" id="navMenu">
+    <a href="#services" onclick="closeMenu()">Services</a>
+    <a href="#galerie" onclick="closeMenu()">Galerie</a>
+    <a href="#apropos" onclick="closeMenu()">À propos</a>
+    <a href="#temoignages" onclick="closeMenu()">Avis</a>
+    <a href="#contact" onclick="closeMenu()">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Artisan maçon · Île-de-France</p>
+    <h1>L'art de bâtir,<br><em>la passion du pierre</em></h1>
+    <p class="hero-sub">Constructions neuves, rénovations, restaurations de façades et murs en pierre. Un savoir-faire transmis depuis 1987.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">Demander un devis</a>
+      <a href="#galerie" class="btn-secondary">Voir nos réalisations</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAND -->
+<div class="stats-band">
+  <div class="stats-grid">
+    <div class="reveal">
+      <div class="stat-num">37</div>
+      <div class="stat-label">Ans d'expérience</div>
+    </div>
+    <div class="reveal reveal-d2">
+      <div class="stat-num">840+</div>
+      <div class="stat-label">Chantiers réalisés</div>
+    </div>
+    <div class="reveal reveal-d3">
+      <div class="stat-num">98%</div>
+      <div class="stat-label">Clients satisfaits</div>
+    </div>
+    <div class="reveal reveal-d4">
+      <div class="stat-num">12</div>
+      <div class="stat-label">Artisans qualifiés</div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services-bg" id="services">
+  <div class="section-inner">
+    <p class="section-label reveal">Nos prestations</p>
+    <h2 class="section-title reveal">Ce que nous bâtissons</h2>
+    <p class="section-desc reveal">De la fondation au faîte, chaque ouvrage est réalisé dans les règles de l'art, avec des matériaux sélectionnés pour leur durabilité.</p>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <span class="service-icon">🧱</span>
+        <h3>Maçonnerie générale</h3>
+        <p>Construction de murs porteurs, cloisons, agglos, briques et béton armé. Travaux de gros œuvre sur mesure.</p>
+      </div>
+      <div class="service-card reveal reveal-d2">
+        <span class="service-icon">🏠</span>
+        <h3>Rénovation & Extension</h3>
+        <p>Extension de maison, surélévation, reprise en sous-œuvre. Nous renforçons et agrandissons votre patrimoine.</p>
+      </div>
+      <div class="service-card reveal reveal-d3">
+        <span class="service-icon">🪨</span>
+        <h3>Pierre naturelle</h3>
+        <p>Restauration de murs en pierre, façades en meulière, enduits à la chaux. Le respect du bâti ancien est notre spécialité.</p>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-icon">🏗️</span>
+        <h3>Dallage & Carrelage</h3>
+        <p>Pose de dallages extérieurs, terrasses, allées en pavés. Sols intérieurs en carrelage grand format.</p>
+      </div>
+      <div class="service-card reveal reveal-d2">
+        <span class="service-icon">🔧</span>
+        <h3>Ravalement de façade</h3>
+        <p>Nettoyage, réparation de fissures, enduits projetés ou talochés. Mise en peinture et traitement hydrofuge.</p>
+      </div>
+      <div class="service-card reveal reveal-d3">
+        <span class="service-icon">🏛️</span>
+        <h3>Cheminées & Foyers</h3>
+        <p>Construction et réfection de cheminées, conduits de fumée, habillages en pierre reconstituée ou naturelle.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stone-divider"></div>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="galerie">
+  <div class="section-inner">
+    <p class="section-label reveal" style="color:var(--sand-500);">Réalisations</p>
+    <h2 class="section-title reveal">Galerie de chantiers</h2>
+    <p class="section-desc reveal">Chaque photo témoigne d'un chantier conduit avec rigueur. Cliquez pour agrandir.</p>
+
+    <div class="gallery-filters reveal">
+      <button class="filter-btn active" data-filter="all">Tout</button>
+      <button class="filter-btn" data-filter="maconnerie">Maçonnerie</button>
+      <button class="filter-btn" data-filter="pierre">Pierre</button>
+      <button class="filter-btn" data-filter="facade">Façade</button>
+      <button class="filter-btn" data-filter="dallage">Dallage</button>
+    </div>
+
+    <div class="gallery-grid" id="galleryGrid">
+      <div class="gallery-item wide reveal" data-cat="maconnerie" data-img="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=900&q=80" data-label="Construction mur porteur">
+        <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=900&q=80" alt="Construction mur porteur" loading="lazy">
+        <div class="gallery-item-overlay">
+          <div><div class="gallery-item-tag">Maçonnerie</div><div class="gallery-item-label">Construction mur porteur</div></div>
+        </div>
+      </div>
+      <div class="gallery-item reveal" data-cat="pierre" data-img="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" data-label="Mur en pierre naturelle">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Mur en pierre naturelle" loading="lazy">
+        <div class="gallery-item-overlay">
+          <div><div class="gallery-item-tag">Pierre</div><div class="gallery-item-label">Mur en pierre naturelle</div></div>
+        </div>
+      </div>
+      <div class="gallery-item reveal reveal-d2" data-cat="facade" data-img="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=600&q=80" data-label="Ravalement enduit chaux">
+        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=600&q=80" alt="Ravalement façade" loading="lazy">
+        <div class="gallery-item-overlay">
+          <div><div class="gallery-item-tag">Façade</div><div class="gallery-item-label">Ravalement enduit chaux</div></div>
+        </div>
+      </div>
+      <div class="gallery-item reveal" data-cat="dallage" data-img="https://images.unsplash.com/photo-1555862124-74657dba8c66?w=600&q=80" data-label="Terrasse dallage Pierre bleue">
+        <img src="https://images.unsplash.com/photo-1555862124-74657dba8c66?w=600&q=80" alt="Dallage terrasse" loading="lazy">
+        <div class="gallery-item-overlay">
+          <div><div class="gallery-item-tag">Dallage</div><div class="gallery-item-label">Terrasse pierre bleue</div></div>
+        </div>
+      </div>
+      <div class="gallery-item reveal reveal-d2" data-cat="maconnerie" data-img="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80" data-label="Extension maison individuelle">
+        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80" alt="Extension" loading="lazy">
+        <div class="gallery-item-overlay">
+          <div><div class="gallery-item-tag">Maçonnerie</div><div class="gallery-item-label">Extension maison</div></div>
+        </div>
+      </div>
+      <div class="gallery-item reveal reveal-d3" data-cat="pierre" data-img="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600&q=80" data-label="Cheminée en pierre de Bourgogne">
+        <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600&q=80" alt="Cheminée pierre" loading="lazy">
+        <div class="gallery-item-overlay">
+          <div><div class="gallery-item-tag">Pierre</div><div class="gallery-item-label">Cheminée pierre de Bourgogne</div></div>
+        </div>
+      </div>
+      <div class="gallery-item wide reveal" data-cat="dallage" data-img="https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=900&q=80" data-label="Allée pavés granit">
+        <img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=900&q=80" alt="Allée pavés" loading="lazy">
+        <div class="gallery-item-overlay">
+          <div><div class="gallery-item-tag">Dallage</div><div class="gallery-item-label">Allée pavés granit</div></div>
+        </div>
+      </div>
+      <div class="gallery-item reveal" data-cat="facade" data-img="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80" data-label="Rénovation façade meulière">
+        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80" alt="Façade meulière" loading="lazy">
+        <div class="gallery-item-overlay">
+          <div><div class="gallery-item-tag">Façade</div><div class="gallery-item-label">Façade meulière</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="apropos">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal">
+        <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=600&q=80" alt="Artisan maçon au travail">
+        <div class="about-badge">
+          <strong>37</strong>
+          ans<br>d'expérience
+        </div>
+      </div>
+      <div class="about-text">
+        <p class="section-label reveal">Notre histoire</p>
+        <h2 class="section-title reveal">Jean-Michel Pierrard,<br>maçon de père en fils</h2>
+        <p class="reveal">Fondée en 1987 par Jean-Michel Pierrard, l'entreprise est aujourd'hui une référence régionale pour la maçonnerie traditionnelle et la restauration du bâti ancien. Compagnon du Tour de France, Jean-Michel a transmis son amour de la pierre à son fils Thomas, qui dirige aujourd'hui les chantiers.</p>
+        <p class="reveal">Notre équipe de 12 artisans partage une même exigence : chaque ouvrage doit tenir cent ans. Pas de précipitation, pas de compromis sur les matériaux.</p>
+        <ul class="values-list reveal">
+          <li>Devis gratuit et détaillé sous 48h</li>
+          <li>Garantie décennale et assurance RC Pro</li>
+          <li>Matériaux sourcés en circuits courts</li>
+          <li>Chantier propre et livraison dans les délais</li>
+          <li>Label RGE — travaux éligibles aux aides</li>
+        </ul>
+        <a href="#contact" class="btn-primary reveal">Prendre contact</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-bg" id="temoignages">
+  <div class="section-inner">
+    <p class="section-label reveal">Ils nous font confiance</p>
+    <h2 class="section-title reveal">Ce que disent nos clients</h2>
+    <p class="section-desc reveal">Des particuliers aux collectivités, chaque chantier se termine par une poignée de mains sincère.</p>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">Extension de 40m² réalisée en 8 semaines, dans les délais annoncés. Travail remarquable, équipe sérieuse. Je recommande sans hésiter.</p>
+        <div class="testimonial-author">Marie-Claire D.</div>
+        <div class="testimonial-location">Versailles, 78</div>
+      </div>
+      <div class="testimonial-card reveal reveal-d2">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">Restauration de notre maison de famille en meulière. Jean-Michel a su conseiller les bonnes techniques. Un résultat qui respecte l'âme du bâtiment.</p>
+        <div class="testimonial-author">Bernard & Sylvie T.</div>
+        <div class="testimonial-location">Meudon, 92</div>
+      </div>
+      <div class="testimonial-card reveal reveal-d3">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">Terrasse et allée en pavés granit impeccables. Chantier propre, artisans courtois, devis respecté à l'euro. On a enfin trouvé la perle rare.</p>
+        <div class="testimonial-author">Frédéric M.</div>
+        <div class="testimonial-location">Saint-Germain-en-Laye, 78</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <p class="section-label reveal">Nous joindre</p>
+    <h2 class="section-title reveal">Demande de devis gratuit</h2>
+    <p class="section-desc reveal">Réponse garantie sous 48h ouvrées. Déplacement gratuit sur Île-de-France.</p>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-block reveal">
+          <div class="contact-icon">📞</div>
+          <div>
+            <h4>Téléphone</h4>
+            <a href="tel:0143224455">01 43 22 44 55</a>
+          </div>
+        </div>
+        <div class="contact-block reveal">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <h4>Email</h4>
+            <a href="mailto:contact@pierrard-maconnerie.fr">contact@pierrard-maconnerie.fr</a>
+          </div>
+        </div>
+        <div class="contact-block reveal">
+          <div class="contact-icon">📍</div>
+          <div>
+            <h4>Adresse</h4>
+            <p>12 rue des Carriers<br>92340 Bourg-la-Reine</p>
+          </div>
+        </div>
+        <div class="contact-block reveal">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <h4>Horaires</h4>
+            <p>Lun–Ven · 8h–18h<br>Urgences : 7j/7</p>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form-wrap reveal">
+        <div class="form-row two-col">
+          <div class="form-field"><label>Prénom *</label><input type="text" placeholder="Jean"></div>
+          <div class="form-field"><label>Nom *</label><input type="text" placeholder="Dupont"></div>
+        </div>
+        <div class="form-row two-col">
+          <div class="form-field"><label>Téléphone *</label><input type="tel" placeholder="06 XX XX XX XX"></div>
+          <div class="form-field"><label>Email</label><input type="email" placeholder="jean@mail.fr"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Type de travaux *</label>
+            <select>
+              <option value="">-- Sélectionner --</option>
+              <option>Maçonnerie générale</option>
+              <option>Rénovation / Extension</option>
+              <option>Pierre naturelle</option>
+              <option>Dallage / Carrelage</option>
+              <option>Ravalement de façade</option>
+              <option>Cheminée</option>
+              <option>Autre</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field"><label>Votre message</label><textarea placeholder="Décrivez votre projet, superficie, contraintes éventuelles..."></textarea></div>
+        </div>
+        <button class="btn-primary form-submit" onclick="handleSubmit(event)">
+          Envoyer ma demande →
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">Pierrard Maçonnerie</div>
+        <div class="footer-brand-tagline">Artisan depuis 1987</div>
+        <p class="footer-desc">L'entreprise familiale spécialisée en maçonnerie traditionnelle, restauration du bâti ancien et travaux de gros œuvre en Île-de-France.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Maçonnerie générale</a></li>
+          <li><a href="#services">Rénovation & Extension</a></li>
+          <li><a href="#services">Pierre naturelle</a></li>
+          <li><a href="#services">Dallage & Carrelage</a></li>
+          <li><a href="#services">Ravalement de façade</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Informations</h4>
+        <ul>
+          <li><a href="#apropos">À propos</a></li>
+          <li><a href="#galerie">Galerie</a></li>
+          <li><a href="#temoignages">Témoignages</a></li>
+          <li><a href="#contact">Devis gratuit</a></li>
+          <li><a href="#">Mentions légales</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2024 Pierrard Maçonnerie · SIRET 382 145 897 00018 · RGE · Garantie décennale</p>
+      <a href="admin.html" class="footer-admin-link">Espace admin</a>
+    </div>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">✕</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<script>
+  // NAV TOGGLE
+  const toggle = document.getElementById('navToggle');
+  const menu = document.getElementById('navMenu');
+  toggle.addEventListener('click', () => {
+    toggle.classList.toggle('open');
+    menu.classList.toggle('open');
+  });
+  function closeMenu() {
+    toggle.classList.remove('open');
+    menu.classList.remove('open');
+  }
+  // Close on outside click
+  document.addEventListener('click', e => {
+    if (!toggle.contains(e.target) && !menu.contains(e.target)) closeMenu();
+  });
+
+  // SCROLL REVEAL
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // GALLERY FILTER
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.gallery-item').forEach(item => {
+        const show = filter === 'all' || item.dataset.cat === filter;
+        item.style.display = show ? '' : 'none';
+      });
+    });
+  });
+
+  // LIGHTBOX
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    item.addEventListener('click', () => {
+      lightboxImg.src = item.dataset.img;
+      lightboxImg.alt = item.dataset.label || '';
+      lightbox.classList.add('open');
+    });
+  });
+  document.getElementById('lightboxClose').addEventListener('click', () => lightbox.classList.remove('open'));
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open'); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') lightbox.classList.remove('open'); });
+
+  // FORM SUBMIT
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target;
+    btn.textContent = '✓ Demande envoyée !';
+    btn.style.background = '#4a7c3f';
+    setTimeout(() => { btn.textContent = 'Envoyer ma demande →'; btn.style.background = ''; }, 3000);
+  }
+</script>
+</body>
+</html>

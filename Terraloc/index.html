@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TerraLoc – Location Jardin & Bricolage · Valence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --forest:   #1b3a24;
+      --deep:     #0f2216;
+      --moss:     #2e5e3a;
+      --sage:     #4a7c59;
+      --leaf:     #7aad6e;
+      --mint:     #c4ddb8;
+      --fog:      #f3f7ef;
+      --gold:     #c9a84c;
+      --gold-lt:  #e0c472;
+      --gold-dk:  #9a7530;
+      --cream:    #faf6ee;
+      --sand:     #ede8dc;
+      --ink:      #1a1f18;
+      --muted:    #5a6b55;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── CURSOR DOT ── */
+    .cursor {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--gold);
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform .12s ease, width .2s, height .2s, opacity .2s;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; inset: 0 0 auto 0; z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 72px;
+      background: rgba(15, 34, 22, 0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,.18);
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: .06em;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .logo-mark {
+      width: 34px; height: 34px;
+      border: 1.5px solid var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .logo em { font-style: italic; color: var(--gold-lt); }
+
+    .nav-links {
+      list-style: none;
+      display: flex; gap: 40px;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: rgba(250,246,238,.7);
+      font-size: .85rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color .2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -3px; left: 0; right: 0;
+      height: 1px; background: var(--gold);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .3s ease;
+    }
+    .nav-links a:hover { color: var(--gold-lt); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .nav-reserve {
+      border: 1px solid var(--gold);
+      color: var(--gold) !important;
+      padding: 8px 22px;
+      border-radius: 2px;
+      font-weight: 600 !important;
+      letter-spacing: .1em !important;
+      transition: background .2s, color .2s !important;
+    }
+    .nav-reserve::after { display: none !important; }
+    .nav-reserve:hover { background: var(--gold) !important; color: var(--deep) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      background: var(--deep);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 140px 8% 100px;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-left::after {
+      content: '';
+      position: absolute; right: -60px; top: 0; bottom: 0;
+      width: 120px;
+      background: var(--deep);
+      clip-path: polygon(0 0, 40% 0, 100% 50%, 40% 100%, 0 100%);
+    }
+
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow-line {
+      width: 40px; height: 1px; background: var(--gold);
+    }
+    .hero-eyebrow span {
+      color: var(--gold);
+      font-size: .75rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 600;
+      color: var(--cream);
+      line-height: 1.08;
+      margin-bottom: 30px;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold-lt);
+    }
+
+    .hero-sub {
+      color: rgba(250,246,238,.6);
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 400px;
+      margin-bottom: 48px;
+      font-weight: 300;
+    }
+
+    .hero-actions { display: flex; gap: 16px; align-items: center; }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--deep);
+      padding: 15px 36px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: .9rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none; cursor: pointer;
+      border-radius: 2px;
+      transition: background .2s, transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 24px rgba(201,168,76,.3);
+    }
+    .btn-gold:hover {
+      background: var(--gold-lt);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(201,168,76,.45);
+    }
+
+    .btn-ghost {
+      color: rgba(250,246,238,.75);
+      font-size: .85rem;
+      text-decoration: none;
+      letter-spacing: .08em;
+      display: flex; align-items: center; gap: 8px;
+      transition: color .2s;
+    }
+    .btn-ghost:hover { color: var(--gold-lt); }
+    .btn-ghost svg { transition: transform .2s; }
+    .btn-ghost:hover svg { transform: translateX(4px); }
+
+    /* Hero decorative numbers */
+    .hero-stats {
+      display: flex; gap: 40px;
+      margin-top: 64px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(201,168,76,.2);
+    }
+    .hstat strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      color: var(--gold-lt);
+      line-height: 1;
+    }
+    .hstat span {
+      font-size: .75rem;
+      color: rgba(250,246,238,.5);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .hero-right {
+      background:
+        linear-gradient(180deg, rgba(15,34,22,.6) 0%, rgba(15,34,22,.2) 40%, rgba(15,34,22,.55) 100%),
+        url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=900&q=85') center/cover no-repeat;
+      position: relative;
+    }
+
+    /* Gold botanical ornament */
+    .hero-ornament {
+      position: absolute;
+      bottom: 60px; right: 60px;
+      width: 180px; height: 180px;
+      border: 1px solid rgba(201,168,76,.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+    }
+    .hero-ornament::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(201,168,76,.15);
+      border-radius: 50%;
+    }
+
+    /* ── RIBBON ── */
+    .ribbon {
+      background: var(--gold);
+      padding: 0 5%;
+      display: flex; justify-content: center; align-items: center;
+      gap: 60px; flex-wrap: wrap;
+      height: 64px;
+      overflow: hidden;
+    }
+    .ribbon-item {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--deep);
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .ribbon-sep { color: rgba(15,34,22,.3); font-size: 1.2rem; }
+
+    /* ── SECTION BASE ── */
+    section { padding: 100px 5%; }
+
+    .tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--gold-dk);
+      font-size: .72rem; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .tag::before {
+      content: '';
+      display: block;
+      width: 24px; height: 1px; background: var(--gold);
+    }
+
+    h2.st {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 600;
+      color: var(--forest);
+      line-height: 1.18;
+      margin-bottom: 18px;
+    }
+    h2.st em { font-style: italic; color: var(--gold-dk); }
+
+    .st-sub {
+      color: var(--muted);
+      font-size: .98rem;
+      line-height: 1.75;
+      max-width: 540px;
+      font-weight: 300;
+    }
+
+    /* ── CATALOGUE ── */
+    #catalogue { background: var(--fog); }
+
+    .cat-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 56px; flex-wrap: wrap; gap: 20px;
+    }
+
+    .cat-filter {
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: transparent;
+      border: 1px solid #c8d8c0;
+      color: var(--muted);
+      padding: 8px 20px; border-radius: 2px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .82rem; font-weight: 500; letter-spacing: .06em;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--forest);
+      border-color: var(--forest);
+      color: var(--cream);
+    }
+
+    .prod-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 28px;
+    }
+
+    .prod-card {
+      background: var(--cream);
+      border: 1px solid rgba(0,0,0,.07);
+      overflow: hidden;
+      position: relative;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .prod-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(15,34,22,.12), 0 0 0 1px rgba(201,168,76,.2);
+    }
+
+    .prod-img {
+      height: 200px;
+      background: var(--forest);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .prod-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(15,34,22,.3));
+    }
+
+    .prod-badge {
+      position: absolute; top: 16px; right: 16px;
+      background: var(--gold);
+      color: var(--deep);
+      font-size: .65rem; font-weight: 800; letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      z-index: 2;
+    }
+
+    .prod-body { padding: 24px; }
+    .prod-cat {
+      font-size: .7rem; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--gold-dk);
+      margin-bottom: 8px;
+    }
+    .prod-body h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem; font-weight: 600;
+      color: var(--forest);
+      margin-bottom: 8px;
+    }
+    .prod-body p {
+      font-size: .85rem; color: var(--muted);
+      line-height: 1.6; margin-bottom: 22px;
+      font-weight: 300;
+    }
+
+    .prod-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid #e4ede0;
+      padding-top: 18px;
+    }
+    .prod-price {
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .prod-price strong {
+      font-size: 1.6rem; font-weight: 600;
+      color: var(--forest); display: block; line-height: 1;
+    }
+    .prod-price span {
+      font-size: .75rem; color: var(--muted);
+    }
+
+    .btn-sm {
+      background: var(--forest);
+      color: var(--cream);
+      border: none; cursor: pointer;
+      padding: 10px 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .8rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: background .2s;
+    }
+    .btn-sm:hover { background: var(--gold); color: var(--deep); }
+
+    /* ── RESERVATION ── */
+    #reservation {
+      background: var(--deep);
+      position: relative;
+      overflow: hidden;
+    }
+    #reservation::before {
+      content: 'TerraLoc';
+      position: absolute;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18vw; font-weight: 700;
+      color: rgba(255,255,255,.02);
+      right: -2%; top: 50%; transform: translateY(-50%);
+      white-space: nowrap; pointer-events: none;
+      letter-spacing: .04em;
+    }
+
+    #reservation .tag { color: var(--gold-lt); }
+    #reservation .tag::before { background: var(--gold-lt); }
+    #reservation h2.st { color: var(--cream); }
+    #reservation h2.st em { color: var(--gold-lt); }
+    #reservation .st-sub { color: rgba(250,246,238,.55); }
+
+    .resa-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-top: 56px;
+    }
+
+    .resa-form { position: relative; z-index: 2; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .field { margin-bottom: 20px; }
+    .field label {
+      display: block;
+      font-size: .72rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: rgba(250,246,238,.5);
+      margin-bottom: 8px;
+    }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(201,168,76,.2);
+      color: var(--cream);
+      padding: 12px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      outline: none;
+      transition: border-color .2s;
+      border-radius: 2px;
+    }
+    .field input::placeholder, .field textarea::placeholder { color: rgba(250,246,238,.25); }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: var(--gold);
+    }
+    .field select option { background: var(--deep); color: var(--cream); }
+    .field textarea { resize: vertical; min-height: 100px; }
+
+    .resa-info { position: relative; z-index: 2; }
+
+    .info-block {
+      border: 1px solid rgba(201,168,76,.18);
+      padding: 32px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .info-block::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--gold);
+    }
+    .info-block h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; color: var(--gold-lt);
+      margin-bottom: 10px;
+    }
+    .info-block p {
+      font-size: .88rem; color: rgba(250,246,238,.55);
+      line-height: 1.7; font-weight: 300;
+    }
+    .info-block strong { color: rgba(250,246,238,.8); font-weight: 500; }
+
+    /* ── HOW IT WORKS ── */
+    #comment { background: var(--sand); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 60px;
+      position: relative;
+    }
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 28px; left: 12%; right: 12%;
+      height: 1px; background: var(--gold);
+      opacity: .3;
+    }
+
+    .step {
+      text-align: center;
+      padding: 0 20px;
+      position: relative;
+    }
+    .step-num {
+      width: 56px; height: 56px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 28px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 600;
+      color: var(--gold-dk);
+      background: var(--sand);
+      position: relative; z-index: 2;
+    }
+    .step-icon { font-size: 2rem; margin-bottom: 16px; }
+    .step h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; font-weight: 600;
+      color: var(--forest); margin-bottom: 10px;
+    }
+    .step p { font-size: .85rem; color: var(--muted); line-height: 1.65; font-weight: 300; }
+
+    /* ── TESTIMONIALS ── */
+    #avis { background: var(--cream); }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    .testi {
+      background: var(--fog);
+      padding: 36px 32px;
+      position: relative;
+      border-bottom: 3px solid var(--gold);
+    }
+    .testi::before {
+      content: '"';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 8rem;
+      color: rgba(201,168,76,.12);
+      position: absolute;
+      top: -20px; left: 20px;
+      line-height: 1;
+    }
+
+    .stars { color: var(--gold); font-size: .9rem; margin-bottom: 16px; }
+    .testi p {
+      font-size: .92rem; color: var(--muted);
+      line-height: 1.75; font-weight: 300;
+      margin-bottom: 28px;
+      font-style: italic;
+      position: relative; z-index: 1;
+    }
+    .testi-author { display: flex; align-items: center; gap: 14px; }
+    .testi-avatar {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: var(--mint);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      border: 2px solid rgba(201,168,76,.3);
+    }
+    .testi-name strong { display: block; color: var(--forest); font-size: .9rem; }
+    .testi-name span { color: var(--muted); font-size: .78rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--deep);
+      border-top: 1px solid rgba(201,168,76,.15);
+      padding: 80px 5% 36px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 48px;
+      margin-bottom: 60px;
+    }
+
+    .footer-brand .logo {
+      display: inline-flex;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+    .footer-brand p {
+      color: rgba(250,246,238,.45);
+      font-size: .88rem; line-height: 1.75;
+      font-weight: 300; max-width: 280px;
+    }
+    .footer-brand .social {
+      display: flex; gap: 12px; margin-top: 24px;
+    }
+    .social-link {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(201,168,76,.25);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(250,246,238,.5);
+      font-size: .9rem; text-decoration: none;
+      transition: border-color .2s, color .2s;
+    }
+    .social-link:hover { border-color: var(--gold); color: var(--gold-lt); }
+
+    .footer-col h4 {
+      font-size: .72rem; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 12px; }
+    .footer-col a {
+      color: rgba(250,246,238,.45); text-decoration: none;
+      font-size: .88rem; font-weight: 300;
+      transition: color .2s;
+    }
+    .footer-col a:hover { color: var(--gold-lt); }
+
+    .footer-contact li {
+      display: flex; gap: 12px;
+      color: rgba(250,246,238,.45); font-size: .88rem;
+      margin-bottom: 14px; font-weight: 300;
+      align-items: flex-start;
+    }
+    .fc-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(201,168,76,.1);
+      padding-top: 28px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom span { color: rgba(250,246,238,.3); font-size: .8rem; }
+    .footer-bottom a { color: rgba(201,168,76,.7); text-decoration: none; font-size: .8rem; }
+    .footer-bottom a:hover { color: var(--gold-lt); }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+    .reveal-delay-4 { transition-delay: .4s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-right { display: none; }
+      .hero-left::after { display: none; }
+      .resa-layout { grid-template-columns: 1fr; gap: 48px; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .steps::before { display: none; }
+      .testi-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      .ribbon { gap: 24px; height: auto; padding: 16px 5%; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-mark">🌿</div>
+    Terra<em>Loc</em>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#catalogue">Catalogue</a></li>
+    <li><a href="#comment">Comment ça marche</a></li>
+    <li><a href="#avis">Avis</a></li>
+    <li><a href="#reservation" class="nav-reserve">Réserver</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      <span>Location professionnelle · Valence</span>
+    </div>
+
+    <h1>L'outil juste,<br/>au moment <em>juste.</em></h1>
+
+    <p class="hero-sub">Tondeuses, tronçonneuses, perceuses, mini-pelles… TerraLoc vous propose plus de 500 références de matériel professionnel en location, à Valence et ses environs.</p>
+
+    <div class="hero-actions">
+      <a href="#catalogue" class="btn-gold">Explorer le catalogue</a>
+      <a href="#comment" class="btn-ghost">
+        Comment ça marche
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hstat"><strong>500+</strong><span>Références</span></div>
+      <div class="hstat"><strong>12 ans</strong><span>D'expérience</span></div>
+      <div class="hstat"><strong>4 800+</strong><span>Clients</span></div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-ornament">🌱</div>
+  </div>
+</div>
+
+<!-- RIBBON -->
+<div class="ribbon">
+  <div class="ribbon-item">✦ Matériel entretenu</div>
+  <div class="ribbon-sep">|</div>
+  <div class="ribbon-item">✦ Livraison à Valence & alentours</div>
+  <div class="ribbon-sep">|</div>
+  <div class="ribbon-item">✦ Ouvert 7j/7</div>
+  <div class="ribbon-sep">|</div>
+  <div class="ribbon-item">✦ Caution simplifiée</div>
+  <div class="ribbon-sep">|</div>
+  <div class="ribbon-item">✦ Marques pro</div>
+</div>
+
+<!-- CATALOGUE -->
+<section id="catalogue">
+  <div class="cat-header">
+    <div>
+      <div class="tag reveal">Notre sélection</div>
+      <h2 class="st reveal reveal-delay-1">Matériel <em>disponible</em><br/>dès aujourd'hui</h2>
+    </div>
+    <div class="cat-filter reveal">
+      <button class="filter-btn active" onclick="filterCat(this,'all')">Tout</button>
+      <button class="filter-btn" onclick="filterCat(this,'jardin')">Jardin</button>
+      <button class="filter-btn" onclick="filterCat(this,'bricolage')">Bricolage</button>
+      <button class="filter-btn" onclick="filterCat(this,'tp')">Terrassement</button>
+    </div>
+  </div>
+
+  <div class="prod-grid" id="prod-grid">
+
+    <div class="prod-card reveal" data-cat="jardin">
+      <div class="prod-img">🌿<span class="prod-badge">Populaire</span></div>
+      <div class="prod-body">
+        <div class="prod-cat">Jardin</div>
+        <h3>Tondeuse autotractée Honda HRX 476</h3>
+        <p>Moteur 4 temps, coupe 47 cm, bac 72 L. Idéale pour jardins jusqu'à 2 000 m².</p>
+        <div class="prod-footer">
+          <div class="prod-price"><strong>28 €</strong><span>par jour</span></div>
+          <button class="btn-sm" onclick="scrollToResa()">Réserver</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="prod-card reveal reveal-delay-1" data-cat="jardin">
+      <div class="prod-img">🌲</div>
+      <div class="prod-body">
+        <div class="prod-cat">Jardin</div>
+        <h3>Tronçonneuse Stihl MS 271</h3>
+        <p>Guide 40 cm, puissance 2,8 kW. EPI fournis : casque, gants, jambières.</p>
+        <div class="prod-footer">
+          <div class="prod-price"><strong>35 €</strong><span>par jour</span></div>
+          <button class="btn-sm" onclick="scrollToResa()">Réserver</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="prod-card reveal reveal-delay-2" data-cat="jardin">
+      <div class="prod-img">💧<span class="prod-badge">Nouveau</span></div>
+      <div class="prod-body">
+        <div class="prod-cat">Jardin</div>
+        <h3>Nettoyeur H.P. Kärcher K7</h3>
+        <p>240 bars, 700 L/h. Terrasses, allées, façades. Lance rotative incluse.</p>
+        <div class="prod-footer">
+          <div class="prod-price"><strong>24 €</strong><span>par jour</span></div>
+          <button class="btn-sm" onclick="scrollToResa()">Réserver</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="prod-card reveal" data-cat="tp">
+      <div class="prod-img">🚜<span class="prod-badge">Pro</span></div>
+      <div class="prod-body">
+        <div class="prod-cat">Terrassement</div>
+        <h3>Mini-pelle compacte 1,5 T</h3>
+        <p>Fouille à 2,1 m, largeur 90 cm. Passe par une porte de garage standard.</p>
+        <div class="prod-footer">
+          <div class="prod-price"><strong>180 €</strong><span>par jour</span></div>
+          <button class="btn-sm" onclick="scrollToResa()">Réserver</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="prod-card reveal reveal-delay-1" data-cat="bricolage">
+      <div class="prod-img">🔨</div>
+      <div class="prod-body">
+        <div class="prod-cat">Bricolage</div>
+        <h3>Perforateur Bosch GBH 8-45 D</h3>
+        <p>1 500 W, mandrin SDS-max 45 mm. Béton armé, pierres, fondations.</p>
+        <div class="prod-footer">
+          <div class="prod-price"><strong>18 €</strong><span>par jour</span></div>
+          <button class="btn-sm" onclick="scrollToResa()">Réserver</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="prod-card reveal reveal-delay-2" data-cat="bricolage">
+      <div class="prod-img">🏗️</div>
+      <div class="prod-body">
+        <div class="prod-cat">Bricolage</div>
+        <h3>Échafaudage roulant 5 m</h3>
+        <p>Hauteur de travail 5 m, plancher alu antidérapant, montage sans outil.</p>
+        <div class="prod-footer">
+          <div class="prod-price"><strong>45 €</strong><span>par jour</span></div>
+          <button class="btn-sm" onclick="scrollToResa()">Réserver</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMMENT CA MARCHE -->
+<section id="comment">
+  <div class="tag reveal">Simple & rapide</div>
+  <h2 class="st reveal reveal-delay-1">Louer en <em>4 étapes</em></h2>
+  <p class="st-sub reveal reveal-delay-2">Pas de démarches compliquées. Vous choisissez, on prépare, vous réalisez.</p>
+
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <div class="step-icon">🔍</div>
+      <h3>Choisissez</h3>
+      <p>Parcourez le catalogue et sélectionnez le matériel adapté à votre chantier ou jardin.</p>
+    </div>
+    <div class="step reveal reveal-delay-1">
+      <div class="step-num">02</div>
+      <div class="step-icon">📅</div>
+      <h3>Réservez</h3>
+      <p>Indiquez vos dates en ligne ou par téléphone. Confirmation par SMS ou e-mail.</p>
+    </div>
+    <div class="step reveal reveal-delay-2">
+      <div class="step-num">03</div>
+      <div class="step-icon">🚚</div>
+      <h3>Récupérez</h3>
+      <p>Retrait en boutique à Valence ou livraison à domicile dès le premier jour de location.</p>
+    </div>
+    <div class="step reveal reveal-delay-3">
+      <div class="step-num">04</div>
+      <div class="step-icon">✅</div>
+      <h3>Restituez</h3>
+      <p>Rapportez le matériel propre à la fin de votre location. Reprise à domicile possible.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TÉMOIGNAGES -->
+<section id="avis">
+  <div class="tag reveal">Ils nous font confiance</div>
+  <h2 class="st reveal reveal-delay-1">Plus de <em>4 800 clients</em><br/>satisfaits à Valence</h2>
+
+  <div class="testi-grid">
+    <div class="testi reveal">
+      <div class="stars">★★★★★</div>
+      <p>La tondeuse était parfaite et mes voisins ont d'abord cru que j'avais engagé un jardinier pro. Livraison ponctuelle, équipe sympathique.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👩</div>
+        <div class="testi-name">
+          <strong>Marie-Claire B.</strong>
+          <span>Particulière, Valence</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi reveal reveal-delay-1">
+      <div class="stars">★★★★★</div>
+      <p>La mini-pelle livrée à 8h pile. Mon projet de drainage réalisé en une journée. Rapport qualité-prix imbattable, je reviendrai sans hésiter.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👨</div>
+        <div class="testi-name">
+          <strong>Thomas K.</strong>
+          <span>Auto-constructeur, Romans-sur-Isère</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi reveal reveal-delay-2">
+      <div class="stars">★★★★☆</div>
+      <p>Le nettoyeur haute pression a transformé ma terrasse en pierre. Le matériel est propre, en excellent état. Vraiment recommandable.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👴</div>
+        <div class="testi-name">
+          <strong>Bernard L.</strong>
+          <span>Propriétaire, Montélimar</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RÉSERVATION -->
+<section id="reservation">
+  <div class="tag reveal">Réservation</div>
+  <h2 class="st reveal reveal-delay-1">Réservez votre<br/>matériel <em>en ligne</em></h2>
+  <p class="st-sub reveal reveal-delay-2">Formulaire de pré-réservation. Confirmation sous 2h en jours ouvrés.</p>
+
+  <div class="resa-layout">
+    <div class="resa-form reveal">
+      <div class="form-row">
+        <div class="field">
+          <label>Prénom</label>
+          <input type="text" placeholder="Jean"/>
+        </div>
+        <div class="field">
+          <label>Nom</label>
+          <input type="text" placeholder="Dupont"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Téléphone</label>
+          <input type="tel" placeholder="06 12 34 56 78"/>
+        </div>
+        <div class="field">
+          <label>E-mail</label>
+          <input type="email" placeholder="jean@exemple.fr"/>
+        </div>
+      </div>
+      <div class="field">
+        <label>Matériel souhaité</label>
+        <select>
+          <option value="">Sélectionnez…</option>
+          <option>Tondeuse autotractée Honda</option>
+          <option>Tronçonneuse Stihl MS 271</option>
+          <option>Nettoyeur haute pression Kärcher K7</option>
+          <option>Mini-pelle compacte 1,5 T</option>
+          <option>Perforateur Bosch GBH 8-45 D</option>
+          <option>Échafaudage roulant 5 m</option>
+          <option>Autre (précisez dans le message)</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Date de début</label>
+          <input type="date"/>
+        </div>
+        <div class="field">
+          <label>Date de fin</label>
+          <input type="date"/>
+        </div>
+      </div>
+      <div class="field">
+        <label>Message (optionnel)</label>
+        <textarea placeholder="Décrivez votre projet ou posez vos questions…"></textarea>
+      </div>
+      <button class="btn-gold" style="width:100%;padding:16px;font-size:.9rem;">Envoyer ma demande</button>
+    </div>
+
+    <div class="resa-info reveal reveal-delay-1">
+      <div class="info-block">
+        <h4>📍 Notre boutique</h4>
+        <p><strong>TerraLoc Valence</strong><br/>14 Avenue de la Forêt Verte<br/>26000 Valence (Drôme)<br/><br/>Lun–Sam : <strong>8h – 19h</strong><br/>Dim : <strong>9h – 13h</strong></p>
+      </div>
+      <div class="info-block">
+        <h4>📞 Réservation rapide</h4>
+        <p>Pour toute urgence ou disponibilité immédiate, appelez-nous directement :<br/><strong style="color:var(--gold-lt);font-size:1.15rem;">04 75 00 12 34</strong></p>
+      </div>
+      <div class="info-block">
+        <h4>💳 Caution & paiement</h4>
+        <p>Caution par empreinte CB (non débitée). Paiement à la restitution. <strong>Assurance casse incluse</strong> sur tous nos contrats.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo">
+        <div class="logo-mark">🌿</div>
+        Terra<em>Loc</em>
+      </a>
+      <p>Votre spécialiste de la location de matériel jardin et bricolage à Valence depuis 2012. Matériel professionnel, conseil expert, service 7j/7.</p>
+      <div class="social">
+        <a class="social-link" href="#">f</a>
+        <a class="social-link" href="#">in</a>
+        <a class="social-link" href="#">ig</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Catalogue</h4>
+      <ul>
+        <li><a href="#">Entretien jardin</a></li>
+        <li><a href="#">Coupe & abattage</a></li>
+        <li><a href="#">Nettoyage</a></li>
+        <li><a href="#">Outillage électrique</a></li>
+        <li><a href="#">Terrassement</a></li>
+        <li><a href="#">Élévation & accès</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Informations</h4>
+      <ul>
+        <li><a href="#">Tarifs & conditions</a></li>
+        <li><a href="#">Livraison Valence</a></li>
+        <li><a href="#">Assurance & caution</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">À propos</a></li>
+        <li><a href="#">Mentions légales</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul class="footer-contact">
+        <li><span class="fc-icon">📍</span>14 Av. de la Forêt Verte, 26000 Valence</li>
+        <li><span class="fc-icon">📞</span>04 75 00 12 34</li>
+        <li><span class="fc-icon">✉️</span>contact@terraloc-valence.fr</li>
+        <li><span class="fc-icon">🕐</span>Lun–Sam 8h–19h · Dim 9h–13h</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 TerraLoc · Valence (Drôme) · Tous droits réservés</span>
+    <span>
+      <a href="#">Mentions légales</a> ·
+      <a href="#">CGV</a> ·
+      <a href="#">Politique de confidentialité</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+
+  // Filter catalogue
+  function filterCat(btn, cat) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.prod-card').forEach(card => {
+      const show = cat === 'all' || card.dataset.cat === cat;
+      card.style.display = show ? '' : 'none';
+    });
+  }
+
+  // Scroll to reservation
+  function scrollToResa() {
+    document.getElementById('reservation').scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

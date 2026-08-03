@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Générateur de devis — Corentin Vallet</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    @media print { .app-no-print { display: none !important; } }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+    body { margin: 0; }
+    #diag { display:none; margin:0; padding:16px 20px; background:#7f1d1d; color:#fff;
+            font-family: ui-monospace, Menlo, Consolas, monospace; line-height:1.5; }
+    #diag a { color:#fecaca; }
+    #boot { padding:40px; text-align:center; color:#78716c;
+            font-family: ui-sans-serif, system-ui, sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="diag"></div>
+  <div id="root"><div id="boot">Chargement de l'application…</div></div>
+
+  <script>
+    (function () {
+      function showError(title, detail) {
+        var d = document.getElementById('diag');
+        d.style.display = 'block';
+        var h = document.createElement('div');
+        h.style.fontWeight = '700';
+        h.style.marginBottom = '4px';
+        h.textContent = '⚠ ' + title;
+        var p = document.createElement('pre');
+        p.style.whiteSpace = 'pre-wrap';
+        p.style.margin = '0 0 14px';
+        p.style.fontSize = '12px';
+        p.textContent = detail || '';
+        d.appendChild(h);
+        d.appendChild(p);
+        var boot = document.getElementById('boot');
+        if (boot) boot.textContent = '';
+      }
+      window.__showError = showError;
+      window.addEventListener('error', function (e) {
+        var loc = e.filename ? ('\n' + e.filename + (e.lineno ? ':' + e.lineno : '')) : '';
+        showError('Erreur JavaScript', (e.message || 'erreur inconnue') + loc);
+      });
+      window.addEventListener('unhandledrejection', function (e) {
+        var r = e.reason;
+        showError('Promesse rejetée', (r && (r.message || r)) + '');
+      });
+    })();
+  </script>
+
+  <script id="appsrc" type="text/plain">
+
+const { useState, useEffect, useCallback } = React;
+
+/* ---------- Génération PDF vectorielle via jsPDF (CDN, sans build) ---------- */
+function generatePdf(devis, emetteur) {
+  const EMETTEUR = emetteur || DEFAULT_EMETTEUR;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: "mm", format: "a4" });
+  const PH = 297, M = 15, R = 195, CW = R - M;
+  const ink = [22, 19, 13], grey = [107, 98, 86], grey2 = [138, 129, 117], rule = [216, 212, 204];
+  let y = 20;
+  // Format monétaire compatible PDF : espace ASCII au lieu de l'espace fine insécable
+  const money = (n) => (Math.round(Number(n || 0) * 100) / 100)
+    .toLocaleString("fr-FR", { minimumFractionDigits: 0, maximumFractionDigits: 2 })
+    .replace(/[\u202f\u00a0]/g, " ") + " \u20ac";
+
+  const fInk = () => doc.setTextColor(ink[0], ink[1], ink[2]);
+  const fGrey = () => doc.setTextColor(grey[0], grey[1], grey[2]);
+  const fGrey2 = () => doc.setTextColor(grey2[0], grey2[1], grey2[2]);
+  const hr = (yy) => { doc.setDrawColor(rule[0], rule[1], rule[2]); doc.setLineWidth(0.2); doc.line(M, yy, R, yy); };
+  const ensure = (space) => { if (y + space > PH - 22) { doc.addPage(); y = compactHeader(); } };
+  const drawLines = (lines, x, yy, lh, opt) => { lines.forEach((ln, i) => doc.text(ln, x, yy + i * lh, opt)); return yy + lines.length * lh; };
+  const label = (txt) => { doc.setFont("helvetica", "bold"); doc.setFontSize(6.5); fGrey(); doc.text(txt.toUpperCase(), M, y, { charSpace: 0.4 }); y += 4.5; };
+
+  const totalHT = devis.prestations.reduce((s, p) => s + Number(p.qte || 0) * Number(p.prixUnit || 0), 0);
+  const remisePct = Number(devis.remise || 0);
+  const remiseMontant = totalHT * remisePct / 100;
+  const netHT = totalHT - remiseMontant;
+  const optionsCochees = devis.options.filter((o) => o.checked);
+  const totalOptions = optionsCochees.reduce((s, o) => s + Number(o.prix || 0), 0);
+  const montants = devis.recurrentes.map((r) => Number(r.montant || 0));
+  const recMin = montants.length ? Math.min.apply(null, montants) : 0;
+  const recMax = montants.length ? Math.max.apply(null, montants) : 0;
+  const valable = addDays(devis.dateEmission, devis.validityDays);
+
+  /* En-tête compact, répété en haut des pages suivantes */
+  function compactHeader() {
+    let hy = 14;
+    doc.setFont("times", "normal"); doc.setFontSize(12); fInk();
+    doc.text(EMETTEUR.nom, M, hy);
+    doc.setFont("helvetica", "bold"); doc.setFontSize(9); fInk();
+    doc.text("Devis N\u00b0 " + devis.number, R, hy, { align: "right" });
+    hy += 4;
+    doc.setFont("helvetica", "normal"); doc.setFontSize(7); fGrey2();
+    doc.text(EMETTEUR.adresse + "  \u00b7  " + EMETTEUR.email + "  \u00b7  SIRET " + EMETTEUR.siret, M, hy);
+    doc.text("\u00c9mis le " + formatDateFR(devis.dateEmission) + "  \u00b7  Valable jusqu'au " + formatDateFR(valable), R, hy, { align: "right" });
+    hy += 4;
+    var clientAddr = (devis.client.adresse || "").replace(/\n/g, ", ");
+    var clientLine = "Client : " + (devis.client.nom || "\u2014");
+    if (clientAddr) clientLine += "  \u2014  " + clientAddr;
+    if (devis.client.siren) clientLine += "  \u2014  SIREN " + devis.client.siren;
+    doc.setFontSize(7.5); fGrey();
+    var cl = doc.splitTextToSize(clientLine, CW);
+    cl.forEach(function (ln, i) { doc.text(ln, M, hy + i * 3.1); });
+    hy += cl.length * 3.1 + 1.5;
+    doc.setDrawColor(rule[0], rule[1], rule[2]); doc.setLineWidth(0.2); doc.line(M, hy, R, hy);
+    return hy + 6;
+  }
+
+  /* Pied de page, dessiné sur chaque page en fin de génération */
+  function drawFooter(pageNum, pageCount) {
+    doc.setDrawColor(rule[0], rule[1], rule[2]); doc.setLineWidth(0.2);
+    doc.line(M, PH - 18, R, PH - 18);
+    doc.setFont("helvetica", "normal"); doc.setFontSize(6.5); fGrey2();
+    doc.text(EMETTEUR.nom + " \u2014 " + EMETTEUR.statut + " \u00b7 SIRET " + EMETTEUR.siret + " \u00b7 APE " + EMETTEUR.ape + " \u00b7 " + EMETTEUR.ville, M, PH - 14);
+    doc.text("TVA non applicable, article 293 B du CGI \u00b7 Dispens\u00e9 d'immatriculation au RCS et au RM", M, PH - 11);
+    if (pageCount > 1) doc.text("Page " + pageNum + "/" + pageCount, R, PH - 11, { align: "right" });
+  }
+
+  /* En-tête */
+  doc.setFont("times", "normal"); doc.setFontSize(20); fInk();
+  doc.text(EMETTEUR.nom, M, y);
+  doc.setFont("helvetica", "bold"); doc.setFontSize(6.5); fGrey();
+  doc.text(EMETTEUR.statut.toUpperCase(), M, y + 5, { charSpace: 0.4 });
+  doc.setFont("helvetica", "normal"); doc.setFontSize(9); fGrey();
+  doc.text(EMETTEUR.slogan, M, y + 10);
+  doc.setFontSize(7.5); fGrey2();
+  doc.text(EMETTEUR.adresse, M, y + 15);
+  doc.text(EMETTEUR.email + "  \u00b7  " + EMETTEUR.tel, M, y + 19);
+  doc.text("SIRET : " + EMETTEUR.siret + "  \u00b7  APE " + EMETTEUR.ape, M, y + 23);
+
+  doc.setFont("times", "normal"); doc.setFontSize(26); fInk();
+  doc.text("Devis", R, y + 2, { align: "right" });
+  doc.setFont("helvetica", "bold"); doc.setFontSize(10);
+  doc.text("N\u00b0 " + devis.number, R, y + 8, { align: "right" });
+  doc.setFont("helvetica", "normal"); doc.setFontSize(7.5); fGrey2();
+  doc.text("\u00c9mis le " + formatDateFR(devis.dateEmission), R, y + 13, { align: "right" });
+  doc.text("Valable jusqu'au " + formatDateFR(valable), R, y + 17, { align: "right" });
+
+  y += 27; hr(y); y += 7;
+
+  /* Client / Lieu */
+  const colR = M + CW / 2 + 4;
+  const wHalf = CW / 2 - 6;
+  let yL = y, yR = y;
+  doc.setFont("helvetica", "bold"); doc.setFontSize(6.5); fGrey();
+  doc.text("CLIENT", M, yL, { charSpace: 0.4 }); yL += 4.5;
+  doc.setFont("helvetica", "bold"); doc.setFontSize(9.5); fInk();
+  doc.text(devis.client.nom || "\u2014", M, yL); yL += 4;
+  if (devis.client.adresse) {
+    doc.setFont("helvetica", "normal"); doc.setFontSize(8.5); fGrey();
+    devis.client.adresse.split("\n").forEach((l) => { yL = drawLines(doc.splitTextToSize(l, wHalf), M, yL, 3.6); });
+  }
+  if (devis.client.siren) { doc.setFont("helvetica", "normal"); doc.setFontSize(8.5); fGrey(); doc.text("N\u00b0 SIREN : " + devis.client.siren, M, yL); yL += 4; }
+  doc.setFont("helvetica", "bold"); doc.setFontSize(6.5); fGrey();
+  doc.text("LIEU D'EX\u00c9CUTION", colR, yR, { charSpace: 0.4 }); yR += 4.5;
+  doc.setFont("helvetica", "normal"); doc.setFontSize(8.5); fGrey();
+  yR = drawLines(doc.splitTextToSize(devis.lieuExecution, wHalf), colR, yR, 3.6);
+  y = Math.max(yL, yR) + 7;
+
+  /* Prestations initiales */
+  ensure(30);
+  label("Prestations initiales");
+  doc.setFont("helvetica", "bold"); doc.setFontSize(6.5); fGrey();
+  doc.text("D\u00c9SIGNATION", M, y, { charSpace: 0.3 });
+  doc.text("QT\u00c9", 128, y, { align: "right" });
+  doc.text("P.U. HT", 160, y, { align: "right" });
+  doc.text("TOTAL HT", R, y, { align: "right" });
+  y += 2; hr(y); y += 4.5;
+
+  devis.prestations.forEach((p) => {
+    ensure(16);
+    y += 3.5;
+    const startY = y;
+    doc.setFont("helvetica", "bold"); doc.setFontSize(9); fInk();
+    let yy = drawLines(doc.splitTextToSize(p.designation || "\u2014", 105), M, y, 3.8);
+    if (p.description) { doc.setFont("helvetica", "normal"); doc.setFontSize(7.5); fGrey2(); yy = drawLines(doc.splitTextToSize(p.description, 105), M, yy + 0.5, 3.1); }
+    doc.setFont("helvetica", "normal"); doc.setFontSize(9); fInk();
+    doc.text(String(p.qte), 128, startY, { align: "right" });
+    doc.text(money(p.prixUnit), 160, startY, { align: "right" });
+    doc.setFont("helvetica", "bold");
+    doc.text(money(Number(p.qte || 0) * Number(p.prixUnit || 0)), R, startY, { align: "right" });
+    y = Math.max(yy, startY + 3.8) + 2.5; hr(y - 1.5);
+  });
+
+  /* Totaux */
+  ensure(remisePct > 0 ? 28 : 22); y += 3;
+  doc.setFont("helvetica", "normal"); doc.setFontSize(9); fGrey();
+  doc.text("Total HT", 130, y);
+  doc.setFont("helvetica", "bold"); fInk(); doc.text(money(totalHT), R, y, { align: "right" });
+  if (remisePct > 0) {
+    y += 5; doc.setFont("helvetica", "normal"); fGrey();
+    doc.text("Remise " + remisePct + "%", 130, y);
+    doc.setFont("helvetica", "bold"); fInk(); doc.text("- " + money(remiseMontant), R, y, { align: "right" });
+  }
+  y += 2.5; doc.setDrawColor(ink[0], ink[1], ink[2]); doc.setLineWidth(0.5); doc.line(130, y, R, y); y += 5;
+  doc.setFont("helvetica", "bold"); doc.setFontSize(10.5); fInk();
+  doc.text("Net \u00e0 payer", 130, y); doc.text(money(netHT), R, y, { align: "right" });
+  y += 6; doc.setFont("helvetica", "normal"); doc.setFontSize(6.5); fGrey2();
+  doc.text("TVA non applicable, article 293 B du CGI.", M, y); y += 8;
+
+  /* Prestations récurrentes */
+  ensure(30);
+  label("Prestations r\u00e9currentes (abonnement mensuel)");
+  doc.setFont("helvetica", "bold"); doc.setFontSize(6.5); fGrey();
+  doc.text("D\u00c9SIGNATION", M, y, { charSpace: 0.3 });
+  doc.text("P\u00c9RIODICIT\u00c9", 150, y, { align: "right" });
+  doc.text("MONTANT HT", R, y, { align: "right" });
+  y += 2; hr(y); y += 4.5;
+
+  devis.recurrentes.forEach((r) => {
+    ensure(16);
+    y += 3.5;
+    const startY = y;
+    doc.setFont("helvetica", "bold"); doc.setFontSize(9); fInk();
+    let yy = drawLines(doc.splitTextToSize(r.designation || "\u2014", 95), M, y, 3.8);
+    if (r.description) { doc.setFont("helvetica", "normal"); doc.setFontSize(7.5); fGrey2(); yy = drawLines(doc.splitTextToSize(r.description, 95), M, yy + 0.5, 3.1); }
+    doc.setFont("helvetica", "normal"); doc.setFontSize(9); fInk();
+    doc.text(r.periodicite, 150, startY, { align: "right" });
+    doc.setFont("helvetica", "bold");
+    doc.text(Number(r.montant) === 0 ? "0 \u20ac/mois" : money(r.montant) + "/mois", R, startY, { align: "right" });
+    y = Math.max(yy, startY + 3.8) + 2.5; hr(y - 1.5);
+  });
+  y += 2; doc.setFont("helvetica", "normal"); doc.setFontSize(6.5); fGrey2();
+  const recTxt = "Abonnement factur\u00e9 mensuellement \u00b7 premier mois offert \u00b7 sans engagement \u00b7 r\u00e9siliable avec un pr\u00e9avis de 30 jours. Net \u00e0 payer \u00e0 la commande : 0 \u20ac, puis " + (recMin === recMax ? money(recMin) : money(recMin) + " \u00e0 " + money(recMax)) + "/mois selon la formule retenue.";
+  y = drawLines(doc.splitTextToSize(recTxt, CW), M, y, 3) + 5;
+
+  /* Options */
+  ensure(28);
+  label("Options \u2014 non incluses dans le total");
+  doc.setFont("helvetica", "normal"); doc.setFontSize(8.5); fGrey();
+  y = drawLines(doc.splitTextToSize("\u00c0 cocher et parapher par le client pour \u00eatre ajout\u00e9es \u00e0 la commande.", CW), M, y, 3.4) + 2;
+
+  devis.options.forEach((o) => {
+    ensure(14);
+    y += 3.5;
+    const startY = y;
+    doc.setDrawColor(ink[0], ink[1], ink[2]); doc.setLineWidth(0.3);
+    if (o.checked) { doc.setFillColor(ink[0], ink[1], ink[2]); doc.rect(M, startY - 2.6, 3.2, 3.2, "FD"); }
+    else { doc.rect(M, startY - 2.6, 3.2, 3.2, "D"); }
+    doc.setFont("helvetica", "bold"); doc.setFontSize(9); fInk();
+    let yy = drawLines(doc.splitTextToSize(o.label, 120), M + 6, startY, 3.8);
+    doc.setFont("helvetica", "normal"); doc.setFontSize(7.5); fGrey2();
+    yy = drawLines(doc.splitTextToSize(o.description, 120), M + 6, yy + 0.3, 3.1);
+    doc.setFont("helvetica", "bold"); doc.setFontSize(9); fInk();
+    doc.text(money(o.prix) + " HT", R, startY, { align: "right" });
+    y = Math.max(yy, startY + 3.8) + 2.5; hr(y - 1.5);
+  });
+  if (optionsCochees.length > 0) {
+    ensure(8); y += 1;
+    doc.setFont("helvetica", "normal"); doc.setFontSize(8.5); fGrey();
+    doc.text("Total options coch\u00e9es", 150, y, { align: "right" });
+    doc.setFont("helvetica", "bold"); fInk(); doc.text(money(totalOptions) + " HT", R, y, { align: "right" }); y += 4;
+  }
+  y += 4;
+
+  /* Conditions */
+  ensure(45);
+  let cyL = y, cyR = y;
+  doc.setFont("helvetica", "bold"); doc.setFontSize(6.5); fGrey();
+  doc.text("D\u00c9LAI D'EX\u00c9CUTION", M, cyL, { charSpace: 0.4 }); cyL += 4.5;
+  doc.setFont("helvetica", "normal"); doc.setFontSize(8.5); fGrey();
+  cyL = drawLines(doc.splitTextToSize(devis.delai, wHalf), M, cyL, 3.6) + 4;
+  doc.setFont("helvetica", "bold"); doc.setFontSize(6.5); fGrey();
+  doc.text("VALIDIT\u00c9 DE L'OFFRE", M, cyL, { charSpace: 0.4 }); cyL += 4.5;
+  doc.setFont("helvetica", "normal"); doc.setFontSize(8.5); fGrey();
+  cyL = drawLines(doc.splitTextToSize("Devis valable " + devis.validityDays + " jours \u00e0 compter de sa date d'\u00e9mission, soit jusqu'au " + formatDateFR(valable) + ".", wHalf), M, cyL, 3.6);
+
+  doc.setFont("helvetica", "bold"); doc.setFontSize(6.5); fGrey();
+  doc.text("MODALIT\u00c9S DE PAIEMENT", colR, cyR, { charSpace: 0.4 }); cyR += 4.5;
+  doc.setFont("helvetica", "normal"); doc.setFontSize(8.5); fGrey();
+  cyR = drawLines(doc.splitTextToSize(devis.paiement, wHalf), colR, cyR, 3.6) + 4;
+  doc.setFont("helvetica", "bold"); doc.setFontSize(6.5); fGrey();
+  doc.text("BON POUR ACCORD", colR, cyR, { charSpace: 0.4 }); cyR += 4.5;
+  doc.setFont("helvetica", "normal"); doc.setFontSize(7.5); fGrey2();
+  cyR = drawLines(doc.splitTextToSize("Date et signature pr\u00e9c\u00e9d\u00e9es de la mention manuscrite \u00ab Bon pour accord \u00bb.", wHalf), colR, cyR, 3.1) + 2;
+  doc.setDrawColor(rule[0], rule[1], rule[2]); doc.setLineWidth(0.3);
+  doc.rect(colR, cyR, wHalf, 14); 
+
+  /* Pied de page sur chaque page */
+  var pageCount = doc.getNumberOfPages();
+  for (var pi = 1; pi <= pageCount; pi++) { doc.setPage(pi); drawFooter(pi, pageCount); }
+
+  return doc.output("blob");
+}
+
+
+/* ----------------------------------------------------------------------------
+   Générateur de devis — Corentin Vallet
+   Interface sobre à gauche, aperçu fidèle du devis à droite.
+   Persistance via window.storage (collection unique "all-devis").
+---------------------------------------------------------------------------- */
+
+const ACCENT = "#9a6a14"; // ocre sobre, réservé au chrome de l'appli
+const INK = "#16130d";
+const RULE = "#d8d4cc";
+
+const STORAGE_KEY = "all-devis";
+
+/* ----------------------------------------------------------------------------
+   Backend (PHP / Hostinger)
+   Stockage clé-valeur servi par api.php, placé dans le même dossier que l'appli.
+   L'authentification est gérée par la protection par mot de passe du dossier :
+   le navigateur renvoie les identifiants automatiquement (requêtes même origine).
+---------------------------------------------------------------------------- */
+const API_URL = "api.php";
+const storage = {
+  async get(key) {
+    const r = await fetch(`${API_URL}?key=${encodeURIComponent(key)}`, { cache: "no-store" });
+    if (!r.ok) throw new Error("Lecture impossible (" + r.status + ")");
+    const data = await r.json();
+    return data && data.found ? { key, value: data.value } : null;
+  },
+  async set(key, value) {
+    const r = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key, value }),
+    });
+    if (!r.ok) throw new Error("Écriture impossible (" + r.status + ")");
+    return { key, value };
+  },
+};
+
+/* ---------- Données par défaut (tirées du modèle) ---------- */
+
+const DEFAULT_EMETTEUR = {
+  nom: "Corentin Vallet",
+  statut: "Entrepreneur individuel (EI)",
+  slogan: "Création de sites web pour artisans & indépendants",
+  adresse: "9 impasse des Chardonnerets, 07130 Cornas",
+  ville: "07130 Cornas",
+  email: "contact@corentinvallet.fr",
+  tel: "06 63 69 40 08",
+  siret: "10542320600017",
+  ape: "62.01Z",
+};
+
+const PRESTATIONS_DEFAUT = [
+  {
+    designation: "Site web vitrine — conception & développement",
+    description:
+      "Bannière d’accueil, rédaction des textes, mise en page, formulaire de contact, galerie photo filtrable par catégorie",
+    qte: 1,
+    prixUnit: 900,
+  },
+  {
+    designation: "Pages supplémentaires",
+    description: "Pages descriptives",
+    qte: 3,
+    prixUnit: 200,
+  },
+  {
+    designation: "Mise en ligne & configuration",
+    description: "Déploiement sur hébergement, configuration du nom de domaine",
+    qte: 1,
+    prixUnit: 100,
+  },
+];
+
+const RECURRENTES_DEFAUT = [
+  {
+    designation: "Option 1 : Hébergement à votre charge",
+    description:
+      "Initialisation de l’hébergement et de l’achat du nom de domaine par mes soins, vous gérez par la suite",
+    periodicite: "Mensuelle",
+    montant: 0,
+  },
+  {
+    designation: "Option 2 : Hébergement & nom de domaine",
+    description:
+      "Hébergement du site, renouvellement du domaine. Gestion des textes et photos par vos soins via l’option administration",
+    periodicite: "Mensuelle",
+    montant: 15,
+  },
+  {
+    designation: "Maintenance complète",
+    description:
+      "Hébergement du site, renouvellement du domaine. Mise à jour des photos et textes à votre demande.",
+    periodicite: "Mensuelle",
+    montant: 50,
+  },
+];
+
+const OPTIONS_DEFAUT = [
+  {
+    label: "Administration des textes",
+    description:
+      "Interface d’administration vous permettant d’être autonome pour la modification de la plupart des contenus",
+    prix: 200,
+    checked: false,
+  },
+  {
+    label: "Administration des photos",
+    description:
+      "Interface d’administration des images : photos intégrées aux pages et photos de la galerie",
+    prix: 400,
+    checked: false,
+  },
+];
+
+const CONDITIONS_DEFAUT = {
+  delai: "6 semaines à compter de la réception de l’acompte et des contenus.",
+  paiement:
+    "Acompte de 30 % à la signature, solde à la livraison. Paiement par virement bancaire.",
+  lieuExecution: "Prestation réalisée à distance — livraison en ligne.",
+};
+
+const EXEMPLE_CLIENT = {
+  nom: "B&A Construction",
+  adresse: "315 rue Marc Seguin\n26700 Beaumont-lès-Valence",
+  siren: "843827619",
+};
+
+const PREMIER_NUMERO = 26001;
+
+/* ---------- Helpers ---------- */
+
+const todayISO = () => new Date().toISOString().slice(0, 10);
+
+function addDays(iso, days) {
+  const d = new Date(iso + "T00:00:00");
+  d.setDate(d.getDate() + Number(days || 0));
+  return d.toISOString().slice(0, 10);
+}
+
+function formatDateFR(iso) {
+  if (!iso) return "—";
+  const [y, m, d] = iso.split("-");
+  return `${d}/${m}/${y.slice(2)}`;
+}
+
+const eur = new Intl.NumberFormat("fr-FR", {
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 2,
+});
+const money = (n) => `${eur.format(Number(n || 0))} €`;
+
+function defaultSettings() {
+  return {
+    emetteur: { ...DEFAULT_EMETTEUR },
+    validityDays: 30,
+    remise: 0,
+    delai: CONDITIONS_DEFAUT.delai,
+    paiement: CONDITIONS_DEFAUT.paiement,
+    lieuExecution: CONDITIONS_DEFAUT.lieuExecution,
+    prestations: PRESTATIONS_DEFAUT.map((p) => ({ ...p })),
+    recurrentes: RECURRENTES_DEFAUT.map((r) => ({ ...r })),
+    options: OPTIONS_DEFAUT.map((o) => ({ ...o })),
+  };
+}
+
+function freshDevis(number, st) {
+  const s = st || defaultSettings();
+  return {
+    id: String(Date.now()) + Math.random().toString(36).slice(2, 6),
+    number: String(number),
+    dateEmission: todayISO(),
+    validityDays: s.validityDays,
+    remise: s.remise || 0,
+    client: { nom: "", adresse: "", siren: "" },
+    prestations: s.prestations.map((p) => ({ ...p })),
+    recurrentes: s.recurrentes.map((r) => ({ ...r })),
+    options: s.options.map((o) => ({ ...o })),
+    delai: s.delai,
+    paiement: s.paiement,
+    lieuExecution: s.lieuExecution,
+    savedAt: null,
+  };
+}
+
+function exempleDevis() {
+  return {
+    ...freshDevis(PREMIER_NUMERO, defaultSettings()),
+    client: { ...EXEMPLE_CLIENT },
+  };
+}
+
+/* ---------- Petits composants de formulaire ---------- */
+
+function Field({ label, children, hint }) {
+  return (
+    <label className="block mb-3">
+      <span className="block text-[11px] font-medium uppercase text-stone-500 mb-1" style={{ letterSpacing: "0.08em" }}>
+        {label}
+      </span>
+      {children}
+      {hint && <span className="block text-[11px] text-stone-400 mt-1">{hint}</span>}
+    </label>
+  );
+}
+
+const inputCls =
+  "w-full rounded-md border border-stone-300 bg-white px-3 py-2 text-sm text-stone-900 outline-none focus:border-stone-500 transition-colors";
+
+function TextInput(props) {
+  return <input {...props} className={inputCls} />;
+}
+function TextArea(props) {
+  return <textarea {...props} rows={props.rows || 2} className={inputCls + " resize-y leading-snug"} />;
+}
+
+function Section({ title, children, right }) {
+  return (
+    <section className="mb-6">
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="text-xs font-semibold uppercase text-stone-700" style={{ letterSpacing: "0.12em" }}>
+          {title}
+        </h3>
+        {right}
+      </div>
+      {children}
+    </section>
+  );
+}
+
+/* ---------- Aperçu du devis (la vedette) ---------- */
+
+function Label({ children }) {
+  return (
+    <div
+      className="text-[10px] font-semibold text-stone-500 mb-2"
+      style={{ letterSpacing: "0.28em", textTransform: "uppercase" }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function DevisDocument({ devis, emetteur }) {
+  const EMETTEUR = emetteur || DEFAULT_EMETTEUR;
+  const totalHT = devis.prestations.reduce(
+    (s, p) => s + Number(p.qte || 0) * Number(p.prixUnit || 0),
+    0
+  );
+  const remisePct = Number(devis.remise || 0);
+  const remiseMontant = totalHT * remisePct / 100;
+  const netHT = totalHT - remiseMontant;
+  const optionsCochees = devis.options.filter((o) => o.checked);
+  const totalOptions = optionsCochees.reduce((s, o) => s + Number(o.prix || 0), 0);
+  const recMin = Math.min(...devis.recurrentes.map((r) => Number(r.montant || 0)));
+  const recMax = Math.max(...devis.recurrentes.map((r) => Number(r.montant || 0)));
+  const valableJusqu = addDays(devis.dateEmission, devis.validityDays);
+
+  return (
+    <div
+      className="devis-paper bg-white text-stone-900 mx-auto"
+      style={{ width: "210mm", maxWidth: "100%", padding: "16mm 15mm", color: INK }}
+    >
+      {/* En-tête */}
+      <header className="flex justify-between items-start gap-8 pb-5" style={{ borderBottom: `1px solid ${RULE}` }}>
+        <div className="max-w-[58%]">
+          <div className="font-serif text-2xl leading-tight">{EMETTEUR.nom}</div>
+          <div className="text-[10px] font-semibold text-stone-500 mt-1" style={{ letterSpacing: "0.22em" }}>
+            {EMETTEUR.statut.toUpperCase()}
+          </div>
+          <p className="text-[12px] text-stone-600 mt-2 leading-snug">{EMETTEUR.slogan}</p>
+          <p className="text-[11px] text-stone-500 mt-3 leading-relaxed">
+            {EMETTEUR.adresse}
+            <br />
+            {EMETTEUR.email} · {EMETTEUR.tel}
+            <br />
+            SIRET : {EMETTEUR.siret} · APE {EMETTEUR.ape}
+          </p>
+        </div>
+        <div className="text-right shrink-0">
+          <div className="font-serif text-3xl tracking-tight">Devis</div>
+          <div className="text-sm font-medium mt-1">N° {devis.number}</div>
+          <div className="text-[11px] text-stone-500 mt-3 leading-relaxed">
+            Émis le {formatDateFR(devis.dateEmission)}
+            <br />
+            Valable jusqu’au {formatDateFR(valableJusqu)}
+          </div>
+        </div>
+      </header>
+
+      {/* Client */}
+      <div className="grid grid-cols-2 gap-8 mt-6">
+        <div>
+          <Label>Client</Label>
+          <div className="text-sm font-medium">{devis.client.nom || "—"}</div>
+          {devis.client.adresse && (
+            <div className="text-[12px] text-stone-600 mt-1 whitespace-pre-line leading-snug">
+              {devis.client.adresse}
+            </div>
+          )}
+          {devis.client.siren && (
+            <div className="text-[12px] text-stone-600 mt-1">N° SIREN : {devis.client.siren}</div>
+          )}
+        </div>
+        <div>
+          <Label>Lieu d’exécution</Label>
+          <div className="text-[12px] text-stone-600 leading-snug">{devis.lieuExecution}</div>
+        </div>
+      </div>
+
+      {/* Prestations initiales */}
+      <div className="mt-8">
+        <Label>Prestations initiales</Label>
+        <table className="w-full text-[12px]" style={{ borderCollapse: "collapse" }}>
+          <thead>
+            <tr className="text-[10px] text-stone-500" style={{ letterSpacing: "0.06em" }}>
+              <th className="text-left font-medium pb-2" style={{ borderBottom: `1px solid ${RULE}` }}>
+                DÉSIGNATION
+              </th>
+              <th className="text-right font-medium pb-2 w-12" style={{ borderBottom: `1px solid ${RULE}` }}>
+                QTÉ
+              </th>
+              <th className="text-right font-medium pb-2 w-24" style={{ borderBottom: `1px solid ${RULE}` }}>
+                P.U. HT
+              </th>
+              <th className="text-right font-medium pb-2 w-24" style={{ borderBottom: `1px solid ${RULE}` }}>
+                TOTAL HT
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {devis.prestations.map((p, i) => (
+              <tr key={i} style={{ borderBottom: `1px solid ${RULE}` }}>
+                <td className="py-2 pr-3 align-top">
+                  <div className="font-medium">{p.designation || "—"}</div>
+                  {p.description && (
+                    <div className="text-[11px] text-stone-500 leading-snug mt-0.5">{p.description}</div>
+                  )}
+                </td>
+                <td className="py-2 text-right align-top tabular-nums">{p.qte}</td>
+                <td className="py-2 text-right align-top tabular-nums">{money(p.prixUnit)}</td>
+                <td className="py-2 text-right align-top tabular-nums font-medium">
+                  {money(Number(p.qte || 0) * Number(p.prixUnit || 0))}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <div className="flex justify-end mt-3">
+          <div className="w-64">
+            <div className="flex justify-between text-[12px] py-1">
+              <span className="text-stone-500">Total HT</span>
+              <span className="tabular-nums font-medium">{money(totalHT)}</span>
+            </div>
+            {remisePct > 0 && (
+              <div className="flex justify-between text-[12px] py-1">
+                <span className="text-stone-500">Remise {remisePct}%</span>
+                <span className="tabular-nums font-medium">− {money(remiseMontant)}</span>
+              </div>
+            )}
+            <div
+              className="flex justify-between text-sm py-2 mt-1 font-semibold"
+              style={{ borderTop: `2px solid ${INK}` }}
+            >
+              <span>Net à payer</span>
+              <span className="tabular-nums">{money(netHT)}</span>
+            </div>
+          </div>
+        </div>
+        <p className="text-[10px] text-stone-400 mt-2">TVA non applicable, article 293 B du CGI.</p>
+      </div>
+
+      {/* Prestations récurrentes */}
+      <div className="mt-8">
+        <Label>Prestations récurrentes (abonnement mensuel)</Label>
+        <table className="w-full text-[12px]" style={{ borderCollapse: "collapse" }}>
+          <thead>
+            <tr className="text-[10px] text-stone-500" style={{ letterSpacing: "0.06em" }}>
+              <th className="text-left font-medium pb-2" style={{ borderBottom: `1px solid ${RULE}` }}>
+                DÉSIGNATION
+              </th>
+              <th className="text-right font-medium pb-2 w-28" style={{ borderBottom: `1px solid ${RULE}` }}>
+                PÉRIODICITÉ
+              </th>
+              <th className="text-right font-medium pb-2 w-24" style={{ borderBottom: `1px solid ${RULE}` }}>
+                MONTANT HT
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {devis.recurrentes.map((r, i) => (
+              <tr key={i} style={{ borderBottom: `1px solid ${RULE}` }}>
+                <td className="py-2 pr-3 align-top">
+                  <div className="font-medium">{r.designation || "—"}</div>
+                  {r.description && (
+                    <div className="text-[11px] text-stone-500 leading-snug mt-0.5">{r.description}</div>
+                  )}
+                </td>
+                <td className="py-2 text-right align-top">{r.periodicite}</td>
+                <td className="py-2 text-right align-top tabular-nums font-medium">
+                  {Number(r.montant) === 0 ? "0 €/mois" : `${money(r.montant)}/mois`}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p className="text-[10px] text-stone-400 mt-2">
+          Abonnement facturé mensuellement · premier mois offert · sans engagement · résiliable avec un préavis
+          de 30 jours. Net à payer à la commande : 0 €, puis {recMin === recMax ? money(recMin) : `${money(recMin)} à ${money(recMax)}`}/mois selon la formule retenue.
+        </p>
+      </div>
+
+      {/* Options */}
+      <div className="mt-8" style={{ pageBreakInside: "avoid" }}>
+        <Label>Options — non incluses dans le total</Label>
+        <p className="text-[11px] text-stone-500 mb-3">
+          À cocher et parapher par le client pour être ajoutées à la commande.
+        </p>
+        {devis.options.map((o, i) => (
+          <div key={i} className="flex items-start gap-3 py-2" style={{ borderBottom: `1px solid ${RULE}` }}>
+            <span
+              className="mt-0.5 shrink-0 inline-flex items-center justify-center"
+              style={{
+                width: 14,
+                height: 14,
+                border: `1.5px solid ${INK}`,
+                background: o.checked ? INK : "transparent",
+                color: "#fff",
+                fontSize: 10,
+                lineHeight: 1,
+              }}
+            >
+              {o.checked ? "✓" : ""}
+            </span>
+            <div className="flex-1">
+              <div className="text-[12px] font-medium">{o.label}</div>
+              <div className="text-[11px] text-stone-500 leading-snug">{o.description}</div>
+            </div>
+            <div className="text-[12px] font-medium tabular-nums shrink-0">{money(o.prix)} HT</div>
+          </div>
+        ))}
+        {optionsCochees.length > 0 && (
+          <div className="flex justify-end mt-2 text-[12px]">
+            <span className="text-stone-500 mr-3">Total options cochées</span>
+            <span className="tabular-nums font-medium">{money(totalOptions)} HT</span>
+          </div>
+        )}
+      </div>
+
+      {/* Conditions */}
+      <div className="grid grid-cols-2 gap-8 mt-8" style={{ pageBreakInside: "avoid" }}>
+        <div>
+          <Label>Délai d’exécution</Label>
+          <p className="text-[12px] text-stone-600 leading-snug">{devis.delai}</p>
+          <div className="mt-4">
+            <Label>Validité de l’offre</Label>
+            <p className="text-[12px] text-stone-600 leading-snug">
+              Devis valable {devis.validityDays} jours à compter de sa date d’émission, soit jusqu’au{" "}
+              {formatDateFR(valableJusqu)}.
+            </p>
+          </div>
+        </div>
+        <div>
+          <Label>Modalités de paiement</Label>
+          <p className="text-[12px] text-stone-600 leading-snug">{devis.paiement}</p>
+          <div className="mt-4">
+            <Label>Bon pour accord</Label>
+            <p className="text-[11px] text-stone-500 leading-snug">
+              Date et signature précédées de la mention manuscrite « Bon pour accord ».
+            </p>
+            <div className="mt-3 h-16 rounded" style={{ border: `1px dashed ${RULE}` }} />
+          </div>
+        </div>
+      </div>
+
+      {/* Pied */}
+      <footer className="mt-8 pt-3 text-[9.5px] text-stone-400 leading-relaxed" style={{ borderTop: `1px solid ${RULE}` }}>
+        {EMETTEUR.nom} — {EMETTEUR.statut} · SIRET {EMETTEUR.siret} · APE {EMETTEUR.ape} · {EMETTEUR.ville}
+        <br />
+        TVA non applicable, article 293 B du CGI · Dispensé d’immatriculation au RCS et au RM
+      </footer>
+    </div>
+  );
+}
+
+/* ---------- Application ---------- */
+
+function App() {
+  const [list, setList] = useState([]);
+  const [settings, setSettings] = useState(defaultSettings);
+  const [devis, setDevis] = useState(exempleDevis);
+  const [loaded, setLoaded] = useState(false);
+  const [view, setView] = useState("editer"); // mobile: editer | apercu | mesdevis
+  const [showList, setShowList] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [printing, setPrinting] = useState(false);
+  const [pdfBusy, setPdfBusy] = useState(false);
+  const [toast, setToast] = useState("");
+
+  const SETTINGS_KEY = "settings";
+
+  /* Chargement initial */
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await storage.get(STORAGE_KEY);
+        if (res && res.value) {
+          const arr = JSON.parse(res.value);
+          if (Array.isArray(arr)) setList(arr);
+        }
+      } catch (e) {
+        // pas encore de collection — normal au premier lancement
+      }
+      try {
+        const sr = await storage.get(SETTINGS_KEY);
+        if (sr && sr.value) {
+          const s = JSON.parse(sr.value);
+          if (s && typeof s === "object") setSettings({ ...defaultSettings(), ...s, emetteur: { ...DEFAULT_EMETTEUR, ...(s.emetteur || {}) } });
+        }
+      } catch (e) {
+        // pas de paramètres enregistrés — valeurs par défaut
+      }
+      setLoaded(true);
+    })();
+  }, []);
+
+  const flash = useCallback((msg) => {
+    setToast(msg);
+    setTimeout(() => setToast(""), 2200);
+  }, []);
+
+  const nextNumber = useCallback(() => {
+    if (!list.length) return PREMIER_NUMERO;
+    const max = list.reduce((m, d) => Math.max(m, parseInt(d.number, 10) || 0), 0);
+    return Math.max(max + 1, PREMIER_NUMERO);
+  }, [list]);
+
+  const persist = useCallback(async (arr) => {
+    try {
+      await storage.set(STORAGE_KEY, JSON.stringify(arr));
+      return true;
+    } catch (e) {
+      flash("Échec de l’enregistrement");
+      return false;
+    }
+  }, [flash]);
+
+  const saveCurrent = useCallback(async () => {
+    const stamped = { ...devis, savedAt: Date.now() };
+    const idx = list.findIndex((d) => d.id === stamped.id);
+    const arr = idx >= 0 ? list.map((d) => (d.id === stamped.id ? stamped : d)) : [stamped, ...list];
+    setList(arr);
+    setDevis(stamped);
+    const ok = await persist(arr);
+    if (ok) flash(idx >= 0 ? "Devis mis à jour" : "Devis enregistré");
+  }, [devis, list, persist, flash]);
+
+  const newDevis = useCallback(() => {
+    setDevis(freshDevis(nextNumber(), settings));
+    setView("editer");
+    setShowList(false);
+    flash("Nouveau devis");
+  }, [nextNumber, flash, settings]);
+
+  const loadDevis = useCallback((d) => {
+    setDevis({ ...d });
+    setShowList(false);
+    setView("editer");
+  }, []);
+
+  const duplicate = useCallback((d) => {
+    const copy = { ...d, id: String(Date.now()), number: String(nextNumber()), savedAt: null };
+    setDevis(copy);
+    setShowList(false);
+    setView("editer");
+    flash("Copie créée (non enregistrée)");
+  }, [nextNumber, flash]);
+
+  const removeDevis = useCallback(async (id) => {
+    const arr = list.filter((d) => d.id !== id);
+    setList(arr);
+    await persist(arr);
+    flash("Devis supprimé");
+  }, [list, persist, flash]);
+
+  /* Impression / PDF */
+  useEffect(() => {
+    if (!printing) return;
+    const done = () => setPrinting(false);
+    window.addEventListener("afterprint", done);
+    const t = setTimeout(() => window.print(), 120);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener("afterprint", done);
+    };
+  }, [printing]);
+
+  const exportPDF = () => setPrinting(true);
+
+  const slug = (str) =>
+    (str || "client")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "") || "client";
+
+  const downloadPDF = useCallback(async () => {
+    setPdfBusy(true);
+    try {
+      const blob = generatePdf(devis, settings.emetteur);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `Devis-${devis.number}-${slug(devis.client.nom)}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      flash("Échec de la génération du PDF");
+    } finally {
+      setPdfBusy(false);
+    }
+  }, [devis, flash, settings]);
+
+  const saveSettings = useCallback(async () => {
+    try {
+      await storage.set("settings", JSON.stringify(settings));
+      flash("Paramètres enregistrés");
+      setShowSettings(false);
+    } catch (e) {
+      flash("Échec de l’enregistrement des paramètres");
+    }
+  }, [settings, flash]);
+
+  const updateSettings = (patch) => setSettings((s) => ({ ...s, ...patch }));
+  const updateEmetteur = (patch) => setSettings((s) => ({ ...s, emetteur: { ...s.emetteur, ...patch } }));
+
+  /* Mises à jour d’état */
+  const update = (patch) => setDevis((d) => ({ ...d, ...patch }));
+  const updateClient = (patch) => setDevis((d) => ({ ...d, client: { ...d.client, ...patch } }));
+  const updateRow = (key, i, patch) =>
+    setDevis((d) => ({ ...d, [key]: d[key].map((it, j) => (j === i ? { ...it, ...patch } : it)) }));
+  const addRow = (key, blank) => setDevis((d) => ({ ...d, [key]: [...d[key], blank] }));
+  const removeRow = (key, i) => setDevis((d) => ({ ...d, [key]: d[key].filter((_, j) => j !== i) }));
+
+  /* Vue impression isolée */
+  if (printing) {
+    return (
+      <div style={{ background: "#fff" }}>
+        <style>{`@page { size: A4; margin: 0; } body { background:#fff; }`}</style>
+        <DevisDocument devis={devis} emetteur={settings.emetteur} />
+      </div>
+    );
+  }
+
+  const btn =
+    "inline-flex items-center justify-center rounded-md font-medium transition-colors whitespace-nowrap shrink-0 px-2.5 py-1.5 text-xs sm:px-3 sm:py-2 sm:text-sm";
+
+  return (
+    <div className="min-h-screen w-full bg-stone-100 text-stone-900" style={{ fontFamily: "ui-sans-serif, system-ui, sans-serif" }}>
+      <style>{`
+        @media print { .app-no-print { display:none !important; } }
+        .tabular-nums { font-variant-numeric: tabular-nums; }
+      `}</style>
+
+      {/* Barre supérieure */}
+      <header className="app-no-print sticky top-0 z-20 bg-white border-b border-stone-200">
+        <div className="max-w-[1400px] mx-auto px-3 sm:px-4 h-14 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 min-w-0">
+            <span
+              className="inline-flex items-center justify-center w-7 h-7 rounded text-white text-xs font-bold shrink-0"
+              style={{ background: ACCENT }}
+            >
+              CV
+            </span>
+            <span className="font-semibold truncate hidden sm:inline">Générateur de devis</span>
+          </div>
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <button
+              className="shrink-0 w-9 h-9 inline-flex items-center justify-center rounded-md text-stone-600 hover:bg-stone-100"
+              onClick={() => setShowSettings(true)}
+              title="Paramètres"
+              aria-label="Paramètres"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="3" />
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+              </svg>
+            </button>
+            <button
+              className={btn + " text-stone-700 hover:bg-stone-100 hidden sm:inline-flex"}
+              onClick={() => setShowList((s) => !s)}
+            >
+              Mes devis ({list.length})
+            </button>
+            <button className={btn + " text-stone-700 hover:bg-stone-100"} onClick={newDevis}>
+              Nouveau
+            </button>
+            <button className={btn + " text-white"} style={{ background: ACCENT }} onClick={saveCurrent}>
+              Enregistrer
+            </button>
+            <button
+              className={btn + " text-white disabled:opacity-60"}
+              style={{ background: INK }}
+              onClick={downloadPDF}
+              disabled={pdfBusy}
+            >
+              {pdfBusy ? "…" : (
+                <>
+                  <span className="sm:hidden">PDF</span>
+                  <span className="hidden sm:inline">Télécharger PDF</span>
+                </>
+              )}
+            </button>
+            <button
+              className={btn + " border border-stone-300 text-stone-700 hover:bg-stone-50 hidden sm:inline-flex"}
+              onClick={exportPDF}
+              title="Imprimer ou enregistrer via le navigateur"
+            >
+              Imprimer
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Onglets mobile */}
+      <div className="app-no-print sm:hidden sticky top-14 z-10 bg-white border-b border-stone-200 flex">
+        {[
+          ["editer", "Éditer"],
+          ["apercu", "Aperçu"],
+          ["mesdevis", "Mes devis"],
+        ].map(([k, lbl]) => (
+          <button
+            key={k}
+            onClick={() => setView(k)}
+            className="flex-1 py-2.5 text-sm font-medium"
+            style={
+              view === k
+                ? { color: ACCENT, borderBottom: `2px solid ${ACCENT}` }
+                : { color: "#78716c" }
+            }
+          >
+            {lbl}
+          </button>
+        ))}
+      </div>
+
+      <div className="max-w-[1400px] mx-auto px-4 py-5 grid grid-cols-1 lg:grid-cols-[minmax(0,420px)_1fr] gap-5">
+        {/* Colonne formulaire */}
+        <div className={`app-no-print ${view === "editer" || view === "mesdevis" ? "" : "hidden"} lg:block`}>
+          {/* Liste (mobile via onglet, desktop via drawer) */}
+          {(view === "mesdevis" || showList) && (
+            <div className="mb-5 bg-white rounded-lg border border-stone-200 p-4">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-xs font-semibold uppercase text-stone-700" style={{ letterSpacing: "0.12em" }}>
+                  Mes devis
+                </h3>
+                <button className="text-xs text-stone-400 hover:text-stone-700 hidden sm:block" onClick={() => setShowList(false)}>
+                  Fermer
+                </button>
+              </div>
+              {!loaded && <p className="text-sm text-stone-400">Chargement…</p>}
+              {loaded && list.length === 0 && (
+                <p className="text-sm text-stone-400">Aucun devis enregistré pour l’instant.</p>
+              )}
+              <div className="space-y-2">
+                {list
+                  .slice()
+                  .sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0))
+                  .map((d) => (
+                    <div
+                      key={d.id}
+                      className={`rounded-md border p-3 ${d.id === devis.id ? "border-stone-400 bg-stone-50" : "border-stone-200"}`}
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="min-w-0">
+                          <div className="text-sm font-medium truncate">
+                            N° {d.number} — {d.client.nom || "Sans client"}
+                          </div>
+                          <div className="text-[11px] text-stone-500">
+                            {money(
+                              d.prestations.reduce((s, p) => s + Number(p.qte || 0) * Number(p.prixUnit || 0), 0)
+                            )}{" "}
+                            · {formatDateFR(d.dateEmission)}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex gap-3 mt-2 text-xs">
+                        <button className="text-stone-700 hover:underline" onClick={() => loadDevis(d)}>
+                          Ouvrir
+                        </button>
+                        <button className="text-stone-700 hover:underline" onClick={() => duplicate(d)}>
+                          Dupliquer
+                        </button>
+                        <button className="text-red-600 hover:underline" onClick={() => removeDevis(d.id)}>
+                          Supprimer
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+
+          {view !== "mesdevis" && (
+            <div className="bg-white rounded-lg border border-stone-200 p-4">
+              {/* Méta */}
+              <Section title="Devis">
+                <div className="grid grid-cols-2 gap-3">
+                  <Field label="Numéro">
+                    <TextInput value={devis.number} onChange={(e) => update({ number: e.target.value })} />
+                  </Field>
+                  <Field label="Validité (jours)">
+                    <TextInput
+                      type="number"
+                      value={devis.validityDays}
+                      onChange={(e) => update({ validityDays: e.target.value })}
+                    />
+                  </Field>
+                </div>
+                <Field label="Date d’émission">
+                  <TextInput
+                    type="date"
+                    value={devis.dateEmission}
+                    onChange={(e) => update({ dateEmission: e.target.value })}
+                  />
+                </Field>
+              </Section>
+
+              {/* Client */}
+              <Section title="Client">
+                <Field label="Nom / raison sociale">
+                  <TextInput value={devis.client.nom} onChange={(e) => updateClient({ nom: e.target.value })} />
+                </Field>
+                <Field label="Adresse">
+                  <TextArea value={devis.client.adresse} onChange={(e) => updateClient({ adresse: e.target.value })} />
+                </Field>
+                <Field label="N° SIREN (facultatif)">
+                  <TextInput value={devis.client.siren} onChange={(e) => updateClient({ siren: e.target.value })} />
+                </Field>
+                <Field label="Lieu d’exécution">
+                  <TextInput value={devis.lieuExecution} onChange={(e) => update({ lieuExecution: e.target.value })} />
+                </Field>
+              </Section>
+
+              {/* Prestations */}
+              <Section
+                title="Prestations initiales"
+                right={
+                  <button
+                    className="text-xs font-medium"
+                    style={{ color: ACCENT }}
+                    onClick={() => addRow("prestations", { designation: "", description: "", qte: 1, prixUnit: 0 })}
+                  >
+                    + Ligne
+                  </button>
+                }
+              >
+                {devis.prestations.map((p, i) => (
+                  <div key={i} className="rounded-md border border-stone-200 p-3 mb-3">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-[11px] text-stone-400">Ligne {i + 1}</span>
+                      {devis.prestations.length > 1 && (
+                        <button className="text-[11px] text-red-600" onClick={() => removeRow("prestations", i)}>
+                          Retirer
+                        </button>
+                      )}
+                    </div>
+                    <TextInput
+                      placeholder="Désignation"
+                      value={p.designation}
+                      onChange={(e) => updateRow("prestations", i, { designation: e.target.value })}
+                    />
+                    <div className="h-2" />
+                    <TextArea
+                      placeholder="Description"
+                      value={p.description}
+                      onChange={(e) => updateRow("prestations", i, { description: e.target.value })}
+                    />
+                    <div className="grid grid-cols-2 gap-3 mt-2">
+                      <Field label="Quantité">
+                        <TextInput
+                          type="number"
+                          value={p.qte}
+                          onChange={(e) => updateRow("prestations", i, { qte: e.target.value })}
+                        />
+                      </Field>
+                      <Field label="Prix unit. HT (€)">
+                        <TextInput
+                          type="number"
+                          value={p.prixUnit}
+                          onChange={(e) => updateRow("prestations", i, { prixUnit: e.target.value })}
+                        />
+                      </Field>
+                    </div>
+                    <div className="text-right text-[12px] text-stone-500">
+                      Total ligne : <span className="font-medium text-stone-800">{money(Number(p.qte || 0) * Number(p.prixUnit || 0))}</span>
+                    </div>
+                  </div>
+                ))}
+              </Section>
+
+              {/* Remise */}
+              <Section title="Remise">
+                <Field
+                  label="Remise globale (%)"
+                  hint="Réduction appliquée sur le total HT des prestations initiales. Le « Net à payer » et le PDF sont recalculés automatiquement. Laissez 0 pour ne pas afficher de remise."
+                >
+                  <TextInput
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={devis.remise ?? 0}
+                    onChange={(e) => update({ remise: e.target.value })}
+                  />
+                </Field>
+              </Section>
+
+              {/* Récurrentes */}
+              <Section
+                title="Prestations récurrentes"
+                right={
+                  <button
+                    className="text-xs font-medium"
+                    style={{ color: ACCENT }}
+                    onClick={() =>
+                      addRow("recurrentes", { designation: "", description: "", periodicite: "Mensuelle", montant: 0 })
+                    }
+                  >
+                    + Formule
+                  </button>
+                }
+              >
+                {devis.recurrentes.map((r, i) => (
+                  <div key={i} className="rounded-md border border-stone-200 p-3 mb-3">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-[11px] text-stone-400">Formule {i + 1}</span>
+                      {devis.recurrentes.length > 1 && (
+                        <button className="text-[11px] text-red-600" onClick={() => removeRow("recurrentes", i)}>
+                          Retirer
+                        </button>
+                      )}
+                    </div>
+                    <TextInput
+                      placeholder="Désignation"
+                      value={r.designation}
+                      onChange={(e) => updateRow("recurrentes", i, { designation: e.target.value })}
+                    />
+                    <div className="h-2" />
+                    <TextArea
+                      placeholder="Description"
+                      value={r.description}
+                      onChange={(e) => updateRow("recurrentes", i, { description: e.target.value })}
+                    />
+                    <div className="grid grid-cols-2 gap-3 mt-2">
+                      <Field label="Périodicité">
+                        <TextInput
+                          value={r.periodicite}
+                          onChange={(e) => updateRow("recurrentes", i, { periodicite: e.target.value })}
+                        />
+                      </Field>
+                      <Field label="Montant HT / mois (€)">
+                        <TextInput
+                          type="number"
+                          value={r.montant}
+                          onChange={(e) => updateRow("recurrentes", i, { montant: e.target.value })}
+                        />
+                      </Field>
+                    </div>
+                  </div>
+                ))}
+              </Section>
+
+              {/* Options */}
+              <Section
+                title="Options"
+                right={
+                  <button
+                    className="text-xs font-medium"
+                    style={{ color: ACCENT }}
+                    onClick={() => addRow("options", { label: "", description: "", prix: 0, checked: false })}
+                  >
+                    + Option
+                  </button>
+                }
+              >
+                {devis.options.map((o, i) => (
+                  <div key={i} className="rounded-md border border-stone-200 p-3 mb-3">
+                    <div className="flex justify-between items-center mb-2">
+                      <label className="flex items-center gap-2 text-[12px] text-stone-600">
+                        <input
+                          type="checkbox"
+                          checked={o.checked}
+                          onChange={(e) => updateRow("options", i, { checked: e.target.checked })}
+                        />
+                        Cochée sur le devis
+                      </label>
+                      <button className="text-[11px] text-red-600" onClick={() => removeRow("options", i)}>
+                        Retirer
+                      </button>
+                    </div>
+                    <TextInput
+                      placeholder="Intitulé"
+                      value={o.label}
+                      onChange={(e) => updateRow("options", i, { label: e.target.value })}
+                    />
+                    <div className="h-2" />
+                    <TextArea
+                      placeholder="Description"
+                      value={o.description}
+                      onChange={(e) => updateRow("options", i, { description: e.target.value })}
+                    />
+                    <Field label="Prix HT (€)">
+                      <TextInput
+                        type="number"
+                        value={o.prix}
+                        onChange={(e) => updateRow("options", i, { prix: e.target.value })}
+                      />
+                    </Field>
+                  </div>
+                ))}
+              </Section>
+
+              {/* Conditions */}
+              <Section title="Conditions">
+                <Field label="Délai d’exécution">
+                  <TextArea value={devis.delai} onChange={(e) => update({ delai: e.target.value })} />
+                </Field>
+                <Field label="Modalités de paiement">
+                  <TextArea value={devis.paiement} onChange={(e) => update({ paiement: e.target.value })} />
+                </Field>
+              </Section>
+            </div>
+          )}
+        </div>
+
+        {/* Colonne aperçu */}
+        <div className={`${view === "apercu" ? "" : "hidden"} lg:block`}>
+          <div className="bg-stone-200 rounded-lg p-3 sm:p-6 overflow-auto">
+            <div className="shadow-xl mx-auto" style={{ width: "fit-content", maxWidth: "100%" }}>
+              <DevisDocument devis={devis} emetteur={settings.emetteur} />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Panneau Paramètres */}
+      {showSettings && (
+        <div className="app-no-print fixed inset-0 z-40 bg-stone-100 overflow-auto">
+          <div className="sticky top-0 bg-white border-b border-stone-200 z-10">
+            <div className="max-w-[760px] mx-auto px-4 h-14 flex items-center justify-between gap-2">
+              <button
+                onClick={() => setShowSettings(false)}
+                className="text-sm text-stone-600 hover:text-stone-900"
+              >
+                ← Retour
+              </button>
+              <span className="font-semibold">Paramètres</span>
+              <button className={btn + " text-white"} style={{ background: ACCENT }} onClick={saveSettings}>
+                Enregistrer
+              </button>
+            </div>
+          </div>
+
+          <div className="max-w-[760px] mx-auto p-4">
+            <p className="text-sm text-stone-500 mb-5">
+              Ces coordonnées servent d’en-tête et de pied à tous les devis. Les valeurs par défaut servent de
+              modèle à chaque nouveau devis et n’affectent pas les devis déjà enregistrés.
+            </p>
+
+            <div className="bg-white rounded-lg border border-stone-200 p-4 mb-4">
+              <Section title="Émetteur (vos coordonnées)">
+                <Field label="Nom">
+                  <TextInput value={settings.emetteur.nom} onChange={(e) => updateEmetteur({ nom: e.target.value })} />
+                </Field>
+                <Field label="Statut">
+                  <TextInput value={settings.emetteur.statut} onChange={(e) => updateEmetteur({ statut: e.target.value })} />
+                </Field>
+                <Field label="Accroche / slogan">
+                  <TextInput value={settings.emetteur.slogan} onChange={(e) => updateEmetteur({ slogan: e.target.value })} />
+                </Field>
+                <Field label="Adresse (en-tête)">
+                  <TextInput value={settings.emetteur.adresse} onChange={(e) => updateEmetteur({ adresse: e.target.value })} />
+                </Field>
+                <Field label="Ville (pied de page)">
+                  <TextInput value={settings.emetteur.ville} onChange={(e) => updateEmetteur({ ville: e.target.value })} />
+                </Field>
+                <div className="grid grid-cols-2 gap-3">
+                  <Field label="Email">
+                    <TextInput value={settings.emetteur.email} onChange={(e) => updateEmetteur({ email: e.target.value })} />
+                  </Field>
+                  <Field label="Téléphone">
+                    <TextInput value={settings.emetteur.tel} onChange={(e) => updateEmetteur({ tel: e.target.value })} />
+                  </Field>
+                  <Field label="SIRET">
+                    <TextInput value={settings.emetteur.siret} onChange={(e) => updateEmetteur({ siret: e.target.value })} />
+                  </Field>
+                  <Field label="Code APE">
+                    <TextInput value={settings.emetteur.ape} onChange={(e) => updateEmetteur({ ape: e.target.value })} />
+                  </Field>
+                </div>
+              </Section>
+            </div>
+
+            <div className="bg-white rounded-lg border border-stone-200 p-4 mb-4">
+              <Section title="Valeurs par défaut des nouveaux devis">
+                <div className="grid grid-cols-2 gap-3">
+                  <Field label="Validité (jours)">
+                    <TextInput type="number" value={settings.validityDays} onChange={(e) => updateSettings({ validityDays: e.target.value })} />
+                  </Field>
+                  <Field label="Remise globale (%)">
+                    <TextInput type="number" value={settings.remise} onChange={(e) => updateSettings({ remise: e.target.value })} />
+                  </Field>
+                </div>
+                <Field label="Lieu d’exécution">
+                  <TextInput value={settings.lieuExecution} onChange={(e) => updateSettings({ lieuExecution: e.target.value })} />
+                </Field>
+                <Field label="Délai d’exécution">
+                  <TextArea value={settings.delai} onChange={(e) => updateSettings({ delai: e.target.value })} />
+                </Field>
+                <Field label="Modalités de paiement">
+                  <TextArea value={settings.paiement} onChange={(e) => updateSettings({ paiement: e.target.value })} />
+                </Field>
+              </Section>
+            </div>
+
+            <div className="bg-white rounded-lg border border-stone-200 p-4 mb-4">
+              <Section title="Lignes par défaut">
+                <p className="text-[12px] text-stone-500 mb-3">
+                  Reprend les prestations, abonnements et options du devis actuellement ouvert comme modèle des
+                  prochains devis.
+                </p>
+                {[
+                  ["prestations", "Prestations initiales"],
+                  ["recurrentes", "Prestations récurrentes"],
+                  ["options", "Options"],
+                ].map(([key, lbl]) => (
+                  <div key={key} className="flex items-center justify-between gap-2 py-2 border-b border-stone-100">
+                    <span className="text-sm">
+                      {lbl} <span className="text-stone-400">— {settings[key].length} ligne(s) par défaut</span>
+                    </span>
+                    <button
+                      className={btn + " text-stone-700 hover:bg-stone-100 border border-stone-300"}
+                      onClick={() => {
+                        setSettings((s) => ({ ...s, [key]: devis[key].map((x) => ({ ...x })) }));
+                        flash(lbl + " : modèle mis à jour");
+                      }}
+                    >
+                      Reprendre du devis actuel
+                    </button>
+                  </div>
+                ))}
+              </Section>
+            </div>
+
+            <div className="flex gap-2 pb-8">
+              <button className={btn + " text-white"} style={{ background: ACCENT }} onClick={saveSettings}>
+                Enregistrer les paramètres
+              </button>
+              <button
+                className={btn + " border border-stone-300 text-stone-700 hover:bg-stone-50"}
+                onClick={() => { setSettings(defaultSettings()); flash("Paramètres réinitialisés (non enregistrés)"); }}
+              >
+                Réinitialiser
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Toast */}
+      {toast && (
+        <div
+          className="app-no-print fixed bottom-5 left-1/2 -translate-x-1/2 text-white text-sm px-4 py-2 rounded-full shadow-lg z-30"
+          style={{ background: INK }}
+        >
+          {toast}
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+try {
+  const root = ReactDOM.createRoot(document.getElementById("root"));
+  root.render(<App />);
+  window.__APP_MOUNTED__ = true;
+} catch (e) {
+  if (window.__showError) window.__showError("Erreur au démarrage de l'application", (e && e.message) || String(e));
+}
+
+  </script>
+
+  <script>
+    (function () {
+      try {
+        if (typeof Babel === 'undefined') return; // le contrôle plus bas signalera l'absence
+        var src = document.getElementById('appsrc').textContent;
+        var compiled = Babel.transform(src, { presets: [['react', { runtime: 'classic' }]] }).code;
+        var s = document.createElement('script');
+        s.textContent = compiled;
+        document.body.appendChild(s);
+      } catch (e) {
+        if (window.__showError) window.__showError('Erreur de compilation du code', (e && e.message) || String(e));
+      }
+    })();
+  </script>
+
+  <script>
+    setTimeout(function () {
+      var missing = [];
+      if (typeof React === 'undefined') missing.push('React');
+      if (typeof ReactDOM === 'undefined') missing.push('ReactDOM');
+      if (typeof Babel === 'undefined') missing.push('Babel');
+      if (!window.jspdf) missing.push('jsPDF');
+      if (missing.length) {
+        window.__showError(
+          'Librairie(s) non chargée(s) : ' + missing.join(', '),
+          "Ces fichiers proviennent d'un CDN externe. Causes possibles : pas de connexion internet, un bloqueur de publicité ou une extension, ou un réseau (pro/mobile) qui filtre unpkg.com / cdnjs.cloudflare.com.\n\nÀ essayer : navigation privée, désactiver les extensions, ou un autre réseau."
+        );
+        return;
+      }
+      if (!window.__APP_MOUNTED__) {
+        window.__showError(
+          "L'application ne s'est pas affichée",
+          "Les librairies sont chargées mais le rendu n'a pas eu lieu. Ouvrez la console (F12 → onglet Console) et copiez la première ligne rouge."
+        );
+      }
+    }, 4500);
+  </script>
+</body>
+</html>
