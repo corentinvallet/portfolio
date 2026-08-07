@@ -116,6 +116,95 @@
     .miniadd{margin-top:16px}
   }
   @media(max-width:919px){ .tabs{display:none} }
+  
+  /* ===== Éditeur FAQ ===== */
+  .faqadm{ margin:14px 0; }
+
+  .faqadm-cat{
+    border:1px solid rgba(27,20,64,.14);
+    border-radius:10px;
+    margin-bottom:10px;
+    background:#fff;
+    overflow:hidden;
+  }
+  .faqadm-cat[open]{ border-color:rgba(122,75,176,.4); }
+  .faqadm-cat > summary{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 14px;
+    cursor:pointer;
+    list-style:none;
+    background:rgba(122,75,176,.05);
+  }
+  .faqadm-cat > summary::-webkit-details-marker{ display:none; }
+  .faqadm-cat > summary::marker{ content:''; }
+
+  .faqadm-cat-title{
+    flex:1;
+    min-width:0;
+    font-weight:600;
+    font-size:.92rem;
+    color:#1B1440;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .faqadm-cat-count{
+    font-size:.75rem;
+    color:rgba(27,20,64,.5);
+    white-space:nowrap;
+  }
+  .faqadm-cat-body{ padding:14px; }
+
+  .faqadm-q{
+    border:1px solid rgba(27,20,64,.1);
+    border-left:3px solid #E2903F;
+    border-radius:8px;
+    padding:12px 14px;
+    margin:12px 0;
+    background:rgba(247,242,231,.5);
+  }
+  .faqadm-q-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:8px;
+  }
+  .faqadm-q-num{
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:#7A4BB0;
+  }
+
+  .faqadm-tools{ display:flex; gap:4px; flex:0 0 auto; }
+  .faqadm-tool{
+    width:26px; height:26px;
+    display:grid; place-items:center;
+    font-size:.8rem; line-height:1;
+    color:#1B1440;
+    background:#fff;
+    border:1px solid rgba(27,20,64,.16);
+    border-radius:6px;
+    cursor:pointer;
+    transition:background .15s, color .15s, border-color .15s;
+  }
+  .faqadm-tool:hover{ background:#7A4BB0; color:#fff; border-color:#7A4BB0; }
+  .faqadm-tool[title^="Supprimer"]:hover{ background:#7A1F3D; border-color:#7A1F3D; }
+
+  .subhead{
+    margin:26px 0 4px;
+    padding-bottom:6px;
+    font-size:.78rem;
+    font-weight:700;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:rgba(27,20,64,.55);
+    border-bottom:1px solid rgba(27,20,64,.1);
+  }
 </style>
 </head>
 <body>
@@ -300,7 +389,113 @@ function repeatList(container, arr, tagLabel, buildFields, newItem){
   container.appendChild(el('button',{class:'btn btn-ghost miniadd',type:'button',
     onclick:()=>{ arr.push(newItem()); markDirty(); draw(); }},'+ Ajouter'));
 }
+/* ═══════════════════════════════════════════════════════════
+   ÉDITEUR FAQ (catégories → questions, 2 niveaux)
+═══════════════════════════════════════════════════════════ */
+function faqEditor(container){
+  const p    = state.faqPage = state.faqPage || {};
+  const cats = p.categories  = p.categories  || [];
+  const list = el('div', {class:'faqadm'});
 
+  const stop = (e) => { e.preventDefault(); e.stopPropagation(); };
+
+  function move(arr, i, delta){
+    const j = i + delta;
+    if (j < 0 || j >= arr.length) return;
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+    markDirty(); draw();
+  }
+
+  function toolBtn(label, title, onclick){
+    return el('button', {type:'button', class:'faqadm-tool', title, onclick}, label);
+  }
+
+  function draw(){
+    list.innerHTML = '';
+
+    if(!cats.length){
+      list.appendChild(el('p', {class:'hint'},
+        'Aucune catégorie pour l’instant. Cliquez sur « + Ajouter une catégorie ».'));
+    }
+
+    cats.forEach((cat, ci) => {
+      cat.items = cat.items || [];
+
+      const det = el('details', {class:'faqadm-cat'});
+      det.open = false;
+
+      det.appendChild(el('summary', {},
+        el('span', {class:'faqadm-cat-title'},
+          String(ci + 1).padStart(2,'0') + '. ' + (cat.nom || '(catégorie sans nom)')
+        ),
+        el('span', {class:'faqadm-cat-count'},
+          cat.items.length + (cat.items.length > 1 ? ' questions' : ' question')
+        ),
+        el('span', {class:'faqadm-tools'},
+          toolBtn('↑', 'Monter la catégorie', e => { stop(e); move(cats, ci, -1); }),
+          toolBtn('↓', 'Descendre la catégorie', e => { stop(e); move(cats, ci, 1); }),
+          toolBtn('✕', 'Supprimer la catégorie', e => {
+            stop(e);
+            if(confirm('Supprimer la catégorie « ' + (cat.nom || 'sans nom') +
+                       ' » et ses ' + cat.items.length + ' question(s) ?')){
+              cats.splice(ci, 1); markDirty(); draw();
+            }
+          })
+        )
+      ));
+
+      const body = el('div', {class:'faqadm-cat-body'});
+
+      body.appendChild(textField('Nom de la catégorie', cat.nom, v => { cat.nom = v; }));
+
+      // ── Questions de la catégorie ──
+      cat.items.forEach((item, qi) => {
+        const card = el('div', {class:'faqadm-q'});
+
+        card.appendChild(el('div', {class:'faqadm-q-head'},
+          el('span', {class:'faqadm-q-num'}, 'Question ' + (qi + 1)),
+          el('span', {class:'faqadm-tools'},
+            toolBtn('↑', 'Monter', e => { stop(e); move(cat.items, qi, -1); }),
+            toolBtn('↓', 'Descendre', e => { stop(e); move(cat.items, qi, 1); }),
+            toolBtn('✕', 'Supprimer', e => {
+              stop(e);
+              if(confirm('Supprimer cette question ?')){
+                cat.items.splice(qi, 1); markDirty(); draw();
+              }
+            })
+          )
+        ));
+
+        card.appendChild(textField('Question', item.q, v => { item.q = v; },
+          {multiline:true}));
+
+        card.appendChild(textField('Réponse', item.r, v => { item.r = v; },
+          {multiline:true, hint:'Mise en forme autorisée : <strong>gras</strong>, ' +
+            '<em>italique</em>, <br> pour un saut de ligne, ' +
+            '<ul><li>puce</li></ul> pour une liste, et ' +
+            '<a href=\'page.php\'>texte du lien</a> pour un lien ' +
+            '(guillemets simples uniquement).'}));
+
+        body.appendChild(card);
+      });
+
+      body.appendChild(el('button', {
+        class:'btn btn-ghost miniadd', type:'button',
+        onclick: () => { cat.items.push({q:'', r:''}); markDirty(); draw(); }
+      }, '+ Ajouter une question'));
+
+      det.appendChild(body);
+      list.appendChild(det);
+    });
+  }
+
+  draw();
+  container.appendChild(list);
+  container.appendChild(el('button', {
+    class:'btn btn-ghost miniadd', type:'button',
+    onclick: () => { cats.push({nom:'Nouvelle catégorie', items:[]}); markDirty(); draw(); }
+  }, '+ Ajouter une catégorie'));
+}
 /* ═══════════════════════════════════════════════════════════
    SECTIONS / ONGLETS
 ═══════════════════════════════════════════════════════════ */
@@ -501,7 +696,28 @@ function render(){
       ],
       ()=>({initials:'',color:'var(--ink)',name:'',role:'',text:''}));
     b.appendChild(bWrap);
+  /* ── FAQ ── */
+    $app.appendChild(section('FAQ', false, b => {
+      const f = state.faqPage = state.faqPage || {};
 
+      b.appendChild(textField('Petit titre (au-dessus)', f.tag, v => f.tag = v));
+      b.appendChild(textField('Titre de la page', f.title, v => f.title = v));
+      b.appendChild(textField('Texte d’introduction', f.intro, v => f.intro = v,
+        {multiline:true}));
+      b.appendChild(textField('Texte du champ de recherche', f.searchPlaceholder,
+        v => f.searchPlaceholder = v,
+        {hint:'Affiché en gris dans la barre de recherche tant qu’elle est vide.'}));
+
+      b.appendChild(el('h3', {class:'subhead'}, 'Questions & réponses'));
+      faqEditor(b);
+
+      b.appendChild(el('h3', {class:'subhead'}, 'Encart « Nous contacter » (bas de page)'));
+      const c = f.cta = f.cta || {};
+      b.appendChild(textField('Titre de l’encart', c.title, v => c.title = v));
+      b.appendChild(textField('Texte de l’encart', c.text, v => c.text = v,
+        {multiline:true}));
+      b.appendChild(textField('Libellé du bouton', c.btn, v => c.btn = v));
+    }));
     // Invités
     const guests = p.guests = p.guests || {};
     b.appendChild(el('div',{style:'margin-top:26px;font-weight:700;font-family:Fraunces,serif;'},'Invités d’honneur'));
