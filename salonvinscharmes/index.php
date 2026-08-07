@@ -258,8 +258,8 @@ $heroMobile  = cl_tr($heroImg, 'f_auto,q_auto,c_fill,ar_4:5,g_auto,w_900');
     list-style:none;margin:0;padding:0;width:max-content;
     animation:sponsors-scroll calc(var(--count) * 4s) linear infinite;
   }
-  .sponsors-viewport:hover .sponsors-track,
-  .sponsors-track:focus-within{animation-play-state:paused;}
+  .sponsors-viewport:hover .sponsors-track{animation-play-state:paused;}
+  .sponsors-viewport:has(a:focus-visible) .sponsors-track{animation-play-state:paused;}
   .sponsors-item{flex:0 0 auto;}
   .sponsors-item img{
     display:block;height:60px;width:auto;max-width:180px;object-fit:contain;
@@ -520,5 +520,23 @@ if ($sponsorItems):
 </footer>
 
 <?php include __DIR__ . '/inc/mobile-menu.php'; ?>
+<script>
+(function(){
+  window.addEventListener('pageshow', function(e){
+    var track = document.querySelector('.sponsors-track');
+    if(!track) return;
+    // relâche un focus resté sur un logo
+    if(document.activeElement && track.contains(document.activeElement)){
+      document.activeElement.blur();
+    }
+    // relance l'animation si la page revient du bfcache
+    if(e.persisted){
+      track.style.animation = 'none';
+      void track.offsetHeight;   // force un reflow
+      track.style.animation = '';
+    }
+  });
+})();
+</script>
 </body>
 </html>
