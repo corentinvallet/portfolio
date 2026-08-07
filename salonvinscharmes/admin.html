@@ -693,7 +693,25 @@ function render(){
       ()=>({source:'',text:'',date:''}));
     b.appendChild(wrap);
   }));
-
+  /* ── SPONSORS ── */
+  $app.appendChild(section('Sponsors & partenaires', false, b=>{
+    const sp = state.sponsors = state.sponsors || {};
+    b.appendChild(textField('Titre de la bande', sp.titre, v=>sp.titre=v,
+      {placeholder:'Ils soutiennent le salon'}));
+    sp.items = sp.items || [];
+    const wrap = el('div',{style:'margin-top:14px'});
+    repeatList(wrap, sp.items, 'Partenaire',
+      (s)=>[
+        el('div',{class:'grid2'},
+          textField('Nom', s.nom, v=>s.nom=v,
+            {hint:'Sert de texte alternatif pour l\u2019accessibilité.'}),
+          textField('Site web (facultatif)', s.url, v=>s.url=v,
+            {placeholder:'https://…', hint:'Laissez vide pour un logo non cliquable.'})),
+        photoField('Logo', s.logo, v=>s.logo=v)
+      ],
+      ()=>({nom:'',logo:'',url:''}));
+    b.appendChild(wrap);
+  }));
   /* ── CONTACT & PIED DE PAGE ── */
   $app.appendChild(section('Contact & pied de page', false, b=>{
     const ct = state.contact = state.contact || {};

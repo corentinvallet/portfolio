@@ -559,6 +559,16 @@
             }
         ]
     },
+    "sponsors": {
+        "titre": "Ils soutiennent le salon",
+        "items": [
+            {
+            "nom": "Nom du partenaire",
+            "logo": "https://res.cloudinary.com/TON_CLOUD/image/upload/f_auto,q_auto,h_180/sponsors/exemple.png",
+            "url": "https://www.exemple.fr"
+            }
+        ]   
+    },
     "faqPage": {
         "tag": "Questions fréquentes",
         "title": "Tout ce qu'il faut savoir avant de venir",

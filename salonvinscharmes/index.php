@@ -13,6 +13,7 @@ $expo    = $c['exposantsHome']?? [];
 $acti    = $c['activites']    ?? [];
 $equipe  = $c['equipeHome']   ?? [];
 $presse  = $c['presseHome']   ?? [];
+$sponsors = $c['sponsors']    ?? [];
 $contact = $c['contact']      ?? [];
 
 $home = true; $active = '';
@@ -234,6 +235,56 @@ $heroMobile  = cl_tr($heroImg, 'f_auto,q_auto,c_fill,ar_4:5,g_auto,w_900');
   @media (max-width:640px){
     .contact-form{grid-template-columns:1fr;}
   }
+   /* --- bande sponsors --- */
+  .sponsors{
+    background:var(--paper-2);
+    padding:56px 0 60px;
+    border-top:1px solid rgba(27,20,64,0.08);
+    border-bottom:1px solid rgba(27,20,64,0.08);
+    overflow:hidden;
+  }
+  .sponsors-title{
+    font-size:clamp(1.15rem,2.4vw,1.5rem);
+    text-align:center;
+    margin:0 0 34px;
+  }
+  .sponsors-viewport{
+    overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+            mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  }
+  .sponsors-track{
+    display:flex;align-items:center;gap:56px;
+    list-style:none;margin:0;padding:0;width:max-content;
+    animation:sponsors-scroll calc(var(--count) * 4s) linear infinite;
+  }
+  .sponsors-viewport:hover .sponsors-track,
+  .sponsors-track:focus-within{animation-play-state:paused;}
+  .sponsors-item{flex:0 0 auto;}
+  .sponsors-item img{
+    display:block;height:60px;width:auto;max-width:180px;object-fit:contain;
+    filter:grayscale(1);opacity:.6;
+    transition:filter .3s ease, opacity .3s ease, transform .3s ease;
+  }
+  .sponsors-item a:hover img,
+  .sponsors-item a:focus-visible img{filter:grayscale(0);opacity:1;transform:scale(1.05);}
+  .sponsors-item a:focus-visible{outline:2px solid var(--grape);outline-offset:6px;border-radius:4px;}
+  @keyframes sponsors-scroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(calc(-100% / var(--repeat)));}
+  }
+  @media (max-width:700px){
+    .sponsors{padding:40px 0 44px;}
+    .sponsors-track{gap:34px;}
+    .sponsors-item img{height:46px;max-width:140px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sponsors-track{
+      animation:none;width:100%;flex-wrap:wrap;justify-content:center;gap:28px 44px;
+    }
+    .sponsors-item[aria-hidden="true"]{display:none;}
+    .sponsors-item img{filter:none;opacity:1;}
+  }
 </style>
 </head>
 <body>
@@ -295,8 +346,35 @@ $heroMobile  = cl_tr($heroImg, 'f_auto,q_auto,c_fill,ar_4:5,g_auto,w_900');
     </div>
   </div>
 </section>
-
-<section class="block" id="activites" style="padding-top:0;">
+<?php
+$sponsorItems = array_values(array_filter($sponsors['items'] ?? [], fn($s) => !empty($s['logo'])));
+if ($sponsorItems):
+    // On répète la liste pour remplir la piste sans trou visible
+    $sponsorRepeat = max(2, (int) ceil(10 / count($sponsorItems)));
+?>
+<div class="sponsors">
+  <div class="wrap">
+    <h2 class="sponsors-title"><?= e($sponsors['titre'] ?? 'Ils soutiennent le salon') ?></h2>
+    <div class="sponsors-viewport">
+      <ul class="sponsors-track" style="--repeat:<?= $sponsorRepeat ?>;--count:<?= count($sponsorItems) ?>;">
+        <?php for ($r = 0; $r < $sponsorRepeat; $r++): ?>
+          <?php foreach ($sponsorItems as $sp): ?>
+          <li class="sponsors-item"<?= $r > 0 ? ' aria-hidden="true"' : '' ?>>
+            <?php if (!empty($sp['url'])): ?>
+            <a href="<?= e($sp['url']) ?>" target="_blank" rel="noopener noreferrer"<?= $r > 0 ? ' tabindex="-1"' : '' ?>>
+            <?php endif; ?>
+            <img src="<?= e(cl_tr($sp['logo'], 'f_auto,q_auto,h_180')) ?>"
+                 alt="<?= e($sp['nom'] ?? '') ?>" loading="lazy" decoding="async">
+            <?php if (!empty($sp['url'])): ?></a><?php endif; ?>
+          </li>
+          <?php endforeach; ?>
+        <?php endfor; ?>
+      </ul>
+    </div>
+  </div>
+</div>
+<?php endif; ?>
+<section class="block" id="activites">
   <div class="wrap">
     <div class="section-head">
       <span class="tag">
