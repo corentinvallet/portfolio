@@ -23,3 +23,11 @@ function load_content() {
   }
   return $c;
 }
+/* Applique des transformations Cloudinary à une URL.
+   Si l'URL n'est pas Cloudinary (fichier local), la renvoie inchangée. */
+function cl_tr($url, $tr) {
+  $url = (string)($url ?? '');
+  if ($url === '') return '';
+  if (strpos($url, 'res.cloudinary.com') === false) return $url;
+  return preg_replace('#/upload/#', '/upload/' . $tr . '/', $url, 1);
+}
