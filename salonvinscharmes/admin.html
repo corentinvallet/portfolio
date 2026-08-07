@@ -398,6 +398,9 @@ function faqEditor(container){
   const list = el('div', {class:'faqadm'});
 
   const stop = (e) => { e.preventDefault(); e.stopPropagation(); };
+  const opened = new WeakSet();
+  let pendingFocus = null;   // objet (question ou catégorie) à focaliser après redraw
+  let focusCard   = null;    // carte DOM correspondante, remplie pendant draw()
 
   function move(arr, i, delta){
     const j = i + delta;
@@ -422,7 +425,11 @@ function faqEditor(container){
       cat.items = cat.items || [];
 
       const det = el('details', {class:'faqadm-cat'});
-      det.open = false;
+      det.open = opened.has(cat);
+      det.addEventListener('toggle', () => {
+        det.open ? opened.add(cat) : opened.delete(cat);
+      });
+      if (cat === pendingFocus) focusCard = det;
 
       det.appendChild(el('summary', {},
         el('span', {class:'faqadm-cat-title'},
@@ -451,6 +458,7 @@ function faqEditor(container){
       // ── Questions de la catégorie ──
       cat.items.forEach((item, qi) => {
         const card = el('div', {class:'faqadm-q'});
+        if (item === pendingFocus) focusCard = card;
 
         card.appendChild(el('div', {class:'faqadm-q-head'},
           el('span', {class:'faqadm-q-num'}, 'Question ' + (qi + 1)),
@@ -481,19 +489,45 @@ function faqEditor(container){
 
       body.appendChild(el('button', {
         class:'btn btn-ghost miniadd', type:'button',
-        onclick: () => { cat.items.push({q:'', r:''}); markDirty(); draw(); }
+        onclick: () => {
+          const nouvelle = {q:'', r:''};
+          cat.items.push(nouvelle);
+          opened.add(cat);          // garde la catégorie dépliée
+          pendingFocus = nouvelle;  // focus sur le champ « Question »
+          markDirty(); draw();
+        }
       }, '+ Ajouter une question'));
 
       det.appendChild(body);
       list.appendChild(det);
     });
+
+    // Focus + défilement vers l'élément qui vient d'être créé
+    if (focusCard) {
+      const cible = focusCard;
+      focusCard = null;
+      pendingFocus = null;
+      requestAnimationFrame(() => {
+        const champ = cible.querySelector('textarea, input');
+        if (champ) {
+          champ.focus();
+          champ.scrollIntoView({block:'center', behavior:'smooth'});
+        }
+      });
+    }
   }
 
   draw();
   container.appendChild(list);
   container.appendChild(el('button', {
     class:'btn btn-ghost miniadd', type:'button',
-    onclick: () => { cats.push({nom:'Nouvelle catégorie', items:[]}); markDirty(); draw(); }
+    onclick: () => {
+      const nouvelle = {nom:'Nouvelle catégorie', items:[]};
+      cats.push(nouvelle);
+      opened.add(nouvelle);
+      pendingFocus = nouvelle;
+      markDirty(); draw();
+    }
   }, '+ Ajouter une catégorie'));
 }
 /* ═══════════════════════════════════════════════════════════
