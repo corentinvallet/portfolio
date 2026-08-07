@@ -509,6 +509,120 @@
             }
         ]
     },
+    "faqPage": {
+        "tag": "Questions fréquentes",
+        "title": "Tout ce qu'il faut savoir avant de venir",
+        "intro": "Horaires, tarifs, parkings, animations, restauration… Vous trouverez ici les réponses aux questions que l'on nous pose le plus souvent. Une question qui ne figure pas dans cette liste ? Écrivez-nous, nous vous répondrons avec plaisir.",
+        "searchPlaceholder": "Rechercher une question…",
+        "categories": [
+            {
+            "nom": "Venir au salon",
+            "items": [
+                {
+                "q": "Où se situe le salon des vins de Charmes-sur-Rhône ?",
+                "r": "Le salon se tient à Charmes-sur-Rhône, en Ardèche. <a href='assets/pdf/plan-situation.pdf' target='_blank' rel='noopener'>Consulter le plan de situation (PDF)</a>."
+                },
+                {
+                "q": "Y a-t-il des parkings à proximité et sont-ils payants ?",
+                "r": "Oui, plusieurs parkings entourent le salon et ils sont <strong>entièrement gratuits</strong>. <a href='assets/pdf/plan-parking.pdf' target='_blank' rel='noopener'>Consulter le plan des parkings (PDF)</a>."
+                },
+                {
+                "q": "Quels sont les horaires d'ouverture ?",
+                "r": "<ul><li><strong>Vendredi</strong> : de 17h00 à 21h00</li><li><strong>Samedi</strong> : de 10h00 à 20h00</li><li><strong>Dimanche</strong> : de 10h00 à 18h00</li></ul>"
+                }
+            ]
+            },
+            {
+            "nom": "Billets & tarifs",
+            "items": [
+                {
+                "q": "Combien coûte l'entrée et où acheter les billets ?",
+                "r": "Le tarif est de <strong>5,00 €</strong>. Les billets sont en vente directement à l'entrée du salon. Vous pouvez également télécharger et imprimer une invitation privilège au tarif réduit de <strong>2,00 €</strong>. <a href='assets/pdf/invitation-privilege.pdf' target='_blank' rel='noopener'>Télécharger une invitation privilège (PDF)</a>."
+                },
+                {
+                "q": "Le billet est-il valable plusieurs jours ?",
+                "r": "Non, le billet n'est valable qu'une seule journée. Si vous souhaitez revenir le lendemain, un nouveau droit d'entrée vous sera demandé. En revanche, le bracelet posé à votre poignet vous permet de sortir et de revenir autant de fois que vous le souhaitez au cours de la même journée."
+                },
+                {
+                "q": "Au cours de la même journée, puis-je ressortir du salon ?",
+                "r": "Oui. À l'entrée, nous posons un bracelet à votre poignet : il vous permet de sortir et de revenir librement tout au long de la même journée."
+                },
+                {
+                "q": "À quoi donne accès le billet d'entrée ?",
+                "r": "Le billet donne accès à <strong>toutes les animations de la journée</strong> : séance d'initiation à la dégustation, conférences accord mets et vins, accord chocolat et vin, accord vin et fromage, etc. Certaines animations sont soumises à inscription préalable."
+                }
+            ]
+            },
+            {
+            "nom": "Animations & dégustation",
+            "items": [
+                {
+                "q": "Comment participer aux animations et à quel prix ?",
+                "r": "Toutes les animations sont <strong>gratuites</strong> dès lors que vous vous êtes acquitté du droit d'entrée. Pensez simplement à vous munir de votre verre. Les conférences accord mets et vins, chocolat et vin, et vin et fromage sont strictement réservées aux personnes préalablement inscrites au stand des organisateurs, le premier stand à droite en entrant dans le salon."
+                },
+                {
+                "q": "Des bouteilles à partir de quel prix ?",
+                "r": "Vous trouverez des bouteilles dès 5 à 6 €. Autour de 10 €, vous pourrez vous constituer une belle cave avec des vins de presque toutes les régions françaises. Et pour les plus exigeants, certains flacons d'exception atteignent 30, 40 ou 50 €."
+                },
+                {
+                "q": "Des crachoirs dans le salon : pourquoi et pour qui ?",
+                "r": "Pour bien déguster, il faut cracher. Vous trouverez des crachoirs sur chaque stand, à utiliser sans modération ! Un crachoir peut intimider quand on débute, mais l'art du crachat s'apprend vite : ne craignez pas le ridicule, tous les dégustateurs sont passés par là."
+                }
+            ]
+            },
+            {
+            "nom": "Sur place",
+            "items": [
+                {
+                "q": "Où trouver le plan des exposants dans le salon ?",
+                "r": "Le plan figure dans le guide du salon, distribué gratuitement à l'entrée. Il est également mis en ligne sur ce site avant chaque édition."
+                },
+                {
+                "q": "Où trouver la liste des exposants ?",
+                "r": "La liste complète figure dans le guide distribué à l'entrée. Vous pouvez aussi la consulter dès maintenant sur <a href='exposants-club-oenologie.php'>notre page exposants</a>, avec un filtre par région et par appellation."
+                },
+                {
+                "q": "Peut-on se restaurer sur place ?",
+                "r": "Oui, deux formules s'offrent à vous :<ul><li><strong>Le midi, samedi et dimanche</strong> : espace restauration dans la salle des fêtes de l'Oustaou.</li><li><strong>Tout au long de la journée</strong> : des sandwichs préparés par les bénévoles du salon, à l'entrée.</li></ul>"
+                },
+                {
+                "q": "Y a-t-il un vestiaire et à quel tarif ?",
+                "r": "Oui, dès l'entrée sur votre droite. Le service est <strong>entièrement gratuit</strong> et sous surveillance permanente, pour que vous profitiez pleinement du salon les mains libres."
+                },
+                {
+                "q": "Comment transporter les bouteilles achetées ?",
+                "r": "Le principe est simple : laissez vos bouteilles sur les stands des viticulteurs au fur et à mesure de vos achats. Avant de partir, prenez un caddie mis à votre disposition à la sortie du salon, faites le tour pour tout récupérer, puis rejoignez votre voiture ou l'aire de chargement prévue à cet effet."
+                }
+            ]
+            },
+            {
+            "nom": "Bon à savoir",
+            "items": [
+                {
+                "q": "Les animaux sont-ils acceptés ?",
+                "r": "Non. Pour des raisons d'hygiène, nos amis les bêtes ne sont pas admis dans l'enceinte du salon."
+                },
+                {
+                "q": "Les mineurs sont-ils admis sur le salon ?",
+                "r": "L'accès à la manifestation est ouvert sans limite d'âge. Les mineurs doivent impérativement être accompagnés d'un adulte, parent ou représentant légal, et demeurent sous son entière et seule responsabilité pendant toute la durée de leur présence. Tout mineur égaré peut se présenter à l'accueil du salon."
+                },
+                {
+                "q": "Un éthylotest est-il à disposition ?",
+                "r": "Oui. La sécurité est une priorité pour les organisateurs : un <strong>éthylotest électronique</strong> est mis gratuitement à votre disposition à la sortie du salon pour vérifier votre taux d'alcool avant de reprendre la route."
+                },
+                {
+                "q": "Quelle est votre position sur la consommation d'alcool ?",
+                "r": "La manifestation étant dédiée à la découverte et à la dégustation de vins, elle s'inscrit pleinement dans une démarche de <strong>consommation responsable</strong>. Crachoirs sur chaque stand, éthylotest à la sortie, restauration sur place : tout est pensé pour que la découverte reste un plaisir sans risque."
+                }
+            ]
+            }
+        ],
+        "cta": {
+            "title": "Votre question n'est pas dans la liste ?",
+            "text": "Écrivez-nous : un bénévole du club vous répondra personnellement, en général sous 48 heures.",
+            "btn": "Nous contacter"
+        }
+    },
     "pressePage": {
         "eyebrow": "Ils parlent du salon",
         "title": "Revue de presse",

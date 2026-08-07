@@ -19,6 +19,7 @@ $logo = $c['logo'] ?? 'assets/logo-cod.png';
       <li><a href="<?= $prefix ?>#activites">Activités</a></li>
       <li><a href="equipe-club-oenologie.php"<?= $active==='equipe' ? ' class="current"' : '' ?>>L'équipe</a></li>
       <li><a href="presse-club-oenologie.php"<?= $active==='presse' ? ' class="current"' : '' ?>>Presse</a></li>
+      <li><a href="faq-club-oenologie.php" class="<?= $active === 'faq' ? 'active' : '' ?>">FAQ</a></li>
     </ul></nav>
     <div class="nav-cta">
       <a href="<?= $prefix ?>#contact" class="btn-icon" aria-label="Nous contacter">
