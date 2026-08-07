@@ -244,9 +244,12 @@ $heroMobile  = cl_tr($heroImg, 'f_auto,q_auto,c_fill,ar_4:5,g_auto,w_900');
     overflow:hidden;
   }
   .sponsors-title{
-    font-size:clamp(1.15rem,2.4vw,1.5rem);
-    text-align:center;
-    margin:0 0 34px;
+    font-family:'Inter',sans-serif;
+    font-size:0.8rem;font-weight:700;
+    letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--grape);
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    margin:0 0 30px;
   }
   .sponsors-viewport{
     overflow:hidden;
@@ -354,7 +357,10 @@ if ($sponsorItems):
 ?>
 <div class="sponsors">
   <div class="wrap">
-    <h2 class="sponsors-title"><?= e($sponsors['titre'] ?? 'Ils soutiennent le salon') ?></h2>
+    <h2 class="sponsors-title">
+      <svg class="swirl" viewBox="0 0 24 24"><path d="M3 15c4-8 10-8 13-3s-2 8-6 6 1-9 8-6"/></svg>
+      <?= e($sponsors['titre'] ?? 'Ils soutiennent le salon') ?>
+    </h2>
     <div class="sponsors-viewport">
       <ul class="sponsors-track" style="--repeat:<?= $sponsorRepeat ?>;--count:<?= count($sponsorItems) ?>;">
         <?php for ($r = 0; $r < $sponsorRepeat; $r++): ?>
