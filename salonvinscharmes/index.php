@@ -16,6 +16,9 @@ $presse  = $c['presseHome']   ?? [];
 $contact = $c['contact']      ?? [];
 
 $home = true; $active = '';
+$heroImg = $hero['image'] ?? '';
+$heroDesktop = cl_tr($heroImg, 'f_auto,q_auto,w_1920');
+$heroMobile  = cl_tr($heroImg, 'f_auto,q_auto,c_fill,ar_4:5,g_auto,w_900');
 ?>
 <!doctype html>
 <html lang="fr">
@@ -26,6 +29,14 @@ $home = true; $active = '';
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<?php if ($heroDesktop !== ''): ?>
+<link rel="preload" as="image" href="<?= e($heroDesktop) ?>" media="(min-width:901px)">
+<link rel="preload" as="image" href="<?= e($heroMobile) ?>" media="(max-width:900px)">
+<style>
+  .hero{ --hero-photo:url('<?= e($heroDesktop) ?>'); }
+  @media (max-width:900px){ .hero{ --hero-photo:url('<?= e($heroMobile) ?>'); } }
+</style>
+<?php endif; ?>
 <style>
   /* --- styles propres à la page d'accueil --- */
   .logo-img{height:44px;}
@@ -34,7 +45,11 @@ $home = true; $active = '';
   /* --- hero --- */
   .hero{
     position:relative;overflow:hidden;
-    background:var(--ink);
+    background-color:var(--ink);
+    background-image:var(--hero-photo, none);
+    background-size:cover;
+    background-position:center 62%;
+    background-repeat:no-repeat;
     color:var(--paper);
     padding:110px 0 90px;
   }
@@ -42,7 +57,11 @@ $home = true; $active = '';
     content:"";position:absolute;inset:0;
     background:
       radial-gradient(560px 560px at 88% -8%, rgba(122,75,176,0.55), transparent 60%),
-      radial-gradient(420px 420px at 8% 108%, rgba(226,144,63,0.28), transparent 65%);
+      radial-gradient(420px 420px at 8% 108%, rgba(226,144,63,0.28), transparent 65%),
+      linear-gradient(to bottom,
+        rgba(27,20,64,0.72) 0%,
+        rgba(27,20,64,0.76) 45%,
+        rgba(122,31,61,0.80) 100%);
     pointer-events:none;
   }
   .hero-grid{position:relative;display:grid;grid-template-columns:1.1fr 0.9fr;gap:56px;align-items:center;}
@@ -50,10 +69,10 @@ $home = true; $active = '';
   .eyebrow{
     display:inline-flex;align-items:center;gap:8px;
     font-size:0.82rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
-    color:var(--amber);margin-bottom:22px;
+    color:#F2BC7A;;margin-bottom:22px;
   }
   .hero h1{font-size:clamp(2.4rem, 5vw, 3.6rem);line-height:1.04;}
-  .hero h1 em{font-style:italic;color:var(--grape);font-weight:500;}
+  .hero h1 em{font-style:italic;color:#C9A7EA;font-weight:500;}
   .hero p.lede{
     margin-top:22px;max-width:46ch;font-size:1.08rem;line-height:1.6;
     color:rgba(247,242,231,0.82);

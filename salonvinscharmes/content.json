@@ -10,7 +10,8 @@
         "ctaPrimary": "Découvrir les vignerons",
         "ctaSecondary": "Voir les activités du club",
         "sealNum": "130+",
-        "sealLabel": "Appellations réunies"
+        "sealLabel": "Appellations réunies",
+        "image": "assets/photos/Vignes.jpg"
     },
     "stats": [
         {
