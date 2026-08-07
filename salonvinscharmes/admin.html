@@ -821,10 +821,16 @@ function render(){
         el('div',{class:'grid2'},
           textField('Téléphone', x.telephone, v=>x.telephone=v),
           textField('E-mail', x.email, v=>x.email=v)),
-        textField('Site web', x.siteWeb, v=>x.siteWeb=v)
+        textField('Site web', x.siteWeb, v=>x.siteWeb=v),
+        el('div',{class:'hint',style:'margin-top:10px;margin-bottom:6px;'},'Réseaux sociaux — collez l\'adresse complète de la page, en commençant par https://'),
+        el('div',{class:'grid2'},
+          textField('Facebook', x.facebook, v=>x.facebook=v),
+          textField('Instagram', x.instagram, v=>x.instagram=v)),
+        textField('LinkedIn', x.linkedin, v=>x.linkedin=v)
       ],
       ()=>({nom:'',type:'Vigneron',region:'',appellations:[],desc:'',
-            nomComplet:'',adresse:'',telephone:'',email:'',siteWeb:'',photo:''}));
+            nomComplet:'',adresse:'',telephone:'',email:'',siteWeb:'',
+            facebook:'',instagram:'',linkedin:'',photo:''}));
     b.appendChild(wrap);
   }));
 
