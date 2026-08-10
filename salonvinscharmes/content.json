@@ -735,7 +735,72 @@
         "ctaText": "Envoyez-les nous : elles rejoindront peut-être cette galerie.",
         "ctaBtn": "Nous les envoyer",
         "albums": [
-        { "nom": "Édition 2025", "photos": [] }
+            {
+                "nom": "Édition 2025",
+                "photos": [
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399150/ognmtq59atbmrj8pqmpc.jpg",
+                        "legende": ""
+                    }
+                ]
+            },
+            {
+                "nom": "Édition 2026",
+                "photos": [
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399164/rvc1mi5f0axlro2po6wg.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/voqypquxzmld7hnbfhi9.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/c7kqro8ogjmit1yfokcu.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/zr6rpb9fnys2faifkmqr.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/eefv0j4gm5mfl8snokhh.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/ljijvqay3qlbvv0ktzxj.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/kgn7eeq0wkn3s1jmiy66.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/vguwzvbzuvym8wvmszvd.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/ss97p4mfgy79fnxmojff.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/vlroanap2abjmchuoidp.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/izm3zza5qmkp1rsl9khw.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/zolfg4rubeosywswumnt.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/wruognqnwkhklvkesqww.jpg",
+                        "legende": ""
+                    }
+                ]
+            }
         ]
     },
     "pressePage": {
@@ -1276,7 +1341,6 @@
             "btn": "Nous contacter"
         }
     },
-
     "settings": {
         "cloudinary": {
             "cloudName": "de5u1njxn",
