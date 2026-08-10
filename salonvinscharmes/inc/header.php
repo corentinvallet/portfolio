@@ -22,7 +22,9 @@ $activiteOn = in_array($active, ['voyages', 'cours'], true);
         <button type="button" class="nav-sub-toggle<?= $activiteOn ? ' current' : '' ?>"
                 aria-expanded="false" aria-controls="sub-activites">
           Activités
-          <svg class="nav-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          <svg class="nav-caret" viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"
+               fill="none" stroke="currentColor" stroke-width="2.4"
+               stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <ul class="subnav" id="sub-activites">
           <li><a href="voyages-club-oenologie.php"<?= $active==='voyages' ? ' class="current"' : '' ?>>Voyages</a></li>
