@@ -8,7 +8,7 @@
 $home  = $home  ?? false;
 $active = $active ?? '';
 $prefix = $home ? '' : 'index.php';
-$logo = $c['logo'] ?? 'assets/logo-cod.png';
+$logo = $c['logo'] ?? 'assets/photod/logos/salon-vins-charmes-logo-256.png';
 $activiteOn = in_array($active, ['voyages', 'cours'], true);
 ?>
 <header>
