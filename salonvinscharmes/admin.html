@@ -531,6 +531,128 @@ function faqEditor(container){
   }, '+ Ajouter une catégorie'));
 }
 /* ═══════════════════════════════════════════════════════════
+   ÉDITEUR GALERIE (albums → photos, 2 niveaux)
+═══════════════════════════════════════════════════════════ */
+function galerieEditor(container){
+  const p      = state.galeriePage = state.galeriePage || {};
+  const albums = p.albums = p.albums || [];
+  const list   = el('div');
+  const opened = new WeakSet();
+
+  function move(arr, i, delta){
+    const j = i + delta;
+    if(j < 0 || j >= arr.length) return;
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+    markDirty(); draw();
+  }
+
+  function tool(label, title, onclick, danger){
+    return el('button', {type:'button', title,
+      class:'btn btn-sm ' + (danger ? 'btn-danger' : 'btn-ghost'),
+      onclick:(ev)=>{ ev.preventDefault(); ev.stopPropagation(); onclick(); }}, label);
+  }
+
+  /* Upload multiple : 20 photos d'un coup */
+  function bulkUpload(album){
+    const cfg = (state.settings && state.settings.cloudinary) || {};
+    if(!cfg.cloudName || !cfg.uploadPreset){
+      alert('Configurez d\u2019abord le Cloud name et l\u2019Upload preset Cloudinary dans la section « Réglages ».');
+      return;
+    }
+    if(typeof cloudinary === 'undefined'){
+      alert('Le module Cloudinary n\u2019a pas pu se charger (vérifiez la connexion internet).');
+      return;
+    }
+    let added = 0;
+    const widget = cloudinary.createUploadWidget(
+      { cloudName: cfg.cloudName, uploadPreset: cfg.uploadPreset,
+        multiple: true, maxFiles: 40, sources:['local','camera','url'] },
+      (error, result)=>{
+        if(error || !result) return;
+        if(result.event === 'success'){
+          album.photos = album.photos || [];
+          album.photos.push({ src: result.info.secure_url, legende: '' });
+          added++; markDirty();
+        }
+        if(result.event === 'queues-end' || result.event === 'close'){
+          if(added){ added = 0; opened.add(album); draw(); }
+        }
+      });
+    widget.open();
+  }
+
+  function photoCard(photos, ph, pi){
+    const card = el('div',{style:'display:flex;gap:12px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff;margin-bottom:8px;'});
+    card.appendChild(el('img',{src: ph.src || '', alt:'',
+      style:'width:86px;height:86px;object-fit:cover;border-radius:8px;flex:none;background:#f3efe6;'}));
+
+    const right = el('div',{style:'flex:1;min-width:0;'});
+    const input = el('input',{type:'text',placeholder:'Légende (facultative)'});
+    input.value = ph.legende || '';
+    input.addEventListener('input', ()=>{ ph.legende = input.value; markDirty(); });
+    right.appendChild(input);
+    right.appendChild(el('div',{style:'display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;'},
+      tool('↑','Monter',    ()=>move(photos, pi, -1)),
+      tool('↓','Descendre', ()=>move(photos, pi, 1)),
+      tool('Supprimer','Supprimer cette photo', ()=>{
+        if(confirm('Supprimer cette photo ?')){ photos.splice(pi,1); markDirty(); draw(); }
+      }, true)
+    ));
+    card.appendChild(right);
+    return card;
+  }
+
+  function draw(){
+    list.innerHTML = '';
+
+    if(!albums.length){
+      list.appendChild(el('p',{class:'hint'},
+        'Aucun album pour l’instant. Cliquez sur « + Ajouter un album ».'));
+    }
+
+    albums.forEach((album, ai)=>{
+      album.photos = album.photos || [];
+
+      const det = el('details',{style:'border:1px solid var(--line);border-radius:14px;margin-bottom:10px;background:#faf7f1;overflow:hidden;'});
+      det.open = opened.has(album);
+      det.addEventListener('toggle', ()=>{ det.open ? opened.add(album) : opened.delete(album); });
+
+      det.appendChild(el('summary',{style:'display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;font-weight:600;'},
+        el('span',{style:'flex:1;min-width:0;'},
+          String(ai+1).padStart(2,'0') + '. ' + (album.nom || '(album sans nom)')),
+        el('span',{class:'hint',style:'margin:0;white-space:nowrap;'},
+          album.photos.length + (album.photos.length > 1 ? ' photos' : ' photo')),
+        el('span',{style:'display:flex;gap:6px;'},
+          tool('↑','Monter l’album',    ()=>move(albums, ai, -1)),
+          tool('↓','Descendre l’album', ()=>move(albums, ai, 1)),
+          tool('Supprimer','Supprimer l’album', ()=>{
+            if(confirm('Supprimer l’album « ' + (album.nom || 'sans nom') + ' » et ses ' + album.photos.length + ' photo(s) ?')){
+              albums.splice(ai,1); markDirty(); draw();
+            }
+          }, true))
+      ));
+
+      const body = el('div',{style:'padding:0 14px 16px;'});
+      body.appendChild(textField('Nom de l’album', album.nom, v=>{ album.nom = v; },
+        {hint:'Sert de libellé au bouton de filtre sur la page (ex : Édition 2025).'}));
+      body.appendChild(el('button',{type:'button',class:'btn btn-ghost btn-sm',
+        style:'margin:2px 0 14px;', onclick:()=>bulkUpload(album)},
+        '📷 Ajouter des photos (sélection multiple)'));
+
+      album.photos.forEach((ph, pi)=> body.appendChild(photoCard(album.photos, ph, pi)));
+
+      det.appendChild(body);
+      list.appendChild(det);
+    });
+  }
+
+  draw();
+  container.appendChild(list);
+  container.appendChild(el('button',{class:'btn btn-ghost miniadd',type:'button',
+    onclick:()=>{ const a = {nom:'', photos:[]}; albums.push(a); opened.add(a); markDirty(); draw(); }},
+    '+ Ajouter un album'));
+}
+/* ═══════════════════════════════════════════════════════════
    SECTIONS / ONGLETS
 ═══════════════════════════════════════════════════════════ */
 function section(title, openFirst, buildBody){
@@ -851,7 +973,23 @@ function render(){
             facebook:'',instagram:'',linkedin:'',photo:''}));
     b.appendChild(wrap);
   }));
+  /* ══════════════ PAGE GALERIE ══════════════ */
+  $app.appendChild(section('Page « Galerie »', false, b=>{
+    const p = state.galeriePage = state.galeriePage || {};
+    b.appendChild(textField('Petit titre (haut de page)', p.eyebrow, v=>p.eyebrow=v));
+    b.appendChild(textField('Titre de la page', p.title, v=>p.title=v));
+    b.appendChild(textField('Introduction', p.intro, v=>p.intro=v, {multiline:true}));
 
+    b.appendChild(el('div',{style:'margin-top:22px;font-weight:700;font-family:Fraunces,serif;'},'Albums photo'));
+    b.appendChild(el('div',{class:'hint',style:'margin:8px 0 14px'},
+      'Chaque album devient un bouton de filtre sur la page. Les photos sont hébergées sur Cloudinary et redimensionnées automatiquement.'));
+    galerieEditor(b);
+
+    b.appendChild(el('div',{style:'margin-top:26px;font-weight:700;font-family:Fraunces,serif;'},'Encart bas de page'));
+    b.appendChild(textField('Titre', p.ctaTitle, v=>p.ctaTitle=v));
+    b.appendChild(textField('Texte', p.ctaText, v=>p.ctaText=v, {multiline:true}));
+    b.appendChild(textField('Bouton', p.ctaBtn, v=>p.ctaBtn=v));
+  }));
   /* ══════════════ PAGE PRESSE ══════════════ */
   $app.appendChild(section('Page « Presse »', false, b=>{
     const p = state.pressePage = state.pressePage || {};

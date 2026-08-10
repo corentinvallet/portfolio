@@ -727,6 +727,17 @@
             "btn": "Nous contacter"
         }
     },
+    "galeriePage": {
+        "eyebrow": "En images",
+        "title": "Le salon en photos",
+        "intro": "Des allées bondées du samedi matin aux dernières dégustations du dimanche soir : quelques instants glanés au fil des éditions.",
+        "ctaTitle": "Vous avez de belles photos du salon ?",
+        "ctaText": "Envoyez-les nous : elles rejoindront peut-être cette galerie.",
+        "ctaBtn": "Nous les envoyer",
+        "albums": [
+        { "nom": "Édition 2025", "photos": [] }
+        ]
+    },
     "pressePage": {
         "eyebrow": "Ils parlent du salon",
         "title": "Revue de presse",
