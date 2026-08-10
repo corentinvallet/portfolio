@@ -1021,6 +1021,170 @@ function render(){
     b.appendChild(wrap);
   }));
 
+  /* ══════════════ PAGE VOYAGES ══════════════ */
+  $app.appendChild(section('Page « Voyages »', false, b=>{
+    const p = state.voyagesPage = state.voyagesPage || {};
+    b.appendChild(textField('Petit titre (haut de page)', p.eyebrow, v=>p.eyebrow=v));
+    b.appendChild(textField('Titre de la page', p.title, v=>p.title=v));
+    b.appendChild(textField('Introduction', p.intro, v=>p.intro=v, {multiline:true}));
+
+    /* — encart « prochain voyage » — */
+    const n = p.prochain = p.prochain || {};
+    b.appendChild(el('h3',{class:'subhead'},'Encart « Prochain voyage » (haut de page)'));
+    b.appendChild(selectField('Afficher cet encart', n.actif || 'oui',
+      [['oui','Oui, l’afficher'],['non','Non, le masquer']], v=>n.actif=v));
+    b.appendChild(el('div',{class:'grid2'},
+      textField('Légende manuscrite', n.tagline, v=>n.tagline=v),
+      textField('Titre', n.titre, v=>n.titre=v)));
+    b.appendChild(el('div',{class:'grid2'},
+      textField('Date', n.date, v=>n.date=v),
+      textField('Lieu / destination', n.lieu, v=>n.lieu=v)));
+    b.appendChild(textField('Texte', n.texte, v=>n.texte=v, {multiline:true}));
+    b.appendChild(el('div',{class:'grid2'},
+      textField('Bouton', n.cta, v=>n.cta=v, {hint:'Laissez vide pour ne pas afficher de bouton.'}),
+      textField('Lien du bouton', n.href, v=>n.href=v, {placeholder:'index.php#contact'})));
+    b.appendChild(photoField('Photo', n.photo, v=>n.photo=v));
+
+    /* — liste des voyages — */
+    b.appendChild(el('h3',{class:'subhead'},'Les voyages passés'));
+    b.appendChild(el('div',{class:'grid2'},
+      textField('Titre de la liste', p.archivesTitle, v=>p.archivesTitle=v),
+      textField('Phrase d’introduction', p.archivesIntro, v=>p.archivesIntro=v)));
+    p.list = p.list || [];
+    b.appendChild(el('div',{class:'hint',style:'margin:12px 0'},
+      p.list.length+' voyages. Le type (Journée / Week-end) sert de bouton de filtre sur la page ; l’année s’affiche sur la photo.'));
+    const vWrap = el('div');
+    repeatList(vWrap, p.list, 'Voyage',
+      (x)=>[
+        el('div',{class:'grid3'},
+          textField('Année', x.annee, v=>x.annee=v, {placeholder:'2019'}),
+          selectField('Type', x.type || 'Journée',
+            [['Journée','Journée'],['Week-end','Week-end']], v=>x.type=v),
+          textField('Date affichée', x.date, v=>x.date=v, {placeholder:'11 mai 2019'})),
+        textField('Titre (destination)', x.titre, v=>x.titre=v),
+        textField('Texte', x.texte, v=>x.texte=v, {multiline:true}),
+        textField('Au programme', x.programme, v=>x.programme=v,
+          {multiline:true, hint:'Une étape par ligne. Laissez vide pour ne rien afficher.'}),
+        photoField('Photo', x.photo, v=>x.photo=v)
+      ],
+      ()=>({annee:'',type:'Journée',titre:'',date:'',texte:'',programme:'',photo:''}));
+    b.appendChild(vWrap);
+
+    /* — encart bas de page — */
+    b.appendChild(el('h3',{class:'subhead'},'Encart bas de page'));
+    const vc = p.cta = p.cta || {};
+    b.appendChild(textField('Titre', vc.title, v=>vc.title=v));
+    b.appendChild(textField('Texte', vc.text, v=>vc.text=v, {multiline:true}));
+    b.appendChild(textField('Bouton', vc.btn, v=>vc.btn=v));
+  }));
+
+  /* ══════════════ PAGE COURS DE DÉGUSTATION ══════════════ */
+  $app.appendChild(section('Page « Cours de dégustation »', false, b=>{
+    const p = state.coursPage = state.coursPage || {};
+    b.appendChild(textField('Petit titre (haut de page)', p.eyebrow, v=>p.eyebrow=v));
+    b.appendChild(textField('Titre de la page', p.title, v=>p.title=v));
+    b.appendChild(textField('Saison', p.saison, v=>p.saison=v,
+      {placeholder:'Saison 2026 – 2027', hint:'Affiché en écriture manuscrite sous le titre.'}));
+    b.appendChild(textField('Introduction', p.intro, v=>p.intro=v, {multiline:true}));
+
+    /* — animateurs — */
+    b.appendChild(el('h3',{class:'subhead'},'Animateurs'));
+    p.animateurs = p.animateurs || [];
+    const aWrap = el('div');
+    repeatList(aWrap, p.animateurs, 'Animateur',
+      (a)=>[ el('div',{class:'grid3'},
+        textField('Initiales', a.initials, v=>a.initials=v),
+        textField('Nom', a.nom, v=>a.nom=v),
+        textField('Rôle', a.role, v=>a.role=v)) ],
+      ()=>({initials:'',nom:'',role:''}));
+    b.appendChild(aWrap);
+
+    /* — infos pratiques — */
+    b.appendChild(el('h3',{class:'subhead'},'Infos pratiques (bandeau)'));
+    p.infos = p.infos || [];
+    const iWrap = el('div');
+    repeatList(iWrap, p.infos, 'Info',
+      (i)=>[
+        el('div',{class:'grid2'},
+          textField('Icône (emoji)', i.icon, v=>i.icon=v, {placeholder:'💶'}),
+          textField('Libellé', i.label, v=>i.label=v, {placeholder:'Tarif'})),
+        textField('Valeur', i.value, v=>i.value=v,
+          {multiline:true, hint:'Les retours à la ligne sont conservés.'})
+      ],
+      ()=>({icon:'',label:'',value:''}));
+    b.appendChild(iWrap);
+    b.appendChild(textField('Note sous le bandeau', p.note, v=>p.note=v,
+      {multiline:true, hint:'Petit encart orange. Laissez vide pour le masquer.'}));
+
+    /* — inscriptions — */
+    b.appendChild(el('h3',{class:'subhead'},'Encart « Inscriptions »'));
+    const ins = p.inscription = p.inscription || {};
+    b.appendChild(textField('Titre', ins.title, v=>ins.title=v));
+    b.appendChild(textField('Texte', ins.text, v=>ins.text=v, {multiline:true}));
+    b.appendChild(el('div',{class:'grid3'},
+      textField('Nom du contact', ins.nom, v=>ins.nom=v),
+      textField('Téléphone', ins.tel, v=>ins.tel=v),
+      textField('E-mail', ins.email, v=>ins.email=v)));
+    b.appendChild(textField('Libellé du bouton', ins.btn, v=>ins.btn=v));
+
+    /* — formules & séances (2 niveaux) — */
+    b.appendChild(el('h3',{class:'subhead'},'Formules et séances'));
+    b.appendChild(el('div',{class:'hint',style:'margin-bottom:12px'},
+      'Chaque formule (Initiation, Perfectionnement…) contient sa propre liste de séances, numérotées automatiquement dans l’ordre d’affichage.'));
+    p.formules = p.formules || [];
+    const fWrap = el('div');
+    repeatList(fWrap, p.formules, 'Formule',
+      (f)=>{
+        f.seances = f.seances || [];
+        const sWrap = el('div',{style:'margin-top:14px;padding-left:14px;border-left:3px solid var(--line);'});
+        sWrap.appendChild(el('div',{class:'lbl',style:'margin-bottom:8px'},'Séances de cette formule'));
+        repeatList(sWrap, f.seances, 'Séance',
+          (s)=>[
+            textField('Thème', s.theme, v=>s.theme=v),
+            textField('Sous-titre (facultatif)', s.sousTitre, v=>s.sousTitre=v,
+              {hint:'Affiché en italique sous le thème.'}),
+            el('div',{class:'grid2'},
+              textField('Animée par', s.animateur, v=>s.animateur=v),
+              textField('Vins dégustés', s.vins, v=>s.vins=v, {placeholder:'5 vins rouges'})),
+            tagsField('Dates', s.dates, v=>s.dates=v,
+              {hint:'Séparez les dates par une virgule — ex : Mardi 4 nov. 2025 (groupe 1), Mardi 9 déc. 2025 (groupe 2)'}),
+            textField('Au programme', s.programme, v=>s.programme=v,
+              {multiline:true, hint:'Un point par ligne. Laissez vide pour ne rien afficher.'})
+          ],
+          ()=>({theme:'',sousTitre:'',animateur:'',vins:'',dates:[],programme:''}));
+        return [
+          el('div',{class:'grid2'},
+            textField('Nom de la formule', f.nom, v=>f.nom=v),
+            textField('Légende manuscrite', f.tagline, v=>f.tagline=v)),
+          textField('Introduction', f.intro, v=>f.intro=v, {multiline:true}),
+          sWrap
+        ];
+      },
+      ()=>({nom:'',tagline:'',intro:'',seances:[]}));
+    b.appendChild(fWrap);
+
+    /* — archives — */
+    b.appendChild(el('h3',{class:'subhead'},'Saisons précédentes (PDF)'));
+    const ar = p.archives = p.archives || {};
+    b.appendChild(el('div',{class:'grid2'},
+      textField('Titre du bloc', ar.title, v=>ar.title=v),
+      textField('Phrase d’introduction', ar.intro, v=>ar.intro=v)));
+    ar.items = ar.items || [];
+    const arWrap = el('div',{style:'margin-top:12px'});
+    repeatList(arWrap, ar.items, 'Saison',
+      (it)=>[ el('div',{class:'grid2'},
+        textField('Libellé', it.label, v=>it.label=v, {placeholder:'2023 / 2024'}),
+        textField('Lien du PDF', it.url, v=>it.url=v, {placeholder:'https://…'})) ],
+      ()=>({label:'',url:''}));
+    b.appendChild(arWrap);
+
+    /* — encart bas de page — */
+    b.appendChild(el('h3',{class:'subhead'},'Encart bas de page'));
+    const cc = p.cta = p.cta || {};
+    b.appendChild(textField('Titre', cc.title, v=>cc.title=v));
+    b.appendChild(textField('Texte', cc.text, v=>cc.text=v, {multiline:true}));
+    b.appendChild(textField('Bouton', cc.btn, v=>cc.btn=v));
+  }));
   setupTabs();
 }
 

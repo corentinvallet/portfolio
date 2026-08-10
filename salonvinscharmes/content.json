@@ -799,6 +799,484 @@
             }
         ]
     },
+    "voyagesPage": {
+        "eyebrow": "Activités du club",
+        "title": "Les voyages du club",
+        "intro": "Depuis 2004, le Club Œnologie Découvertes emmène ses adhérents sur les routes du vin : une journée dans un vignoble voisin au printemps, un week-end plus lointain à l'automne. À chaque fois, la même idée — rencontrer celles et ceux qui font le vin, et découvrir le pays qui va avec.",
+        "prochain": {
+            "actif": "oui",
+            "tagline": "à venir",
+            "titre": "Le prochain voyage se prépare",
+            "date": "Printemps 2027",
+            "lieu": "Destination en cours de choix",
+            "texte": "La destination du prochain départ est en cours de préparation par le bureau. Les adhérents seront prévenus en priorité : le nombre de places est limité par la capacité du car.",
+            "cta": "Être prévenu du prochain départ",
+            "href": "index.php#contact",
+            "photo": ""
+        },
+        "archivesTitle": "Là où nous sommes déjà allés",
+        "archivesIntro": "Vingt ans de voyages, de la vallée du Rhône au Jura, en passant par la Suisse, la Bourgogne et le Languedoc.",
+        "list": [
+            {
+                "annee": "2019",
+                "type": "Journée",
+                "titre": "Notre-Dame de Cousignac et la grotte Chauvet",
+                "date": "11 mai 2019",
+                "texte": "Une journée en sud Ardèche partagée entre le vignoble et la préhistoire, du domaine familial de Cousignac jusqu'à la réplique de la grotte Chauvet.",
+                "programme": "Visite et dégustation au domaine de Notre-Dame de Cousignac\nDécouverte de la grotte Chauvet 2",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/2019_voyage_sud_Ardeche_5-6075ff7877f95905aa2775977ee942bc.JPG"
+            },
+            {
+                "annee": "2018",
+                "type": "Week-end",
+                "titre": "Nice et ses environs",
+                "date": "21, 22 et 23 septembre 2018",
+                "texte": "Trois jours sur la Côte d'Azur pour découvrir Bellet, l'un des plus petits et des plus confidentiels vignobles de France, niché dans les collines niçoises.",
+                "programme": "Découverte du vignoble de Bellet\nVisite du vieux Nice et de l'arrière-pays",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/2018-10-nice-et-ses-environs-1577820f834e95062db6a2a5b83d9b09.JPG"
+            },
+            {
+                "annee": "2018",
+                "type": "Journée",
+                "titre": "Beaucaire et Avignon",
+                "date": "5 mai 2018",
+                "texte": "Une plongée dans le vin tel qu'on le faisait il y a deux mille ans, suivie d'une escale avignonnaise.",
+                "programme": "Mas des Tourelles : vinification gallo-romaine\nVisite d'Avignon",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-beaucaire-avignon-2018-b1e92173bfec76e9d1c93a71f31373ba.JPG"
+            },
+            {
+                "annee": "2017",
+                "type": "Week-end",
+                "titre": "Le Jura et la Suisse",
+                "date": "22, 23 et 24 septembre 2017",
+                "texte": "Un week-end entre deux pays viticoles méconnus : les terrasses de Lavaux au bord du Léman, puis les vins de voile jurassiens.",
+                "programme": "Vignoble suisse de Lavaux, classé au patrimoine mondial\nDomaines du Jura : savagnin, vin jaune",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/week-end-jura-suisse-2017-97b554900022875ba76f629f82a52dc3.JPG"
+            },
+            {
+                "annee": "2017",
+                "type": "Journée",
+                "titre": "Rasteau",
+                "date": "20 mai 2017",
+                "texte": "Retour dans un cru de la vallée du Rhône méridionale que le club affectionne, entre grenache généreux et vins doux naturels.",
+                "programme": "Domaine de la Girardière\nDégustation commentée",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-rasteau-2017-d6f761cf1a72b4ccf4d505bac75c37cd.JPG"
+            },
+            {
+                "annee": "2016",
+                "type": "Journée",
+                "titre": "Vacqueyras",
+                "date": "21 mai 2016",
+                "texte": "Une journée au pied des Dentelles de Montmirail, à la rencontre d'un cru rhodanien taillé pour la garde.",
+                "programme": "Domaine Maître Curnier\nDécouverte des Dentelles de Montmirail",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-vacqueyras-2016-0b0f8989017252aab7cc03a5383557b7.JPG"
+            },
+            {
+                "annee": "2016",
+                "type": "Week-end",
+                "titre": "Autour du lac de Serre-Ponçon",
+                "date": "23, 24 et 25 septembre 2016",
+                "texte": "Un week-end de montagne où l'altitude change tout : paysages alpins, lac turquoise et vignobles de haute vallée.",
+                "programme": "Tour du lac de Serre-Ponçon\nProducteurs et terroirs de montagne",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/serre-poncon-2016-93ba7fb76231fc4297c65abc87cf1a81.JPG"
+            },
+            {
+                "annee": "2015",
+                "type": "Journée",
+                "titre": "Suze-la-Rousse",
+                "date": "30 mai 2015",
+                "texte": "Une journée drômoise autour de Grignan-les-Adhémar, appellation discrète et attachante de la vallée du Rhône.",
+                "programme": "Domaine des Agates (Grignan-les-Adhémar)\nDécouverte de Suze-la-Rousse",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-suze-la-rousse-2015-51c0767905eae869b36bc029f35f6316.JPG"
+            },
+            {
+                "annee": "2015",
+                "type": "Week-end",
+                "titre": "La Bourgogne et Dijon",
+                "date": "25, 26 et 27 septembre 2015",
+                "texte": "Trois jours au cœur des climats bourguignons, du château de Chamilly aux ruelles du vieux Dijon.",
+                "programme": "Château de Chamilly\nVisite de Dijon et de la Côte",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/week-end-bourgogne-et-visite-dijon-2015-3ee53f61ed4ccd9d08568b607df89868.JPG"
+            },
+            {
+                "annee": "2014",
+                "type": "Journée",
+                "titre": "Ruoms",
+                "date": "17 mai 2014",
+                "texte": "Une journée ardéchoise qui mêle le vin et le sous-sol : la cave coopérative d'un côté, un aven spectaculaire de l'autre.",
+                "programme": "Néovinum, l'espace de découverte des vins d'Ardèche\nDescente dans l'Aven d'Orgnac",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-ruoms-2014-01f6237d8cbe3ca6c5269a1be2968cfc.JPG"
+            },
+            {
+                "annee": "2014",
+                "type": "Week-end",
+                "titre": "Le Languedoc",
+                "date": "3, 4 et 5 octobre 2014",
+                "texte": "Un week-end dans le plus vaste vignoble de France, entre garrigue, abbayes et cépages méditerranéens.",
+                "programme": "Domaine de l'Abbaye Sainte-Eugénie\nDécouverte des terroirs languedociens",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/week-end-languedoc-2014-974eaa5e3f859d20b7ea1ef27c202c2b.JPG"
+            },
+            {
+                "annee": "2013",
+                "type": "Journée",
+                "titre": "Rasteau",
+                "date": "13 avril 2013",
+                "texte": "Première visite du club à Rasteau, où le grenache donne aussi bien des rouges puissants que des vins doux naturels.",
+                "programme": "Domaine les Girasols\nDécouverte du village et de son terroir",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-rasteau-2013-560e42027558dcb6a1fe76de62f1187f.JPG"
+            },
+            {
+                "annee": "2012",
+                "type": "Journée",
+                "titre": "Gigondas",
+                "date": "12 mai 2012",
+                "texte": "Une journée passée en compagnie d'un vigneron passionné, au pied des Dentelles de Montmirail.",
+                "programme": "Domaine de la Tuilière, avec Didier Bézert\nDégustation des crus de Gigondas",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-gigondas-2012-c305cd3c7ef88e26e35b456b5bbd84a0.JPG"
+            },
+            {
+                "annee": "2012",
+                "type": "Week-end",
+                "titre": "Cassis et Bandol",
+                "date": "5, 6 et 7 octobre 2012",
+                "texte": "Un week-end en Provence maritime : les blancs de Cassis face aux calanques, les mourvèdres de Bandol sur les restanques.",
+                "programme": "Vignoble de Cassis et calanques\nDomaines de Bandol",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/week-end-cassis-bandol-2012-d69cfab9cd4b02911786f68791320948.JPG"
+            },
+            {
+                "annee": "2011",
+                "type": "Journée",
+                "titre": "Le Diois",
+                "date": "8 octobre 2011",
+                "texte": "Une journée dans la haute vallée de la Drôme, accueillis par une famille de vignerons, autour de la clairette de Die.",
+                "programme": "Accueil chez la famille Vincent\nDégustation de clairette de Die",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-dans-le-diois-2011-08d8b582d088913719f8775650495382.JPG"
+            },
+            {
+                "annee": "2011",
+                "type": "Journée",
+                "titre": "La Côte-Saint-André",
+                "date": "5 mai 2011",
+                "texte": "Une escapade iséroise placée sous le signe de la musique et du patrimoine, autant que du vin.",
+                "programme": "Maison-musée d'Hector Berlioz\nDécouverte des produits du terroir",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-saint-andre-2011-c0f925069079607063b534d41200be2c.JPG"
+            },
+            {
+                "annee": "2010",
+                "type": "Week-end",
+                "titre": "Découverte du Jura",
+                "date": "8, 9 et 10 octobre 2010",
+                "texte": "Trois jours dans un vignoble à part, où le savagnin et l'élevage sous voile produisent des vins que l'on ne confond avec aucun autre.",
+                "programme": "Domaines jurassiens et vin jaune\nDécouverte du patrimoine local",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/decouverte-du-jura-2010-5c7c631c392598c20f8209e6d13b92f8.JPG"
+            },
+            {
+                "annee": "2009",
+                "type": "Journée",
+                "titre": "Châteauneuf-du-Pape",
+                "date": "3 octobre 2009",
+                "texte": "Une journée dans le plus célèbre cru de la vallée du Rhône, sur ses galets roulés caractéristiques.",
+                "programme": "Domaine du Mas de Boislauzon\nDécouverte du village et de ses terroirs",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-chateauneuf-du-pape-2009-e9070602e90e6f9078102d0900026965.JPG"
+            },
+            {
+                "annee": "2009",
+                "type": "Journée",
+                "titre": "Le Beaujolais",
+                "date": "16 mai 2009",
+                "texte": "Une journée au pays du gamay, entre pierres dorées et crus du nord du vignoble.",
+                "programme": "Accueil à Cercié\nDégustation des crus du Beaujolais",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-beaujolais-2009-e301b3e9532728e60190b1e1b73c33ac.JPG"
+            },
+            {
+                "annee": "2007",
+                "type": "Journée",
+                "titre": "Le monastère de Solan",
+                "date": "13 octobre 2007",
+                "texte": "Une visite hors du commun, chez des moniales orthodoxes qui cultivent la vigne en agriculture biologique.",
+                "programme": "Visite du monastère de Solan\nDécouverte du vignoble monastique",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/visite-monastere-salon-2007-cb200d477787285aff79b3ec4b044a40.JPG"
+            },
+            {
+                "annee": "2006",
+                "type": "Week-end",
+                "titre": "La Bourgogne",
+                "date": "28 et 29 octobre 2006",
+                "texte": "Un premier grand week-end bourguignon, avec Beaune et ses Hospices en point d'orgue.",
+                "programme": "Visite de Beaune et des Hospices\nDécouverte des climats de Bourgogne",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/week-end-bourgogne-2006-80056e2c7e808761240b58a4e193ef7b.JPG"
+            },
+            {
+                "annee": "2005",
+                "type": "Week-end",
+                "titre": "Gordes",
+                "date": "octobre 2005",
+                "texte": "Une quarantaine d'adhérents en Luberon, entre villages perchés et vignobles du Ventoux.",
+                "programme": "Village de Gordes et abbaye de Sénanque\nVignobles du Luberon",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/voyage-gordes-2005-da8c17fad1258072aadf0abae9042b13.JPG"
+            },
+            {
+                "annee": "2004",
+                "type": "Journée",
+                "titre": "L'Université du vin de Suze-la-Rousse",
+                "date": "octobre 2004",
+                "texte": "Le tout premier voyage du club : une journée dans le château qui abrite l'Université du vin, où se forment sommeliers et vignerons.",
+                "programme": "Visite de l'Université du vin\nDécouverte du château de Suze-la-Rousse",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/suze-la-rousse-2004-f94e606106a73391943351632c557908.JPG"
+            },
+            {
+                "annee": "",
+                "type": "Week-end",
+                "titre": "Les Corbières",
+                "date": "à préciser",
+                "texte": "Un week-end dans les Corbières, entre abbayes cathares et vignobles escarpés du Languedoc.",
+                "programme": "Domaines des Corbières\nPatrimoine cathare",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/week-end-dans-les-corbieres-ac61314b065d05b46ca87adafe1b4b50.JPG"
+            }
+        ],
+        "cta": {
+            "title": "Envie de partir avec nous ?",
+            "text": "Les voyages sont réservés aux adhérents du club. L'adhésion est de 10 € par an — écrivez-nous, nous vous expliquons tout.",
+            "btn": "Nous contacter"
+        }
+    },
+    "coursPage": {
+        "eyebrow": "Activités du club",
+        "title": "Les cours de dégustation",
+        "saison": "Saison 2025 – 2026",
+        "intro": "Chaque année, de novembre à février, le club propose quatre séances pour apprendre à regarder, sentir et goûter un vin. Deux formules coexistent : l'initiation, pour poser les bases, et le perfectionnement, pour explorer une région ou un cépage en profondeur. Environ 75 personnes réparties en quatre groupes y participent chaque saison.",
+        "animateurs": [
+            {
+                "initials": "GP",
+                "nom": "Guy Perriolat",
+                "role": "Sommelier-conseil, formateur à l'Université du vin de Suze-la-Rousse"
+            },
+            {
+                "initials": "GR",
+                "nom": "Guillaume Reynaud",
+                "role": "Sommelier-conseil"
+            }
+        ],
+        "infos": [
+            {
+                "icon": "🍷",
+                "label": "Format",
+                "value": "4 séances par saison"
+            },
+            {
+                "icon": "📅",
+                "label": "Période",
+                "value": "De novembre à février"
+            },
+            {
+                "icon": "💶",
+                "label": "Tarif",
+                "value": "120 € les 4 séances\n+ 10 € d'adhésion au club"
+            },
+            {
+                "icon": "👥",
+                "label": "Groupes",
+                "value": "4 groupes, environ 75 participants"
+            }
+        ],
+        "note": "Demi-tarif pour les bénévoles ayant participé à l'organisation du salon.",
+        "inscription": {
+            "title": "Renseignements et inscriptions",
+            "text": "Les inscriptions se font directement auprès de Gilbert Balay, qui vous indiquera les groupes où il reste de la place.",
+            "nom": "Gilbert Balay",
+            "tel": "06 50 84 94 00",
+            "email": "",
+            "btn": "Nous écrire"
+        },
+        "formules": [
+            {
+                "nom": "Initiation",
+                "tagline": "pour commencer",
+                "intro": "Quatre séances pour acquérir la méthode : comprendre ce que l'on sent, mettre des mots sur ce que l'on goûte, et repérer ce qui distingue un vin d'un autre. Aucun prérequis n'est demandé.",
+                "seances": [
+                    {
+                        "theme": "Les cépages",
+                        "sousTitre": "",
+                        "animateur": "",
+                        "vins": "6 vins : 3 blancs, 3 rouges",
+                        "dates": [
+                            "Lundi 3 novembre 2025"
+                        ],
+                        "programme": "Principes de l'analyse sensorielle et de la dégustation\nExercice pratique : reconnaître les arômes et les saveurs de base\nLe raisin : maturité et composition"
+                    },
+                    {
+                        "theme": "Les grands styles de vins blancs",
+                        "sousTitre": "",
+                        "animateur": "",
+                        "vins": "5 vins blancs",
+                        "dates": [
+                            "Lundi 17 novembre 2025"
+                        ],
+                        "programme": "Vinification : pressurage, débourbage, fermentation alcoolique\nÉlevage : fût, bâtonnage, fermentation malolactique"
+                    },
+                    {
+                        "theme": "Les grands styles de vins rouges",
+                        "sousTitre": "",
+                        "animateur": "",
+                        "vins": "5 vins rouges",
+                        "dates": [
+                            "Lundi 8 décembre 2025"
+                        ],
+                        "programme": "Vinification traditionnelle, pigeage\nÉlevage : fermentation malolactique, fût, préparation à la mise en bouteille"
+                    },
+                    {
+                        "theme": "Les vinifications et les vins spéciaux",
+                        "sousTitre": "",
+                        "animateur": "",
+                        "vins": "5 vins",
+                        "dates": [
+                            "Lundi 19 janvier 2026"
+                        ],
+                        "programme": "La macération carbonique\nLes vins effervescents : la méthode champenoise\nVinification et élevage"
+                    }
+                ]
+            },
+            {
+                "nom": "Perfectionnement",
+                "tagline": "pour aller plus loin",
+                "intro": "Pour celles et ceux qui ont déjà suivi l'initiation : chaque séance explore une région, un cépage ou un style, verre en main. Les mêmes thèmes sont proposés à trois groupes, à des dates différentes.",
+                "seances": [
+                    {
+                        "theme": "Vallée du Rhône septentrionale",
+                        "sousTitre": "Rive droite / rive gauche : le duel",
+                        "animateur": "Guy Perriolat",
+                        "vins": "6 vins",
+                        "dates": [
+                            "Mardi 4 nov. 2025 (groupe 1)",
+                            "Mardi 9 déc. 2025 (groupe 2)",
+                            "Mardi 16 déc. 2025 (groupe 3)"
+                        ],
+                        "programme": ""
+                    },
+                    {
+                        "theme": "E Viva España !",
+                        "sousTitre": "Le tour des grands vignobles espagnols",
+                        "animateur": "Guillaume Reynaud",
+                        "vins": "5 vins",
+                        "dates": [
+                            "Mardi 6 janv. 2026 (groupe 1)",
+                            "Lundi 10 nov. 2025 (groupe 2)",
+                            "Mardi 18 nov. 2025 (groupe 3)"
+                        ],
+                        "programme": ""
+                    },
+                    {
+                        "theme": "Les cabernets dans tous leurs états",
+                        "sousTitre": "",
+                        "animateur": "Guy Perriolat",
+                        "vins": "5 vins",
+                        "dates": [
+                            "Mardi 2 déc. 2025 (groupe 1)",
+                            "Mardi 3 févr. 2026 (groupe 2)",
+                            "Mardi 20 janv. 2026 (groupe 3)"
+                        ],
+                        "programme": ""
+                    },
+                    {
+                        "theme": "Blancs de Loire",
+                        "sousTitre": "",
+                        "animateur": "Guillaume Reynaud",
+                        "vins": "6 vins",
+                        "dates": [
+                            "Mardi 27 janv. 2026 (groupe 1)",
+                            "Mardi 13 janv. 2026 (groupe 2)",
+                            "Mardi 10 févr. 2026 (groupe 3)"
+                        ],
+                        "programme": ""
+                    }
+                ]
+            }
+        ],
+        "archives": {
+            "title": "Les saisons précédentes",
+            "intro": "Le détail des séances des années passées, en PDF.",
+            "items": [
+                {
+                    "label": "2023 / 2024",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances_2023-2024.pdf"
+                },
+                {
+                    "label": "2022 / 2023",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances_2022-2023.pdf"
+                },
+                {
+                    "label": "2021 / 2022",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances_2021-2022.pdf"
+                },
+                {
+                    "label": "2019 / 2020",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances_2019-2020.pdf"
+                },
+                {
+                    "label": "2018 / 2019",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2018-2019.pdf"
+                },
+                {
+                    "label": "2017 / 2018",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2017-2018.pdf"
+                },
+                {
+                    "label": "2016 / 2017",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2016-20171.pdf"
+                },
+                {
+                    "label": "2015 / 2016",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2015-2016.pdf"
+                },
+                {
+                    "label": "2014 / 2015",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2014-2015.pdf"
+                },
+                {
+                    "label": "2013 / 2014",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2013-2014.pdf"
+                },
+                {
+                    "label": "2012 / 2013",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2012-2013.pdf"
+                },
+                {
+                    "label": "2011 / 2012",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2011-2012.pdf"
+                },
+                {
+                    "label": "2010 / 2011",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2010-2011.pdf"
+                },
+                {
+                    "label": "2009 / 2010",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2009-2010.pdf"
+                },
+                {
+                    "label": "2008 / 2009",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2008-2009.pdf"
+                },
+                {
+                    "label": "2007 / 2008",
+                    "url": "https://www.cluboenologie.com/images/initiation/Seances2007-2008.pdf"
+                },
+                {
+                    "label": "2006 / 2007",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2006-2007.pdf"
+                },
+                {
+                    "label": "2005 / 2006",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2005-2006.pdf"
+                }
+            ]
+        },
+        "cta": {
+            "title": "Une place vous attend peut-être",
+            "text": "Les groupes sont volontairement réduits pour que chacun puisse déguster et poser ses questions. Contactez-nous pour connaître les disponibilités.",
+            "btn": "Nous contacter"
+        }
+    },
+
     "settings": {
         "cloudinary": {
             "cloudName": "de5u1njxn",

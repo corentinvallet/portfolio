@@ -1,6 +1,7 @@
 <?php
 /* Attend en entrée :
-   $active = '' | 'exposants' | 'equipe' | 'presse'   (page courante, pour la classe .current)
+   $active = '' | 'exposants' | 'equipe' | 'presse' | 'galerie' | 'faq'
+             | 'voyages' | 'cours'                    (page courante, pour la classe .current)
    $home   = true sur index.php (ancres directes), false ailleurs (préfixées par index.php)
    $c      = tableau content.json (issu de load_content())
 */
@@ -8,6 +9,7 @@ $home  = $home  ?? false;
 $active = $active ?? '';
 $prefix = $home ? '' : 'index.php';
 $logo = $c['logo'] ?? 'assets/logo-cod.png';
+$activiteOn = in_array($active, ['voyages', 'cours'], true);
 ?>
 <header>
   <div class="wrap nav-row">
@@ -16,11 +18,21 @@ $logo = $c['logo'] ?? 'assets/logo-cod.png';
       <ul>
       <li><a href="<?= $prefix ?>#salon">Le Salon</a></li>
       <li><a href="exposants-club-oenologie.php"<?= $active==='exposants' ? ' class="current"' : '' ?>>Exposants</a></li>
-      <li><a href="<?= $prefix ?>#activites">Activités</a></li>
+      <li class="has-sub">
+        <button type="button" class="nav-sub-toggle<?= $activiteOn ? ' current' : '' ?>"
+                aria-expanded="false" aria-controls="sub-activites">
+          Activités
+          <svg class="nav-caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <ul class="subnav" id="sub-activites">
+          <li><a href="voyages-club-oenologie.php"<?= $active==='voyages' ? ' class="current"' : '' ?>>Voyages</a></li>
+          <li><a href="cours-degustation-club-oenologie.php"<?= $active==='cours' ? ' class="current"' : '' ?>>Cours dégustation</a></li>
+        </ul>
+      </li>
       <li><a href="equipe-club-oenologie.php"<?= $active==='equipe' ? ' class="current"' : '' ?>>L'équipe</a></li>
       <li><a href="presse-club-oenologie.php"<?= $active==='presse' ? ' class="current"' : '' ?>>Presse</a></li>
       <li><a href="galerie-club-oenologie.php"<?= $active==='galerie' ? ' class="current"' : '' ?>>Galerie</a></li>
-      <li><a href="faq-club-oenologie.php" class="<?= $active === 'faq' ? 'active' : '' ?>">FAQ</a></li>
+      <li><a href="faq-club-oenologie.php"<?= $active==='faq' ? ' class="current"' : '' ?>>FAQ</a></li>
     </ul></nav>
     <div class="nav-cta">
       <a href="<?= $prefix ?>#contact" class="btn-icon" aria-label="Nous contacter">
