@@ -94,14 +94,14 @@ $heroMobile  = cl_tr($heroImg, 'f_auto,q_auto,c_fill,ar_4:5,g_auto,w_900');
   }
   .carte-mention{
     display:flex;align-items:baseline;justify-content:center;gap:11px;
-    font-family:'Fraunces',cursive;color:var(--paper);
+    font-family:'Fraunces',Georgia,serif;color:var(--paper);
   }
   .carte-mention::before,.carte-mention::after{
     content:"";align-self:center;height:1.5px;width:26px;flex:none;
     background:var(--amber);border-radius:2px;
   }
-  .carte-mention .num{font-size:2.2rem;font-weight:700;line-height:1;color:#F2BC7A;}
-  .carte-mention .lbl{font-size:1.5rem;font-weight:700;line-height:1;}
+  .carte-mention .num{font-size:2rem;font-weight:700;line-height:1;color:#F2BC7A;}
+  .carte-mention .lbl{font-size:1.05rem;font-weight:600;line-height:1;}
   @media (max-width:900px){
     .carte-hero{margin-top:30px;}
     .carte-hero .svc-carte{max-width:420px;}
