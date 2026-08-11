@@ -28,7 +28,7 @@ $heroMobile  = cl_tr($heroImg, 'f_auto,q_auto,c_fill,ar_4:5,g_auto,w_900');
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?= e($c['meta']['title'] ?? 'Club Œnologie Découvertes') ?></title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,700&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css?v=<?= @filemtime(__DIR__ . '/assets/style.css') ?: time() ?>">
 <?php if ($heroDesktop !== ''): ?>
 <link rel="preload" as="image" href="<?= e($heroDesktop) ?>" media="(min-width:901px)">
@@ -93,15 +93,15 @@ $heroMobile  = cl_tr($heroImg, 'f_auto,q_auto,c_fill,ar_4:5,g_auto,w_900');
     filter:drop-shadow(0 26px 46px rgba(0,0,0,0.45));
   }
   .carte-mention{
-    display:flex;align-items:center;justify-content:center;gap:11px;
+    display:flex;align-items:baseline;justify-content:center;gap:11px;
     font-family:'Caveat',cursive;color:var(--paper);
   }
   .carte-mention::before,.carte-mention::after{
-    content:"";height:1.5px;width:26px;flex:none;
+    content:"";align-self:center;height:1.5px;width:26px;flex:none;
     background:var(--amber);border-radius:2px;
   }
-  .carte-mention .num{font-size:2rem;font-weight:700;line-height:1;color:#F2BC7A;}
-  .carte-mention .lbl{font-size:1.4rem;font-weight:700;line-height:1;}
+  .carte-mention .num{font-size:2.2rem;font-weight:700;line-height:1;color:#F2BC7A;}
+  .carte-mention .lbl{font-size:1.5rem;font-weight:700;line-height:1;}
   @media (max-width:900px){
     .carte-hero{margin-top:30px;}
     .carte-hero .svc-carte{max-width:420px;}
