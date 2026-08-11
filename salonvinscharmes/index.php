@@ -84,25 +84,28 @@ $heroMobile  = cl_tr($heroImg, 'f_auto,q_auto,c_fill,ar_4:5,g_auto,w_900');
   .hero-actions .btn-ghost{border-color:rgba(247,242,231,0.5);color:var(--paper);}
   .hero-actions .btn-ghost:hover{background:var(--paper);color:var(--ink);}
 
-  /* wax-seal / cachet de cire — élément signature */
-  .seal-wrap{display:flex;justify-content:center;}
-  .seal{
-    position:relative;width:280px;height:280px;border-radius:50%;
-    background:
-      radial-gradient(circle at 32% 28%, rgba(255,255,255,0.18), transparent 45%),
-      conic-gradient(from 210deg, var(--bordeaux), var(--grape), var(--amber), var(--bordeaux));
-    display:flex;align-items:center;justify-content:center;
-    box-shadow:0 30px 60px -20px rgba(0,0,0,0.55);
+  /* --- carte des vignobles — bloc illustratif du hero --- */
+  /* la carte a besoin d'un peu plus de place que l'ancien cachet */
+  @media (min-width:901px){ .hero-grid{grid-template-columns:1fr 1.05fr;} }
+  .carte-hero{margin:0;display:flex;flex-direction:column;align-items:center;gap:12px;}
+  .carte-hero .svc-carte{
+    width:100%;max-width:520px;
+    filter:drop-shadow(0 26px 46px rgba(0,0,0,0.45));
   }
-  .seal::after{
-    content:"";position:absolute;inset:14px;border-radius:50%;
-    border:2px dashed rgba(247,242,231,0.35);
+  .carte-mention{
+    display:flex;align-items:center;justify-content:center;gap:11px;
+    font-family:'Caveat',cursive;color:var(--paper);
   }
-  .seal-inner{
-    text-align:center;font-family:'Fraunces',serif;color:var(--paper);
+  .carte-mention::before,.carte-mention::after{
+    content:"";height:1.5px;width:26px;flex:none;
+    background:var(--amber);border-radius:2px;
   }
-  .seal-inner .num{font-size:2.6rem;font-weight:700;line-height:1;}
-  .seal-inner .lbl{font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;margin-top:6px;display:block;}
+  .carte-mention .num{font-size:2rem;font-weight:700;line-height:1;color:#F2BC7A;}
+  .carte-mention .lbl{font-size:1.4rem;font-weight:700;line-height:1;}
+  @media (max-width:900px){
+    .carte-hero{margin-top:30px;}
+    .carte-hero .svc-carte{max-width:420px;}
+  }
 
   /* --- stat band --- */
   .stats{background:var(--paper-2);padding:44px 0;border-bottom:1px solid rgba(27,20,64,0.08);}
@@ -308,14 +311,7 @@ $heroMobile  = cl_tr($heroImg, 'f_auto,q_auto,c_fill,ar_4:5,g_auto,w_900');
         <a href="#activites" class="btn btn-ghost"><?= e($hero['ctaSecondary'] ?? '') ?></a>
       </div>
     </div>
-    <div class="seal-wrap">
-      <div class="seal">
-        <div class="seal-inner">
-          <span class="num"><?= e($hero['sealNum'] ?? '') ?></span>
-          <span class="lbl"><?= e($hero['sealLabel'] ?? '') ?></span>
-        </div>
-      </div>
-    </div>
+    <?php include __DIR__ . '/inc/carte-vignobles.php'; ?>
   </div>
 </section>
 
