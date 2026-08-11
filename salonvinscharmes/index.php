@@ -94,7 +94,7 @@ $heroMobile  = cl_tr($heroImg, 'f_auto,q_auto,c_fill,ar_4:5,g_auto,w_900');
   }
   .carte-mention{
     display:flex;align-items:baseline;justify-content:center;gap:11px;
-    font-family:'Caveat',cursive;color:var(--paper);
+    font-family:'Fraunces',cursive;color:var(--paper);
   }
   .carte-mention::before,.carte-mention::after{
     content:"";align-self:center;height:1.5px;width:26px;flex:none;
