@@ -58,11 +58,11 @@ $heroMobile  = cl_tr($heroImg, 'f_auto,q_auto,c_fill,ar_4:5,g_auto,w_900');
     content:"";position:absolute;inset:0;
     background:
       radial-gradient(560px 560px at 88% -8%, rgba(122,75,176,0.55), transparent 60%),
-      radial-gradient(420px 420px at 8% 108%, rgba(226,144,63,0.28), transparent 65%),
+      radial-gradient(420px 420px at 8% 108%, rgba(122,75,176,0.28), transparent 65%),
       linear-gradient(to bottom,
         rgba(27,20,64,0.72) 0%,
         rgba(27,20,64,0.76) 45%,
-        rgba(122,31,61,0.80) 100%);
+        rgba(58,32,104,0.82) 100%);
     pointer-events:none;
   }
   .hero-grid{position:relative;display:grid;grid-template-columns:1.1fr 0.9fr;gap:56px;align-items:center;}
