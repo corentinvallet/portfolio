@@ -14,9 +14,9 @@
         "badges": [
             "Sculpture sur bois",
             "Créations sur mesure",
-            "Réponses à appels d'offre"
+            "Réponses à appels d'offres"
         ],
-        "cta": "Découvrir l'oeuvre"
+        "cta": "Découvrir l'œuvre"
     },
     "about": {
         "label": "Portrait",
@@ -36,18 +36,15 @@
         "cards": [
             {
                 "name": "Commandes publiques",
-                "desc": "Villes, mairies, espaces verts… Francis conçoit des œuvres monumentales pensées pour l'espace public, qui s'intègrent harmonieusement dans leur environnement.",
-                "iconUrl": "https://res.cloudinary.com/de5u1njxn/image/upload/v1780117977/francis-ferret/uscqcjn6bdjyq5qzlrby.png"
+                "desc": "Villes, mairies, espaces verts… Francis conçoit des œuvres monumentales pensées pour l'espace public, qui s'intègrent harmonieusement dans leur environnement."
             },
             {
                 "name": "Démonstrations live",
-                "desc": "Foires, festivals, marchés artisanaux : assister à la naissance d'une sculpture en direct est un spectacle à part entière, fascinant petits et grands.",
-                "iconUrl": "https://res.cloudinary.com/de5u1njxn/image/upload/v1780117974/francis-ferret/hw0zuhz83xmhokjv6dhs.jpg"
+                "desc": "Foires, festivals, marchés artisanaux : assister à la naissance d'une sculpture en direct est un spectacle à part entière, fascinant petits et grands."
             },
             {
                 "name": "Associations & entreprises",
-                "desc": "Cadeau d'exception, trophée, installation emblématique : Francis crée des pièces uniques sur mesure pour les associations et les entreprises souhaitant marquer les esprits.",
-                "iconUrl": "https://res.cloudinary.com/de5u1njxn/image/upload/v1780117971/francis-ferret/ucfhzslavlojrbr3fa3m.jpg"
+                "desc": "Cadeau d'exception, trophée, installation emblématique : Francis crée des pièces uniques sur mesure pour les associations et les entreprises souhaitant marquer les esprits."
             }
         ]
     },
@@ -70,15 +67,15 @@
         ],
         "photos": [
             {
-                "id": "p178011788902499",
-                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1780118031/francis-ferret/qy5hove7xrkwcs7qlt62.jpg",
-                "cat": "personnages",
-                "alt": ""
-            },
-            {
                 "id": "p1780117891283183",
                 "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1780118033/francis-ferret/bimvkphmykqnpyeccltg.jpg",
                 "cat": "animaux",
+                "alt": ""
+            },
+            {
+                "id": "p178011788902499",
+                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1780118031/francis-ferret/qy5hove7xrkwcs7qlt62.jpg",
+                "cat": "personnages",
                 "alt": ""
             },
             {
@@ -128,6 +125,12 @@
                 "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1780118037/francis-ferret/raxowyhdm6dg98siegti.jpg",
                 "cat": "animaux",
                 "alt": ""
+            },
+            {
+                "id": "p1786222223001346",
+                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786222669/francis-ferret/wczgdu6b0aacljzwes53.jpg",
+                "cat": "personnages",
+                "alt": ""
             }
         ]
     },
@@ -161,7 +164,7 @@
         "label": "Parcours",
         "title": "*Francis* Ferret",
         "p1": "Né en 1995 en Saône-et-Loire, Francis Ferret a très tôt lié son destin au travail du bois. Ébéniste, marqueteur, tourneur et sculpteur formé à Moirans-en-Montagne et Château-Chinon, il complète son expertise par quatre années d'études artistiques à l'École Pivaut (Nantes), dont il sort diplômé en 2022 comme sculpteur et bédéiste. De la finesse de la gouge à la puissance de la tronçonneuse, il façonne diverses essences pour créer un univers sensible et poétique où se côtoient figures imaginaires, faune et flore.",
-        "p2": "En 2015, après des études de sculpture ornemaniste, Francis réalise sa première œuvre monumentale animalière en séquoia (une ourse et son ourson au village du Puley en Saône et Loire). En 2018, poussé par la soif d'apprendre, il réalise un rêve d'enfant en intégrant une école de dessin artistique, l'école PIVAUT à Nantes. Quatre ans plus tard, il obtient ainsi le diplôme de dessinateur illustrateur, bédéiste. Il participe plusieurs fois aux championnats de France de sculpture à la tronçonneuse et remporte le titre de Champion de France en 2020 à Reims et en 2024 à Brûlons.",
+        "p2": "En 2015, après des études de sculpture ornemaniste, Francis réalise sa première œuvre monumentale animalière en séquoia (une ourse et son ourson au village du Puley en Saône-et-Loire). En 2018, poussé par la soif d'apprendre, il réalise un rêve d'enfant en intégrant une école de dessin artistique, l'école Pivaut à Nantes. Quatre ans plus tard, il obtient ainsi le diplôme de dessinateur illustrateur, bédéiste. Il participe plusieurs fois aux championnats de France de sculpture à la tronçonneuse et remporte le titre de Champion de France en 2020 à Reims et en 2024 à Brûlon.",
         "stats": [
             {
                 "num": "2 x",

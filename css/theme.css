@@ -1,0 +1,13 @@
+/* =====================================================================
+   theme.css — Palette de couleurs & reset, COMMUNS à tout le site.
+   👉 Pour changer une couleur du site, c'est ICI, à un seul endroit.
+   Chargé AVANT le CSS propre à chaque page (index.css / galerie.css / admin.css).
+   ===================================================================== */
+:root {
+    --tc-deep: #3d1a0e; --tc-rich: #7a3520; --tc-mid: #b85c38; --tc-warm: #d4845a;
+    --tc-light: #e8b49a; --tc-pale: #f5e0d0; --tc-cream: #faf3ed; --gold: #c8a96e;
+    --gold-light: #e8d5a3; --off-white: #f9f4ef;
+    /* utilisées surtout par l'admin */
+    --line: #e7d4c4; --ok: #3f7d4f; --err: #b3402f;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
