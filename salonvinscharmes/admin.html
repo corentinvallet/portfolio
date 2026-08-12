@@ -717,6 +717,7 @@ function render(){
   /* ── HERO (accueil) ── */
   $app.appendChild(section('Bannière d’accueil', false, b=>{
     const h = state.hero = state.hero || {};
+    b.appendChild(photoField('Photo de fond', h.image, v=>h.image=v));
     b.appendChild(textField('Petit titre (au-dessus)', h.eyebrow, v=>h.eyebrow=v));
     b.appendChild(textField('Titre principal', h.title, v=>h.title=v, {multiline:true,
       hint:'Entourez un mot de *astérisques* pour le mettre en italique (ex: *raconté*).'}));
