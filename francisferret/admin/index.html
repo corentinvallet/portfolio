@@ -1,19 +1,15 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="robots" content="noindex, nofollow" />
-  <title>Administration — Francis Ferret</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/theme.css" />
-  <link rel="stylesheet" href="../css/admin.css" />
-  <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
-  <link rel="apple-touch-icon" sizes="192x192" href="images/favicon-192x192.png" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Administration — Francis Ferret</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="../css/theme.css" />
+        <link rel="stylesheet" href="../css/admin.css" />
 </head>
 <body>
 
@@ -52,8 +48,8 @@
 <input type="file" id="multiPick" accept="image/*" multiple hidden />
 <input type="file" id="jsonPick" accept="application/json,.json" hidden />
 
-<script src="../js/config.js"></script>
-<script src="../js/site-core.js"></script>
+<script src="../config.js"></script>
+<script src="../site-core.js"></script>
 <script>
 const CFG = window.SITE_CONFIG || {};
 CFG.contentUrl = "../content.json";
@@ -67,8 +63,6 @@ const escHtml = s => String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").re
 const escAttr = s => String(s??"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
 function getPath(o,p){return p.split(".").reduce((a,k)=>(a==null?a:a[k]),o);}
 function setPath(o,p,v){const k=p.split(".");const last=k.pop();let t=o;k.forEach(x=>t=t[x]);t[last]=v;}
-async function sha256(str){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(str));
-  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("");}
 function slug(s){return String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")
   .replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")||("cat"+Date.now());}
 let toastT;
@@ -427,9 +421,12 @@ function renderReglages(){
   </div>
 
   <div class="card">
-    <div class="field"><label>Nouveau mot de passe</label><input type="text" id="pwGen" placeholder="Tapez un mot de passe"></div>
-    <button class="btn" onclick="genHash()">Générer l'empreinte</button>
-    <div class="hashout" id="hashOut"></div>
+    <h2>Mot de passe de connexion</h2><div class="sub">Le mot de passe demandé par le navigateur pour ouvrir cette page d'administration</div>
+    <div class="field"><label>Mot de passe actuel</label><input type="password" id="pwCurrent" autocomplete="current-password"></div>
+    <div class="field"><label>Nouveau mot de passe</label><input type="password" id="pwNew" autocomplete="new-password"></div>
+    <div class="field"><label>Confirmer le nouveau mot de passe</label><input type="password" id="pwConfirm" autocomplete="new-password"></div>
+    <button class="btn" id="pwChangeBtn" onclick="changePassword()">Changer le mot de passe</button>
+    <p class="muted">Au moins 10 caractères. La prochaine fois que le navigateur redemande le mot de passe pour ouvrir l'admin, utilisez le nouveau.</p>
   </div>
 
   <div class="card">
@@ -439,10 +436,21 @@ function renderReglages(){
     <p class="muted">L'export contient tous les textes et la liste des photos.</p>
   </div>`;
 }
-function genHash(){
-  const v=$("#pwGen").value; if(!v){toast("Saisissez un mot de passe",1);return;}
-  sha256(v).then(h=>{const o=$("#hashOut");o.style.display="block";
-    o.innerHTML=`adminPasswordSha256: "<b>${h}</b>"`;toast("Empreinte générée — copiez-la dans config.js");});
+async function changePassword(){
+  const btn=$("#pwChangeBtn");
+  const cur=$("#pwCurrent").value, n1=$("#pwNew").value, n2=$("#pwConfirm").value;
+  if(!cur||!n1||!n2){toast("Remplissez les trois champs",1);return;}
+  if(n1.length<10){toast("Le nouveau mot de passe doit faire au moins 10 caractères",1);return;}
+  if(n1!==n2){toast("Les deux nouveaux mots de passe ne correspondent pas",1);return;}
+  btn.disabled=true;
+  try{
+    const res=await fetch("change-password.php",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user:"admin",current:cur,new:n1})});
+    const d=await res.json().catch(()=>({}));
+    if(!res.ok||d.error) throw new Error(d.error||"Échec du changement de mot de passe");
+    $("#pwCurrent").value="";$("#pwNew").value="";$("#pwConfirm").value="";
+    toast("Mot de passe changé ✓ — utilisez-le à la prochaine connexion");
+  }catch(err){toast(err.message,1);}
+  finally{btn.disabled=false;}
 }
 $("#jsonPick").addEventListener("change",e=>{
   const f=e.target.files[0]; e.target.value=""; if(!f)return;
