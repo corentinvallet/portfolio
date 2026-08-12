@@ -29,9 +29,10 @@
   style.textContent = `
     .cv-signature {
       display: flex;
+      flex-direction: column;   /* ajouté */
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 6px;                 /* tu peux réduire le gap vu qu'on empile */
       padding: 18px 12px;
       margin-top: 20px;
       border-top: 1px solid ${c.border};
@@ -39,7 +40,6 @@
       font-size: 13px;
       color: ${c.text};
       text-align: center;
-      flex-wrap: wrap;
     }
     .cv-signature a {
       color: ${c.accent};
@@ -75,7 +75,8 @@
     <a href="https://corentinvallet.fr?utm_source=signature-widget" target="_blank" rel="noopener"><img class="cv-logo" src="https://corentinvallet.fr/common/widgets/cv-logo-orange.png" alt="Corentin Vallet" width="18" height="18" /></a>
     <span>
       <a href="https://corentinvallet.fr?utm_source=signature-widget" target="_blank" rel="noopener">Site réalisé par Corentin Vallet</a>
-      <span class="cv-tagline">— Création de sites web</span> 
+      <br/>
+      <span class="cv-tagline">Création de sites web</span> 
     </span>
   `;
 
