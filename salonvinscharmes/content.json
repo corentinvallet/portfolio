@@ -1,197 +1,1350 @@
 {
-    "brand": {
-        "name": "Francis Ferret",
-        "tagline": "Sculpteur sur bois — Saône-et-Loire"
+    "meta": {
+        "title": "Club Œnologie Découvertes — Salon des Vins de France"
     },
-    "images": {
-        "hero": "https://res.cloudinary.com/de5u1njxn/image/upload/v1780118000/francis-ferret/tatgoqdeiws0f21horlt.jpg",
-        "portrait": "https://res.cloudinary.com/de5u1njxn/image/upload/v1780117995/francis-ferret/bmkkq3tqua9acnne3m8q.jpg"
-    },
+    "logo": "assets/logo-cod.png",
     "hero": {
-        "title1": "Francis",
-        "title2": "Ferret",
-        "sub": "Sculpteur créateur",
-        "badges": [
-            "Sculpture sur bois",
-            "Créations sur mesure",
-            "Réponses à appels d'offres"
-        ],
-        "cta": "Découvrir l'œuvre"
+        "eyebrow": "22e édition — 27, 28 & 29 mars 2026",
+        "title": "Le Salon des Vins de France, *raconté* en couleurs.",
+        "lede": "À Charmes-sur-Rhône, 61 vignerons indépendants, 8 producteurs régionaux et une poignée de chefs étoilés. De nombreuses régions viticoles, toutes les gammes de prix.",
+        "ctaPrimary": "Découvrir les vignerons",
+        "ctaSecondary": "Voir les activités du club",
+        "sealNum": "130+",
+        "sealLabel": "Appellations réunies",
+        "image": "assets/photos/Vignes.jpg"
     },
-    "about": {
-        "label": "Portrait",
-        "title": "*Francis* Ferret",
-        "p1": "Originaire de Saône-et-Loire, vivant désormais dans le Jura, Francis façonne la matière vivante avec une précision et une force rares. Armé de ses outils comme de pinceaux, il tire du bois brut des formes puissantes — animaux sauvages, personnages expressifs, créatures imaginaires.",
-        "p2": "Sa passion pour les personnages donne naissance à des œuvres d'une humanité saisissante : chaque visage sculpté semble porter une histoire, chaque posture une émotion. Deux fois couronné Champion de France de sculpture à la tronçonneuse, Francis intervient pour des villes, des associations et des événements à travers toute la France.",
-        "stats": [
-            {
-                "num": "10+",
-                "label": "Années de pratique"
-            }
-        ]
-    },
-    "savoir": {
-        "label": "Domaines",
-        "title": "*Les* prestations",
+    "stats": [
+        {
+            "num": "61",
+            "label": "Vignerons indépendants"
+        },
+        {
+            "num": "8",
+            "label": "Producteurs régionaux"
+        },
+        {
+            "num": "3",
+            "label": "Jours de salon, fin mars"
+        }
+    ],
+    "exposantsHome": {
+        "tag": "Exposants 2026",
+        "title": "Un panorama du vignoble français",
+        "intro": "Des vignerons venus des plus grandes régions viticoles Françaises (Alsace, Beaujolais, Bordelais, Bourgogne, Champagne, Corse, Jura et tant d'autres). Des vins pour tous budgets, toutes tables. A leurs côtés, des producteurs qui font la part belle au terroir ardéchois — de la bière artisanale au whisky local.",
         "cards": [
             {
-                "name": "Commandes publiques",
-                "desc": "Villes, mairies, espaces verts… Francis conçoit des œuvres monumentales pensées pour l'espace public, qui s'intègrent harmonieusement dans leur environnement."
+                "icon": "V",
+                "title": "Viticulteurs",
+                "text": "61 domaines indépendants, plus de 130 appellations : la liste complète des vignerons présents cette année.",
+                "linkText": "Voir les vignerons →",
+                "linkHref": "exposants-club-oenologie.php?type=Vigneron"
             },
             {
-                "name": "Démonstrations live",
-                "desc": "Foires, festivals, marchés artisanaux : assister à la naissance d'une sculpture en direct est un spectacle à part entière, fascinant petits et grands."
+                "icon": "P",
+                "title": "Produits régionaux",
+                "text": "Charcuterie, macarons, miel, picodon, huile d'olive, chocolat... et le whisky ardéchois, révélation 2026.",
+                "linkText": "Voir les producteurs →",
+                "linkHref": "exposants-club-oenologie.php?type=Producteur"
             },
             {
-                "name": "Associations & entreprises",
-                "desc": "Cadeau d'exception, trophée, installation emblématique : Francis crée des pièces uniques sur mesure pour les associations et les entreprises souhaitant marquer les esprits."
+                "icon": "⚑",
+                "title": "Plan & liste PDF",
+                "text": "Retrouvez la liste complète des exposants et le plan du salon, prêts à télécharger avant votre visite.",
+                "linkText": "Télécharger le PDF →",
+                "linkHref": "#"
             }
         ]
     },
-    "galerie": {
-        "label": "Portfolio",
-        "title": "La *galerie*",
-        "heroLabel": "Portfolio complet",
-        "heroTitle": "La *galerie*",
-        "heroSub": "Toutes les œuvres de Francis Ferret — sculpteur sur bois",
-        "ctaPreview": "Voir toutes les œuvres",
-        "categories": [
+    "activites": {
+        "tag": "Toute l'année",
+        "title": "Les activités du club",
+        "intro": "Le salon n'est qu'un rendez-vous parmi d'autres : le club vit toute l'année autour du vin, de la dégustation et du voyage.",
+        "panels": [
             {
-                "key": "animaux",
-                "label": "Animaux"
+                "variant": "voyages",
+                "tagline": "en immersion",
+                "title": "Voyages œnologiques",
+                "text": "Des escapades organisées chez les producteurs, à la rencontre des terroirs et des femmes et hommes qui les font vivre.",
+                "cta": "Voir les prochains voyages",
+                "href": "voyages-club-oenologie.php"
             },
             {
-                "key": "personnages",
-                "label": "Personnages"
-            }
-        ],
-        "photos": [
-            {
-                "id": "p1780117891283183",
-                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1780118033/francis-ferret/bimvkphmykqnpyeccltg.jpg",
-                "cat": "animaux",
-                "alt": ""
-            },
-            {
-                "id": "p178011788902499",
-                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1780118031/francis-ferret/qy5hove7xrkwcs7qlt62.jpg",
-                "cat": "personnages",
-                "alt": ""
-            },
-            {
-                "id": "p1780117891902120",
-                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1780118034/francis-ferret/u9s09klswrk79bgh9laa.jpg",
-                "cat": "personnages",
-                "alt": ""
-            },
-            {
-                "id": "p1780117889789550",
-                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1780118032/francis-ferret/lnbcuuhhwor0ezoout2c.jpg",
-                "cat": "personnages",
-                "alt": ""
-            },
-            {
-                "id": "p1780117890309431",
-                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1780118032/francis-ferret/zgq6drifbhyjxnmqxry3.jpg",
-                "cat": "personnages",
-                "alt": ""
-            },
-            {
-                "id": "p178011789079881",
-                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1780118033/francis-ferret/ekbpvea4vinep9nakutj.jpg",
-                "cat": "personnages",
-                "alt": ""
-            },
-            {
-                "id": "p1780117892627698",
-                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1780118034/francis-ferret/tk69k05ejjcwntrmzsmu.jpg",
-                "cat": "personnages",
-                "alt": ""
-            },
-            {
-                "id": "p1780117893605899",
-                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1780118035/francis-ferret/kc1xcuuragw4ryevvqf7.jpg",
-                "cat": "animaux",
-                "alt": ""
-            },
-            {
-                "id": "p1780117894509903",
-                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1780118036/francis-ferret/giigl416h7cjrvmfaxyg.jpg",
-                "cat": "animaux",
-                "alt": ""
-            },
-            {
-                "id": "p1780117895502613",
-                "url": "https://res.cloudinary.com/de5u1njxn/image/upload/v1780118037/francis-ferret/raxowyhdm6dg98siegti.jpg",
-                "cat": "animaux",
-                "alt": ""
+                "variant": "cours",
+                "tagline": "pas à pas",
+                "title": "Cours d'initiation à la dégustation",
+                "text": "Un cycle de séances pour apprendre à observer, sentir et goûter — ouvert à tous, sans prérequis.",
+                "cta": "Voir le programme 2025–2026",
+                "href": "cours-degustation-club-oenologie.php"
             }
         ]
     },
-    "evenements": {
-        "label": "Agenda & Réalisations",
-        "title": "Événements *& présence*",
+    "equipeHome": {
+        "tag": "Les bénévoles",
+        "title": "L'équipe derrière le salon",
+        "intro": "Une association de passionnés, portée par ses bénévoles — et par quelques belles rencontres chaque année.",
+        "members": [
+            {
+                "initials": "JT",
+                "name": "Johan Thyriot",
+                "role": "Chef parrain 2026"
+            },
+            {
+                "initials": "OS",
+                "name": "Oscar Marceau",
+                "role": "Chef étoilé"
+            },
+            {
+                "initials": "LF",
+                "name": "Laurent Froment",
+                "role": "Fromagère"
+            },
+            {
+                "initials": "DR",
+                "name": "Damine Michel",
+                "role": "Chocolatier"
+            },
+            {
+                "initials": "GR",
+                "name": "Grégory Robinet",
+                "role": "Œnologue"
+            },
+            {
+                "initials": "GP",
+                "name": "Georges Perraud",
+                "role": "Sommelier conseil"
+            }
+        ]
+    },
+    "presseHome": {
+        "tag": "Revue de presse",
+        "title": "Ils en parlent",
+        "intro": "Le salon dans le Dauphiné Libéré, l'Hebdo de l'Ardèche et l'Écho.",
         "items": [
             {
-                "name": "Championnats de France — Sculpture à la tronçonneuse",
-                "detail": "Deux fois couronné Champion de France, Francis participe chaque année aux compétitions nationales qui rassemblent les meilleurs sculpteurs du pays.",
-                "tag": "Compétition"
+                "source": "Dauphiné Libéré",
+                "text": "Lancement de la 22e édition",
+                "date": "13/03/2026"
             },
             {
-                "name": "Foires & marchés artisanaux",
-                "detail": "Présent tout au long de l'année sur les grandes foires régionales et nationales, Francis crée en direct face au public et présente ses œuvres à la vente.",
-                "tag": "Événement public"
+                "source": "Hebdo Ardèche",
+                "text": "Portrait du salon et de ses exposants",
+                "date": "19/03/2026"
             },
             {
-                "name": "Commandes municipales & associations",
-                "detail": "Régulièrement sollicité par des communes de Bourgogne-Franche-Comté et d'ailleurs pour créer des œuvres emblématiques dans l'espace public ou pour des événements associatifs.",
-                "tag": "Commande"
+                "source": "L'Écho",
+                "text": "Un rendez-vous incontournable",
+                "date": "21/03/2026"
             },
             {
-                "name": "Démonstrations en milieu scolaire & culturel",
-                "detail": "Sensibilisation à l'art de la sculpture sur bois auprès de jeunes publics, ateliers et démonstrations dans les médiathèques, musées et espaces culturels.",
-                "tag": "Pédagogie"
-            }
-        ]
-    },
-    "parcours": {
-        "label": "Parcours",
-        "title": "*Francis* Ferret",
-        "p1": "Né en 1995 en Saône-et-Loire, Francis Ferret a très tôt lié son destin au travail du bois. Ébéniste, marqueteur, tourneur et sculpteur formé à Moirans-en-Montagne et Château-Chinon, il complète son expertise par quatre années d'études artistiques à l'École Pivaut (Nantes), dont il sort diplômé en 2022 comme sculpteur et bédéiste. De la finesse de la gouge à la puissance de la tronçonneuse, il façonne diverses essences pour créer un univers sensible et poétique où se côtoient figures imaginaires, faune et flore.",
-        "p2": "En 2015, après des études de sculpture ornemaniste, Francis réalise sa première œuvre monumentale animalière en séquoia (une ourse et son ourson au village du Puley en Saône-et-Loire). En 2018, poussé par la soif d'apprendre, il réalise un rêve d'enfant en intégrant une école de dessin artistique, l'école Pivaut à Nantes. Quatre ans plus tard, il obtient ainsi le diplôme de dessinateur illustrateur, bédéiste. Il participe plusieurs fois aux championnats de France de sculpture à la tronçonneuse et remporte le titre de Champion de France en 2020 à Reims et en 2024 à Brûlon.",
-        "stats": [
-            {
-                "num": "2 x",
-                "label": "Champion de France"
-            },
-            {
-                "num": "10+",
-                "label": "Années de pratique"
+                "source": "Dauphiné Libéré",
+                "text": "Bilan de l'édition 2026",
+                "date": "28/04/2026"
             }
         ]
     },
     "contact": {
-        "label": "Me contacter",
-        "title": "Parlons de *votre projet*",
-        "text": "Commande personnalisée, démonstration, événement, exposition… N'hésitez pas à me soumettre votre projet. Je réponds à chaque demande personnellement.",
-        "rows": [
-            "Saône-et-Loire (71) — Jura (39)",
-            "Sur demande via le formulaire",
-            "Via le formulaire ci-contre"
-        ],
-        "subjects": [
-            "Commande personnalisée",
-            "Démonstration / événement",
-            "Commande municipale / association",
-            "Renseignement tarif",
-            "Autre"
-        ],
-        "formspreeEndpoint": "https://formspree.io/f/XXXXXXXX",
-        "successMessage": "✓ Merci pour votre message ! Francis vous répondra dans les meilleurs délais."
+        "phone": "",
+        "email": "",
+        "facebook": "#",
+        "instagram": "#",
+        "mentionsLegales": "#",
+        "warning": "L'abus d'alcool est dangereux pour la santé, à consommer avec modération."
     },
-    "footer": {
-        "logo": "Francis Ferret",
-        "sub": "Sculpteur sur bois — Saône-et-Loire",
-        "copy": "© 2025 Francis Ferret — Tous droits réservés"
+    "equipePage": {
+        "eyebrow": "Association loi 1901",
+        "title": "L'équipe du club",
+        "intro": "Un bureau de bénévoles passionnés, épaulé chaque année par des chefs, un œnologue et un sommelier — et par tous ceux qui donnent un coup de main le temps du salon.",
+        "bureau": {
+            "tag": "Le bureau",
+            "title": "Ceux qui font tourner le club",
+            "intro": "Élu chaque année en assemblée générale, le bureau organise le salon et anime la vie du club au fil des saisons.",
+            "members": [
+                {
+                    "initials": "MB",
+                    "color": "var(--grape)",
+                    "name": "Marcelle Berthaud",
+                    "role": "Présidente",
+                    "text": "Adhérente depuis 2015, elle coordonne l'organisation générale du salon et représente le club."
+                },
+                {
+                    "initials": "PL",
+                    "color": "var(--amber)",
+                    "name": "Pierre Lacombe",
+                    "role": "Trésorier",
+                    "text": "Suit les comptes de l'association et le budget de chaque édition du salon."
+                },
+                {
+                    "initials": "CV",
+                    "color": "var(--ink)",
+                    "name": "Clara Viquier",
+                    "role": "Vice-présidente",
+                    "text": "Pilote la relation avec les vignerons et la logistique du week-end du salon."
+                }
+            ]
+        },
+        "guests": {
+            "tag": "Invités d'honneur",
+            "title": "Les experts qui animent le salon",
+            "intro": "Chaque édition s'appuie sur des professionnels reconnus pour partager leur savoir-faire lors d'ateliers et de dégustations commentées.",
+            "items": [
+                {
+                    "tagline": "chef parrain",
+                    "name": "Julien Thévenin",
+                    "role": "Chef, parrain de l'édition 2026",
+                    "text": "Anime les ateliers accords mets-vins et parraine le thème « Les couleurs du vin »."
+                },
+                {
+                    "tagline": "à la dégustation",
+                    "name": "Georges Perraud",
+                    "role": "Œnologue conseil",
+                    "text": "Encadre les cours d'initiation à la dégustation proposés par le club toute l'année."
+                },
+                {
+                    "tagline": "au service",
+                    "name": "Gérard Praud",
+                    "role": "Sommelier conseil",
+                    "text": "Conseille les visiteurs sur le salon et accompagne les accords proposés par les exposants."
+                }
+            ]
+        },
+        "benevoles": {
+            "tag": "Merci à eux",
+            "title": "Les bénévoles du week-end",
+            "intro": "Une trentaine de bénévoles se relaient chaque année pour l'accueil, la billetterie et le service.",
+            "items": [
+                {
+                    "initials": "LR",
+                    "name": "Lucien Requin",
+                    "since": "Bénévole depuis 2020"
+                },
+                {
+                    "initials": "TF",
+                    "name": "Théo Fortin",
+                    "since": "Bénévole depuis 2018"
+                },
+                {
+                    "initials": "AN",
+                    "name": "Alexia Nellin",
+                    "since": "Bénévole depuis 2022"
+                },
+                {
+                    "initials": "SR",
+                    "name": "Serge Ritou",
+                    "since": "Bénévole depuis 2016"
+                },
+                {
+                    "initials": "EC",
+                    "name": "Éléonore Charreton",
+                    "since": "Bénévole depuis 2023"
+                },
+                {
+                    "initials": "+",
+                    "name": "Et bien d'autres",
+                    "since": "Rejoignez-les !"
+                }
+            ]
+        },
+        "join": {
+            "title": "Envie de rejoindre l'équipe ?",
+            "text": "Le club recrute des bénévoles pour chaque édition du salon, sans engagement à l'année. Une bonne façon de découvrir les coulisses, un verre à la main.",
+            "cta": "Devenir bénévole"
+        }
+    },
+    "exposantsPage": {
+        "eyebrow": "Salon 2026 — 22e édition",
+        "title": "Les exposants du salon",
+        "intro": "61 vignerons indépendants et 8 producteurs régionaux, réunis les 27, 28 et 29 mars 2026 à Charmes-sur-Rhône. Filtrez par type, région ou appellation pour préparer votre visite.",
+        "list": [
+            {
+                "nom": "Herrbasch André",
+                "type": "Vigneron",
+                "region": "Alsace",
+                "appellations": [
+                    "Sylvaner",
+                    "Gewurztraminer",
+                    "Riesling",
+                    "Pinot gris",
+                    "Pinot noir",
+                    "Edelzwicker",
+                    "Muscat"
+                ],
+                "desc": "Bla bla\nBla",
+                "nomComplet": "Herrbasch André",
+                "adresse": "3 et 6 rue du Bernstein\n67650 Dambach La Ville",
+                "telephone": "+33 03 88 92 45 56",
+                "email": "herrbach.vin@gmail.com",
+                "siteWeb": "https://www.herrbachvins.com/",
+                "photo": "",
+                "facebook": "https://www.facebook.com/herrbachvins",
+                "instagram": "",
+                "linkedin": ""
+            },
+            {
+                "nom": "Domaine de l'Oriel",
+                "type": "Vigneron",
+                "region": "Alsace",
+                "appellations": [
+                    "Sylvaner",
+                    "Gewurztraminer",
+                    "Riesling",
+                    "Riesling Grand Cru",
+                    "Pinot gris",
+                    "Pinot noir",
+                    "Pinot blanc",
+                    "Crémant d'Alsace"
+                ],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "133, rue des trois épis\n68230 NIEDERMORSCHWIHR",
+                "telephone": "+33 3 89 27 40 55",
+                "email": "",
+                "siteWeb": "https://domainedeloriel.fr/",
+                "photo": "",
+                "facebook": "",
+                "instagram": "",
+                "linkedin": ""
+            },
+            {
+                "nom": "Domaine de la Paillardière",
+                "type": "Vigneron",
+                "region": "Beaujolais",
+                "appellations": [
+                    "Morgon",
+                    "Brouilly",
+                    "Moulin à Vent",
+                    "Beaujolais",
+                    "Beaujolais Villages"
+                ],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "190 rue de la condemine, 69220 Corcelles-en-Beaujolais",
+                "telephone": "06 08 36 83 45",
+                "email": "",
+                "siteWeb": "https://www.domaine-de-la-paillardiere.com/",
+                "photo": "",
+                "facebook": "",
+                "instagram": "",
+                "linkedin": ""
+            },
+            {
+                "nom": "Château Boujut",
+                "type": "Vigneron",
+                "region": "Bordelais",
+                "appellations": [
+                    "Lalande de Pomerol"
+                ],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "7 route des Annereaux\n33500 LALANDE DE POMEROL",
+                "telephone": "06 09 13 33 68",
+                "email": "chateauboujut@gmail.com",
+                "siteWeb": "https://lalande-pomerol.com/project/chateau-boujut/",
+                "photo": "",
+                "facebook": "",
+                "instagram": "",
+                "linkedin": ""
+            },
+            {
+                "nom": "Château Haut Fayan",
+                "type": "Vigneron",
+                "region": "Bordelais",
+                "appellations": [
+                    "Puisseguin",
+                    "Saint Emilion"
+                ],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": "",
+                "facebook": "",
+                "instagram": "",
+                "linkedin": ""
+            },
+            {
+                "nom": "Château Haut Bergeron",
+                "type": "Vigneron",
+                "region": "Bordelais",
+                "appellations": [
+                    "Graves",
+                    "Sauternes"
+                ],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": "",
+                "facebook": "",
+                "instagram": "",
+                "linkedin": ""
+            },
+            {
+                "nom": "Château La Fon du Berger",
+                "type": "Vigneron",
+                "region": "Bordelais",
+                "appellations": [
+                    "Pauillac",
+                    "Haut Médoc"
+                ],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": "",
+                "facebook": "",
+                "instagram": "",
+                "linkedin": ""
+            },
+            {
+                "nom": "Domaine Pelletier Hibon",
+                "type": "Vigneron",
+                "region": "Bourgogne",
+                "appellations": [
+                    "Givry",
+                    "Crémant de Bourgogne"
+                ],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": "",
+                "facebook": "",
+                "instagram": "",
+                "linkedin": ""
+            },
+            {
+                "nom": "Domaine Pagnier Jean-Pierre",
+                "type": "Vigneron",
+                "region": "Bourgogne",
+                "appellations": [
+                    "Petit Chablis",
+                    "Chablis",
+                    "Chablis 1er cru"
+                ],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": "",
+                "facebook": "",
+                "instagram": "",
+                "linkedin": ""
+            },
+            {
+                "nom": "Domaine le Virolys",
+                "type": "Vigneron",
+                "region": "Bourgogne",
+                "appellations": [
+                    "Viré Clessé",
+                    "Mâcon-Village",
+                    "Crémant de Bourgogne"
+                ],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": "",
+                "facebook": "",
+                "instagram": "",
+                "linkedin": ""
+            },
+            {
+                "nom": "Charcuterie Maureen Branger",
+                "type": "Producteur",
+                "region": "",
+                "appellations": [],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": "",
+                "facebook": "",
+                "instagram": "",
+                "linkedin": ""
+            },
+            {
+                "nom": "Brasserie de la Grange du Seigneur",
+                "type": "Producteur",
+                "region": "",
+                "appellations": [],
+                "desc": "Bière artisanale ",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": "",
+                "facebook": "",
+                "instagram": "",
+                "linkedin": ""
+            },
+            {
+                "nom": "Dominique Riou",
+                "type": "Producteur",
+                "region": "",
+                "appellations": [],
+                "desc": "Artisan chocolatier",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": "",
+                "facebook": "",
+                "instagram": "",
+                "linkedin": ""
+            },
+            {
+                "nom": "GAEC du Champ du Riou",
+                "type": "Producteur",
+                "region": "",
+                "appellations": [],
+                "desc": "Fromagerie, picodons",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": "",
+                "facebook": "",
+                "instagram": "",
+                "linkedin": ""
+            },
+            {
+                "nom": "Le Vieux Moulin",
+                "type": "Producteur",
+                "region": "",
+                "appellations": [],
+                "desc": "Huiles d'olives et produits dérivés ",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": "",
+                "facebook": "",
+                "instagram": "",
+                "linkedin": ""
+            },
+            {
+                "nom": "GAEC l'Abeille Turquoise",
+                "type": "Producteur",
+                "region": "",
+                "appellations": [],
+                "desc": "Miel",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": "",
+                "facebook": "",
+                "instagram": "",
+                "linkedin": ""
+            }
+        ]
+    },
+    "sponsors": {
+        "titre": "Ils soutiennent le salon",
+        "items": [
+            {
+                "nom": "Crédit Mutuel",
+                "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135104/fbe2wytjdzvdtidbcz7d.png",
+                "url": "https://www.creditmutuel.fr/home/index.html"
+            },
+            {
+                "nom": "Intermarché",
+                "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135272/tpaq6j0sahvgltabxmfl.png",
+                "url": "https://www.intermarche.com/?srsltid=AfmBOopHfBJ934nxbQpUCZiGUWwvn_gGUDbhDATrzwoXydCJIGZo8qAe"
+            },
+            {
+                "nom": "Ardèche Le département",
+                "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135313/mfa0ho0bn8pg1nhulpde.png",
+                "url": "https://www.ardeche.fr/"
+            },
+            {
+                "nom": "Région Auvergne Rhône Alpes",
+                "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135387/xdhyvxqp6zys4ld0eula.webp",
+                "url": "https://www.auvergnerhonealpes.fr/"
+            },
+            {
+                "nom": "Rampa Energies",
+                "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135414/bkzyeehsomyfpa0n4eun.png",
+                "url": "https://rampa-energies.com/"
+            },
+            {
+                "nom": "Le Carré d'Aléthius",
+                "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135601/g798v3o9y0cav77yqxrj.jpg",
+                "url": "https://www.lecarredalethius.com/fr/"
+            },
+            {
+                "nom": "Droit de bouchon",
+                "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135607/gkviq5pqk6pugdcwc9jg.webp",
+                "url": "https://droit-de-bouchon.fr/"
+            },
+            {
+                "nom": "Ardrom Groupe",
+                "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135615/khrbjh6kbbsmo2ysmgii.png",
+                "url": "https://www.ardrom.fr/"
+            },
+            {
+                "nom": "Crussol Menuiseries",
+                "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135621/zblk8rvdqlbsyxutwtvi.jpg",
+                "url": "https://crussolmenuiseries.fr/"
+            },
+            {
+                "nom": "Printicy",
+                "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135627/bcspf04knmvlho8lhp34.png",
+                "url": "https://www.printicy.com/"
+            }
+        ]
+    },
+    "faqPage": {
+        "tag": "Questions fréquentes",
+        "title": "Tout ce qu'il faut savoir avant de venir",
+        "intro": "Horaires, tarifs, parkings, animations, restauration… Vous trouverez ici les réponses aux questions que l'on nous pose le plus souvent. Une question qui ne figure pas dans cette liste ? Écrivez-nous, nous vous répondrons avec plaisir.",
+        "searchPlaceholder": "Rechercher une question…",
+        "categories": [
+            {
+                "nom": "Venir au salon",
+                "items": [
+                    {
+                        "q": "Où se situe le salon des vins de Charmes-sur-Rhône ?",
+                        "r": "Le salon se tient à Charmes-sur-Rhône, en Ardèche. <a href='assets/pdf/plan-situation.pdf' target='_blank' rel='noopener'>Consulter le plan de situation (PDF)</a>."
+                    },
+                    {
+                        "q": "Y a-t-il des parkings à proximité et sont-ils payants ?",
+                        "r": "Oui, plusieurs parkings entourent le salon et ils sont <strong>entièrement gratuits</strong>. <a href='assets/pdf/plan-parking.pdf' target='_blank' rel='noopener'>Consulter le plan des parkings (PDF)</a>."
+                    },
+                    {
+                        "q": "Quels sont les horaires d'ouverture ?",
+                        "r": "<ul><li><strong>Vendredi</strong> : de 17h00 à 21h00</li><li><strong>Samedi</strong> : de 10h00 à 20h00</li><li><strong>Dimanche</strong> : de 10h00 à 18h00</li></ul>"
+                    }
+                ]
+            },
+            {
+                "nom": "Billets & tarifs",
+                "items": [
+                    {
+                        "q": "Combien coûte l'entrée et où acheter les billets ?",
+                        "r": "Le tarif est de <strong>5,00 €</strong>. Les billets sont en vente directement à l'entrée du salon. Vous pouvez également télécharger et imprimer une invitation privilège au tarif réduit de <strong>2,00 €</strong>. <a href='assets/pdf/invitation-privilege.pdf' target='_blank' rel='noopener'>Télécharger une invitation privilège (PDF)</a>."
+                    },
+                    {
+                        "q": "Le billet est-il valable plusieurs jours ?",
+                        "r": "Non, le billet n'est valable qu'une seule journée. Si vous souhaitez revenir le lendemain, un nouveau droit d'entrée vous sera demandé. En revanche, le bracelet posé à votre poignet vous permet de sortir et de revenir autant de fois que vous le souhaitez au cours de la même journée."
+                    },
+                    {
+                        "q": "Au cours de la même journée, puis-je ressortir du salon ?",
+                        "r": "Oui. À l'entrée, nous posons un bracelet à votre poignet : il vous permet de sortir et de revenir librement tout au long de la même journée."
+                    },
+                    {
+                        "q": "À quoi donne accès le billet d'entrée ?",
+                        "r": "Le billet donne accès à <strong>toutes les animations de la journée</strong> : séance d'initiation à la dégustation, conférences accord mets et vins, accord chocolat et vin, accord vin et fromage, etc. Certaines animations sont soumises à inscription préalable."
+                    }
+                ]
+            },
+            {
+                "nom": "Animations & dégustation",
+                "items": [
+                    {
+                        "q": "Comment participer aux animations et à quel prix ?",
+                        "r": "Toutes les animations sont <strong>gratuites</strong> dès lors que vous vous êtes acquitté du droit d'entrée. Pensez simplement à vous munir de votre verre. Les conférences accord mets et vins, chocolat et vin, et vin et fromage sont strictement réservées aux personnes préalablement inscrites au stand des organisateurs, le premier stand à droite en entrant dans le salon."
+                    },
+                    {
+                        "q": "Des bouteilles à partir de quel prix ?",
+                        "r": "Vous trouverez des bouteilles dès 5 à 6 €. Autour de 10 €, vous pourrez vous constituer une belle cave avec des vins de presque toutes les régions françaises. Et pour les plus exigeants, certains flacons d'exception atteignent 30, 40 ou 50 €."
+                    },
+                    {
+                        "q": "Des crachoirs dans le salon : pourquoi et pour qui ?",
+                        "r": "Pour bien déguster, il faut cracher. Vous trouverez des crachoirs sur chaque stand, à utiliser sans modération ! Un crachoir peut intimider quand on débute, mais l'art du crachat s'apprend vite : ne craignez pas le ridicule, tous les dégustateurs sont passés par là."
+                    }
+                ]
+            },
+            {
+                "nom": "Sur place",
+                "items": [
+                    {
+                        "q": "Où trouver le plan des exposants dans le salon ?",
+                        "r": "Le plan figure dans le guide du salon, distribué gratuitement à l'entrée. Il est également mis en ligne sur ce site avant chaque édition."
+                    },
+                    {
+                        "q": "Où trouver la liste des exposants ?",
+                        "r": "La liste complète figure dans le guide distribué à l'entrée. Vous pouvez aussi la consulter dès maintenant sur <a href='exposants-club-oenologie.php'>notre page exposants</a>, avec un filtre par région et par appellation."
+                    },
+                    {
+                        "q": "Peut-on se restaurer sur place ?",
+                        "r": "Oui, deux formules s'offrent à vous :<ul><li><strong>Le midi, samedi et dimanche</strong> : espace restauration dans la salle des fêtes de l'Oustaou.</li><li><strong>Tout au long de la journée</strong> : des sandwichs préparés par les bénévoles du salon, à l'entrée.</li></ul>"
+                    },
+                    {
+                        "q": "Y a-t-il un vestiaire et à quel tarif ?",
+                        "r": "Oui, dès l'entrée sur votre droite. Le service est <strong>entièrement gratuit</strong> et sous surveillance permanente, pour que vous profitiez pleinement du salon les mains libres."
+                    },
+                    {
+                        "q": "Comment transporter les bouteilles achetées ?",
+                        "r": "Le principe est simple : laissez vos bouteilles sur les stands des viticulteurs au fur et à mesure de vos achats. Avant de partir, prenez un caddie mis à votre disposition à la sortie du salon, faites le tour pour tout récupérer, puis rejoignez votre voiture ou l'aire de chargement prévue à cet effet."
+                    }
+                ]
+            },
+            {
+                "nom": "Bon à savoir",
+                "items": [
+                    {
+                        "q": "Les animaux sont-ils acceptés ?",
+                        "r": "Non. Pour des raisons d'hygiène, nos amis les bêtes ne sont pas admis dans l'enceinte du salon."
+                    },
+                    {
+                        "q": "Les mineurs sont-ils admis sur le salon ?",
+                        "r": "L'accès à la manifestation est ouvert sans limite d'âge. Les mineurs doivent impérativement être accompagnés d'un adulte, parent ou représentant légal, et demeurent sous son entière et seule responsabilité pendant toute la durée de leur présence. Tout mineur égaré peut se présenter à l'accueil du salon."
+                    },
+                    {
+                        "q": "Un éthylotest est-il à disposition ?",
+                        "r": "Oui. La sécurité est une priorité pour les organisateurs : un <strong>éthylotest électronique</strong> est mis gratuitement à votre disposition à la sortie du salon pour vérifier votre taux d'alcool avant de reprendre la route."
+                    },
+                    {
+                        "q": "Quelle est votre position sur la consommation d'alcool ?",
+                        "r": "La manifestation étant dédiée à la découverte et à la dégustation de vins, elle s'inscrit pleinement dans une démarche de <strong>consommation responsable</strong>. Crachoirs sur chaque stand, éthylotest à la sortie, restauration sur place : tout est pensé pour que la découverte reste un plaisir sans risque."
+                    }
+                ]
+            }
+        ],
+        "cta": {
+            "title": "Votre question n'est pas dans la liste ?",
+            "text": "Écrivez-nous : un bénévole du club vous répondra personnellement, en général sous 48 heures.",
+            "btn": "Nous contacter"
+        }
+    },
+    "galeriePage": {
+        "eyebrow": "En images",
+        "title": "Le salon en photos",
+        "intro": "Des allées bondées du samedi matin aux dernières dégustations du dimanche soir : quelques instants glanés au fil des éditions.",
+        "ctaTitle": "Vous avez de belles photos du salon ?",
+        "ctaText": "Envoyez-les nous : elles rejoindront peut-être cette galerie.",
+        "ctaBtn": "Nous les envoyer",
+        "albums": [
+            {
+                "nom": "Édition 2025",
+                "photos": [
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399150/ognmtq59atbmrj8pqmpc.jpg",
+                        "legende": ""
+                    }
+                ]
+            },
+            {
+                "nom": "Édition 2026",
+                "photos": [
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399164/rvc1mi5f0axlro2po6wg.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/voqypquxzmld7hnbfhi9.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/c7kqro8ogjmit1yfokcu.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/zr6rpb9fnys2faifkmqr.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/eefv0j4gm5mfl8snokhh.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/ljijvqay3qlbvv0ktzxj.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/kgn7eeq0wkn3s1jmiy66.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/vguwzvbzuvym8wvmszvd.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/ss97p4mfgy79fnxmojff.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/vlroanap2abjmchuoidp.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/izm3zza5qmkp1rsl9khw.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/zolfg4rubeosywswumnt.jpg",
+                        "legende": ""
+                    },
+                    {
+                        "src": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786399165/wruognqnwkhklvkesqww.jpg",
+                        "legende": ""
+                    }
+                ]
+            }
+        ]
+    },
+    "pressePage": {
+        "eyebrow": "Ils parlent du salon",
+        "title": "Revue de presse",
+        "intro": "Les articles parus dans la presse locale et régionale autour du Salon des Vins de France, édition après édition.",
+        "kit": {
+            "title": "Vous êtes journaliste ?",
+            "text": "Un kit presse avec photos haute définition, chiffres clés et contacts du bureau est disponible sur simple demande.",
+            "cta": "Demander le kit presse"
+        },
+        "articles": [
+            {
+                "source": "Dauphiné Libéré",
+                "titre": "Lancement de la 22e édition du salon",
+                "date": "13/03/2026",
+                "annee": "2026",
+                "resume": "À quelques semaines de l'ouverture, le journal revient sur le thème « Les couleurs du vin » et sur les nouveaux exposants attendus cette année."
+            },
+            {
+                "source": "Hebdo Ardèche",
+                "titre": "Portrait du salon et de ses exposants",
+                "date": "19/03/2026",
+                "annee": "2026",
+                "resume": "Un reportage au long cours chez plusieurs vignerons et producteurs régionaux, à quelques jours du salon."
+            },
+            {
+                "source": "L'Écho",
+                "titre": "Un rendez-vous incontournable en Ardèche",
+                "date": "21/03/2026",
+                "annee": "2026",
+                "resume": "Le journal souligne la place prise par le salon dans l'agenda viticole régional depuis plus de vingt ans."
+            },
+            {
+                "source": "Dauphiné Libéré",
+                "titre": "Bilan de l'édition 2026",
+                "date": "28/04/2026",
+                "annee": "2026",
+                "resume": "Fréquentation, ambiance et retours des exposants : le compte-rendu complet de cette 22e édition."
+            },
+            {
+                "source": "L'Écho",
+                "titre": "Le whisky ardéchois, révélation du salon",
+                "date": "30/03/2025",
+                "annee": "2025",
+                "resume": "Zoom sur une distillerie locale qui a attiré l'attention des visiteurs lors de l'édition précédente."
+            },
+            {
+                "source": "Hebdo Ardèche",
+                "titre": "Les chefs étoilés donnent le ton",
+                "date": "25/03/2025",
+                "annee": "2025",
+                "resume": "Retour sur les ateliers animés par des chefs invités, entre accords mets-vins et dégustations commentées."
+            },
+            {
+                "source": "Dauphiné Libéré",
+                "titre": "20 ans de salon : rencontre avec les fondateurs",
+                "date": "22/03/2024",
+                "annee": "2024",
+                "resume": "À l'occasion d'un anniversaire rond, les bénévoles historiques racontent la création du club et du salon."
+            }
+        ]
+    },
+    "voyagesPage": {
+        "eyebrow": "Activités du club",
+        "title": "Les voyages du club",
+        "intro": "Depuis 2004, le Club Œnologie Découvertes emmène ses adhérents sur les routes du vin : une journée dans un vignoble voisin au printemps, un week-end plus lointain à l'automne. À chaque fois, la même idée — rencontrer celles et ceux qui font le vin, et découvrir le pays qui va avec.",
+        "prochain": {
+            "actif": "oui",
+            "tagline": "à venir",
+            "titre": "Le prochain voyage se prépare",
+            "date": "Printemps 2027",
+            "lieu": "Destination en cours de choix",
+            "texte": "La destination du prochain départ est en cours de préparation par le bureau. Les adhérents seront prévenus en priorité : le nombre de places est limité par la capacité du car.",
+            "cta": "Être prévenu du prochain départ",
+            "href": "index.php#contact",
+            "photo": ""
+        },
+        "archivesTitle": "Là où nous sommes déjà allés",
+        "archivesIntro": "Vingt ans de voyages, de la vallée du Rhône au Jura, en passant par la Suisse, la Bourgogne et le Languedoc.",
+        "list": [
+            {
+                "annee": "2019",
+                "type": "Journée",
+                "titre": "Notre-Dame de Cousignac et la grotte Chauvet",
+                "date": "11 mai 2019",
+                "texte": "Une journée en sud Ardèche partagée entre le vignoble et la préhistoire, du domaine familial de Cousignac jusqu'à la réplique de la grotte Chauvet.",
+                "programme": "Visite et dégustation au domaine de Notre-Dame de Cousignac\nDécouverte de la grotte Chauvet 2",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/2019_voyage_sud_Ardeche_5-6075ff7877f95905aa2775977ee942bc.JPG"
+            },
+            {
+                "annee": "2018",
+                "type": "Week-end",
+                "titre": "Nice et ses environs",
+                "date": "21, 22 et 23 septembre 2018",
+                "texte": "Trois jours sur la Côte d'Azur pour découvrir Bellet, l'un des plus petits et des plus confidentiels vignobles de France, niché dans les collines niçoises.",
+                "programme": "Découverte du vignoble de Bellet\nVisite du vieux Nice et de l'arrière-pays",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/2018-10-nice-et-ses-environs-1577820f834e95062db6a2a5b83d9b09.JPG"
+            },
+            {
+                "annee": "2018",
+                "type": "Journée",
+                "titre": "Beaucaire et Avignon",
+                "date": "5 mai 2018",
+                "texte": "Une plongée dans le vin tel qu'on le faisait il y a deux mille ans, suivie d'une escale avignonnaise.",
+                "programme": "Mas des Tourelles : vinification gallo-romaine\nVisite d'Avignon",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-beaucaire-avignon-2018-b1e92173bfec76e9d1c93a71f31373ba.JPG"
+            },
+            {
+                "annee": "2017",
+                "type": "Week-end",
+                "titre": "Le Jura et la Suisse",
+                "date": "22, 23 et 24 septembre 2017",
+                "texte": "Un week-end entre deux pays viticoles méconnus : les terrasses de Lavaux au bord du Léman, puis les vins de voile jurassiens.",
+                "programme": "Vignoble suisse de Lavaux, classé au patrimoine mondial\nDomaines du Jura : savagnin, vin jaune",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/week-end-jura-suisse-2017-97b554900022875ba76f629f82a52dc3.JPG"
+            },
+            {
+                "annee": "2017",
+                "type": "Journée",
+                "titre": "Rasteau",
+                "date": "20 mai 2017",
+                "texte": "Retour dans un cru de la vallée du Rhône méridionale que le club affectionne, entre grenache généreux et vins doux naturels.",
+                "programme": "Domaine de la Girardière\nDégustation commentée",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-rasteau-2017-d6f761cf1a72b4ccf4d505bac75c37cd.JPG"
+            },
+            {
+                "annee": "2016",
+                "type": "Journée",
+                "titre": "Vacqueyras",
+                "date": "21 mai 2016",
+                "texte": "Une journée au pied des Dentelles de Montmirail, à la rencontre d'un cru rhodanien taillé pour la garde.",
+                "programme": "Domaine Maître Curnier\nDécouverte des Dentelles de Montmirail",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-vacqueyras-2016-0b0f8989017252aab7cc03a5383557b7.JPG"
+            },
+            {
+                "annee": "2016",
+                "type": "Week-end",
+                "titre": "Autour du lac de Serre-Ponçon",
+                "date": "23, 24 et 25 septembre 2016",
+                "texte": "Un week-end de montagne où l'altitude change tout : paysages alpins, lac turquoise et vignobles de haute vallée.",
+                "programme": "Tour du lac de Serre-Ponçon\nProducteurs et terroirs de montagne",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/serre-poncon-2016-93ba7fb76231fc4297c65abc87cf1a81.JPG"
+            },
+            {
+                "annee": "2015",
+                "type": "Journée",
+                "titre": "Suze-la-Rousse",
+                "date": "30 mai 2015",
+                "texte": "Une journée drômoise autour de Grignan-les-Adhémar, appellation discrète et attachante de la vallée du Rhône.",
+                "programme": "Domaine des Agates (Grignan-les-Adhémar)\nDécouverte de Suze-la-Rousse",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-suze-la-rousse-2015-51c0767905eae869b36bc029f35f6316.JPG"
+            },
+            {
+                "annee": "2015",
+                "type": "Week-end",
+                "titre": "La Bourgogne et Dijon",
+                "date": "25, 26 et 27 septembre 2015",
+                "texte": "Trois jours au cœur des climats bourguignons, du château de Chamilly aux ruelles du vieux Dijon.",
+                "programme": "Château de Chamilly\nVisite de Dijon et de la Côte",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/week-end-bourgogne-et-visite-dijon-2015-3ee53f61ed4ccd9d08568b607df89868.JPG"
+            },
+            {
+                "annee": "2014",
+                "type": "Journée",
+                "titre": "Ruoms",
+                "date": "17 mai 2014",
+                "texte": "Une journée ardéchoise qui mêle le vin et le sous-sol : la cave coopérative d'un côté, un aven spectaculaire de l'autre.",
+                "programme": "Néovinum, l'espace de découverte des vins d'Ardèche\nDescente dans l'Aven d'Orgnac",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-ruoms-2014-01f6237d8cbe3ca6c5269a1be2968cfc.JPG"
+            },
+            {
+                "annee": "2014",
+                "type": "Week-end",
+                "titre": "Le Languedoc",
+                "date": "3, 4 et 5 octobre 2014",
+                "texte": "Un week-end dans le plus vaste vignoble de France, entre garrigue, abbayes et cépages méditerranéens.",
+                "programme": "Domaine de l'Abbaye Sainte-Eugénie\nDécouverte des terroirs languedociens",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/week-end-languedoc-2014-974eaa5e3f859d20b7ea1ef27c202c2b.JPG"
+            },
+            {
+                "annee": "2013",
+                "type": "Journée",
+                "titre": "Rasteau",
+                "date": "13 avril 2013",
+                "texte": "Première visite du club à Rasteau, où le grenache donne aussi bien des rouges puissants que des vins doux naturels.",
+                "programme": "Domaine les Girasols\nDécouverte du village et de son terroir",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-rasteau-2013-560e42027558dcb6a1fe76de62f1187f.JPG"
+            },
+            {
+                "annee": "2012",
+                "type": "Journée",
+                "titre": "Gigondas",
+                "date": "12 mai 2012",
+                "texte": "Une journée passée en compagnie d'un vigneron passionné, au pied des Dentelles de Montmirail.",
+                "programme": "Domaine de la Tuilière, avec Didier Bézert\nDégustation des crus de Gigondas",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-gigondas-2012-c305cd3c7ef88e26e35b456b5bbd84a0.JPG"
+            },
+            {
+                "annee": "2012",
+                "type": "Week-end",
+                "titre": "Cassis et Bandol",
+                "date": "5, 6 et 7 octobre 2012",
+                "texte": "Un week-end en Provence maritime : les blancs de Cassis face aux calanques, les mourvèdres de Bandol sur les restanques.",
+                "programme": "Vignoble de Cassis et calanques\nDomaines de Bandol",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/week-end-cassis-bandol-2012-d69cfab9cd4b02911786f68791320948.JPG"
+            },
+            {
+                "annee": "2011",
+                "type": "Journée",
+                "titre": "Le Diois",
+                "date": "8 octobre 2011",
+                "texte": "Une journée dans la haute vallée de la Drôme, accueillis par une famille de vignerons, autour de la clairette de Die.",
+                "programme": "Accueil chez la famille Vincent\nDégustation de clairette de Die",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-dans-le-diois-2011-08d8b582d088913719f8775650495382.JPG"
+            },
+            {
+                "annee": "2011",
+                "type": "Journée",
+                "titre": "La Côte-Saint-André",
+                "date": "5 mai 2011",
+                "texte": "Une escapade iséroise placée sous le signe de la musique et du patrimoine, autant que du vin.",
+                "programme": "Maison-musée d'Hector Berlioz\nDécouverte des produits du terroir",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-saint-andre-2011-c0f925069079607063b534d41200be2c.JPG"
+            },
+            {
+                "annee": "2010",
+                "type": "Week-end",
+                "titre": "Découverte du Jura",
+                "date": "8, 9 et 10 octobre 2010",
+                "texte": "Trois jours dans un vignoble à part, où le savagnin et l'élevage sous voile produisent des vins que l'on ne confond avec aucun autre.",
+                "programme": "Domaines jurassiens et vin jaune\nDécouverte du patrimoine local",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/decouverte-du-jura-2010-5c7c631c392598c20f8209e6d13b92f8.JPG"
+            },
+            {
+                "annee": "2009",
+                "type": "Journée",
+                "titre": "Châteauneuf-du-Pape",
+                "date": "3 octobre 2009",
+                "texte": "Une journée dans le plus célèbre cru de la vallée du Rhône, sur ses galets roulés caractéristiques.",
+                "programme": "Domaine du Mas de Boislauzon\nDécouverte du village et de ses terroirs",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-chateauneuf-du-pape-2009-e9070602e90e6f9078102d0900026965.JPG"
+            },
+            {
+                "annee": "2009",
+                "type": "Journée",
+                "titre": "Le Beaujolais",
+                "date": "16 mai 2009",
+                "texte": "Une journée au pays du gamay, entre pierres dorées et crus du nord du vignoble.",
+                "programme": "Accueil à Cercié\nDégustation des crus du Beaujolais",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/journee-beaujolais-2009-e301b3e9532728e60190b1e1b73c33ac.JPG"
+            },
+            {
+                "annee": "2007",
+                "type": "Journée",
+                "titre": "Le monastère de Solan",
+                "date": "13 octobre 2007",
+                "texte": "Une visite hors du commun, chez des moniales orthodoxes qui cultivent la vigne en agriculture biologique.",
+                "programme": "Visite du monastère de Solan\nDécouverte du vignoble monastique",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/visite-monastere-salon-2007-cb200d477787285aff79b3ec4b044a40.JPG"
+            },
+            {
+                "annee": "2006",
+                "type": "Week-end",
+                "titre": "La Bourgogne",
+                "date": "28 et 29 octobre 2006",
+                "texte": "Un premier grand week-end bourguignon, avec Beaune et ses Hospices en point d'orgue.",
+                "programme": "Visite de Beaune et des Hospices\nDécouverte des climats de Bourgogne",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/week-end-bourgogne-2006-80056e2c7e808761240b58a4e193ef7b.JPG"
+            },
+            {
+                "annee": "2005",
+                "type": "Week-end",
+                "titre": "Gordes",
+                "date": "octobre 2005",
+                "texte": "Une quarantaine d'adhérents en Luberon, entre villages perchés et vignobles du Ventoux.",
+                "programme": "Village de Gordes et abbaye de Sénanque\nVignobles du Luberon",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/voyage-gordes-2005-da8c17fad1258072aadf0abae9042b13.JPG"
+            },
+            {
+                "annee": "2004",
+                "type": "Journée",
+                "titre": "L'Université du vin de Suze-la-Rousse",
+                "date": "octobre 2004",
+                "texte": "Le tout premier voyage du club : une journée dans le château qui abrite l'Université du vin, où se forment sommeliers et vignerons.",
+                "programme": "Visite de l'Université du vin\nDécouverte du château de Suze-la-Rousse",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/suze-la-rousse-2004-f94e606106a73391943351632c557908.JPG"
+            },
+            {
+                "annee": "",
+                "type": "Week-end",
+                "titre": "Les Corbières",
+                "date": "à préciser",
+                "texte": "Un week-end dans les Corbières, entre abbayes cathares et vignobles escarpés du Languedoc.",
+                "programme": "Domaines des Corbières\nPatrimoine cathare",
+                "photo": "https://www.cluboenologie.com/media/widgetkit/week-end-dans-les-corbieres-ac61314b065d05b46ca87adafe1b4b50.JPG"
+            }
+        ],
+        "cta": {
+            "title": "Envie de partir avec nous ?",
+            "text": "Les voyages sont réservés aux adhérents du club. L'adhésion est de 10 € par an — écrivez-nous, nous vous expliquons tout.",
+            "btn": "Nous contacter"
+        }
+    },
+    "coursPage": {
+        "eyebrow": "Activités du club",
+        "title": "Les cours de dégustation",
+        "saison": "Saison 2025 – 2026",
+        "intro": "Chaque année, de novembre à février, le club propose quatre séances pour apprendre à regarder, sentir et goûter un vin. Deux formules coexistent : l'initiation, pour poser les bases, et le perfectionnement, pour explorer une région ou un cépage en profondeur. Environ 75 personnes réparties en quatre groupes y participent chaque saison.",
+        "animateurs": [
+            {
+                "initials": "GP",
+                "nom": "Guy Perriolat",
+                "role": "Sommelier-conseil, formateur à l'Université du vin de Suze-la-Rousse"
+            },
+            {
+                "initials": "GR",
+                "nom": "Guillaume Reynaud",
+                "role": "Sommelier-conseil"
+            }
+        ],
+        "infos": [
+            {
+                "icon": "🍷",
+                "label": "Format",
+                "value": "4 séances par saison"
+            },
+            {
+                "icon": "📅",
+                "label": "Période",
+                "value": "De novembre à février"
+            },
+            {
+                "icon": "💶",
+                "label": "Tarif",
+                "value": "120 € les 4 séances\n+ 10 € d'adhésion au club"
+            },
+            {
+                "icon": "👥",
+                "label": "Groupes",
+                "value": "4 groupes, environ 75 participants"
+            }
+        ],
+        "note": "Demi-tarif pour les bénévoles ayant participé à l'organisation du salon.",
+        "inscription": {
+            "title": "Renseignements et inscriptions",
+            "text": "Les inscriptions se font directement auprès de Gilbert Balay, qui vous indiquera les groupes où il reste de la place.",
+            "nom": "Gilbert Balay",
+            "tel": "06 50 84 94 00",
+            "email": "",
+            "btn": "Nous écrire"
+        },
+        "formules": [
+            {
+                "nom": "Initiation",
+                "tagline": "pour commencer",
+                "intro": "Quatre séances pour acquérir la méthode : comprendre ce que l'on sent, mettre des mots sur ce que l'on goûte, et repérer ce qui distingue un vin d'un autre. Aucun prérequis n'est demandé.",
+                "seances": [
+                    {
+                        "theme": "Les cépages",
+                        "sousTitre": "",
+                        "animateur": "",
+                        "vins": "6 vins : 3 blancs, 3 rouges",
+                        "dates": [
+                            "Lundi 3 novembre 2025"
+                        ],
+                        "programme": "Principes de l'analyse sensorielle et de la dégustation\nExercice pratique : reconnaître les arômes et les saveurs de base\nLe raisin : maturité et composition"
+                    },
+                    {
+                        "theme": "Les grands styles de vins blancs",
+                        "sousTitre": "",
+                        "animateur": "",
+                        "vins": "5 vins blancs",
+                        "dates": [
+                            "Lundi 17 novembre 2025"
+                        ],
+                        "programme": "Vinification : pressurage, débourbage, fermentation alcoolique\nÉlevage : fût, bâtonnage, fermentation malolactique"
+                    },
+                    {
+                        "theme": "Les grands styles de vins rouges",
+                        "sousTitre": "",
+                        "animateur": "",
+                        "vins": "5 vins rouges",
+                        "dates": [
+                            "Lundi 8 décembre 2025"
+                        ],
+                        "programme": "Vinification traditionnelle, pigeage\nÉlevage : fermentation malolactique, fût, préparation à la mise en bouteille"
+                    },
+                    {
+                        "theme": "Les vinifications et les vins spéciaux",
+                        "sousTitre": "",
+                        "animateur": "",
+                        "vins": "5 vins",
+                        "dates": [
+                            "Lundi 19 janvier 2026"
+                        ],
+                        "programme": "La macération carbonique\nLes vins effervescents : la méthode champenoise\nVinification et élevage"
+                    }
+                ]
+            },
+            {
+                "nom": "Perfectionnement",
+                "tagline": "pour aller plus loin",
+                "intro": "Pour celles et ceux qui ont déjà suivi l'initiation : chaque séance explore une région, un cépage ou un style, verre en main. Les mêmes thèmes sont proposés à trois groupes, à des dates différentes.",
+                "seances": [
+                    {
+                        "theme": "Vallée du Rhône septentrionale",
+                        "sousTitre": "Rive droite / rive gauche : le duel",
+                        "animateur": "Guy Perriolat",
+                        "vins": "6 vins",
+                        "dates": [
+                            "Mardi 4 nov. 2025 (groupe 1)",
+                            "Mardi 9 déc. 2025 (groupe 2)",
+                            "Mardi 16 déc. 2025 (groupe 3)"
+                        ],
+                        "programme": ""
+                    },
+                    {
+                        "theme": "E Viva España !",
+                        "sousTitre": "Le tour des grands vignobles espagnols",
+                        "animateur": "Guillaume Reynaud",
+                        "vins": "5 vins",
+                        "dates": [
+                            "Mardi 6 janv. 2026 (groupe 1)",
+                            "Lundi 10 nov. 2025 (groupe 2)",
+                            "Mardi 18 nov. 2025 (groupe 3)"
+                        ],
+                        "programme": ""
+                    },
+                    {
+                        "theme": "Les cabernets dans tous leurs états",
+                        "sousTitre": "",
+                        "animateur": "Guy Perriolat",
+                        "vins": "5 vins",
+                        "dates": [
+                            "Mardi 2 déc. 2025 (groupe 1)",
+                            "Mardi 3 févr. 2026 (groupe 2)",
+                            "Mardi 20 janv. 2026 (groupe 3)"
+                        ],
+                        "programme": ""
+                    },
+                    {
+                        "theme": "Blancs de Loire",
+                        "sousTitre": "",
+                        "animateur": "Guillaume Reynaud",
+                        "vins": "6 vins",
+                        "dates": [
+                            "Mardi 27 janv. 2026 (groupe 1)",
+                            "Mardi 13 janv. 2026 (groupe 2)",
+                            "Mardi 10 févr. 2026 (groupe 3)"
+                        ],
+                        "programme": ""
+                    }
+                ]
+            }
+        ],
+        "archives": {
+            "title": "Les saisons précédentes",
+            "intro": "Le détail des séances des années passées, en PDF.",
+            "items": [
+                {
+                    "label": "2023 / 2024",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances_2023-2024.pdf"
+                },
+                {
+                    "label": "2022 / 2023",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances_2022-2023.pdf"
+                },
+                {
+                    "label": "2021 / 2022",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances_2021-2022.pdf"
+                },
+                {
+                    "label": "2019 / 2020",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances_2019-2020.pdf"
+                },
+                {
+                    "label": "2018 / 2019",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2018-2019.pdf"
+                },
+                {
+                    "label": "2017 / 2018",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2017-2018.pdf"
+                },
+                {
+                    "label": "2016 / 2017",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2016-20171.pdf"
+                },
+                {
+                    "label": "2015 / 2016",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2015-2016.pdf"
+                },
+                {
+                    "label": "2014 / 2015",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2014-2015.pdf"
+                },
+                {
+                    "label": "2013 / 2014",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2013-2014.pdf"
+                },
+                {
+                    "label": "2012 / 2013",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2012-2013.pdf"
+                },
+                {
+                    "label": "2011 / 2012",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2011-2012.pdf"
+                },
+                {
+                    "label": "2010 / 2011",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2010-2011.pdf"
+                },
+                {
+                    "label": "2009 / 2010",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2009-2010.pdf"
+                },
+                {
+                    "label": "2008 / 2009",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2008-2009.pdf"
+                },
+                {
+                    "label": "2007 / 2008",
+                    "url": "https://www.cluboenologie.com/images/initiation/Seances2007-2008.pdf"
+                },
+                {
+                    "label": "2006 / 2007",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2006-2007.pdf"
+                },
+                {
+                    "label": "2005 / 2006",
+                    "url": "https://www.cluboenologie.com/images/initiation/seances2005-2006.pdf"
+                }
+            ]
+        },
+        "cta": {
+            "title": "Une place vous attend peut-être",
+            "text": "Les groupes sont volontairement réduits pour que chacun puisse déguster et poser ses questions. Contactez-nous pour connaître les disponibilités.",
+            "btn": "Nous contacter"
+        }
+    },
+    "settings": {
+        "cloudinary": {
+            "cloudName": "de5u1njxn",
+            "uploadPreset": "salonvinscharmes"
+        }
     }
 }
