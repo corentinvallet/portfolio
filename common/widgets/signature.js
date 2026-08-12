@@ -53,8 +53,8 @@
       border-bottom: 1px solid ${c.accent};
     }
     .cv-signature .cv-logo {
-      width: 18px;
-      height: 18px;
+      width: 32px;
+      height: 32px;
       flex-shrink: 0;
     }
     .cv-signature .cv-tagline {
