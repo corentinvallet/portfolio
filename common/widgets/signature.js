@@ -72,10 +72,7 @@
   var wrapper = document.createElement('div');
   wrapper.className = 'cv-signature';
   wrapper.innerHTML = `
-    <svg class="cv-logo" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="20" cy="20" r="19" stroke="${c.accent}" stroke-width="1.5"/>
-      <text x="20" y="26" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="${c.accent}">CV</text>
-    </svg>
+    <img class="cv-logo" src="https://corentinvallet.fr/widget/cv-logo-orange.png" alt="Corentin Vallet" width="18" height="18" />
     <span>
       Site réalisé par <a href="https://corentinvallet.fr?utm_source=signature-widget" target="_blank" rel="noopener">Corentin Vallet</a>
       <span class="cv-tagline">— Création de sites pour artisans &amp; indépendants</span>
