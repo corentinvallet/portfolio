@@ -702,8 +702,7 @@ function render(){
   $app.appendChild(section('Réglages', true, b=>{
     b.appendChild(textField('Titre du site (onglet navigateur / SEO)', state.meta?.title,
       v=>{ state.meta=state.meta||{}; state.meta.title=v; }));
-    b.appendChild(textField('Chemin du logo', state.logo,
-      v=>state.logo=v, {hint:'Chemin relatif (ex: assets/logo-cod.png) ou URL complète.'}));
+    b.appendChild(photoField('Logo du site', state.logo, v=>state.logo=v));
 
     b.appendChild(el('div',{style:'margin-top:26px;font-weight:700;font-family:Fraunces,serif;'},'Cloudinary (photos des exposants)'));
     const cloud = state.settings = state.settings || {};
