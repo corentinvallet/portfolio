@@ -24,6 +24,7 @@ $home = false; $active = 'faq';
 <title>FAQ — <?= e($c['meta']['title'] ?? 'Club Œnologie Découvertes') ?></title>
 <meta name="description" content="Horaires, tarifs, parkings, animations, restauration : toutes les réponses aux questions fréquentes sur le Salon des Vins de France de Charmes-sur-Rhône.">
 <link rel="stylesheet" href="assets/style.css?v=<?= @filemtime(__DIR__ . '/assets/style.css') ?: time() ?>">
+<link rel="icon" type="image/x-icon" href="assets/photos/Logo.png" />
 <link rel="stylesheet" href="assets/page-faq.css">
 </head>
 <body>

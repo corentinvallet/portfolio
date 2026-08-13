@@ -1,17 +1,17 @@
 {
     "meta": {
-        "title": "Club Œnologie Découvertes — Salon des Vins de France"
+        "title": "Salon des Vins de France - Charmes-sur-Rhône" 
     },
-    "logo": "assets/logo-cod.png",
+    "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786612004/mypsvmeg0mkn4tzrn67i.png",
     "hero": {
         "eyebrow": "22e édition — 27, 28 & 29 mars 2026",
-        "title": "Le Salon des Vins de France, *raconté* en couleurs.",
+        "title": "Salon des *Vins de France* de Charmes-sur-Rhône",
         "lede": "À Charmes-sur-Rhône, 61 vignerons indépendants, 8 producteurs régionaux et une poignée de chefs étoilés. De nombreuses régions viticoles, toutes les gammes de prix.",
         "ctaPrimary": "Découvrir les vignerons",
         "ctaSecondary": "Voir les activités du club",
         "sealNum": "130+",
         "sealLabel": "Appellations réunies",
-        "image": "assets/photos/Vignes.jpg"
+        "image": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786612323/ahg5mlax7diziyjfjbzk.png"
     },
     "stats": [
         {

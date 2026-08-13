@@ -42,6 +42,7 @@ $home = false; $active = 'galerie';
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css?v=<?= @filemtime(__DIR__ . '/assets/style.css') ?: time() ?>">
+<link rel="icon" type="image/x-icon" href="assets/photos/Logo.png" />
 <link rel="stylesheet" href="assets/page-galerie.css">
 </head>
 <body>
