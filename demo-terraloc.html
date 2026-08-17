@@ -84,6 +84,148 @@
     }
     .nav-logo-img { height: 32px; width: auto; display: block; }
     .nav-logo span { color: var(--accent); font-style: italic; }
+        .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── DROPDOWN NAV ── */
+    .nav-dropdown { position: relative; }
+    .nav-dropdown::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      height: 14px;
+    }
+    .nav-dropdown > .nav-dropdown-trigger {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .nav-dropdown > .nav-dropdown-trigger::after {
+      content: '';
+      width: 6px; height: 6px;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(45deg);
+      margin-top: -3px;
+      transition: transform 0.2s;
+    }
+    .nav-dropdown:hover > .nav-dropdown-trigger::after { transform: rotate(225deg); margin-top: 3px; }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 14px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-6px);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      box-shadow: var(--card-shadow);
+      padding: 8px 0;
+      min-width: 170px;
+      list-style: none;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .nav-dropdown:hover .nav-dropdown-menu {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateX(-50%) translateY(0);
+    }
+    .nav-dropdown-menu a {
+      display: block;
+      padding: 10px 20px;
+      white-space: nowrap;
+      text-transform: none;
+      letter-spacing: 0.02em;
+      font-size: 0.85rem;
+    }
+
+    /* ── BURGER ── */
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+    .nav-burger span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--text);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .nav-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .nav-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    @media (max-width: 900px) {
+      .nav-burger { display: flex; }
+      .nav-dropdown-menu {
+        position: static;
+        transform: none;
+        opacity: 1;
+        pointer-events: all;
+        box-shadow: none;
+        border: none;
+        background: transparent;
+        padding: 0 0 8px;
+      }
+      .nav-dropdown-menu a {
+        padding: 8px 24px;
+        font-size: 0.78rem;
+        color: var(--text2);
+      }
+      .nav-dropdown > .nav-dropdown-trigger::after { display: none; }
+      .nav-links {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 0;
+        background: var(--nav-bg);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s ease;
+      }
+      .nav-links.open {
+        max-height: 400px;
+      }
+      .nav-links li {
+        width: 100%;
+        text-align: center;
+      }
+      .nav-links a {
+        display: block;
+        padding: 16px 24px;
+      }
+    }
     .nav-back {
       font-size: 0.78rem;
       font-weight: 500;
@@ -312,15 +454,28 @@
 <!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo"><img src="Photos/Logo sans texte.png" alt="Corentin Vallet" class="nav-logo-img"> Corentin <span>Vallet</span></a>
-  <a href="index.html#realisations" class="nav-back">
-    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 8H3M7 4L3 8l4 4"/></svg>
-    <span class="nav-back-text">Retour aux réalisations</span>
-  </a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html#approche">Approche</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li class="nav-dropdown">
+      <a href="index.html#realisations" class="nav-dropdown-trigger">Démonstrations</a>
+      <ul class="nav-dropdown-menu">
+        <li><a href="demo-zinc.html">Restaurant</a></li>
+        <li><a href="demo-pierrard.html">Artisan</a></li>
+        <li><a href="demo-terraloc.html">Commerce</a></li>
+      </ul>
+    </li>
+    <li><a href="index.html#profil">Profil</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
   <div class="toggle-wrap">
     <span>☀︎</span>
     <button class="toggle-btn" id="themeToggle" aria-label="Basculer le thème"></button>
     <span>☽</span>
   </div>
+  <button class="nav-burger" id="nav-burger" aria-label="Ouvrir le menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -454,6 +609,22 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.12 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+<script>
+  const burger = document.getElementById('nav-burger');
+  const navLinks = document.getElementById('nav-links');
+
+  burger.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    burger.setAttribute('aria-expanded', isOpen);
+  });
+
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    });
+  });
 </script>
 </body>
 </html>
