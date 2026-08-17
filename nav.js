@@ -30,8 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Ferme tout quand on clique sur un lien
+  // Ferme tout quand on clique sur un lien (sauf le trigger "Démonstrations",
+  // qui gère lui-même son accordéon en mobile)
   navLinks.querySelectorAll('a').forEach(link => {
+    if (link === dropdownTrigger) return;
     link.addEventListener('click', () => {
       navLinks.classList.remove('open');
       burger.setAttribute('aria-expanded', 'false');
