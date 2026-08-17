@@ -187,63 +187,6 @@
     }
     .nav-links a:hover { color: var(--accent); }
 
-    /* ── DROPDOWN NAV ── */
-    .nav-dropdown { position: relative; }
-    .nav-dropdown::after {
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      height: 14px; /* comble l'espace vide pour garder le survol actif */
-    }
-    .nav-dropdown > .nav-dropdown-trigger {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-    }
-    .nav-dropdown > .nav-dropdown-trigger::after {
-      content: '';
-      width: 6px; height: 6px;
-      border-right: 1.5px solid currentColor;
-      border-bottom: 1.5px solid currentColor;
-      transform: rotate(45deg);
-      margin-top: -3px;
-      transition: transform 0.2s;
-    }
-    .nav-dropdown:hover > .nav-dropdown-trigger::after { transform: rotate(225deg); margin-top: 3px; }
-
-    .nav-dropdown-menu {
-      position: absolute;
-      top: calc(100% + 14px);
-      left: 50%;
-      transform: translateX(-50%) translateY(-6px);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      box-shadow: var(--card-shadow);
-      padding: 8px 0;
-      min-width: 170px;
-      list-style: none;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s, transform 0.2s;
-    }
-    .nav-dropdown:hover .nav-dropdown-menu {
-      opacity: 1;
-      pointer-events: all;
-      transform: translateX(-50%) translateY(0);
-    }
-    .nav-dropdown-menu a {
-      display: block;
-      padding: 10px 20px;
-      white-space: nowrap;
-      text-transform: none;
-      letter-spacing: 0.02em;
-      font-size: 0.85rem;
-    }
-
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
@@ -1076,38 +1019,6 @@
 
     @media (max-width: 900px) {
       .nav-burger { display: flex; }
-      /* ── Sous-menu "Démonstrations" en accordéon ── */
-      .nav-dropdown-menu {
-        position: static;
-        transform: none;
-        opacity: 1;
-        pointer-events: all;
-        box-shadow: none;
-        border: none;
-        background: rgba(0,0,0,0.03);
-        padding: 0;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-      }
-      [data-theme="dark"] .nav-dropdown-menu { background: rgba(255,255,255,0.03); }
-      .nav-dropdown.is-open .nav-dropdown-menu {
-        max-height: 200px;
-        padding: 4px 0 8px;
-      }
-      .nav-dropdown-menu a {
-        padding: 8px 24px;
-        font-size: 0.75rem;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        font-family: 'DM Mono', monospace;
-        color: var(--text2);
-      }
-      .nav-dropdown > .nav-dropdown-trigger::after { transition: transform 0.25s ease; }
-      .nav-dropdown.is-open > .nav-dropdown-trigger::after {
-        transform: rotate(225deg);
-        margin-top: 3px;
-      }
       .nav-links {
         position: fixed;
         top: 60px; /* hauteur theme-bar + nav, ajuste si besoin */
