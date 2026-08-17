@@ -1198,7 +1198,7 @@
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
       <a href="#realisations" class="hero-cta-secondary">
-        Voir les démonstrations
+        Démonstrations
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="14" height="14" rx="1"/><path d="M5 8h6M8 5l3 3-3 3"/></svg>
       </a>
     </div>
