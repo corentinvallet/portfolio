@@ -184,6 +184,7 @@
 
     @media (max-width: 900px) {
       .nav-burger { display: flex; }
+      /* ── Sous-menu "Démonstrations" en accordéon ── */
       .nav-dropdown-menu {
         position: static;
         transform: none;
@@ -191,15 +192,30 @@
         pointer-events: all;
         box-shadow: none;
         border: none;
-        background: transparent;
-        padding: 0 0 8px;
+        background: rgba(0,0,0,0.03);
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+      [data-theme="dark"] .nav-dropdown-menu { background: rgba(255,255,255,0.03); }
+      .nav-dropdown.is-open .nav-dropdown-menu {
+        max-height: 200px;
+        padding: 4px 0 8px;
       }
       .nav-dropdown-menu a {
         padding: 8px 24px;
-        font-size: 0.78rem;
+        font-size: 0.75rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        font-family: 'DM Mono', monospace;
         color: var(--text2);
       }
-      .nav-dropdown > .nav-dropdown-trigger::after { display: none; }
+      .nav-dropdown > .nav-dropdown-trigger::after { transition: transform 0.25s ease; }
+      .nav-dropdown.is-open > .nav-dropdown-trigger::after {
+        transform: rotate(225deg);
+        margin-top: 3px;
+      }
       .nav-links {
         position: fixed;
         top: 60px;
@@ -458,7 +474,7 @@
     <li><a href="index.html#approche">Approche</a></li>
     <li><a href="index.html#services">Services</a></li>
     <li class="nav-dropdown">
-      <a href="index.html#realisations" class="nav-dropdown-trigger">Démonstrations</a>
+      <a href="index.html#realisations" class="nav-dropdown-trigger" aria-expanded="false">Démonstrations</a>
       <ul class="nav-dropdown-menu">
         <li><a href="demo-zinc.html">Restaurant</a></li>
         <li><a href="demo-pierrard.html">Artisan</a></li>
@@ -613,16 +629,37 @@
 <script>
   const burger = document.getElementById('nav-burger');
   const navLinks = document.getElementById('nav-links');
+  const dropdownLi = document.querySelector('.nav-dropdown');
+  const dropdownTrigger = document.querySelector('.nav-dropdown-trigger');
 
   burger.addEventListener('click', () => {
     const isOpen = navLinks.classList.toggle('open');
     burger.setAttribute('aria-expanded', isOpen);
   });
 
+  /* ── Accordéon "Démonstrations" en mobile ── */
+  dropdownTrigger.addEventListener('click', (e) => {
+    if (window.innerWidth <= 900) {
+      e.preventDefault();
+      const isOpen = dropdownLi.classList.toggle('is-open');
+      dropdownTrigger.setAttribute('aria-expanded', isOpen);
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 900) {
+      dropdownLi.classList.remove('is-open');
+      dropdownTrigger.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Ferme tout quand on clique sur un lien
   navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       navLinks.classList.remove('open');
       burger.setAttribute('aria-expanded', 'false');
+      dropdownLi.classList.remove('is-open');
+      dropdownTrigger.setAttribute('aria-expanded', 'false');
     });
   });
 </script>
