@@ -63,20 +63,6 @@
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 3px; }
 
-    /* ── THEME TOGGLE ── */
-    #theme-bar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1000;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 10px 28px;
-      background: var(--nav-bg);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      transition: background var(--transition);
-    }
     .toggle-wrap {
       display: flex;
       align-items: center;
@@ -115,7 +101,7 @@
     /* ── NAV ── */
     nav {
       position: fixed;
-      top: 45px; left: 0; right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 999;
       display: flex;
       justify-content: space-between;
@@ -931,7 +917,7 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; padding-top: 140px; }
+      .hero { grid-template-columns: 1fr; padding-top: 100px; }
       .hero-right { display: none; }
       .approach-grid { grid-template-columns: 1fr; }
       .services-grid { grid-template-columns: 1fr; }
@@ -971,7 +957,7 @@
 
       .nav-links {
         position: fixed;
-        top: 79px; /* hauteur theme-bar + nav, ajuste si besoin */
+        top: 60px; /* hauteur theme-bar + nav, ajuste si besoin */
         left: 0;
         right: 0;
         flex-direction: column;
@@ -1104,28 +1090,18 @@
     </g>
   </symbol>
 </svg>
-<!-- THEME TOGGLE BAR -->
-<div id="theme-bar">
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Corentin <span>Vallet</span></div>
+  <ul class="nav-links" id="nav-links">
+    ...
+  </ul>
   <div class="toggle-wrap">
     <span class="sun-icon">☀︎</span>
     <button class="toggle-btn" id="themeToggle" aria-label="Basculer le thème"></button>
     <span class="moon-icon">☽</span>
   </div>
-</div>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-logo"><img src="Photos/Logo sans texte.png" alt="Corentin Vallet" class="nav-logo-img"></div>
-  <ul class="nav-links" id="nav-links">
-    <li><a href="#approche">Approche</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#realisations">Réalisations</a></li>
-    <li><a href="#profil">Profil</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <button class="nav-burger" id="nav-burger" aria-label="Ouvrir le menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="nav-burger" ...>...</button>
 </nav>
 
 <!-- HERO -->
