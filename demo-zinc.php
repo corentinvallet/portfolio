@@ -370,43 +370,7 @@
   }, { threshold: 0.12 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
-<script>
-  const burger = document.getElementById('nav-burger');
-  const navLinks = document.getElementById('nav-links');
-  const dropdownLi = document.querySelector('.nav-dropdown');
-  const dropdownTrigger = document.querySelector('.nav-dropdown-trigger');
 
-  burger.addEventListener('click', () => {
-    const isOpen = navLinks.classList.toggle('open');
-    burger.setAttribute('aria-expanded', isOpen);
-  });
-
-  /* ── Accordéon "Démonstrations" en mobile ── */
-  dropdownTrigger.addEventListener('click', (e) => {
-    if (window.innerWidth <= 900) {
-      e.preventDefault();
-      const isOpen = dropdownLi.classList.toggle('is-open');
-      dropdownTrigger.setAttribute('aria-expanded', isOpen);
-    }
-  });
-
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 900) {
-      dropdownLi.classList.remove('is-open');
-      dropdownTrigger.setAttribute('aria-expanded', 'false');
-    }
-  });
-
-  // Ferme tout quand on clique sur un lien
-  navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-      burger.setAttribute('aria-expanded', 'false');
-      dropdownLi.classList.remove('is-open');
-      dropdownTrigger.setAttribute('aria-expanded', 'false');
-    });
-  });
-</script>
 <script src="nav.js"></script>
 </body>
 </html>
