@@ -253,7 +253,34 @@
     }
     .hero-cta:hover { background: var(--accent2); transform: translateY(-2px); }
     .hero-cta svg { width: 16px; height: 16px; }
-
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .hero-cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 13px 27px;
+      border-radius: 2px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .hero-cta-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .hero-cta-secondary svg { width: 16px; height: 16px; }
     .hero-right {
       position: relative;
       display: flex;
@@ -1165,10 +1192,16 @@
       <span id="hero-title3">à Valence</span>
     </h1>
     <p class="hero-desc" id="hero-desc">Je conçois des sites clé en main à Valence pour les artistes, commerçants et artisans — avec une vraie réflexion sur votre communication, pas seulement du code.</p>
-    <a href="#contact" class="hero-cta">
-      <span id="hero-cta-text"></span>
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-    </a>
+    <div class="hero-ctas">
+      <a href="#contact" class="hero-cta">
+        <span id="hero-cta-text"></span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+      <a href="#realisations" class="hero-cta-secondary">
+        Voir les démonstrations
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="14" height="14" rx="1"/><path d="M5 8h6M8 5l3 3-3 3"/></svg>
+      </a>
+    </div>
   </div>
 
   <div class="hero-right">
