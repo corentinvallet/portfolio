@@ -340,8 +340,8 @@
     <h2 class="section-title fade-up">Restaurant, commerce, artisanat —<br>chaque secteur a <em>sa propre démo</em></h2>
     <p class="section-intro fade-up">Ce principe (site vitrine + espace admin sur mesure) s'adapte à votre activité. Découvrez les autres exemples ou échangeons directement sur votre projet.</p>
     <div class="hero-ctas fade-up">
-      <a href="index.html#realisations" class="btn btn-outline">Voir les autres réalisations</a>
-      <a href="index.html#contact" class="btn btn-primary">
+      <a href="index.php#realisations" class="btn btn-outline">Voir les autres réalisations</a>
+      <a href="index.php#contact" class="btn btn-primary">
         Discuter de mon projet
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
