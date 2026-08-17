@@ -188,6 +188,14 @@
 
     /* ── DROPDOWN NAV ── */
     .nav-dropdown { position: relative; }
+    .nav-dropdown::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      height: 14px; /* comble l'espace vide pour garder le survol actif */
+    }
     .nav-dropdown > .nav-dropdown-trigger {
       display: flex;
       align-items: center;
@@ -1206,7 +1214,7 @@
     <li><a href="#approche">Approche</a></li>
     <li><a href="#services">Services</a></li>
     <li class="nav-dropdown">
-      <span class="nav-dropdown-trigger"><a href="#realisations">Démonstrations</a></span>
+      <a href="#realisations" class="nav-dropdown-trigger">Démonstrations</a>
       <ul class="nav-dropdown-menu">
         <li><a href="demo-zinc.html">Restaurant</a></li>
       </ul>
