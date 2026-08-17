@@ -4,17 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Étude de cas — TerraLoc, site pour un loueur de matériel | Corentin Vallet</title>
-  <meta name="description" content="Découvrez en détail la démo TerraLoc : un site vitrine pour un commerce de location de matériel jardin & bricolage avec catalogue et réservation en ligne, et un espace admin pour tout gérer sans compétence technique." />
+  <title>Étude de cas — Le Zinc, site pour restaurateur | Corentin Vallet</title>
+  <meta name="description" content="Découvrez en détail la démo Le Zinc : un site vitrine pour bistrot avec réservation en ligne, et un espace admin pour tout gérer sans compétence technique." />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://corentinvallet.fr/demo-terraloc.html" />
+  <link rel="canonical" href="https://corentinvallet.fr/demo-zinc.php" />
 
   <link rel="icon" type="image/ico" href="Photos/Favicon_transp48.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Mono:wght@300;400&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
+  <link rel="stylesheet" href="nav.css">
   <style>
     :root {
       --bg:       #f5f2ec;
@@ -56,235 +56,6 @@
       overflow-x: hidden;
       transition: background var(--transition), color var(--transition);
     }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 999;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 40px;
-      background: var(--nav-bg);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      transition: background var(--transition);
-    }
-    .nav-logo {
-      font-family: 'Fraunces', serif;
-      font-size: 1.15rem;
-      font-weight: 400;
-      color: var(--text);
-      letter-spacing: -0.02em;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-    }
-    .nav-logo-img { height: 32px; width: auto; display: block; }
-    .nav-logo span { color: var(--accent); font-style: italic; }
-        .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text2);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--accent); }
-
-    /* ── DROPDOWN NAV ── */
-    .nav-dropdown { position: relative; }
-    .nav-dropdown::after {
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      height: 14px;
-    }
-    .nav-dropdown > .nav-dropdown-trigger {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-    }
-    .nav-dropdown > .nav-dropdown-trigger::after {
-      content: '';
-      width: 6px; height: 6px;
-      border-right: 1.5px solid currentColor;
-      border-bottom: 1.5px solid currentColor;
-      transform: rotate(45deg);
-      margin-top: -3px;
-      transition: transform 0.2s;
-    }
-    .nav-dropdown:hover > .nav-dropdown-trigger::after { transform: rotate(225deg); margin-top: 3px; }
-
-    .nav-dropdown-menu {
-      position: absolute;
-      top: calc(100% + 14px);
-      left: 50%;
-      transform: translateX(-50%) translateY(-6px);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      box-shadow: var(--card-shadow);
-      padding: 8px 0;
-      min-width: 170px;
-      list-style: none;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s, transform 0.2s;
-    }
-    .nav-dropdown:hover .nav-dropdown-menu {
-      opacity: 1;
-      pointer-events: all;
-      transform: translateX(-50%) translateY(0);
-    }
-    .nav-dropdown-menu a {
-      display: block;
-      padding: 10px 20px;
-      white-space: nowrap;
-      text-transform: none;
-      letter-spacing: 0.02em;
-      font-size: 0.85rem;
-    }
-
-    /* ── BURGER ── */
-    .nav-burger {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      gap: 5px;
-      width: 32px;
-      height: 32px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-    }
-    .nav-burger span {
-      display: block;
-      width: 100%;
-      height: 2px;
-      background: var(--text);
-      transition: transform 0.3s ease, opacity 0.3s ease;
-    }
-    .nav-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-    .nav-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-    @media (max-width: 900px) {
-      .nav-burger { display: flex; }
-      /* ── Sous-menu "Démonstrations" en accordéon ── */
-      .nav-dropdown-menu {
-        position: static;
-        transform: none;
-        opacity: 1;
-        pointer-events: all;
-        box-shadow: none;
-        border: none;
-        background: rgba(0,0,0,0.03);
-        padding: 0;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-      }
-      [data-theme="dark"] .nav-dropdown-menu { background: rgba(255,255,255,0.03); }
-      .nav-dropdown.is-open .nav-dropdown-menu {
-        max-height: 200px;
-        padding: 4px 0 8px;
-      }
-      .nav-dropdown-menu a {
-        padding: 8px 24px;
-        font-size: 0.75rem;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        font-family: 'DM Mono', monospace;
-        color: var(--text2);
-      }
-      .nav-dropdown > .nav-dropdown-trigger::after { transition: transform 0.25s ease; }
-      .nav-dropdown.is-open > .nav-dropdown-trigger::after {
-        transform: rotate(225deg);
-        margin-top: 3px;
-      }
-      .nav-links {
-        position: fixed;
-        top: 60px;
-        left: 0;
-        right: 0;
-        flex-direction: column;
-        gap: 0;
-        background: var(--nav-bg);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid var(--border);
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.35s ease;
-      }
-      .nav-links.open {
-        max-height: 400px;
-      }
-      .nav-links li {
-        width: 100%;
-        text-align: center;
-      }
-      .nav-links a {
-        display: block;
-        padding: 16px 24px;
-      }
-    }
-    .nav-back {
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text2);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: color 0.2s;
-    }
-    .nav-back:hover { color: var(--accent); }
-    .toggle-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      color: var(--text2);
-      text-transform: uppercase;
-    }
-    .toggle-btn {
-      position: relative;
-      width: 44px; height: 24px;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      cursor: pointer;
-      transition: background var(--transition);
-    }
-    [data-theme="dark"] .toggle-btn { background: var(--accent); }
-    .toggle-btn::after {
-      content: '';
-      position: absolute;
-      top: 2px; left: 2px;
-      width: 18px; height: 18px;
-      border-radius: 50%;
-      background: #fff;
-      transition: transform var(--transition);
-    }
-    [data-theme="dark"] .toggle-btn::after { transform: translateX(20px); }
 
     /* ── HERO ── */
     .hero {
@@ -466,45 +237,18 @@
   </style>
 </head>
 <body>
-
-<!-- NAV -->
-<nav>
-  <a href="index.html" class="nav-logo"><img src="Photos/Logo sans texte.png" alt="Corentin Vallet" class="nav-logo-img"> Corentin <span>Vallet</span></a>
-  <ul class="nav-links" id="nav-links">
-    <li><a href="index.html#approche">Approche</a></li>
-    <li><a href="index.html#services">Services</a></li>
-    <li class="nav-dropdown">
-      <a href="index.html#realisations" class="nav-dropdown-trigger" aria-expanded="false">Démonstrations</a>
-      <ul class="nav-dropdown-menu">
-        <li><a href="demo-zinc.html">Restaurant</a></li>
-        <li><a href="demo-pierrard.html">Artisan</a></li>
-        <li><a href="demo-terraloc.html">Commerce</a></li>
-      </ul>
-    </li>
-    <li><a href="index.html#profil">Profil</a></li>
-    <li><a href="index.html#contact">Contact</a></li>
-  </ul>
-  <div class="toggle-wrap">
-    <span>☀︎</span>
-    <button class="toggle-btn" id="themeToggle" aria-label="Basculer le thème"></button>
-    <span>☽</span>
-  </div>
-  <button class="nav-burger" id="nav-burger" aria-label="Ouvrir le menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-
+<?php include __DIR__ . '/inc/nav.php'; ?>
 <!-- HERO -->
 <div class="hero">
-  <p class="hero-eyebrow">✦ Étude de cas · Commerces & location ✦</p>
-  <h1 class="hero-title">TerraLoc, un catalogue<br>qui donne envie de <em>réserver</em></h1>
-  <p class="hero-desc">Cette démo montre ce que je conçois pour un commerce de location de matériel : un site vitrine avec catalogue filtrable et réservation en ligne, et un espace d'administration qui permet de tout gérer soi-même, sans aucune compétence technique.</p>
+  <p class="hero-eyebrow">✦ Étude de cas · Restaurateurs ✦</p>
+  <h1 class="hero-title">Le <em>Zinc</em>, un site pensé<br>pour un bistrot parisien</h1>
+  <p class="hero-desc">Cette démo montre ce que je conçois pour un restaurateur : un site vitrine qui donne envie de pousser la porte, et un espace d'administration qui permet de tout gérer soi-même, sans aucune compétence technique.</p>
   <div class="hero-ctas">
-    <a href="commerce/index.html" target="_blank" rel="noopener" class="btn btn-primary">
+    <a href="restaurant/index.html" target="_blank" rel="noopener" class="btn btn-primary">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="14" height="14" rx="1"/><path d="M5 8h6M8 5l3 3-3 3"/></svg>
       Voir le site vitrine
     </a>
-    <a href="commerce/admin.html" target="_blank" rel="noopener" class="btn btn-outline">
+    <a href="restaurant/admin.html" target="_blank" rel="noopener" class="btn btn-outline">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="14" height="14" rx="1"/><path d="M5 8h6M8 5l3 3-3 3"/></svg>
       Voir l'espace admin
     </a>
@@ -515,39 +259,39 @@
 <section class="cote-client">
   <div class="section-inner">
     <div class="section-label fade-up">Ce que voit votre client</div>
-    <h2 class="section-title fade-up">Une <em>vitrine</em> qui donne envie<br>de réserver du matériel</h2>
-    <p class="section-intro fade-up">Le site public met en avant le catalogue et la simplicité de la démarche : chaque élément est pensé pour transformer un visiteur en réservation, sans qu'il ait besoin de décrocher son téléphone.</p>
+    <h2 class="section-title fade-up">Une <em>vitrine</em> qui donne envie<br>de réserver une table</h2>
+    <p class="section-intro fade-up">Le site public met en avant l'identité du restaurant : ambiance, carte, avis clients. Chaque élément est pensé pour transformer un visiteur en réservation.</p>
 
     <div class="feature-grid">
       <div class="feature-card fade-up">
-        <span class="feature-icon">🌿</span>
+        <span class="feature-icon">🍷</span>
         <div class="feature-name">Identité visuelle sur mesure</div>
-        <p class="feature-desc">Palette et typographie propres à l'enseigne — un univers qui inspire confiance, entre matériel professionnel et service de proximité.</p>
+        <p class="feature-desc">Palette, typographies et ambiance visuelle propres au bistrot — noir, or et cuivre pour évoquer un lieu chaleureux et authentique.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">🛠️</span>
-        <div class="feature-name">Catalogue filtrable par catégorie</div>
-        <p class="feature-desc">Jardin, bricolage, terrassement… chaque référence a sa fiche avec prix à la journée, filtrable en un clic pour trouver le bon outil rapidement.</p>
+        <span class="feature-icon">📖</span>
+        <div class="feature-name">Carte mise en avant</div>
+        <p class="feature-desc">Entrées, plats, desserts organisés en onglets clairs, avec descriptions et prix — la carte se met à jour automatiquement dès que le restaurateur la modifie.</p>
       </div>
       <div class="feature-card fade-up">
         <span class="feature-icon">📅</span>
         <div class="feature-name">Réservation en ligne intégrée</div>
-        <p class="feature-desc">Un formulaire directement sur le site, avec sélection du matériel et des dates — la demande arrive prête à être confirmée.</p>
-      </div>
-      <div class="feature-card fade-up">
-        <span class="feature-icon">🔍</span>
-        <div class="feature-name">Parcours client guidé</div>
-        <p class="feature-desc">Les 4 étapes de la location (choisir, réserver, récupérer, restituer) sont expliquées simplement pour rassurer les nouveaux clients.</p>
+        <p class="feature-desc">Un formulaire directement sur le site, avec créneaux et jours d'ouverture qui se ferment automatiquement une fois complets.</p>
       </div>
       <div class="feature-card fade-up">
         <span class="feature-icon">★</span>
         <div class="feature-name">Avis clients mis en scène</div>
-        <p class="feature-desc">Les retours clients sont affichés avec soin pour rassurer un visiteur qui loue du matériel pour la première fois.</p>
+        <p class="feature-desc">Les retours clients sont affichés avec soin pour rassurer un visiteur qui découvre l'établissement pour la première fois.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <span class="feature-icon">🖼️</span>
+        <div class="feature-name">Galerie immersive</div>
+        <p class="feature-desc">Photos de la salle, des plats et de l'ambiance pour donner un aperçu concret du lieu avant même d'y avoir mis les pieds.</p>
       </div>
       <div class="feature-card fade-up">
         <span class="feature-icon">📱</span>
         <div class="feature-name">Pensé mobile</div>
-        <p class="feature-desc">La grande majorité des visiteurs consultent un catalogue depuis leur téléphone, souvent la veille d'un chantier — le site s'adapte à tous les écrans.</p>
+        <p class="feature-desc">La grande majorité des visiteurs consultent un restaurant depuis leur téléphone — le site est entièrement adapté à tous les écrans.</p>
       </div>
     </div>
   </div>
@@ -560,28 +304,28 @@
   <div class="section-inner">
     <div class="section-label fade-up">Ce que vous gérez vous-même</div>
     <h2 class="section-title fade-up">Un espace admin <em>simple</em>,<br>sans jamais toucher au code</h2>
-    <p class="section-intro fade-up">Derrière le site, un tableau de bord privé permet de garder la main sur son catalogue et son activité au quotidien — comme dans les grandes plateformes, mais sur son propre site.</p>
+    <p class="section-intro fade-up">Derrière le site, un tableau de bord privé permet au restaurateur de garder la main sur son activité au quotidien — comme dans les grandes plateformes, mais sur son propre site.</p>
 
     <div class="feature-grid">
       <div class="feature-card fade-up">
-        <span class="feature-icon">🛠️</span>
-        <div class="feature-name">Catalogue de matériel éditable</div>
-        <p class="feature-desc">Ajouter une référence, modifier un prix ou une catégorie, mettre en avant un produit populaire ou nouveau — tout se fait en quelques clics.</p>
+        <span class="feature-icon">📋</span>
+        <div class="feature-name">Suivi des réservations en un coup d'œil</div>
+        <p class="feature-desc">Total, réservations du jour, en attente de confirmation, nombre de couverts — les chiffres essentiels affichés dès l'ouverture de l'espace admin.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">🖼️</span>
-        <div class="feature-name">Bannière & bandeau modifiables</div>
-        <p class="feature-desc">Changer l'image d'accueil ou les messages clés du bandeau (livraison, horaires, garanties) pour coller à l'actualité du commerce.</p>
+        <span class="feature-icon">✎</span>
+        <div class="feature-name">Édition de la carte en temps réel</div>
+        <p class="feature-desc">Ajouter, modifier ou réorganiser plats et catégories — les changements apparaissent instantanément sur le site public.</p>
       </div>
       <div class="feature-card fade-up">
         <span class="feature-icon">📷</span>
-        <div class="feature-name">Photos gérées en un clic</div>
-        <p class="feature-desc">Chaque image de produit ou de bannière s'upload directement depuis l'admin, hébergée automatiquement sur le cloud.</p>
+        <div class="feature-name">Galerie par glisser-déposer</div>
+        <p class="feature-desc">Ajouter de nouvelles photos ou réorganiser la galerie sans aucune manipulation technique.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">💬</span>
-        <div class="feature-name">Avis clients à jour</div>
-        <p class="feature-desc">Ajouter les derniers retours clients pour que la section avis reste vivante et représentative de l'activité récente.</p>
+        <span class="feature-icon">⚙️</span>
+        <div class="feature-name">Réglages horaires & capacité</div>
+        <p class="feature-desc">Définir les jours d'ouverture et le nombre de couverts disponibles par service — le formulaire de réservation s'adapte automatiquement.</p>
       </div>
     </div>
   </div>
@@ -663,5 +407,6 @@
     });
   });
 </script>
+<script src="nav.js"></script>
 </body>
 </html>

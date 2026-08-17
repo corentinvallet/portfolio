@@ -9,7 +9,7 @@
   <meta name="description" content="Sites web clé en main pour indépendants et petites entreprises à Valence et dans la Drôme/Ardèche. Design sur-mesure, livraison rapide, accompagnement de A à Z." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://corentinvallet.fr/" />
-
+  <link rel="stylesheet" href="nav.css">
   <!-- Favicon -->
   <link rel="icon" type="image/ico" href="Photos/Favicon_transp48.png">
 
@@ -1243,33 +1243,7 @@
     </g>
   </symbol>
 </svg>
-<!-- NAV -->
-<nav>
-  <div class="nav-logo"><img src="Photos/Logo sans texte.png" alt="Corentin Vallet" class="nav-logo-img"> Corentin <span>Vallet</span></div>
-  <ul class="nav-links" id="nav-links">
-    <li><a href="#approche">Approche</a></li>
-    <li><a href="#services">Services</a></li>
-    <li class="nav-dropdown">
-      <a href="#realisations" class="nav-dropdown-trigger" aria-expanded="false">Démonstrations</a>
-      <ul class="nav-dropdown-menu">
-        <li><a href="demo-zinc.html">Restaurant</a></li>
-        <li><a href="demo-pierrard.html">Artisan</a></li>
-        <li><a href="demo-terraloc.html">Commerce</a></li>
-      </ul>
-    </li>
-    <li><a href="#profil">Profil</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <div class="toggle-wrap">
-    <span class="sun-icon">☀︎</span>
-    <button class="toggle-btn" id="themeToggle" aria-label="Basculer le thème"></button>
-    <span class="moon-icon">☽</span>
-  </div>
-  <button class="nav-burger" id="nav-burger" aria-label="Ouvrir le menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-
+<?php $home = true; include __DIR__ . '/inc/nav.php'; ?>
 <!-- HERO -->
 <div class="hero">
   <div class="hero-left">
@@ -1396,7 +1370,7 @@
           </div>
         </div>
 
-        <a href="demo-zinc.html" class="tab-preview night sector-preview-link" aria-label="Voir la démo Le Zinc">
+        <a href="demo-zinc.php" class="tab-preview night sector-preview-link" aria-label="Voir la démo Le Zinc">
           <svg viewBox="0 0 320 190" width="100%" height="100%" style="position:absolute;inset:0;" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
             <rect width="320" height="190" fill="#0e0e0e"/>
             <line x1="24" y1="38" x2="296" y2="38" stroke="#c8a96e" stroke-width="0.5" opacity="0.5"/>
@@ -1420,7 +1394,7 @@
 
         <div class="tab-body">
           <p class="tab-desc">Identité visuelle forte, carte du jour mise en avant, réservation intégrée côté client ; mise à jour de la carte, gestion des réservations et suivi des avis côté admin. Atmosphère conviviale et authentique, pensée pour donner envie de pousser la porte.</p>
-          <a href="demo-zinc.html" class="sector-link">
+          <a href="demo-zinc.php" class="sector-link">
             Découvrir la démo complète
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
           </a>
@@ -1437,7 +1411,7 @@
           </div>
         </div>
 
-        <a href="demo-pierrard.html" class="tab-preview stone sector-preview-link" aria-label="Voir la démo Pierrard Maçonnerie">
+        <a href="demo-pierrard.php" class="tab-preview stone sector-preview-link" aria-label="Voir la démo Pierrard Maçonnerie">
           <svg viewBox="0 0 320 190" width="100%" height="100%" style="position:absolute;inset:0;" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
             <rect width="320" height="190" fill="#ECE4D1"/>
             <line x1="24" y1="38" x2="296" y2="38" stroke="#c8a96e" stroke-width="0.5" opacity="0.5"/>
@@ -1461,7 +1435,7 @@
 
         <div class="tab-body">
           <p class="tab-desc">Galerie de chantiers, devis en ligne, témoignages clients et labels mis en avant côté client ; ajout de réalisations, suivi des demandes de devis et mise à jour des services côté admin. Un site qui inspire confiance avant même le premier appel.</p>
-          <a href="demo-pierrard.html" class="sector-link">
+          <a href="demo-pierrard.php" class="sector-link">
             Découvrir la démo complète
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
           </a>
@@ -1478,7 +1452,7 @@
           </div>
         </div>
 
-        <a href="demo-terraloc.html" class="tab-preview sage sector-preview-link" aria-label="Voir la démo TerraLoc">
+        <a href="demo-terraloc.php" class="tab-preview sage sector-preview-link" aria-label="Voir la démo TerraLoc">
           <svg viewBox="0 0 320 190" width="100%" height="100%" style="position:absolute;inset:0;" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
             <rect width="320" height="190" fill="#1b3a24"/>
             <line x1="24" y1="38" x2="296" y2="38" stroke="#c8a96e" stroke-width="0.5" opacity="0.5"/>
@@ -1502,7 +1476,7 @@
 
         <div class="tab-body">
           <p class="tab-desc">Catalogue de location filtrable, avis clients, formulaire de réservation côté client ; gestion du catalogue, des photos et des avis côté admin. Un site conçu pour simplifier la prise de contact.</p>
-          <a href="demo-terraloc.html" class="sector-link">
+          <a href="demo-terraloc.php" class="sector-link">
             Découvrir la démo complète
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
           </a>
@@ -1848,5 +1822,6 @@
     });
   });
 </script>
+<script src="nav.js"></script>
 </body>
 </html>
