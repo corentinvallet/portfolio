@@ -30,6 +30,7 @@ $siteUrl = 'https://corentinvallet.fr/baconstruction';
   <link rel="canonical" href="<?= e($siteUrl) ?>/galerie.php"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="css/galerie.css"/>
+  <link rel="stylesheet" href="css/base.css"/>
 </head>
 <body>
 

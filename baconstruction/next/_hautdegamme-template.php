@@ -6,6 +6,7 @@
   <title><?= e(strip_tags($PAGE_TITLE)) ?> — B&amp;A Construction</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="css/hautdegamme.css"/>    
+  <link rel="stylesheet" href="css/base.css"/>
 </head>
 <body>
 

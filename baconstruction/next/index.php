@@ -35,6 +35,7 @@ $preview = array_slice($gallery, 0, 3);
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="preload" as="image" href="<?= e($hero['image'] ?? '') ?>">
   <link rel="stylesheet" href="css/index.css"/>
+  <link rel="stylesheet" href="css/base.css"/>
 </head>
 <body>
 
