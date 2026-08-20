@@ -279,7 +279,7 @@ $siteUrl = 'https://corentinvallet.fr/baconstruction';
     .contact-form textarea{resize:vertical;min-height:120px}
 
     /* ── FOOTER ── */
-    footer{background:var(--dark-brown);padding:36px 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px;border-top:1px solid rgba(196,148,74,.2)}
+        footer{background:var(--dark-brown);padding:36px 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px;border-top:1px solid rgba(196,148,74,.2)}
     .footer-brand{display:flex;align-items:center;gap:14px}
     .footer-logo-circle{width:42px;height:42px;border-radius:50%;object-fit:cover;flex-shrink:0;opacity:.9}
     .footer-brand strong{display:block;color:var(--sand);font-family:'Playfair Display',serif;font-size:.92rem}
