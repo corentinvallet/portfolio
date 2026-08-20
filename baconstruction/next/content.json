@@ -223,71 +223,253 @@
         {
             "value": "escalier-beton",
             "label": "Escalier béton"
+        },
+        {
+            "value": "enduit-décoratif",
+            "label": "Enduit décoratif"
         }
     ],
     "gallery": [
         {
-            "full": "Photos/Gallerie/full/1.webp",
-            "thumb": "Photos/Gallerie/thumb/1.webp",
-            "caption": "Terrasse – effet bois",
-            "sub": "Béton imprimé",
-            "category": "beton-imprime"
+            "full": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_1600,c_limit/v1787252022/dx2h3vnhldm5tm4ceypp.jpg",
+            "thumb": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_600,h_450,c_fill/v1787252022/dx2h3vnhldm5tm4ceypp.jpg",
+            "caption": "Nouvelle réalisation",
+            "sub": "",
+            "categories": [
+                "beton-imprime",
+                "piscine"
+            ]
         },
         {
             "full": "Photos/Gallerie/full/2.webp",
             "thumb": "Photos/Gallerie/thumb/2.webp",
             "caption": "Rosaces",
             "sub": "Béton imprimé",
-            "category": "beton-imprime"
-        },
-        {
-            "full": "Photos/CaveAVin1.jpg",
-            "thumb": "Photos/CaveAVin1.jpg",
-            "caption": "Cave à vin",
-            "sub": "souterraine",
-            "category": "cave-a-vin"
-        },
-        {
-            "full": "Photos/Gallerie/full/3.webp",
-            "thumb": "Photos/Gallerie/thumb/3.webp",
-            "caption": "Terrasse - Effet parquet",
-            "sub": "Béton imprimé",
-            "category": "beton-cire"
-        },
-        {
-            "full": "Photos/Gallerie/full/4.webp",
-            "thumb": "Photos/Gallerie/thumb/4.webp",
-            "caption": "Béton désactivé coloré",
-            "sub": "Béton désactivé",
-            "category": "beton-desactive"
-        },
-        {
-            "full": "Photos/Gallerie/CaveAVin2.jpg",
-            "thumb": "Photos/Gallerie/CaveAVin2.jpg",
-            "caption": "Cave à vin",
-            "sub": "souterraine",
-            "category": "cave-a-vin"
+            "categories": [
+                "beton-imprime"
+            ]
         },
         {
             "full": "Photos/Gallerie/full/5.webp",
             "thumb": "Photos/Gallerie/thumb/5.webp",
             "caption": "Margelle piscine",
             "sub": "Piscine",
-            "category": "piscine"
+            "categories": [
+                "piscine"
+            ]
+        },
+        {
+            "full": "Photos/Gallerie/full/1.webp",
+            "thumb": "Photos/Gallerie/thumb/1.webp",
+            "caption": "Terrasse – effet bois",
+            "sub": "Béton imprimé",
+            "categories": [
+                "beton-imprime"
+            ]
+        },
+        {
+            "full": "Photos/CaveAVin1.jpg",
+            "thumb": "Photos/CaveAVin1.jpg",
+            "caption": "Cave à vin",
+            "sub": "souterraine",
+            "categories": [
+                "cave-a-vin"
+            ]
+        },
+        {
+            "full": "Photos/Gallerie/full/3.webp",
+            "thumb": "Photos/Gallerie/thumb/3.webp",
+            "caption": "Terrasse - Effet parquet",
+            "sub": "Béton imprimé",
+            "categories": [
+                "beton-imprime"
+            ]
+        },
+        {
+            "full": "Photos/Gallerie/full/4.webp",
+            "thumb": "Photos/Gallerie/thumb/4.webp",
+            "caption": "Béton désactivé coloré",
+            "sub": "Béton désactivé",
+            "categories": [
+                "beton-desactive"
+            ]
+        },
+        {
+            "full": "Photos/Gallerie/CaveAVin2.jpg",
+            "thumb": "Photos/Gallerie/CaveAVin2.jpg",
+            "caption": "Cave à vin",
+            "sub": "souterraine",
+            "categories": [
+                "cave-a-vin"
+            ]
         },
         {
             "full": "Photos/Gallerie/full/6.webp",
             "thumb": "Photos/Gallerie/thumb/6.webp",
             "caption": "Béton imprimé – Effet parquet",
             "sub": "Béton imprimé",
-            "category": "beton-imprime"
+            "categories": [
+                "beton-imprime",
+                "piscine"
+            ]
         },
         {
             "full": "Photos/Escalier colimaçon.avif",
             "thumb": "Photos/Escalier colimaçon.avif",
             "caption": "Photo escalier béton",
             "sub": "Escalier béton",
-            "category": "escalier-beton"
+            "categories": [
+                "escalier-beton"
+            ]
+        },
+        {
+            "full": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_1600,c_limit/v1787251666/xiy7ic9gn6wtiu7h9bjb.jpg",
+            "thumb": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_600,h_450,c_fill/v1787251666/xiy7ic9gn6wtiu7h9bjb.jpg",
+            "caption": "Nouvelle réalisation",
+            "sub": "",
+            "categories": [
+                "beton-imprime",
+                "enduit-décoratif"
+            ]
+        },
+        {
+            "full": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_1600,c_limit/v1787251680/dcrpm40secorz98nxlic.jpg",
+            "thumb": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_600,h_450,c_fill/v1787251680/dcrpm40secorz98nxlic.jpg",
+            "caption": "Nouvelle réalisation",
+            "sub": "",
+            "categories": [
+                "enduit-décoratif"
+            ]
+        },
+        {
+            "full": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_1600,c_limit/v1787251693/wwvydlrwsvdxqnziiywh.jpg",
+            "thumb": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_600,h_450,c_fill/v1787251693/wwvydlrwsvdxqnziiywh.jpg",
+            "caption": "Nouvelle réalisation",
+            "sub": "",
+            "categories": [
+                "beton-desactive"
+            ]
+        },
+        {
+            "full": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_1600,c_limit/v1787251700/adejdxqp0b5q6jlk8jab.jpg",
+            "thumb": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_600,h_450,c_fill/v1787251700/adejdxqp0b5q6jlk8jab.jpg",
+            "caption": "Nouvelle réalisation",
+            "sub": "",
+            "categories": [
+                "piscine"
+            ]
+        },
+        {
+            "full": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_1600,c_limit/v1787251707/bgyzyxrpweog7ukv8tst.jpg",
+            "thumb": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_600,h_450,c_fill/v1787251707/bgyzyxrpweog7ukv8tst.jpg",
+            "caption": "Nouvelle réalisation",
+            "sub": "",
+            "categories": [
+                "piscine",
+                "beton-imprime"
+            ]
+        },
+        {
+            "full": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_1600,c_limit/v1787251715/gh8ycjqqyhoqmjkiutwy.jpg",
+            "thumb": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_600,h_450,c_fill/v1787251715/gh8ycjqqyhoqmjkiutwy.jpg",
+            "caption": "Nouvelle réalisation",
+            "sub": "",
+            "categories": [
+                "beton-imprime"
+            ]
+        },
+        {
+            "full": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_1600,c_limit/v1787251722/w3rdaspd8ps2g9whpmje.jpg",
+            "thumb": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_600,h_450,c_fill/v1787251722/w3rdaspd8ps2g9whpmje.jpg",
+            "caption": "Nouvelle réalisation",
+            "sub": "",
+            "categories": [
+                "beton-imprime"
+            ]
+        },
+        {
+            "full": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_1600,c_limit/v1787251729/ymqtmqhqlvbkieuzy1ps.jpg",
+            "thumb": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_600,h_450,c_fill/v1787251729/ymqtmqhqlvbkieuzy1ps.jpg",
+            "caption": "Nouvelle réalisation",
+            "sub": "",
+            "categories": [
+                "beton-imprime",
+                "piscine"
+            ]
+        },
+        {
+            "full": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_1600,c_limit/v1787251737/ngdkzriuinz7zyix3wzx.jpg",
+            "thumb": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_600,h_450,c_fill/v1787251737/ngdkzriuinz7zyix3wzx.jpg",
+            "caption": "Nouvelle réalisation",
+            "sub": "",
+            "categories": [
+                "beton-imprime",
+                "piscine"
+            ]
+        },
+        {
+            "full": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_1600,c_limit/v1787251744/xfbbkbs7hkwwqbghilyt.jpg",
+            "thumb": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_600,h_450,c_fill/v1787251744/xfbbkbs7hkwwqbghilyt.jpg",
+            "caption": "Nouvelle réalisation",
+            "sub": "",
+            "categories": [
+                "enduit-décoratif"
+            ]
+        },
+        {
+            "full": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_1600,c_limit/v1787251751/t470b6gimags3bjzsi7u.jpg",
+            "thumb": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_600,h_450,c_fill/v1787251751/t470b6gimags3bjzsi7u.jpg",
+            "caption": "Nouvelle réalisation",
+            "sub": "",
+            "categories": [
+                "enduit-décoratif"
+            ]
+        },
+        {
+            "full": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_1600,c_limit/v1787251795/sqfwxbkm2j9b2syfdujh.jpg",
+            "thumb": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_600,h_450,c_fill/v1787251795/sqfwxbkm2j9b2syfdujh.jpg",
+            "caption": "Nouvelle réalisation",
+            "sub": "",
+            "categories": []
+        },
+        {
+            "full": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_1600,c_limit/v1787251802/jsfuidqafmgezauwgkz6.jpg",
+            "thumb": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_600,h_450,c_fill/v1787251802/jsfuidqafmgezauwgkz6.jpg",
+            "caption": "Nouvelle réalisation",
+            "sub": "",
+            "categories": [
+                "beton-cire"
+            ]
+        },
+        {
+            "full": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_1600,c_limit/v1787251810/som8hraibkyp6wvlg6nj.jpg",
+            "thumb": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_600,h_450,c_fill/v1787251810/som8hraibkyp6wvlg6nj.jpg",
+            "caption": "Nouvelle réalisation",
+            "sub": "",
+            "categories": [
+                "beton-imprime",
+                "piscine"
+            ]
+        },
+        {
+            "full": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_1600,c_limit/v1787251817/wf3zibqtknssihp0xmup.jpg",
+            "thumb": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_600,h_450,c_fill/v1787251817/wf3zibqtknssihp0xmup.jpg",
+            "caption": "Nouvelle réalisation",
+            "sub": "",
+            "categories": [
+                "beton-imprime",
+                "piscine"
+            ]
+        },
+        {
+            "full": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_1600,c_limit/v1787252015/ev4jtjpgas93x1gsp3at.jpg",
+            "thumb": "https://res.cloudinary.com/de5u1njxn/image/upload/f_auto,q_auto,w_600,h_450,c_fill/v1787252015/ev4jtjpgas93x1gsp3at.jpg",
+            "caption": "Nouvelle réalisation",
+            "sub": "",
+            "categories": [
+                "beton-imprime",
+                "piscine"
+            ]
         }
     ]
 }
