@@ -98,14 +98,14 @@ $siteUrl = 'https://corentinvallet.fr/baconstruction';
 </div>
 
 <!-- FOOTER -->
-<footer>
-  <div class="footer-brand">
+  <footer>
+    <div class="footer-brand">
     <img class="footer-logo-circle" src="<?= e($logo) ?>" alt="Logo B&amp;A Construction">
-    <div><strong>B&amp;A Construction</strong><p>Bruno Salgado · Alex Freitas</p></div>
-  </div>
-  <p class="footer-copy">© <?= date('Y') ?> B&amp;A Construction — Tous droits réservés</p>
-  <div id="cv-signature"></div>
-</footer>
+      <div><strong>B&amp;A Construction</strong><p>Bruno Salgado · Alex Freitas</p></div>
+    </div>
+    <p class="footer-copy">© <?= date('Y') ?> B&amp;A Construction — Tous droits réservés</p>
+    <div id="cv-signature"></div>
+  </footer>
 
 <!-- ═══════════════════════════════════════════
      LIGHTBOX
