@@ -107,7 +107,7 @@
     /* ── FOOTER ── */
     footer{background:var(--dark-brown);padding:36px 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px;border-top:1px solid rgba(196,148,74,.2)}
     .footer-brand{display:flex;align-items:center;gap:14px}
-    .footer-logo-circle{width:42px;height:42px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;color:#fff;font-size:.9rem;flex-shrink:0;opacity:.9}
+    .footer-logo-circle{width:42px;height:42px;border-radius:50%;object-fit:cover;flex-shrink:0;opacity:.9}
     .footer-brand strong{display:block;color:var(--sand);font-family:'Playfair Display',serif;font-size:.92rem}
     .footer-brand p{font-size:.76rem;color:rgba(232,220,200,.45)}
     .footer-copy{font-size:.72rem;color:rgba(232,220,200,.32);letter-spacing:.08em}
@@ -241,7 +241,7 @@
 
 <footer>
   <div class="footer-brand">
-    <div class="footer-logo-circle">B&amp;A</div>
+    <img class="footer-logo-circle" src="<?= e($logo) ?>" alt="Logo B&amp;A Construction">
     <div><strong>B&amp;A Construction</strong><p>Bruno Salgado · Alex Freitas</p></div>
   </div>
   <p class="footer-copy">© <?= date('Y') ?> B&amp;A Construction — Tous droits réservés</p>
