@@ -1,106 +1,295 @@
-/* ============================================================
-   B&A Construction — Base commun (reset, variables, nav, boutons)
-   Partagé par index.php, galerie.php et les pages Haut de gamme
-   ============================================================ */
-
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
-    :root{
-      --sand:#e8dcc8;--brown:#7a5c3e;--dark-brown:#3d2b1a;
-      --cream:#f5f0e8;--accent:#c4944a;--text:#2a1f14;
-    }
-
-    html{scroll-behavior:smooth}
-
-    body{font-family:'Raleway',sans-serif;color:var(--text);background:var(--cream);overflow-x:hidden}
-
-    /* ── NAV ── */
-    nav{
-      position:fixed;top:0;left:0;right:0;z-index:100;
-      display:flex;align-items:center;justify-content:space-between;
-      padding:16px 5%;
-      background:rgba(26,18,10,0.88);
-      backdrop-filter:blur(14px);
-      border-bottom:1px solid rgba(196,148,74,0.25);
-    }
-
-    .nav-logo{display:flex;align-items:center;gap:13px;text-decoration:none;cursor:pointer}
-
-    .nav-brand{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--sand);letter-spacing:.04em;line-height:1.2}
-
-    .nav-brand em{font-style:normal;color:var(--accent)}
-
-    .nav-links a{text-decoration:none;color:var(--sand);font-size:.78rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;transition:color .25s;cursor:pointer}
-
-    .nav-links a:hover{color:var(--accent)}
-
-    .nav-toggle{display:none;flex-direction:column;gap:5px;
-      width:42px;height:42px;padding:0;background:none;border:0;cursor:pointer}
-
-    .nav-toggle span{display:block;width:24px;height:2px;margin:0 auto;
-      background:var(--sand);transition:transform .3s,opacity .3s}
-
-    #main-nav.open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-
-    #main-nav.open .nav-toggle span:nth-child(2){opacity:0}
-
-    #main-nav.open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-
-    .has-dropdown > a::after{content:"";display:inline-block;width:6px;height:6px;margin-left:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg)}
-
-    .dropdown{
-      list-style:none;position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(-6px);
-      min-width:210px;background:rgba(20,14,8,0.98);border:1px solid rgba(196,148,74,.25);
-      padding:8px 0;opacity:0;visibility:hidden;transition:opacity .22s ease,transform .22s ease,visibility .22s;
-      box-shadow:0 18px 40px rgba(0,0,0,.4);
-    }
-
-    .has-dropdown:hover .dropdown,.has-dropdown:focus-within .dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
-
-    .dropdown a{display:block;padding:11px 22px;font-size:.74rem;letter-spacing:.1em;white-space:nowrap}
-
-    .dropdown a::after{display:none}
-
-    .btn-primary{padding:13px 36px;background:var(--accent);color:#fff;border:none;cursor:pointer;font-family:'Raleway',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:background .25s,transform .2s;display:inline-block}
-
-    .btn-primary:hover{background:#a87836;transform:translateY(-2px)}
-
-    .section-label{font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px}
-
-    .section-title{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,4vw,2.9rem);font-weight:700;line-height:1.15;color:var(--dark-brown);margin-bottom:18px}
-
-    .section-desc{font-size:.97rem;line-height:1.85;color:#5a4535;max-width:560px}
-
-    .gallery-link-text{font-family:'Raleway',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--cream)}
-
-    .gallery-link-sub{font-size:.75rem;color:var(--cream);letter-spacing:.06em}
-
-    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-
-    .gallery-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s cubic-bezier(.25,.46,.45,.94)}
-
-    .gallery-item:hover img{transform:scale(1.07)}
-
-    .gallery-caption{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(26,18,10,.78) 100%);opacity:0;transition:opacity .3s;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:18px;gap:4px}
-
-    .gallery-item:hover .gallery-caption{opacity:1}
-
-    .gallery-caption span{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sand);font-weight:500}
-
-    .footer-brand{display:flex;align-items:center;gap:14px}
-
-    .footer-logo-circle{width:42px;height:42px;border-radius:50%;object-fit:cover;flex-shrink:0;opacity:.9}
-
-    .footer-brand strong{display:block;color:var(--sand);font-family:'Playfair Display',serif;font-size:.92rem}
-
-    .footer-brand p{font-size:.76rem;color:rgba(232,220,200,.45)}
-
-    .footer-copy{font-size:.72rem;color:rgba(232,220,200,.32);letter-spacing:.08em}
-
-    .page-header .section-label{font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px}
-
-    .page-header h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;color:var(--sand);line-height:1.1;margin-bottom:14px}
-
-    .page-header h1 em{font-style:normal;color:var(--accent)}
-
-    .page-header p{font-size:.97rem;line-height:1.85;color:rgba(232,220,200,.6);max-width:520px}
+/* ============================================================ B&A Construction — Base commun (reset, variables, nav, boutons) Partagé par index.php, galerie.php et les pages Haut de gamme ============================================================ */
+ *,*::before,*::after{
+    box-sizing:border-box;
+    margin:0;
+    padding:0
+}
+ :root{
+     --sand:#e8dcc8;
+    --brown:#7a5c3e;
+    --dark-brown:#3d2b1a;
+     --cream:#f5f0e8;
+    --accent:#c4944a;
+    --text:#2a1f14;
+}
+ html{
+    scroll-behavior:smooth
+}
+ body{
+    font-family:'Raleway',sans-serif;
+    color:var(--text);
+    background:var(--cream);
+    overflow-x:hidden
+}
+/* ── NAV ── */
+ nav{
+     position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:100;
+     display:flex;
+    align-items:center;
+    justify-content:space-between;
+     padding:16px 5%;
+     background:rgba(26,18,10,0.88);
+     backdrop-filter:blur(14px);
+     border-bottom:1px solid rgba(196,148,74,0.25);
+}
+ .nav-logo{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    text-decoration:none;
+    cursor:pointer
+}
+ .nav-brand{
+    font-family:'Playfair Display',serif;
+    font-size:1.1rem;
+    font-weight:700;
+    color:var(--sand);
+    letter-spacing:.04em;
+    line-height:1.2
+}
+ .nav-brand em{
+    font-style:normal;
+    color:var(--accent)
+}
+ .nav-links a{
+    text-decoration:none;
+    color:var(--sand);
+    font-size:.78rem;
+    font-weight:500;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    transition:color .25s;
+    cursor:pointer
+}
+ .nav-links a:hover{
+    color:var(--accent)
+}
+ .nav-toggle{
+    display:none;
+    flex-direction:column;
+    gap:5px;
+     width:42px;
+    height:42px;
+    padding:0;
+    background:none;
+    border:0;
+    cursor:pointer
+}
+ .nav-toggle span{
+    display:block;
+    width:24px;
+    height:2px;
+    margin:0 auto;
+     background:var(--sand);
+    transition:transform .3s,opacity .3s
+}
+ #main-nav.open .nav-toggle span:nth-child(1){
+    transform:translateY(7px) rotate(45deg)
+}
+ #main-nav.open .nav-toggle span:nth-child(2){
+    opacity:0
+}
+ #main-nav.open .nav-toggle span:nth-child(3){
+    transform:translateY(-7px) rotate(-45deg)
+}
+ .has-dropdown > a::after{
+    content:"";
+    display:inline-block;
+    width:6px;
+    height:6px;
+    margin-left:6px;
+    border-right:1.5px solid currentColor;
+    border-bottom:1.5px solid currentColor;
+    transform:translateY(-2px) rotate(45deg)
+}
+ .dropdown{
+     list-style:none;
+    position:absolute;
+    top:calc(100% + 14px);
+    left:50%;
+    transform:translateX(-50%) translateY(-6px);
+     min-width:210px;
+    background:rgba(20,14,8,0.98);
+    border:1px solid rgba(196,148,74,.25);
+     padding:8px 0;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .22s ease,transform .22s ease,visibility .22s;
+     box-shadow:0 18px 40px rgba(0,0,0,.4);
+}
+ .has-dropdown:hover .dropdown,.has-dropdown:focus-within .dropdown{
+    opacity:1;
+    visibility:visible;
+    transform:translateX(-50%) translateY(0)
+}
+ .dropdown a{
+    display:block;
+    padding:11px 22px;
+    font-size:.74rem;
+    letter-spacing:.1em;
+    white-space:nowrap
+}
+ .dropdown a::after{
+    display:none
+}
+ .btn-primary{
+    padding:13px 36px;
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    cursor:pointer;
+    font-family:'Raleway',sans-serif;
+    font-size:.8rem;
+    font-weight:600;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    text-decoration:none;
+    transition:background .25s,transform .2s;
+    display:inline-block
+}
+ .btn-primary:hover{
+    background:#a87836;
+    transform:translateY(-2px)
+}
+ .section-label{
+    font-size:.7rem;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    color:var(--accent);
+    font-weight:600;
+    margin-bottom:12px
+}
+ .section-title{
+    font-family:'Playfair Display',serif;
+    font-size:clamp(1.9rem,4vw,2.9rem);
+    font-weight:700;
+    line-height:1.15;
+    color:var(--dark-brown);
+    margin-bottom:18px
+}
+ .section-desc{
+    font-size:.97rem;
+    line-height:1.85;
+    color:#5a4535;
+    max-width:560px
+}
+ .gallery-link-text{
+    font-family:'Raleway',sans-serif;
+    font-size:.82rem;
+    font-weight:700;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--cream)
+}
+ .gallery-link-sub{
+    font-size:.75rem;
+    color:var(--cream);
+    letter-spacing:.06em
+}
+ .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px
+}
+ .gallery-item img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform .55s cubic-bezier(.25,.46,.45,.94)
+}
+ .gallery-item:hover img{
+    transform:scale(1.07)
+}
+ .gallery-caption{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg,transparent 50%,rgba(26,18,10,.78) 100%);
+    opacity:0;
+    transition:opacity .3s;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:flex-end;
+    padding:18px;
+    gap:4px
+}
+ .gallery-item:hover .gallery-caption{
+    opacity:1
+}
+ .gallery-caption span{
+    font-size:.75rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--sand);
+    font-weight:500
+}
+ footer{
+    background:var(--dark-brown);
+    padding:36px 5%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:18px;
+    border-top:1px solid rgba(196,148,74,.2)
+}
+ .footer-brand{
+    display:flex;
+    align-items:center;
+    gap:14px
+}
+ .footer-logo-circle{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    object-fit:cover;
+    flex-shrink:0;
+    opacity:.9
+}
+ .footer-brand strong{
+    display:block;
+    color:var(--sand);
+    font-family:'Playfair Display',serif;
+    font-size:.92rem
+}
+ .footer-brand p{
+    font-size:.76rem;
+    color:rgba(232,220,200,.45)
+}
+ .footer-copy{
+    font-size:.72rem;
+    color:rgba(232,220,200,.32);
+    letter-spacing:.08em
+}
+ .page-header .section-label{
+    font-size:.7rem;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    color:var(--accent);
+    font-weight:600;
+    margin-bottom:12px
+}
+ .page-header h1{
+    font-family:'Playfair Display',serif;
+    font-size:clamp(2.2rem,5vw,3.8rem);
+    font-weight:900;
+    color:var(--sand);
+    line-height:1.1;
+    margin-bottom:14px
+}
+ .page-header h1 em{
+    font-style:normal;
+    color:var(--accent)
+}
+ .page-header p{
+    font-size:.97rem;
+    line-height:1.85;
+    color:rgba(232,220,200,.6);
+    max-width:520px
+}
+ 
