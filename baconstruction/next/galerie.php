@@ -505,7 +505,7 @@ $siteUrl = 'https://corentinvallet.fr/baconstruction';
 
   <div class="gallery-full-grid" id="gallery-grid">
     <?php foreach ($gallery as $g): ?>
-    <div class="gallery-item" data-src="<?= e($g['full'] ?? '') ?>" data-category="<?= e($g['category'] ?? '') ?>">
+    <div class="gallery-item" data-src="<?= e($g['full'] ?? '') ?>" data-category="<?= e(implode(' ', $g['categories'] ?? ($g['category'] ? [$g['category']] : []))) ?>">
       <img src="<?= e($g['thumb'] ?? ($g['full'] ?? '')) ?>" alt="<?= e($g['caption'] ?? '') ?>" loading="lazy" width="600" height="450">
       <div class="gallery-caption"><span><?= e($g['caption'] ?? '') ?></span><?php if (!empty($g['sub'])): ?><em><?= e($g['sub']) ?></em><?php endif; ?></div>
     </div>
@@ -555,10 +555,14 @@ $siteUrl = 'https://corentinvallet.fr/baconstruction';
     'beton-imprime':'réalisation(s) en béton imprimé'
   };
 
+  function hasCategory(item, cat) {
+    return item.dataset.category.split(' ').includes(cat);
+  }
+
   function updateCount(filter) {
     const n = filter === 'all'
       ? items.length
-      : Array.from(items).filter(el => el.dataset.category === filter).length;
+      : Array.from(items).filter(el => hasCategory(el, filter)).length;
     count.textContent = n + ' ' + (labels[filter] || 'réalisations');
     empty.style.display = n === 0 ? 'block' : 'none';
   }
@@ -566,7 +570,7 @@ $siteUrl = 'https://corentinvallet.fr/baconstruction';
   function applyFilter(filter) {
     btns.forEach(b => b.classList.toggle('active', b.dataset.filter === filter));
     items.forEach(item => {
-      item.classList.toggle('hidden', filter !== 'all' && item.dataset.category !== filter);
+      item.classList.toggle('hidden', filter !== 'all' && !hasCategory(item, filter));
     });
     updateCount(filter);
   }

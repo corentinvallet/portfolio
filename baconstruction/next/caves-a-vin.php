@@ -11,7 +11,7 @@ function ml($s) { return nl2br(htmlspecialchars((string)($s ?? ''), ENT_QUOTES, 
 $d       = $c['caveavin'] ?? [];
 $contact = $c['contact']  ?? [];
 $logo    = $c['logo']     ?? 'Photos/Logo simplifié.webp';
-$gallery = array_values(array_filter($c['gallery'] ?? [], fn($g) => ($g['category'] ?? '') === 'cave-a-vin'));
+$gallery = array_values(array_filter($c['gallery'] ?? [], fn($g) => in_array('cave-a-vin', $g['categories'] ?? ($g['category'] ? [$g['category']] : []), true)));
 
 $PAGE_LABEL = 'Haut de gamme';
 $PAGE_TITLE = 'Caves à <em>vin</em>';

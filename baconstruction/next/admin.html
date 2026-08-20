@@ -98,6 +98,9 @@
   .gal-item .gthumb{width:84px;height:64px;flex-shrink:0;object-fit:cover;border:1px solid var(--line);
     background:linear-gradient(135deg,var(--dark-brown),var(--brown))}
   .gal-fields{flex:1;min-width:0}
+  .catcheck{display:flex;flex-wrap:wrap;gap:6px 14px}
+  .catcheck-item{display:flex;align-items:center;gap:6px;font-size:.82rem;color:var(--text);cursor:pointer}
+  .catcheck-item input{width:auto;accent-color:var(--accent)}
   .gal-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
 
   /* ── Barre d'enregistrement ── */
@@ -239,15 +242,22 @@ function textField(labelTxt, value, onChange, {multiline=false, hint='', placeho
 }
 
 /* ── Sélecteur de catégorie ── */
-function catField(value, onChange){
-  const sel = el('select');
+/* ── Sélecteur de catégories (plusieurs choix possibles) ── */
+function catField(values, onChange){
+  values = Array.isArray(values) ? values : (values ? [values] : []);
+  const box = el('div',{class:'catcheck'});
   CATS.forEach(([v,lab])=>{
-    const o = el('option',{value:v}, lab);
-    if(v===value) o.selected = true;
-    sel.appendChild(o);
+    const cb = el('input',{type:'checkbox',value:v});
+    cb.checked = values.includes(v);
+    cb.addEventListener('change', ()=>{
+      if(cb.checked){ if(!values.includes(v)) values.push(v); }
+      else { const idx=values.indexOf(v); if(idx>-1) values.splice(idx,1); }
+      onChange(values);
+      markDirty();
+    });
+    box.appendChild(el('label',{class:'catcheck-item'}, cb, ' '+lab));
   });
-  sel.addEventListener('change', ()=>{ onChange(sel.value); markDirty(); });
-  return el('div',{class:'field'}, el('label',{class:'lbl'},'Catégorie'), sel);
+  return el('div',{class:'field'}, el('label',{class:'lbl'},'Catégories'), box);
 }
 /* ── Sélecteur de catégorie avec option "aucun lien" (cartes Services) ── */
 function catFieldOptional(labelTxt, value, onChange, hint){
@@ -680,7 +690,13 @@ function render(){
   }));
 
   $app.appendChild(section('Galerie photos', false, b=>{
-    state.gallery = state.gallery || [];
+        state.gallery = state.gallery || [];
+    state.gallery.forEach(g=>{
+      if(!Array.isArray(g.categories)){
+        g.categories = g.category ? [g.category] : [];
+        delete g.category;
+      }
+    });
     b.appendChild(el('div',{class:'hint',style:'margin-bottom:12px'},
       'Ajoutez vos photos via Cloudinary. La miniature et la version pleine taille sont créées automatiquement.'));
     const list = el('div');
@@ -694,7 +710,7 @@ function render(){
         const fields = el('div',{class:'gal-fields'},
           textField('Légende', g.caption, v=>g.caption=v),
           textField('Sous-titre', g.sub, v=>g.sub=v),
-          catField(g.category, v=>g.category=v));
+          catField(g.categories, v=>g.categories=v));
         card.appendChild(el('div',{class:'top'}, thumb, fields));
         card.appendChild(el('div',{class:'gal-actions'},
           el('button',{class:'btn btn-accent btn-sm',type:'button',
@@ -712,7 +728,7 @@ function render(){
     b.appendChild(list);
     b.appendChild(el('button',{class:'btn btn-accent miniadd',type:'button',
       onclick:()=>pickImage(({full,thumb})=>{
-        state.gallery.push({full,thumb,caption:'Nouvelle réalisation',sub:'',category:CATS[0][0]});
+        state.gallery.push({full,thumb,caption:'Nouvelle réalisation',sub:'',categories:[]});
         markDirty(); draw();
       })},'+ Ajouter une photo'));
   }));

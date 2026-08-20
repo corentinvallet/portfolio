@@ -594,7 +594,7 @@ $preview = array_slice($gallery, 0, 3);
     </a>
     <div class="gallery-grid gallery-preview">
       <?php foreach ($preview as $g): ?>
-      <div class="gallery-item" data-src="<?= e($g['full'] ?? '') ?>" data-category="<?= e($g['category'] ?? '') ?>">
+      <div class="gallery-item" data-src="<?= e($g['full'] ?? '') ?>" data-category="<?= e(implode(' ', $g['categories'] ?? ($g['category'] ? [$g['category']] : []))) ?>">
         <img src="<?= e($g['thumb'] ?? ($g['full'] ?? '')) ?>" alt="<?= e($g['caption'] ?? '') ?>" loading="lazy" width="600" height="450">
         <div class="gallery-caption"><span><?= e($g['caption'] ?? '') ?></span></div>
         <div class="preview-overlay">
@@ -690,8 +690,8 @@ $preview = array_slice($gallery, 0, 3);
    Les 3 vignettes de l'accueil et la bannière mènent vers galerie.php.
    Si la vignette a une catégorie, on ouvre la galerie pré-filtrée dessus. */
 function goToGallery(category) {
-  const cat = (category && category.length) ? category : '';
-  window.location.href = 'galerie.php' + (cat ? '?cat=' + encodeURIComponent(cat) : '');
+  const first = (category || '').trim().split(/\s+/)[0] || '';
+  window.location.href = 'galerie.php' + (first ? '?cat=' + encodeURIComponent(first) : '');
 }
 
 (function(){

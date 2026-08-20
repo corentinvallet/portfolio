@@ -11,7 +11,7 @@ function ml($s) { return nl2br(htmlspecialchars((string)($s ?? ''), ENT_QUOTES, 
 $d       = $c['escalierbeton'] ?? [];
 $contact = $c['contact']       ?? [];
 $logo    = $c['logo']          ?? 'Photos/Logo simplifié.webp';
-$gallery = array_values(array_filter($c['gallery'] ?? [], fn($g) => ($g['category'] ?? '') === 'escalier-beton'));
+$gallery = array_values(array_filter($c['gallery'] ?? [], fn($g) => in_array('escalier-beton', $g['categories'] ?? ($g['category'] ? [$g['category']] : []), true)));
 
 $PAGE_LABEL = 'Haut de gamme';
 $PAGE_TITLE = 'Escalier <em>béton</em>';
