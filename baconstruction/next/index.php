@@ -676,6 +676,7 @@ $preview = array_slice($gallery, 0, 3);
       <div><strong>B&amp;A Construction</strong><p>Bruno Salgado · Alex Freitas</p></div>
     </div>
     <p class="footer-copy">© <?= date('Y') ?> B&amp;A Construction — Tous droits réservés</p>
+    <div id="cv-signature"></div>
   </footer>
 
 </div><!-- /page-home -->
@@ -808,5 +809,7 @@ function goToGallery(category) {
     }));
 })();
 </script>
+
+<script src="https://www.corentinvallet.fr/common/widgets/signature.js?v=1" defer></script>
 </body>
 </html>
