@@ -11,7 +11,7 @@
         "image": "Photos/Hero.webp",
         "eyebrow": "Maçonnerie générale · Valence",
         "names": "Bruno Salgado · Alex Freitas",
-        "sub": "Béton imprimé, ciré, désactivé — entièrement sur mesure. Ouvrages spécifiques (caves à vins, escaliers béton).",
+        "sub": "Béton imprimé, ciré, désactivé — entièrement sur mesure. Ouvrages spécifiques (piscines, caves à vins, escaliers béton).",
         "ctaPrimary": "Voir nos réalisations",
         "ctaSecondary": "Demander un devis"
     },
@@ -46,8 +46,8 @@
             },
             {
                 "icon": "Photos/Piscine 2.webp",
-                "title": "Plages de piscine",
-                "text": "Réalisation complète des plages et margelles, antidérapant résistant aux UV et au chlore.",
+                "title": "Piscines",
+                "text": "Réalisation complète de piscines et de leurs plages et margelles, antidérapant résistant aux UV et au chlore.",
                 "filter": "piscine"
             },
             {
@@ -201,6 +201,10 @@
     },
     "categories": [
         {
+            "value": "piscine",
+            "label": "Piscine"
+        },
+        {
             "value": "cave-a-vin",
             "label": "Caves à vins"
         },
@@ -211,10 +215,6 @@
         {
             "value": "beton-desactive",
             "label": "Béton désactivé"
-        },
-        {
-            "value": "piscine",
-            "label": "Piscine"
         },
         {
             "value": "beton-imprime",

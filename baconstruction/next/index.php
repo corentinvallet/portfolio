@@ -201,15 +201,17 @@ $preview = array_slice($gallery, 0, 3);
           <div class="contact-item"><span class="contact-icon">📧</span><div><strong>E-mail</strong><p><?= e($contact['email'] ?? '') ?></p></div></div>
           <div class="contact-item"><span class="contact-icon">📍</span><div><strong>Zone d'intervention</strong><p><?= ml($contact['zone'] ?? '') ?></p></div></div>
         </div>
-      </div>
-      <form class="contact-form" onsubmit="return false">
+      </div>      
+      <form class="contact-form" action="https://formspree.io/f/mljroqno" method="POST">
+        <input type="hidden" name="_subject" value="Nouvelle demande de contact - B&amp;A Construction">
+        <input type="text" name="_gotcha" style="display:none">
         <div class="form-row">
-          <input type="text" placeholder="Prénom"/>
-          <input type="text" placeholder="Nom"/>
-        </div>
-        <input type="email" placeholder="Adresse e-mail"/>
-        <input type="tel" placeholder="Téléphone"/>
-        <select><option value="" disabled selected>Type de projet</option><option>Terrasse béton imprimé</option><option>Plage de piscine</option><option>Allée béton désactivé</option><option>Béton ciré</option><option>Gros œuvre / Dalle</option><option>Autre</option></select>
+          <input type="text" name="prenom" placeholder="Prénom" required/>
+          <input type="text" name="nom" placeholder="Nom" required/>
+        </div>        
+        <input type="email" name="email" placeholder="Adresse e-mail" required/>
+        <input type="tel" name="telephone" placeholder="Téléphone"/>
+        <select name="type_projet"><option value="" disabled selected>Type de projet</option><option>Terrasse béton imprimé</option><option>Plage de piscine</option><option>Allée béton désactivé</option><option>Béton ciré</option><option>Gros œuvre / Dalle</option><option>Autre</option></select>
         <textarea placeholder="Décrivez votre projet (surface, délais, contraintes…)"></textarea>
         <button type="submit" class="btn-primary">Envoyer ma demande →</button>
       </form>
