@@ -437,8 +437,8 @@
       display: block;
     }
     .service-icon img {
-      width: 96px;
-      height: 96px;
+      width: 48px;
+      height: 48px;
       display: block;
       object-fit: contain;
     }
