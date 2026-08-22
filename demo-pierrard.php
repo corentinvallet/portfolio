@@ -283,7 +283,7 @@
         <p class="feature-desc">Les réalisations sont classées par catégorie (maçonnerie, pierre, façade, dallage) et filtrables en un clic — la meilleure preuve du travail effectué.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">📋</span>
+        <span class="feature-icon"><img src="Photos/devis.png" alt="Devis"></span>
         <div class="feature-name">Devis en ligne intégré</div>
         <p class="feature-desc">Un formulaire directement sur le site, avec sélection du type de travaux — les demandes arrivent triées, prêtes à être traitées.</p>
       </div>
@@ -312,7 +312,7 @@
 
     <div class="feature-grid">
       <div class="feature-card fade-up">
-        <span class="feature-icon">📊</span>
+        <span class="feature-icon"><img src="Photos/tableaubord.png" alt="Tableau de bord"></span>
         <div class="feature-name">Tableau de bord en un coup d'œil</div>
         <p class="feature-desc">Photos publiées, demandes de devis reçues — les chiffres essentiels affichés dès l'ouverture de l'espace admin.</p>
       </div>
