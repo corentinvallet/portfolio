@@ -183,7 +183,8 @@
     }
     .feature-card:hover::before { height: 100%; }
     .feature-card:hover { transform: translateY(-3px); }
-    .feature-icon { font-size: 1.6rem; margin-bottom: 16px; display: block; }
+    .feature-icon { margin-bottom: 16px; display: block; }
+    .feature-icon img { width: 48px; height: 48px; object-fit: contain; display: block; }
     .feature-name {
       font-family: 'Fraunces', serif;
       font-size: 1.2rem;
@@ -265,17 +266,17 @@
 
     <div class="feature-grid">
       <div class="feature-card fade-up">
-        <span class="feature-icon">🌿</span>
+        <span class="feature-icon"><img src="Photos/identite.png" alt="Identité"></span>
         <div class="feature-name">Identité visuelle sur mesure</div>
         <p class="feature-desc">Palette et typographie propres à l'enseigne — un univers qui inspire confiance, entre matériel professionnel et service de proximité.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">🛠️</span>
+        <span class="feature-icon"><img src="Photos/identite.png" alt="Identité"></span>
         <div class="feature-name">Catalogue filtrable par catégorie</div>
         <p class="feature-desc">Jardin, bricolage, terrassement… chaque référence a sa fiche avec prix à la journée, filtrable en un clic pour trouver le bon outil rapidement.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">📅</span>
+        <span class="feature-icon"><img src="Photos/reservation.png" alt="Réservation"></span>
         <div class="feature-name">Réservation en ligne intégrée</div>
         <p class="feature-desc">Un formulaire directement sur le site, avec sélection du matériel et des dates — la demande arrive prête à être confirmée.</p>
       </div>
@@ -285,12 +286,12 @@
         <p class="feature-desc">Les 4 étapes de la location (choisir, réserver, récupérer, restituer) sont expliquées simplement pour rassurer les nouveaux clients.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">★</span>
+        <span class="feature-icon"><img src="Photos/étoile.png" alt="Étoile"></span>
         <div class="feature-name">Avis clients mis en scène</div>
         <p class="feature-desc">Les retours clients sont affichés avec soin pour rassurer un visiteur qui loue du matériel pour la première fois.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">📱</span>
+        <span class="feature-icon"><img src="Photos/smartphone.png" alt="Smartphone"></span>
         <div class="feature-name">Pensé mobile</div>
         <p class="feature-desc">La grande majorité des visiteurs consultent un catalogue depuis leur téléphone, souvent la veille d'un chantier — le site s'adapte à tous les écrans.</p>
       </div>
@@ -319,12 +320,12 @@
         <p class="feature-desc">Changer l'image d'accueil ou les messages clés du bandeau (livraison, horaires, garanties) pour coller à l'actualité du commerce.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">📷</span>
+        <span class="feature-icon"><img src="Photos/Photo.png" alt="Photo"></span>
         <div class="feature-name">Photos gérées en un clic</div>
         <p class="feature-desc">Chaque image de produit ou de bannière s'upload directement depuis l'admin, hébergée automatiquement sur le cloud.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">💬</span>
+        <span class="feature-icon"><img src="Photos/étoile.png" alt="Étoile"></span>
         <div class="feature-name">Avis clients à jour</div>
         <p class="feature-desc">Ajouter les derniers retours clients pour que la section avis reste vivante et représentative de l'activité récente.</p>
       </div>
