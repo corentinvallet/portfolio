@@ -271,7 +271,7 @@
         <p class="feature-desc">Palette et typographie propres à l'enseigne — un univers qui inspire confiance, entre matériel professionnel et service de proximité.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/identite.png" alt="Identité"></span>
+        <span class="feature-icon"><img src="Photos/catalogue.png" alt="Catalogue"></span>
         <div class="feature-name">Catalogue filtrable par catégorie</div>
         <p class="feature-desc">Jardin, bricolage, terrassement… chaque référence a sa fiche avec prix à la journée, filtrable en un clic pour trouver le bon outil rapidement.</p>
       </div>
@@ -310,7 +310,7 @@
 
     <div class="feature-grid">
       <div class="feature-card fade-up">
-        <span class="feature-icon">🛠️</span>
+        <span class="feature-icon"><img src="Photos/catalogue.png" alt="Catalogue"></span>
         <div class="feature-name">Catalogue de matériel éditable</div>
         <p class="feature-desc">Ajouter une référence, modifier un prix ou une catégorie, mettre en avant un produit populaire ou nouveau — tout se fait en quelques clics.</p>
       </div>
