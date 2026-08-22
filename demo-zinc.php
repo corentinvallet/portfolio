@@ -182,7 +182,8 @@
     }
     .feature-card:hover::before { height: 100%; }
     .feature-card:hover { transform: translateY(-3px); }
-    .feature-icon { font-size: 1.6rem; margin-bottom: 16px; display: block; }
+    .feature-icon { margin-bottom: 16px; display: block; }
+    .feature-icon img { width: 48px; height: 48px; object-fit: contain; display: block; }
     .feature-name {
       font-family: 'Fraunces', serif;
       font-size: 1.2rem;
@@ -264,7 +265,7 @@
 
     <div class="feature-grid">
       <div class="feature-card fade-up">
-        <span class="feature-icon">🍷</span>
+        <img src="Photos/identite.png" alt="Identité visuelle sur mesure">
         <div class="feature-name">Identité visuelle sur mesure</div>
         <p class="feature-desc">Palette, typographies et ambiance visuelle propres au bistrot — noir, or et cuivre pour évoquer un lieu chaleureux et authentique.</p>
       </div>
