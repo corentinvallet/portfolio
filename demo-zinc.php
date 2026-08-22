@@ -265,32 +265,32 @@
 
     <div class="feature-grid">
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/identite.png" alt="Indentité"></span>
+        <span class="feature-icon"><img src="Photos/identite.png" alt="Identité"></span>
         <div class="feature-name">Identité visuelle sur mesure</div>
         <p class="feature-desc">Palette, typographies et ambiance visuelle propres au bistrot — noir, or et cuivre pour évoquer un lieu chaleureux et authentique.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">📖</span>
+        <span class="feature-icon"><img src="Photos/menu.png" alt="Menu"></span>
         <div class="feature-name">Carte mise en avant</div>
         <p class="feature-desc">Entrées, plats, desserts organisés en onglets clairs, avec descriptions et prix — la carte se met à jour automatiquement dès que le restaurateur la modifie.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">📅</span>
+        <span class="feature-icon"><img src="Photos/reservation.png" alt="Réservation"></span>
         <div class="feature-name">Réservation en ligne intégrée</div>
         <p class="feature-desc">Un formulaire directement sur le site, avec créneaux et jours d'ouverture qui se ferment automatiquement une fois complets.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">★</span>
+        <span class="feature-icon"><img src="Photos/étoile.png" alt="Étoile"></span>
         <div class="feature-name">Avis clients mis en scène</div>
         <p class="feature-desc">Les retours clients sont affichés avec soin pour rassurer un visiteur qui découvre l'établissement pour la première fois.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">🖼️</span>
+        <span class="feature-icon"><img src="Photos/Photo.png" alt="Appareil photo"></span>
         <div class="feature-name">Galerie immersive</div>
         <p class="feature-desc">Photos de la salle, des plats et de l'ambiance pour donner un aperçu concret du lieu avant même d'y avoir mis les pieds.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">📱</span>
+        <span class="feature-icon"><img src="Photos/smartphone.png" alt="Smartphone"></span>
         <div class="feature-name">Pensé mobile</div>
         <p class="feature-desc">La grande majorité des visiteurs consultent un restaurant depuis leur téléphone — le site est entièrement adapté à tous les écrans.</p>
       </div>
