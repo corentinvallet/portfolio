@@ -309,7 +309,7 @@
 
     <div class="feature-grid">
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/reservations.png" alt="Réservation"></span>
+        <span class="feature-icon"><img src="Photos/reservation.png" alt="Réservation"></span>
         <div class="feature-name">Suivi des réservations en un coup d'œil</div>
         <p class="feature-desc">Total, réservations du jour, en attente de confirmation, nombre de couverts — les chiffres essentiels affichés dès l'ouverture de l'espace admin.</p>
       </div>
@@ -324,7 +324,7 @@
         <p class="feature-desc">Ajouter de nouvelles photos ou réorganiser la galerie sans aucune manipulation technique.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">⚙️</span>
+        <span class="feature-icon"><img src="Photos/réglage.png" alt="Roue dentée"></span>
         <div class="feature-name">Réglages horaires & capacité</div>
         <p class="feature-desc">Définir les jours d'ouverture et le nombre de couverts disponibles par service — le formulaire de réservation s'adapte automatiquement.</p>
       </div>
