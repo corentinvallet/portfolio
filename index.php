@@ -611,7 +611,7 @@
       border-bottom: 1px solid var(--border);
     }
     .sector-card-icon { display: block; }
-    .sector-card-icon img { width: 32px; height: 32px; object-fit: contain; display: block; }
+    .sector-card-icon img { width: 48px; height: 48px; object-fit: contain; display: block; }
     .sector-card-title {
       font-family: 'Fraunces', serif;
       font-size: 1.1rem;
