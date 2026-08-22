@@ -38,7 +38,7 @@
     "svc2_name": "Conseil en communication",
     "svc2_desc": "Avant même de construire le site, on définit ensemble votre message, votre positionnement et la façon dont vous voulez vous adresser à vos clients.",
     "svc2_tags": "Stratégie de contenu, Tone of voice, Positionnement",
-    "svc3_icon": "✍️",
+    "svc3_icon": "<img src=\"Photos/redaction.png\" alt=\"Site vitrine\">",
     "svc3_name": "Rédaction & textes",
     "svc3_desc": "Je rédige les textes de votre site à votre place — ou je retravaille les vôtres. Des mots qui vous ressemblent, qui convainquent et qui référencent bien.",
     "svc3_tags": "Copywriting, SEO de base, Reformulation",

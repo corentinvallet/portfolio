@@ -436,6 +436,12 @@
       margin-bottom: 18px;
       display: block;
     }
+    .service-icon img {
+      width: 32px;
+      height: 32px;
+      display: block;
+      object-fit: contain;
+    }
     .service-name {
       font-family: 'Fraunces', serif;
       font-size: 1.35rem;
@@ -1583,7 +1589,7 @@
 
     /* — Services — */
     ['1','2','3','4'].forEach(n => {
-      set('svc'+n+'-icon', data['svc'+n+'_icon']);
+      setHtml('svc'+n+'-icon', data['svc'+n+'_icon']);
       set('svc'+n+'-name', data['svc'+n+'_name']);
       set('svc'+n+'-desc', data['svc'+n+'_desc']);
       if (data['svc'+n+'_tags']) {
