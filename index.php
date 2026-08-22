@@ -610,7 +610,8 @@
       padding: 20px 24px 16px;
       border-bottom: 1px solid var(--border);
     }
-    .sector-card-icon { font-size: 1.6rem; line-height: 1; }
+    .sector-card-icon { display: block; }
+    .sector-card-icon img { width: 32px; height: 32px; object-fit: contain; display: block; }
     .sector-card-title {
       font-family: 'Fraunces', serif;
       font-size: 1.1rem;
@@ -1313,7 +1314,7 @@
       <!-- ══ RESTAURATEURS ══ -->
       <div class="sector-card fade-up">
         <div class="sector-card-header">
-          <span class="sector-card-icon">🍷</span>
+          <span class="sector-card-icon"><img src="Photos/restaurant.png" alt="Restaurateurs"></span>
           <div>
             <div class="sector-card-title">Restaurateurs</div>
             <div class="sector-card-sub">Le Zinc — Bistrot parisien</div>
@@ -1354,7 +1355,7 @@
       <!-- ══ ARTISANS ══ -->
       <div class="sector-card fade-up">
         <div class="sector-card-header">
-          <span class="sector-card-icon">🧱</span>
+          <span class="sector-card-icon"><img src="Photos/macon.png" alt="Maçons"></span>
           <div>
             <div class="sector-card-title">Artisans</div>
             <div class="sector-card-sub">Pierrard Maçonnerie</div>
@@ -1395,7 +1396,7 @@
       <!-- ══ COMMERCES ══ -->
       <div class="sector-card fade-up">
         <div class="sector-card-header">
-          <span class="sector-card-icon">🏡</span>
+          <span class="sector-card-icon"><img src="Photos/commerce.png" alt="Commerces"></span>
           <div>
             <div class="sector-card-title">Commerces</div>
             <div class="sector-card-sub">TerraLoc — Location de matériel</div>
