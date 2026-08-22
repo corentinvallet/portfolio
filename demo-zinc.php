@@ -309,17 +309,17 @@
 
     <div class="feature-grid">
       <div class="feature-card fade-up">
-        <span class="feature-icon">📋</span>
+        <span class="feature-icon"><img src="Photos/reservations.png" alt="Réservation"></span>
         <div class="feature-name">Suivi des réservations en un coup d'œil</div>
         <p class="feature-desc">Total, réservations du jour, en attente de confirmation, nombre de couverts — les chiffres essentiels affichés dès l'ouverture de l'espace admin.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">✎</span>
+        <span class="feature-icon"><img src="Photos/redaction.png" alt="Rédaction"></span>
         <div class="feature-name">Édition de la carte en temps réel</div>
         <p class="feature-desc">Ajouter, modifier ou réorganiser plats et catégories — les changements apparaissent instantanément sur le site public.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">📷</span>
+        <span class="feature-icon"><img src="Photos/Photo.png" alt="Photo"></span>
         <div class="feature-name">Galerie par glisser-déposer</div>
         <p class="feature-desc">Ajouter de nouvelles photos ou réorganiser la galerie sans aucune manipulation technique.</p>
       </div>
