@@ -184,7 +184,9 @@
     }
     .feature-card:hover::before { height: 100%; }
     .feature-card:hover { transform: translateY(-3px); }
-    .feature-icon { font-size: 1.6rem; margin-bottom: 16px; display: block; }
+    
+    .feature-icon { margin-bottom: 16px; display: block; }
+    .feature-icon img { width: 48px; height: 48px; object-fit: contain; display: block; }
     .feature-name {
       font-family: 'Fraunces', serif;
       font-size: 1.2rem;
@@ -266,17 +268,17 @@
 
     <div class="feature-grid">
       <div class="feature-card fade-up">
-        <span class="feature-icon">🧱</span>
+        <span class="feature-icon"><img src="Photos/identite.png" alt="Identité"></span>
         <div class="feature-name">Identité visuelle sur mesure</div>
         <p class="feature-desc">Palette pierre et terre, typographie sobre — une identité qui évoque le sérieux et le savoir-faire artisanal, loin des sites génériques du BTP.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">🏗️</span>
+        <span class="feature-icon"><img src="Photos/macon.png" alt="Mur"></span>
         <div class="feature-name">Prestations mises en avant</div>
         <p class="feature-desc">Maçonnerie générale, pierre naturelle, dallage, ravalement… chaque spécialité a sa fiche claire, pour que le visiteur trouve tout de suite ce qu'il cherche.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">🖼️</span>
+        <span class="feature-icon"><img src="Photos/Photo.png" alt="Photo"></span>
         <div class="feature-name">Galerie de chantiers filtrable</div>
         <p class="feature-desc">Les réalisations sont classées par catégorie (maçonnerie, pierre, façade, dallage) et filtrables en un clic — la meilleure preuve du travail effectué.</p>
       </div>
@@ -286,12 +288,12 @@
         <p class="feature-desc">Un formulaire directement sur le site, avec sélection du type de travaux — les demandes arrivent triées, prêtes à être traitées.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">★</span>
+        <span class="feature-icon"><img src="Photos/étoile.png" alt="Étoile"></span>
         <div class="feature-name">Avis clients mis en scène</div>
         <p class="feature-desc">Les retours clients sont affichés avec soin pour rassurer un visiteur qui confie souvent un chantier important à un inconnu.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">📱</span>
+        <span class="feature-icon"><img src="Photos/smartphone.png" alt="Smartphone"></span>
         <div class="feature-name">Pensé mobile</div>
         <p class="feature-desc">Un client qui cherche un artisan en urgence est souvent sur son téléphone — le site est entièrement adapté à tous les écrans.</p>
       </div>
@@ -315,17 +317,17 @@
         <p class="feature-desc">Photos publiées, demandes de devis reçues — les chiffres essentiels affichés dès l'ouverture de l'espace admin.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">📷</span>
+        <span class="feature-icon"><img src="Photos/Photo.png" alt="Photo"></span>
         <div class="feature-name">Galerie de chantiers par glisser-déposer</div>
         <p class="feature-desc">Ajouter des photos depuis le chantier, les classer par catégorie et les réorganiser — sans aucune manipulation technique.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">✎</span>
+        <span class="feature-icon"><img src="Photos/redaction.png" alt="Rédaction"></span>
         <div class="feature-name">Textes & prestations modifiables</div>
         <p class="feature-desc">Mettre à jour la présentation de l'entreprise ou la liste des prestations — les changements apparaissent instantanément sur le site public.</p>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">⚙️</span>
+        <span class="feature-icon"><img src="Photos/réglage.png" alt="Roue dentée"></span>
         <div class="feature-name">Réglages de l'entreprise</div>
         <p class="feature-desc">Coordonnées, zone d'intervention, mot de passe d'accès — tout se paramètre depuis un seul écran, à jour en permanence.</p>
       </div>
