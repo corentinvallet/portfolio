@@ -265,7 +265,7 @@
 
     <div class="feature-grid">
       <div class="feature-card fade-up">
-        <img src="Photos/identite.png" alt="Identité visuelle sur mesure">
+        <span class="feature-icon"><img src="Photos/identite.png" alt="Indentité"></span>
         <div class="feature-name">Identité visuelle sur mesure</div>
         <p class="feature-desc">Palette, typographies et ambiance visuelle propres au bistrot — noir, or et cuivre pour évoquer un lieu chaleureux et authentique.</p>
       </div>
