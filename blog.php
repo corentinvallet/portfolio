@@ -29,6 +29,7 @@ function h($s) { return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
   <meta name="description" content="Conseils et retours d'expérience sur la création de sites web pour artisans et indépendants à Valence, Bourg-lès-Valence, Portes-lès-Valence et Romans-sur-Isère." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://corentinvallet.fr/blog.php" />
+  <link rel="stylesheet" href="nav.css">
   <link rel="icon" type="image/ico" href="Photos/Favicon_transp48.png">
 
   <meta property="og:type" content="website" />
@@ -56,14 +57,9 @@ function h($s) { return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;font-size:16px;}
-    body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);transition:background var(--transition),color var(--transition);}
+    body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);transition:background var(--transition),color var(--transition);padding-top:72px;}
     a{color:inherit;text-decoration:none;}
     .wrap{max-width:900px;margin:0 auto;padding:0 24px;}
-    header.site{padding:28px 0;border-bottom:1px solid var(--border);}
-    header.site .wrap{display:flex;align-items:center;justify-content:space-between;}
-    .brand{font-family:'Fraunces',serif;font-weight:600;font-size:1.3rem;}
-    .back-link{font-family:'DM Mono',monospace;font-size:0.78rem;letter-spacing:.04em;color:var(--text2);}
-    .back-link:hover{color:var(--accent);}
     .hero{padding:64px 0 40px;}
     .eyebrow{font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:block;}
     h1{font-family:'Fraunces',serif;font-weight:600;font-size:2.4rem;line-height:1.15;margin-bottom:14px;}
@@ -83,12 +79,7 @@ function h($s) { return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
 </head>
 <body>
 
-<header class="site">
-  <div class="wrap">
-    <a class="brand" href="/">Corentin Vallet</a>
-    <a class="back-link" href="/">← Retour au site</a>
-  </div>
-</header>
+<?php include __DIR__ . '/inc/nav.php'; ?>
 
 <section class="hero">
   <div class="wrap">
@@ -119,5 +110,16 @@ function h($s) { return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
   <div class="wrap">© <?= date('Y') ?> Corentin Vallet — Création de sites web à Valence</div>
 </footer>
 
+<script src="nav.js"></script>
+<script>
+  const html = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  btn.addEventListener('click', () => {
+    html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', html.dataset.theme);
+  });
+  const saved = localStorage.getItem('theme');
+  if (saved) html.dataset.theme = saved;
+</script>
 </body>
 </html>

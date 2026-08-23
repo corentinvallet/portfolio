@@ -44,6 +44,7 @@ $image = $post && !empty($post['image']) ? $post['image'] : 'https://corentinval
   <meta name="description" content="<?= h($desc) ?>" />
   <meta name="robots" content="<?= $post ? 'index, follow' : 'noindex, follow' ?>" />
   <?php if ($post): ?><link rel="canonical" href="<?= h($url) ?>" /><?php endif; ?>
+  <link rel="stylesheet" href="nav.css">
   <link rel="icon" type="image/ico" href="Photos/Favicon_transp48.png">
 
   <meta property="og:type" content="article" />
@@ -85,14 +86,9 @@ $image = $post && !empty($post['image']) ? $post['image'] : 'https://corentinval
       --card-shadow:0 2px 24px rgba(0,0,0,0.4);
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);}
+    body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);padding-top:72px;}
     a{color:inherit;text-decoration:none;}
     .wrap{max-width:760px;margin:0 auto;padding:0 24px;}
-    header.site{padding:28px 0;border-bottom:1px solid var(--border);}
-    header.site .wrap{display:flex;align-items:center;justify-content:space-between;}
-    .brand{font-family:'Fraunces',serif;font-weight:600;font-size:1.3rem;}
-    .back-link{font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--text2);}
-    .back-link:hover{color:var(--accent);}
     article{padding:56px 0 80px;}
     .post-date{font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:.05em;color:var(--accent);text-transform:uppercase;margin-bottom:16px;display:block;}
     h1{font-family:'Fraunces',serif;font-weight:600;font-size:2.2rem;line-height:1.2;margin-bottom:26px;}
@@ -106,16 +102,12 @@ $image = $post && !empty($post['image']) ? $post['image'] : 'https://corentinval
 </head>
 <body>
 
-<header class="site">
-  <div class="wrap">
-    <a class="brand" href="/">Corentin Vallet</a>
-    <a class="back-link" href="/blog.php">← Tous les articles</a>
-  </div>
-</header>
+<?php include __DIR__ . '/inc/nav.php'; ?>
 
 <?php if ($post): ?>
 <article>
   <div class="wrap">
+    <a href="/blog.php" style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--text2);display:inline-block;margin-bottom:20px;">← Tous les articles</a>
     <span class="post-date"><?= h(date('d M Y', strtotime($post['date'] ?? 'now'))) ?></span>
     <h1><?= h($post['title'] ?? '') ?></h1>
     <?php if (!empty($post['image'])): ?>
@@ -136,5 +128,16 @@ $image = $post && !empty($post['image']) ? $post['image'] : 'https://corentinval
   <div class="wrap">© <?= date('Y') ?> Corentin Vallet — Création de sites web à Valence</div>
 </footer>
 
+<script src="nav.js"></script>
+<script>
+  const html = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  btn.addEventListener('click', () => {
+    html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', html.dataset.theme);
+  });
+  const saved = localStorage.getItem('theme');
+  if (saved) html.dataset.theme = saved;
+</script>
 </body>
 </html>
