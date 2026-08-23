@@ -21,7 +21,7 @@ $prefix = $home ? '' : 'index.php';
       </ul>
     </li>
     <li><a href="<?= $prefix ?>#profil">Profil</a></li>
-    <li><a href="blog.php">Blog</a></li>
+    <!--<li><a href="blog.php">Blog</a></li>-->
     <li><a href="<?= $prefix ?>#contact">Contact</a></li>
   </ul>
   <div class="toggle-wrap">
