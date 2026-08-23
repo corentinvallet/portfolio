@@ -534,6 +534,10 @@ a { color: inherit; text-decoration: none; }
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
       Médiathèque
     </button>
+    <button class="nav-item" onclick="goTo('blog', this)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+      Blog
+    </button>
 
     <div class="nav-group-label">Paramètres</div>
     <button class="nav-item" onclick="goTo('contact', this)">
@@ -1167,6 +1171,67 @@ a { color: inherit; text-decoration: none; }
     </div>
   </div>
 
+  <!-- ══ BLOG ══ -->
+  <div id="panel-blog" class="panel">
+    <div class="topbar">
+      <div>
+        <div class="page-title">Articles de <em>blog</em></div>
+        <div class="page-subtitle">Gérez les articles publiés sur /blog.php</div>
+      </div>
+      <button class="save-btn" onclick="newBlogPost()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Nouvel article
+      </button>
+    </div>
+    <div class="content">
+
+      <div class="card">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">📰</span> Tous les articles</div></div>
+        <div class="card-body">
+          <div id="blog-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+          <div id="blog-empty" style="display:none;color:var(--text2);padding:16px 0;">Aucun article pour le moment — cliquez sur « Nouvel article ».</div>
+        </div>
+      </div>
+
+      <div class="card" id="blog-form-card" style="display:none;">
+        <div class="card-header"><div class="card-title"><span class="card-title-icon">✏️</span> <span id="blog-form-title">Nouvel article</span></div></div>
+        <div class="card-body">
+          <input type="hidden" id="blog-f-id" />
+          <div class="grid-2">
+            <div class="field"><label>Titre</label><input type="text" id="blog-f-title" oninput="autoSlug()" placeholder="Ex : 5 raisons d'avoir un site web quand on est artisan à Valence"/></div>
+            <div class="field"><label>Slug (URL)</label><input type="text" id="blog-f-slug" placeholder="5-raisons-site-web-artisan-valence"/></div>
+          </div>
+          <div class="field"><label>Date</label><input type="date" id="blog-f-date"/></div>
+          <div class="field">
+            <label>Image de couverture</label>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <img id="blog-f-image-preview" src="" alt="" style="display:none;width:80px;height:60px;object-fit:cover;border-radius:6px;border:1px solid var(--border);"/>
+              <input type="file" id="blog-f-image-input" accept="image/*" onchange="handleBlogImage(event)"/>
+            </div>
+          </div>
+          <div class="field"><label>Extrait (résumé affiché dans la liste)</label><textarea id="blog-f-excerpt" placeholder="Un ou deux phrases qui donnent envie de lire la suite…"></textarea></div>
+          <div class="field"><label>Contenu de l'article (HTML simple accepté : &lt;p&gt;, &lt;h2&gt;, &lt;strong&gt;, &lt;a&gt;…)</label><textarea id="blog-f-content" rows="10" style="min-height:220px;"></textarea></div>
+          <div class="grid-2">
+            <div class="field" style="flex-direction:row;align-items:center;gap:8px;">
+              <input type="checkbox" id="blog-f-published" style="width:auto;"/>
+              <label style="margin:0;">Publié (visible sur le site)</label>
+            </div>
+            <div class="field" style="flex-direction:row;align-items:center;gap:8px;">
+              <input type="checkbox" id="blog-f-fb" style="width:auto;"/>
+              <label style="margin:0;">Publier aussi sur Facebook</label>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:8px;">
+            <button class="save-btn" onclick="saveBlogPost()">Enregistrer l'article</button>
+            <button class="save-btn" style="background:var(--bg2);color:var(--text);border:1px solid var(--border);" onclick="cancelBlogEdit()">Annuler</button>
+          </div>
+          <div id="blog-fb-status" style="font-size:0.82rem;color:var(--text2);margin-top:6px;"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- ══ CONTACT ══ -->
   <div id="panel-contact" class="panel">
     <div class="topbar">
@@ -1556,6 +1621,211 @@ function renderPhotos() {
   grid.appendChild(addBtn);
 }
 
+/* ══ BLOG ══
+   Les articles vivent dans leur propre fichier (blog-posts.json), séparé
+   de content.json, et sont sauvegardés via save-blog.php. Même token
+   d'admin (SAVE_TOKEN) que pour le reste.
+   ═══════════════════════════════════════════════════════════════════ */
+const BLOG_URL      = '../blog-posts.json';
+const BLOG_ENDPOINT = '../save-blog.php';
+const FB_ENDPOINT   = '../post-facebook.php';
+const SITE_URL      = 'https://corentinvallet.fr';
+
+let blogPosts = [];
+
+async function loadBlogPosts() {
+  try {
+    const res = await fetch(BLOG_URL + '?t=' + Date.now(), { cache: 'no-store' });
+    blogPosts = res.ok ? await res.json() : [];
+    if (!Array.isArray(blogPosts)) blogPosts = [];
+  } catch (e) {
+    console.warn('blog-posts.json introuvable, on part d\'une liste vide.', e);
+    blogPosts = [];
+  }
+  renderBlogList();
+}
+
+async function persistBlogPosts() {
+  const res = await fetch(BLOG_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-admin-token': SAVE_TOKEN },
+    body: JSON.stringify({ posts: blogPosts })
+  });
+  const out = await res.json().catch(() => ({}));
+  if (!res.ok || !out.ok) throw new Error(out.error || ('HTTP ' + res.status));
+}
+
+function renderBlogList() {
+  const list  = document.getElementById('blog-list');
+  const empty = document.getElementById('blog-empty');
+  list.innerHTML = '';
+  if (!blogPosts.length) { empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+
+  const sorted = [...blogPosts].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  sorted.forEach(p => {
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;';
+    const badge = p.published
+      ? '<span class="badge badge-green">● Publié</span>'
+      : '<span class="badge" style="background:var(--bg2);color:var(--text2);">Brouillon</span>';
+    row.innerHTML = `
+      <div style="min-width:0;">
+        <div style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(p.title || '(sans titre)')}</div>
+        <div style="font-size:0.78rem;color:var(--text2);font-family:'DM Mono',monospace;">${escapeHtml(p.date || '')} · /blog-post.php?slug=${escapeHtml(p.slug || '')}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+        ${badge}
+        <button class="save-btn" style="padding:6px 12px;background:var(--bg2);color:var(--text);border:1px solid var(--border);" onclick="editBlogPost('${p.id}')">Modifier</button>
+        <button class="save-btn" style="padding:6px 12px;background:var(--bg2);color:var(--red,#c0392b);border:1px solid var(--border);" onclick="deleteBlogPost('${p.id}')">Supprimer</button>
+      </div>`;
+    list.appendChild(row);
+  });
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function slugify(s) {
+  return (s || '').toString().toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
+window.autoSlug = function() {
+  const slugField = document.getElementById('blog-f-slug');
+  if (slugField.dataset.manual === '1') return; // l'utilisateur a modifié le slug à la main
+  slugField.value = slugify(document.getElementById('blog-f-title').value);
+};
+document.addEventListener('DOMContentLoaded', () => {
+  const slugField = document.getElementById('blog-f-slug');
+  if (slugField) slugField.addEventListener('input', () => { slugField.dataset.manual = '1'; });
+});
+
+window.newBlogPost = function() {
+  document.getElementById('blog-form-title').textContent = 'Nouvel article';
+  document.getElementById('blog-f-id').value = '';
+  document.getElementById('blog-f-title').value = '';
+  document.getElementById('blog-f-slug').value = '';
+  document.getElementById('blog-f-slug').dataset.manual = '0';
+  document.getElementById('blog-f-date').value = new Date().toISOString().slice(0, 10);
+  document.getElementById('blog-f-excerpt').value = '';
+  document.getElementById('blog-f-content').value = '';
+  document.getElementById('blog-f-published').checked = false;
+  document.getElementById('blog-f-fb').checked = false;
+  document.getElementById('blog-f-image-preview').style.display = 'none';
+  document.getElementById('blog-f-image-preview').dataset.src = '';
+  document.getElementById('blog-fb-status').textContent = '';
+  document.getElementById('blog-form-card').style.display = 'block';
+  document.getElementById('blog-form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+window.editBlogPost = function(id) {
+  const p = blogPosts.find(x => String(x.id) === String(id));
+  if (!p) return;
+  document.getElementById('blog-form-title').textContent = 'Modifier l\'article';
+  document.getElementById('blog-f-id').value = p.id;
+  document.getElementById('blog-f-title').value = p.title || '';
+  document.getElementById('blog-f-slug').value = p.slug || '';
+  document.getElementById('blog-f-slug').dataset.manual = '1';
+  document.getElementById('blog-f-date').value = p.date || '';
+  document.getElementById('blog-f-excerpt').value = p.excerpt || '';
+  document.getElementById('blog-f-content').value = p.content || '';
+  document.getElementById('blog-f-published').checked = !!p.published;
+  document.getElementById('blog-f-fb').checked = false;
+  const preview = document.getElementById('blog-f-image-preview');
+  if (p.image) { preview.src = p.image; preview.style.display = 'block'; preview.dataset.src = p.image; }
+  else { preview.style.display = 'none'; preview.dataset.src = ''; }
+  document.getElementById('blog-fb-status').textContent = '';
+  document.getElementById('blog-form-card').style.display = 'block';
+  document.getElementById('blog-form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+window.cancelBlogEdit = function() {
+  document.getElementById('blog-form-card').style.display = 'none';
+};
+
+window.handleBlogImage = function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const preview = document.getElementById('blog-f-image-preview');
+    preview.src = ev.target.result;
+    preview.style.display = 'block';
+    preview.dataset.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+};
+
+window.deleteBlogPost = async function(id) {
+  if (!confirm('Supprimer définitivement cet article ?')) return;
+  blogPosts = blogPosts.filter(p => String(p.id) !== String(id));
+  try {
+    await persistBlogPosts();
+    renderBlogList();
+    showToast();
+  } catch (e) {
+    console.error(e);
+    showToastError();
+  }
+};
+
+window.saveBlogPost = async function() {
+  const id        = document.getElementById('blog-f-id').value || String(Date.now());
+  const title     = document.getElementById('blog-f-title').value.trim();
+  const slug      = slugify(document.getElementById('blog-f-slug').value.trim() || title);
+  const date      = document.getElementById('blog-f-date').value || new Date().toISOString().slice(0, 10);
+  const excerpt   = document.getElementById('blog-f-excerpt').value.trim();
+  const content   = document.getElementById('blog-f-content').value;
+  const published = document.getElementById('blog-f-published').checked;
+  const postToFb  = document.getElementById('blog-f-fb').checked;
+  const image     = document.getElementById('blog-f-image-preview').dataset.src || '';
+
+  if (!title) { alert('Le titre est obligatoire.'); return; }
+  if (!slug)  { alert('Le slug est obligatoire.'); return; }
+  if (blogPosts.some(p => p.slug === slug && String(p.id) !== String(id))) {
+    alert('Ce slug est déjà utilisé par un autre article — choisissez-en un autre.');
+    return;
+  }
+
+  const existingIndex = blogPosts.findIndex(p => String(p.id) === String(id));
+  const post = { id, title, slug, date, excerpt, content, image, published };
+  if (existingIndex >= 0) blogPosts[existingIndex] = post;
+  else blogPosts.push(post);
+
+  try {
+    await persistBlogPosts();
+    renderBlogList();
+    showToast();
+    document.getElementById('blog-form-card').style.display = 'none';
+
+    if (postToFb && published) {
+      const status = document.getElementById('blog-fb-status');
+      status.textContent = 'Publication sur Facebook…';
+      try {
+        const fbRes = await fetch(FB_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-admin-token': SAVE_TOKEN },
+          body: JSON.stringify({
+            message: title + (excerpt ? '\n\n' + excerpt : ''),
+            link: SITE_URL + '/blog-post.php?slug=' + encodeURIComponent(slug)
+          })
+        });
+        const fbOut = await fbRes.json().catch(() => ({}));
+        status.textContent = (fbRes.ok && fbOut.ok) ? '✓ Publié sur Facebook' : ('✗ Facebook : ' + (fbOut.error || 'erreur inconnue'));
+      } catch (e) {
+        status.textContent = '✗ Facebook : ' + e.message;
+      }
+    }
+  } catch (e) {
+    console.error(e);
+    showToastError();
+  }
+};
+
 /* ══ INIT : charger le contenu (content.json) au démarrage ══ */
 (async function(){
   const data = await loadData();
@@ -1566,6 +1836,8 @@ function renderPhotos() {
   }
   // Pré-remplir le panel actif (dashboard ne contient pas de data-key, c'est ok)
   fillPanel('dashboard');
+  // Blog
+  loadBlogPosts();
 })();
 </script>
 </body>

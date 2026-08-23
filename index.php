@@ -1546,6 +1546,7 @@
 <footer>
   <div class="footer-logo">Corentin <span>Vallet</span></div>
   <div class="footer-copy" id="footer-copy"></div>
+  <div style="margin-top:8px;"><a href="/blog.php" style="color:var(--text2);text-decoration:underline;">Blog</a></div>
 </footer>
 
 <!-- MODAL IFRAME -->
