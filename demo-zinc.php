@@ -252,6 +252,24 @@
       footer { padding: 32px 24px; }
       .nav-back span.nav-back-text { display: none; }
     }
+
+    /* ── SMARTPHONES ── */
+    @media (max-width: 600px) {
+      html { font-size: 15px; }
+      .hero { padding: 100px 20px 48px; }
+      .hero-title br,
+      .section-title br { display: none; }
+      section { padding: 48px 20px; }
+      .section-inner { max-width: 100%; }
+      .hero-ctas { flex-direction: column; align-items: stretch; }
+      .hero-ctas .btn { justify-content: center; }
+      .feature-body { padding: 20px 20px 24px; }
+      .feature-name { font-size: 1.08rem; }
+      footer { flex-direction: column; text-align: center; padding: 28px 20px; }
+    }
+
+    /* Avoid horizontal overflow from any oversized inline element */
+    img { max-width: 100%; height: auto; }
   </style>
 </head>
 <body>
@@ -338,28 +356,28 @@
 
     <div class="feature-grid">
             <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Zinc/Adminreservations.png" alt="Suivi des réservations dans l'admin"></span>
+        <span class="feature-icon"><img src="Photos/capture-admin-reservations.png" alt="Suivi des réservations dans l'admin"></span>
         <div class="feature-body">
           <div class="feature-name">Suivi des réservations en un coup d'œil</div>
           <p class="feature-desc">Total, réservations du jour, en attente de confirmation, nombre de couverts — les chiffres essentiels affichés dès l'ouverture de l'espace admin.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Admincarte.png" alt="Édition de la carte dans l'admin"></span>
+        <span class="feature-icon"><img src="Photos/capture-admin-carte.png" alt="Édition de la carte dans l'admin"></span>
         <div class="feature-body">
           <div class="feature-name">Édition de la carte en temps réel</div>
           <p class="feature-desc">Ajouter, modifier ou réorganiser plats et catégories — les changements apparaissent instantanément sur le site public.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Admingalerie.png" alt="Galerie drag & drop dans l'admin"></span>
+        <span class="feature-icon"><img src="Photos/capture-admin-galerie.png" alt="Galerie drag & drop dans l'admin"></span>
         <div class="feature-body">
           <div class="feature-name">Galerie par glisser-déposer</div>
           <p class="feature-desc">Ajouter de nouvelles photos ou réorganiser la galerie sans aucune manipulation technique.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Adminreglages.png" alt="Réglages horaires dans l'admin"></span>
+        <span class="feature-icon"><img src="Photos/capture-admin-reglages.png" alt="Réglages horaires dans l'admin"></span>
         <div class="feature-body">
           <div class="feature-name">Réglages horaires & capacité</div>
           <p class="feature-desc">Définir les jours d'ouverture et le nombre de couverts disponibles par service — le formulaire de réservation s'adapte automatiquement.</p>
