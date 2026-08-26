@@ -11,6 +11,8 @@
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.25s ease;
+  touch-action: none; /* on gère nous-mêmes le pincement, pas le navigateur */
+  overscroll-behavior: contain;
 }
 .lightbox-overlay.open { opacity: 1; visibility: visible; }
 .lightbox-overlay img {
@@ -18,6 +20,9 @@
   max-height: 85vh;
   object-fit: contain;
   border-radius: 4px;
+  touch-action: none;
+  will-change: transform;
+  transform-origin: center center;
   box-shadow: 0 12px 48px rgba(0,0,0,0.5);
   transform: scale(0.96);
   transition: transform 0.25s ease;
