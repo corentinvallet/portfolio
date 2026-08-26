@@ -300,6 +300,13 @@
     <div class="feature-grid">
       
       <div class="feature-card fade-up">
+        <span class="feature-icon"><img src="Photos/Realisations/francisferret-identite.jpg" alt="Identité visuelle"></span>
+        <div class="feature-body">
+          <div class="feature-name">Identité visuelle</div>
+          <p class="feature-desc">Les œuvres de Francis sont magnifiques, il ne faut pas trop en faire visuellement. Travail autour d'une palette de couleurs rappelant le bois. Polices simples. Le travail de Francis est le centre du site.</p>
+        </div>
+      </div>
+      <div class="feature-card fade-up">
         <span class="feature-icon"><img src="Photos/Realisations/francisferret-galerie.jpg" alt="Galerie d'œuvres avec lightbox"></span>
         <div class="feature-body">
           <div class="feature-name">Galerie d'œuvres</div>
@@ -310,14 +317,7 @@
         <span class="feature-icon"><img src="Photos/Realisations/francisferret-portrait.jpg" alt="Portrait de Francis Ferret"></span>
         <div class="feature-body">
           <div class="feature-name">Portrait & histoire</div>
-          <p class="feature-desc">Une présentation personnelle pour donner un visage et une histoire au métier — né en 1995 en Saône-et-Loire, formé à l'École nationale de lutherie de Moirans-en-Montagne.</p>
-        </div>
-      </div>
-      <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/francisferret-identite.jpg" alt="Identité visuelle"></span>
-        <div class="feature-body">
-          <div class="feature-name">Identité visuelle</div>
-          <p class="feature-desc">Les oeuvres de Francis sont magnifiques, il ne faut pas trop en faire visuellement. Travail autour d'une palette de couleurs rappelant le bois. Polices simples. Le travail de Francis est le centre du site.</p>
+          <p class="feature-desc">Une présentation personnelle pour donner un visage et une histoire à Francis et à son œuvre.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
