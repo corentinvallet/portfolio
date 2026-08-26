@@ -163,11 +163,11 @@
       gap: 20px;
       margin-top: 48px;
     }
-    .feature-card {
+        .feature-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 4px;
-      padding: 32px;
+      padding: 0;
       position: relative;
       overflow: hidden;
       transition: background var(--transition), border var(--transition), transform 0.2s;
@@ -179,11 +179,28 @@
       width: 3px; height: 0;
       background: var(--accent);
       transition: height 0.4s cubic-bezier(.4,0,.2,1);
+      z-index: 2;
     }
     .feature-card:hover::before { height: 100%; }
     .feature-card:hover { transform: translateY(-3px); }
-    .feature-icon { margin-bottom: 16px; display: block; }
-    .feature-icon img { width: 48px; height: 48px; object-fit: contain; display: block; }
+    .feature-icon {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+    }
+    .feature-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+    }
+    .feature-card:hover .feature-icon img { transform: scale(1.04); }
+    .feature-body { padding: 24px 32px 32px; }
     .feature-name {
       font-family: 'Fraunces', serif;
       font-size: 1.2rem;
@@ -264,35 +281,47 @@
     <p class="section-intro fade-up">Le site public met en avant l'identité du restaurant : ambiance, carte, avis clients. Chaque élément est pensé pour transformer un visiteur en réservation.</p>
 
     <div class="feature-grid">
-      <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/identite.png" alt="Identité"></span>
-        <div class="feature-name">Identité visuelle sur mesure</div>
-        <p class="feature-desc">Palette, typographies et ambiance visuelle propres au bistrot — noir, or et cuivre pour évoquer un lieu chaleureux et authentique.</p>
+            <div class="feature-card fade-up">
+        <span class="feature-icon"><img src="Photos/capture-identite.png" alt="Identité visuelle du site"></span>
+        <div class="feature-body">
+          <div class="feature-name">Identité visuelle sur mesure</div>
+          <p class="feature-desc">Palette, typographies et ambiance visuelle propres au bistrot — noir, or et cuivre pour évoquer un lieu chaleureux et authentique.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/menu.png" alt="Menu"></span>
-        <div class="feature-name">Carte mise en avant</div>
-        <p class="feature-desc">Entrées, plats, desserts organisés en onglets clairs, avec descriptions et prix — la carte se met à jour automatiquement dès que le restaurateur la modifie.</p>
+        <span class="feature-icon"><img src="Photos/capture-menu.png" alt="Carte du restaurant"></span>
+        <div class="feature-body">
+          <div class="feature-name">Carte mise en avant</div>
+          <p class="feature-desc">Entrées, plats, desserts organisés en onglets clairs, avec descriptions et prix — la carte se met à jour automatiquement dès que le restaurateur la modifie.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/reservation.png" alt="Réservation"></span>
-        <div class="feature-name">Réservation en ligne intégrée</div>
-        <p class="feature-desc">Un formulaire directement sur le site, avec créneaux et jours d'ouverture qui se ferment automatiquement une fois complets.</p>
+        <span class="feature-icon"><img src="Photos/capture-reservation.png" alt="Formulaire de réservation"></span>
+        <div class="feature-body">
+          <div class="feature-name">Réservation en ligne intégrée</div>
+          <p class="feature-desc">Un formulaire directement sur le site, avec créneaux et jours d'ouverture qui se ferment automatiquement une fois complets.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/étoile.png" alt="Étoile"></span>
-        <div class="feature-name">Avis clients mis en scène</div>
-        <p class="feature-desc">Les retours clients sont affichés avec soin pour rassurer un visiteur qui découvre l'établissement pour la première fois.</p>
+        <span class="feature-icon"><img src="Photos/capture-avis.png" alt="Avis clients"></span>
+        <div class="feature-body">
+          <div class="feature-name">Avis clients mis en scène</div>
+          <p class="feature-desc">Les retours clients sont affichés avec soin pour rassurer un visiteur qui découvre l'établissement pour la première fois.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Photo.png" alt="Appareil photo"></span>
-        <div class="feature-name">Galerie immersive</div>
-        <p class="feature-desc">Photos de la salle, des plats et de l'ambiance pour donner un aperçu concret du lieu avant même d'y avoir mis les pieds.</p>
+        <span class="feature-icon"><img src="Photos/capture-galerie.png" alt="Galerie photo"></span>
+        <div class="feature-body">
+          <div class="feature-name">Galerie immersive</div>
+          <p class="feature-desc">Photos de la salle, des plats et de l'ambiance pour donner un aperçu concret du lieu avant même d'y avoir mis les pieds.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/smartphone.png" alt="Smartphone"></span>
-        <div class="feature-name">Pensé mobile</div>
-        <p class="feature-desc">La grande majorité des visiteurs consultent un restaurant depuis leur téléphone — le site est entièrement adapté à tous les écrans.</p>
+        <span class="feature-icon"><img src="Photos/capture-mobile.png" alt="Version mobile du site"></span>
+        <div class="feature-body">
+          <div class="feature-name">Pensé mobile</div>
+          <p class="feature-desc">La grande majorité des visiteurs consultent un restaurant depuis leur téléphone — le site est entièrement adapté à tous les écrans.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -308,25 +337,33 @@
     <p class="section-intro fade-up">Derrière le site, un tableau de bord privé permet au restaurateur de garder la main sur son activité au quotidien — comme dans les grandes plateformes, mais sur son propre site.</p>
 
     <div class="feature-grid">
-      <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/reservation.png" alt="Réservation"></span>
-        <div class="feature-name">Suivi des réservations en un coup d'œil</div>
-        <p class="feature-desc">Total, réservations du jour, en attente de confirmation, nombre de couverts — les chiffres essentiels affichés dès l'ouverture de l'espace admin.</p>
+            <div class="feature-card fade-up">
+        <span class="feature-icon"><img src="Photos/capture-admin-reservations.png" alt="Suivi des réservations dans l'admin"></span>
+        <div class="feature-body">
+          <div class="feature-name">Suivi des réservations en un coup d'œil</div>
+          <p class="feature-desc">Total, réservations du jour, en attente de confirmation, nombre de couverts — les chiffres essentiels affichés dès l'ouverture de l'espace admin.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/redaction.png" alt="Rédaction"></span>
-        <div class="feature-name">Édition de la carte en temps réel</div>
-        <p class="feature-desc">Ajouter, modifier ou réorganiser plats et catégories — les changements apparaissent instantanément sur le site public.</p>
+        <span class="feature-icon"><img src="Photos/capture-admin-carte.png" alt="Édition de la carte dans l'admin"></span>
+        <div class="feature-body">
+          <div class="feature-name">Édition de la carte en temps réel</div>
+          <p class="feature-desc">Ajouter, modifier ou réorganiser plats et catégories — les changements apparaissent instantanément sur le site public.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Photo.png" alt="Photo"></span>
-        <div class="feature-name">Galerie par glisser-déposer</div>
-        <p class="feature-desc">Ajouter de nouvelles photos ou réorganiser la galerie sans aucune manipulation technique.</p>
+        <span class="feature-icon"><img src="Photos/capture-admin-galerie.png" alt="Galerie drag & drop dans l'admin"></span>
+        <div class="feature-body">
+          <div class="feature-name">Galerie par glisser-déposer</div>
+          <p class="feature-desc">Ajouter de nouvelles photos ou réorganiser la galerie sans aucune manipulation technique.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/réglage.png" alt="Roue dentée"></span>
-        <div class="feature-name">Réglages horaires & capacité</div>
-        <p class="feature-desc">Définir les jours d'ouverture et le nombre de couverts disponibles par service — le formulaire de réservation s'adapte automatiquement.</p>
+        <span class="feature-icon"><img src="Photos/capture-admin-reglages.png" alt="Réglages horaires dans l'admin"></span>
+        <div class="feature-body">
+          <div class="feature-name">Réglages horaires & capacité</div>
+          <p class="feature-desc">Définir les jours d'ouverture et le nombre de couverts disponibles par service — le formulaire de réservation s'adapte automatiquement.</p>
+        </div>
       </div>
     </div>
   </div>
