@@ -289,35 +289,35 @@
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/capture-menu.png" alt="Carte du restaurant"></span>
+        <span class="feature-icon"><img src="Photos/Demo Zinc/Menu.png" alt="Carte du restaurant"></span>
         <div class="feature-body">
           <div class="feature-name">Carte mise en avant</div>
           <p class="feature-desc">Entrées, plats, desserts organisés en onglets clairs, avec descriptions et prix — la carte se met à jour automatiquement dès que le restaurateur la modifie.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/capture-reservation.png" alt="Formulaire de réservation"></span>
+        <span class="feature-icon"><img src="Photos/Demo Zinc/Reservation.png" alt="Formulaire de réservation"></span>
         <div class="feature-body">
           <div class="feature-name">Réservation en ligne intégrée</div>
           <p class="feature-desc">Un formulaire directement sur le site, avec créneaux et jours d'ouverture qui se ferment automatiquement une fois complets.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/capture-avis.png" alt="Avis clients"></span>
+        <span class="feature-icon"><img src="Photos/Demo Zinc/Avis.png" alt="Avis clients"></span>
         <div class="feature-body">
           <div class="feature-name">Avis clients mis en scène</div>
           <p class="feature-desc">Les retours clients sont affichés avec soin pour rassurer un visiteur qui découvre l'établissement pour la première fois.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/capture-galerie.png" alt="Galerie photo"></span>
+        <span class="feature-icon"><img src="Photos/Demo Zinc/Galerie.png" alt="Galerie photo"></span>
         <div class="feature-body">
           <div class="feature-name">Galerie immersive</div>
           <p class="feature-desc">Photos de la salle, des plats et de l'ambiance pour donner un aperçu concret du lieu avant même d'y avoir mis les pieds.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/capture-mobile.png" alt="Version mobile du site"></span>
+        <span class="feature-icon"><img src="Photos/Demo Zinc/Mobile.png" alt="Version mobile du site"></span>
         <div class="feature-body">
           <div class="feature-name">Pensé mobile</div>
           <p class="feature-desc">La grande majorité des visiteurs consultent un restaurant depuis leur téléphone — le site est entièrement adapté à tous les écrans.</p>
