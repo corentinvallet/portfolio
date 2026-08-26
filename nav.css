@@ -209,12 +209,18 @@ nav {
     right: 0;
     flex-direction: column;
     gap: 0;
-    background: var(--nav-bg);
-    backdrop-filter: blur(12px);
+    background: var(--bg);
     border-bottom: 1px solid var(--border);
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.35s ease;
+  }
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    .nav-links {
+      background: color-mix(in srgb, var(--bg) 96%, transparent);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+    }
   }
   .nav-links.open {
     max-height: 400px;
