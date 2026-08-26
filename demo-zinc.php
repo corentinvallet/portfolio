@@ -282,7 +282,7 @@
 
     <div class="feature-grid">
             <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/capture-identite.png" alt="Identité visuelle du site"></span>
+        <span class="feature-icon"><img src="Photos/Demo Zinc/Identitevisuelle.png" alt="Identité visuelle du site"></span>
         <div class="feature-body">
           <div class="feature-name">Identité visuelle sur mesure</div>
           <p class="feature-desc">Palette, typographies et ambiance visuelle propres au bistrot — noir, or et cuivre pour évoquer un lieu chaleureux et authentique.</p>
