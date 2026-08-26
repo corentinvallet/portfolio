@@ -1324,12 +1324,12 @@
 
     <div class="portfolio-grid">
       <div class="portfolio-card fade-up">
-        <a href="https://www.francisferret.fr" target="_blank" rel="noopener" class="portfolio-preview" aria-label="Voir le site de Francis Ferret">
+        <a href="realisation-francisferret.php" class="portfolio-preview" aria-label="Voir la réalisation pour Francis Ferret">
           <img src="Photos/Realisations/francis-ferret.jpg" alt="Site de Francis Ferret, sculpteur sur bois" class="portfolio-preview-img">
           <div class="preview-overlay">
             <span class="preview-btn">
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="14" height="14" rx="1"/><path d="M5 8h6M8 5l3 3-3 3"/></svg>
-              Voir le site
+              Voir la réalisation
             </span>
           </div>
         </a>
