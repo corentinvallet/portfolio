@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Pierrard Maçonnerie — Artisan depuis 1987</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -58,11 +58,11 @@
     z-index: 100;
     background: var(--stone-900);
     border-bottom: 3px solid var(--sand-500);
-    padding: 0 1.2rem;
+    padding: env(safe-area-inset-top, 0) 1.2rem 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 60px;
+    height: calc(60px + env(safe-area-inset-top, 0px));
     transition: background .3s;
   }
 
@@ -108,7 +108,7 @@
 
   .nav-menu {
     position: fixed;
-    top: 60px; left: 0; right: 0;
+    top: calc(60px + env(safe-area-inset-top, 0px)); left: 0; right: 0;
     background: var(--stone-900);
     border-bottom: 3px solid var(--sand-500);
     display: flex;
@@ -152,7 +152,7 @@
   /* ── HERO ── */
   .hero {
     min-height: 100svh;
-    padding-top: 60px;
+    padding-top: calc(60px + env(safe-area-inset-top, 0px));
     background: var(--stone-900);
     position: relative;
     overflow: hidden;
