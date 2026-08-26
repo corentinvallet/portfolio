@@ -21,6 +21,8 @@ html.lightbox-lock, html.lightbox-lock body {
 }
 .lightbox-overlay.open { opacity: 1; visibility: visible; }
 .lightbox-overlay img {
+  position: relative;
+  z-index: 1;
   max-width: 90vw;
   max-height: 85vh;
   object-fit: contain;
@@ -45,6 +47,7 @@ html.lightbox-lock, html.lightbox-lock body {
 }
 .lightbox-close, .lightbox-prev, .lightbox-next {
   position: absolute;
+  z-index: 2; /* toujours au-dessus de l'image, même quand elle a son propre contexte d'empilement (transform) */
   background: rgba(20, 15, 10, 0.65);
   border: 1px solid rgba(255,255,255,0.25);
   box-shadow: 0 2px 10px rgba(0,0,0,0.35);
