@@ -13,6 +13,12 @@ $prefix = $home ? '' : 'index.php';
     <li><a href="<?= $prefix ?>#approche">Approche</a></li>
     <li><a href="<?= $prefix ?>#services">Services</a></li>
     <li class="nav-dropdown">
+      <a href="<?= $prefix ?>#projetsclients" class="nav-dropdown-trigger" aria-expanded="false">Projets clients</a>
+      <ul class="nav-dropdown-menu">
+        <li><a href="realisation-francisferret.php">Artiste</a></li>
+      </ul>
+    </li>
+    <li class="nav-dropdown">
       <a href="<?= $prefix ?>#realisations" class="nav-dropdown-trigger" aria-expanded="false">Démonstrations</a>
       <ul class="nav-dropdown-menu">
         <li><a href="demo-zinc.php">Restaurant</a></li>
