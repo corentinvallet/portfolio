@@ -552,6 +552,17 @@
     .portfolio-preview.rose    { background: linear-gradient(135deg, #2a1020 0%, #b0446a 100%); }
     .portfolio-preview.stone   { background: linear-gradient(135deg, #1c1610 0%, #7a6a50 100%); }
     .portfolio-preview.zinc    { background: linear-gradient(135deg, #141414 0%, #505050 100%); }
+    .portfolio-preview-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+    }
+    .portfolio-card:hover .portfolio-preview-img { transform: scale(1.05); }
     .portfolio-body {
       padding: 24px 28px;
     }
@@ -1304,7 +1315,37 @@
   </div>
 </section>
 
-<!-- RÉALISATIONS -->
+<!-- RÉALISATIONS CLIENTS (vrais projets livrés) -->
+<section id="projets-clients" class="portfolio">
+  <div class="section-inner">
+    <div class="section-label fade-up">Réalisations clients</div>
+    <h2 class="section-title fade-up">Des projets <em>livrés</em><br>pour de vrais clients.</h2>
+    <p class="section-intro fade-up">Voici un aperçu de sites que j'ai conçus et mis en ligne. Cliquez sur un aperçu pour découvrir le site final.</p>
+
+    <div class="portfolio-grid">
+      <div class="portfolio-card fade-up">
+        <a href="https://www.francisferret.fr" target="_blank" rel="noopener" class="portfolio-preview" aria-label="Voir le site de Francis Ferret">
+          <img src="Photos/Realisations/francis-ferret.jpg" alt="Site de Francis Ferret, sculpteur sur bois" class="portfolio-preview-img">
+          <div class="preview-overlay">
+            <span class="preview-btn">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="14" height="14" rx="1"/><path d="M5 8h6M8 5l3 3-3 3"/></svg>
+              Voir le site
+            </span>
+          </div>
+        </a>
+        <div class="portfolio-body">
+          <div class="portfolio-type">Artisan d'art · Sculpteur sur bois</div>
+          <div class="portfolio-name">Francis Ferret</div>
+          <p class="portfolio-desc">Site vitrine pour un sculpteur sur bois formé à Moirans-en-Montagne : portrait, savoir-faire, galerie d'œuvres, agenda d'événements et prise de contact — pensé pour mettre en valeur un travail d'artisanat d'art.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- DÉMONSTRATIONS -->
 <section id="realisations" class="portfolio">
   <div class="section-inner">
     <div class="section-label">Exemples de réalisations</div>
