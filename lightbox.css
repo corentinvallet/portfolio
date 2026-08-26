@@ -51,7 +51,7 @@ html.lightbox-lock, html.lightbox-lock body {
   background: rgba(20, 15, 10, 0.65);
   border: 1px solid rgba(255,255,255,0.25);
   box-shadow: 0 2px 10px rgba(0,0,0,0.35);
-  color:  #ffffff;
+  color:  #F5F2EC;
   cursor: pointer;
   display: flex;
   align-items: center;
