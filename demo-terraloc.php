@@ -168,7 +168,7 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 4px;
-      padding: 32px;
+      padding: 0;
       position: relative;
       overflow: hidden;
       transition: background var(--transition), border var(--transition), transform 0.2s;
@@ -180,20 +180,109 @@
       width: 3px; height: 0;
       background: var(--accent);
       transition: height 0.4s cubic-bezier(.4,0,.2,1);
+      z-index: 2;
     }
     .feature-card:hover::before { height: 100%; }
     .feature-card:hover { transform: translateY(-3px); }
-    .feature-icon { margin-bottom: 16px; display: block; }
-    .feature-icon img { width: 48px; height: 48px; object-fit: contain; display: block; }
+
+    .feature-icon {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+    }
+    .feature-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      cursor: zoom-in;
+      transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+    }
+    .feature-card:hover .feature-icon img { transform: scale(1.04); }
+    .feature-body { padding: 24px 32px 32px; }
     .feature-name {
       font-family: 'Fraunces', serif;
       font-size: 1.2rem;
       font-weight: 400;
-      color: var(--text);
+      color: var(--accent);
       margin-bottom: 8px;
       letter-spacing: -0.02em;
     }
     .feature-desc { font-size: 0.88rem; color: var(--text2); line-height: 1.7; }
+
+    /* ── LIGHTBOX ── */
+    .lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 12, 9, 0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease;
+    }
+    .lightbox-overlay.open { opacity: 1; visibility: visible; }
+    .lightbox-overlay img {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.5);
+      transform: scale(0.96);
+      transition: transform 0.25s ease;
+    }
+    .lightbox-overlay.open img { transform: scale(1); }
+    .lightbox-caption {
+      position: absolute;
+      bottom: 28px;
+      left: 0; right: 0;
+      text-align: center;
+      color: #f0ebe3;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+    }
+    .lightbox-close, .lightbox-prev, .lightbox-next {
+      position: absolute;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: #f0ebe3;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover { background: rgba(255,255,255,0.18); }
+    .lightbox-close {
+      top: 24px; right: 24px;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+    }
+    .lightbox-prev, .lightbox-next {
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+    }
+    .lightbox-prev { left: 24px; }
+    .lightbox-next { right: 24px; }
+    @media (max-width: 600px) {
+      .lightbox-overlay { padding: 20px; }
+      .lightbox-prev, .lightbox-next { width: 38px; height: 38px; font-size: 1.1rem; }
+      .lightbox-prev { left: 8px; }
+      .lightbox-next { right: 8px; }
+      .lightbox-close { top: 12px; right: 12px; }
+    }
 
     .divider {
       border: none;
@@ -266,34 +355,46 @@
 
     <div class="feature-grid">
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/identite.png" alt="Identité"></span>
-        <div class="feature-name">Identité visuelle sur mesure</div>
-        <p class="feature-desc">Palette et typographie propres à l'enseigne — un univers qui inspire confiance, entre matériel professionnel et service de proximité.</p>
+        <span class="feature-icon"><img src="Photos/Demo Terraloc/Identitevisuelle.png" alt="Identité visuelle du site"></span>
+        <div class="feature-body">
+          <div class="feature-name">Identité visuelle sur mesure</div>
+          <p class="feature-desc">Palette et typographie propres à l'enseigne — un univers qui inspire confiance, entre matériel professionnel et service de proximité.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/catalogue.png" alt="Catalogue"></span>
-        <div class="feature-name">Catalogue filtrable par catégorie</div>
-        <p class="feature-desc">Jardin, bricolage, terrassement… chaque référence a sa fiche avec prix à la journée, filtrable en un clic pour trouver le bon outil rapidement.</p>
+        <span class="feature-icon"><img src="Photos/Demo Terraloc/Catalogue.png" alt="Catalogue filtrable"></span>
+        <div class="feature-body">
+          <div class="feature-name">Catalogue filtrable par catégorie</div>
+          <p class="feature-desc">Jardin, bricolage, terrassement… chaque référence a sa fiche avec prix à la journée, filtrable en un clic pour trouver le bon outil rapidement.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/reservation.png" alt="Réservation"></span>
-        <div class="feature-name">Réservation en ligne intégrée</div>
-        <p class="feature-desc">Un formulaire directement sur le site, avec sélection du matériel et des dates — la demande arrive prête à être confirmée.</p>
+        <span class="feature-icon"><img src="Photos/Demo Terraloc/Reservation.png" alt="Formulaire de réservation"></span>
+        <div class="feature-body">
+          <div class="feature-name">Réservation en ligne intégrée</div>
+          <p class="feature-desc">Un formulaire directement sur le site, avec sélection du matériel et des dates — la demande arrive prête à être confirmée.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">🔍</span>
-        <div class="feature-name">Parcours client guidé</div>
-        <p class="feature-desc">Les 4 étapes de la location (choisir, réserver, récupérer, restituer) sont expliquées simplement pour rassurer les nouveaux clients.</p>
+        <span class="feature-icon"><img src="Photos/Demo Terraloc/Parcours.png" alt="Parcours client guidé"></span>
+        <div class="feature-body">
+          <div class="feature-name">Parcours client guidé</div>
+          <p class="feature-desc">Les 4 étapes de la location (choisir, réserver, récupérer, restituer) sont expliquées simplement pour rassurer les nouveaux clients.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/étoile.png" alt="Étoile"></span>
-        <div class="feature-name">Avis clients mis en scène</div>
-        <p class="feature-desc">Les retours clients sont affichés avec soin pour rassurer un visiteur qui loue du matériel pour la première fois.</p>
+        <span class="feature-icon"><img src="Photos/Demo Terraloc/Avis.png" alt="Avis clients"></span>
+        <div class="feature-body">
+          <div class="feature-name">Avis clients mis en scène</div>
+          <p class="feature-desc">Les retours clients sont affichés avec soin pour rassurer un visiteur qui loue du matériel pour la première fois.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/smartphone.png" alt="Smartphone"></span>
-        <div class="feature-name">Pensé mobile</div>
-        <p class="feature-desc">La grande majorité des visiteurs consultent un catalogue depuis leur téléphone, souvent la veille d'un chantier — le site s'adapte à tous les écrans.</p>
+        <span class="feature-icon"><img src="Photos/Demo Terraloc/Mobile.png" alt="Version mobile du site"></span>
+        <div class="feature-body">
+          <div class="feature-name">Pensé mobile</div>
+          <p class="feature-desc">La grande majorité des visiteurs consultent un catalogue depuis leur téléphone, souvent la veille d'un chantier — le site s'adapte à tous les écrans.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -310,24 +411,32 @@
 
     <div class="feature-grid">
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/catalogue.png" alt="Catalogue"></span>
-        <div class="feature-name">Catalogue de matériel éditable</div>
-        <p class="feature-desc">Ajouter une référence, modifier un prix ou une catégorie, mettre en avant un produit populaire ou nouveau — tout se fait en quelques clics.</p>
+        <span class="feature-icon"><img src="Photos/Demo Terraloc/Admincatalogue.png" alt="Édition du catalogue dans l'admin"></span>
+        <div class="feature-body">
+          <div class="feature-name">Catalogue de matériel éditable</div>
+          <p class="feature-desc">Ajouter une référence, modifier un prix ou une catégorie, mettre en avant un produit populaire ou nouveau — tout se fait en quelques clics.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon">🖼️</span>
-        <div class="feature-name">Bannière & bandeau modifiables</div>
-        <p class="feature-desc">Changer l'image d'accueil ou les messages clés du bandeau (livraison, horaires, garanties) pour coller à l'actualité du commerce.</p>
+        <span class="feature-icon"><img src="Photos/Demo Terraloc/Adminbanniere.png" alt="Édition de la bannière dans l'admin"></span>
+        <div class="feature-body">
+          <div class="feature-name">Bannière & bandeau modifiables</div>
+          <p class="feature-desc">Changer l'image d'accueil ou les messages clés du bandeau (livraison, horaires, garanties) pour coller à l'actualité du commerce.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Photo.png" alt="Photo"></span>
-        <div class="feature-name">Photos gérées en un clic</div>
-        <p class="feature-desc">Chaque image de produit ou de bannière s'upload directement depuis l'admin, hébergée automatiquement sur le cloud.</p>
+        <span class="feature-icon"><img src="Photos/Demo Terraloc/Adminphotos.png" alt="Gestion des photos dans l'admin"></span>
+        <div class="feature-body">
+          <div class="feature-name">Photos gérées en un clic</div>
+          <p class="feature-desc">Chaque image de produit ou de bannière s'upload directement depuis l'admin, hébergée automatiquement sur le cloud.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/étoile.png" alt="Étoile"></span>
-        <div class="feature-name">Avis clients à jour</div>
-        <p class="feature-desc">Ajouter les derniers retours clients pour que la section avis reste vivante et représentative de l'activité récente.</p>
+        <span class="feature-icon"><img src="Photos/Demo Terraloc/Adminavis.png" alt="Gestion des avis dans l'admin"></span>
+        <div class="feature-body">
+          <div class="feature-name">Avis clients à jour</div>
+          <p class="feature-desc">Ajouter les derniers retours clients pour que la section avis reste vivante et représentative de l'activité récente.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -355,6 +464,15 @@
   <div class="footer-copy">© 2026 — Corentin Vallet</div>
 </footer>
 
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Fermer">✕</button>
+  <button class="lightbox-prev" id="lightboxPrev" aria-label="Image précédente">←</button>
+  <img id="lightboxImg" src="" alt="">
+  <button class="lightbox-next" id="lightboxNext" aria-label="Image suivante">→</button>
+  <p class="lightbox-caption" id="lightboxCaption"></p>
+</div>
+
 <script>
   /* ── THEME TOGGLE ── */
   const html = document.documentElement;
@@ -371,6 +489,55 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.12 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  /* ── LIGHTBOX ── */
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxCaption = document.getElementById('lightboxCaption');
+  const galleryImgs = Array.from(document.querySelectorAll('.feature-icon img'));
+  let currentIndex = 0;
+
+  function openLightbox(index) {
+    currentIndex = index;
+    const img = galleryImgs[currentIndex];
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    lightboxCaption.textContent = img.alt;
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function showImage(delta) {
+    currentIndex = (currentIndex + delta + galleryImgs.length) % galleryImgs.length;
+    const img = galleryImgs[currentIndex];
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    lightboxCaption.textContent = img.alt;
+  }
+
+  galleryImgs.forEach((img, index) => {
+    img.addEventListener('click', () => openLightbox(index));
+  });
+
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  document.getElementById('lightboxPrev').addEventListener('click', () => showImage(-1));
+  document.getElementById('lightboxNext').addEventListener('click', () => showImage(1));
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') showImage(-1);
+    if (e.key === 'ArrowRight') showImage(1);
+  });
 </script>
 
 <script src="nav.js"></script>
