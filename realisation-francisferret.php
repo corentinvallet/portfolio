@@ -298,6 +298,14 @@
     <p class="section-intro fade-up">Chaque section du site répond à une question qu'un visiteur se pose face au travail d'un sculpteur : qui est-il, que sait-il faire, qu'a-t-il créé, où peut-on le rencontrer ?</p>
 
     <div class="feature-grid">
+      
+      <div class="feature-card fade-up">
+        <span class="feature-icon"><img src="Photos/Realisations/francisferret-galerie.jpg" alt="Galerie d'œuvres avec lightbox"></span>
+        <div class="feature-body">
+          <div class="feature-name">Galerie d'œuvres</div>
+          <p class="feature-desc">Le centre névralgique du site. Un portfolio dédié aux créations, avec un aperçu en grand format au clic — la meilleure vitrine pour un travail avant tout visuel et manuel.</p>
+        </div>
+      </div>
       <div class="feature-card fade-up">
         <span class="feature-icon"><img src="Photos/Realisations/francisferret-portrait.jpg" alt="Portrait de Francis Ferret"></span>
         <div class="feature-body">
@@ -310,13 +318,6 @@
         <div class="feature-body">
           <div class="feature-name">Savoir-faire détaillé</div>
           <p class="feature-desc">Ébénisterie, marqueterie, tournage, sculpture : chaque domaine de compétence a sa propre présentation, pour montrer l'étendue du métier au-delà de la seule sculpture.</p>
-        </div>
-      </div>
-      <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/francisferret-galerie.jpg" alt="Galerie d'œuvres avec lightbox"></span>
-        <div class="feature-body">
-          <div class="feature-name">Galerie d'œuvres</div>
-          <p class="feature-desc">Un portfolio dédié aux créations, avec un aperçu en grand format au clic — la meilleure vitrine pour un travail avant tout visuel et manuel.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
