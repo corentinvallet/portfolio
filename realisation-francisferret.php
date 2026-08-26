@@ -314,10 +314,10 @@
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/francisferret-savoirfaire.jpg" alt="Savoir-faire mis en avant"></span>
+        <span class="feature-icon"><img src="Photos/Realisations/francisferret-identite.jpg" alt="Identité visuelle"></span>
         <div class="feature-body">
-          <div class="feature-name">Savoir-faire détaillé</div>
-          <p class="feature-desc">Ébénisterie, marqueterie, tournage, sculpture : chaque domaine de compétence a sa propre présentation, pour montrer l'étendue du métier au-delà de la seule sculpture.</p>
+          <div class="feature-name">Identité visuelle</div>
+          <p class="feature-desc">Les oeuvres de Francis sont magnifiques, il ne faut pas trop en faire visuellement. Travail autour d'une palette de couleurs rappelant le bois. Polices simples. Le travail de Francis est le centre du site.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
