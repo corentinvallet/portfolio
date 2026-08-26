@@ -169,7 +169,7 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 4px;
-      padding: 32px;
+      padding: 0;
       position: relative;
       overflow: hidden;
       transition: background var(--transition), border var(--transition), transform 0.2s;
@@ -181,21 +181,109 @@
       width: 3px; height: 0;
       background: var(--accent);
       transition: height 0.4s cubic-bezier(.4,0,.2,1);
+      z-index: 2;
     }
     .feature-card:hover::before { height: 100%; }
     .feature-card:hover { transform: translateY(-3px); }
-    
-    .feature-icon { margin-bottom: 16px; display: block; }
-    .feature-icon img { width: 48px; height: 48px; object-fit: contain; display: block; }
+
+    .feature-icon {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+    }
+    .feature-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      cursor: zoom-in;
+      transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+    }
+    .feature-card:hover .feature-icon img { transform: scale(1.04); }
+    .feature-body { padding: 24px 32px 32px; }
     .feature-name {
       font-family: 'Fraunces', serif;
       font-size: 1.2rem;
       font-weight: 400;
-      color: var(--text);
+      color: var(--accent);
       margin-bottom: 8px;
       letter-spacing: -0.02em;
     }
     .feature-desc { font-size: 0.88rem; color: var(--text2); line-height: 1.7; }
+
+    /* ── LIGHTBOX ── */
+    .lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 12, 9, 0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease;
+    }
+    .lightbox-overlay.open { opacity: 1; visibility: visible; }
+    .lightbox-overlay img {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.5);
+      transform: scale(0.96);
+      transition: transform 0.25s ease;
+    }
+    .lightbox-overlay.open img { transform: scale(1); }
+    .lightbox-caption {
+      position: absolute;
+      bottom: 28px;
+      left: 0; right: 0;
+      text-align: center;
+      color: #f0ebe3;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+    }
+    .lightbox-close, .lightbox-prev, .lightbox-next {
+      position: absolute;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: #f0ebe3;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .lightbox-close:hover, .lightbox-prev:hover, .lightbox-next:hover { background: rgba(255,255,255,0.18); }
+    .lightbox-close {
+      top: 24px; right: 24px;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+    }
+    .lightbox-prev, .lightbox-next {
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+    }
+    .lightbox-prev { left: 24px; }
+    .lightbox-next { right: 24px; }
+    @media (max-width: 600px) {
+      .lightbox-overlay { padding: 20px; }
+      .lightbox-prev, .lightbox-next { width: 38px; height: 38px; font-size: 1.1rem; }
+      .lightbox-prev { left: 8px; }
+      .lightbox-next { right: 8px; }
+      .lightbox-close { top: 12px; right: 12px; }
+    }
 
     .divider {
       border: none;
@@ -238,6 +326,24 @@
       footer { padding: 32px 24px; }
       .nav-back span.nav-back-text { display: none; }
     }
+
+    /* ── SMARTPHONES ── */
+    @media (max-width: 600px) {
+      html { font-size: 15px; }
+      .hero { padding: 100px 20px 48px; }
+      .hero-title br,
+      .section-title br { display: none; }
+      section { padding: 48px 20px; }
+      .section-inner { max-width: 100%; }
+      .hero-ctas { flex-direction: column; align-items: stretch; }
+      .hero-ctas .btn { justify-content: center; }
+      .feature-body { padding: 20px 20px 24px; }
+      .feature-name { font-size: 1.08rem; }
+      footer { flex-direction: column; text-align: center; padding: 28px 20px; }
+    }
+
+    /* Avoid horizontal overflow from any oversized inline element */
+    img { max-width: 100%; height: auto; }
   </style>
 </head>
 <body>
@@ -268,34 +374,46 @@
 
     <div class="feature-grid">
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/identite.png" alt="Identité"></span>
-        <div class="feature-name">Identité visuelle sur mesure</div>
-        <p class="feature-desc">Palette pierre et terre, typographie sobre — une identité qui évoque le sérieux et le savoir-faire artisanal, loin des sites génériques du BTP.</p>
+        <span class="feature-icon"><img src="Photos/Demo Pierrard/Identitevisuelle.png" alt="Identité visuelle du site"></span>
+        <div class="feature-body">
+          <div class="feature-name">Identité visuelle sur mesure</div>
+          <p class="feature-desc">Palette pierre et terre, typographie sobre — une identité qui évoque le sérieux et le savoir-faire artisanal, loin des sites génériques du BTP.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/macon.png" alt="Mur"></span>
-        <div class="feature-name">Prestations mises en avant</div>
-        <p class="feature-desc">Maçonnerie générale, pierre naturelle, dallage, ravalement… chaque spécialité a sa fiche claire, pour que le visiteur trouve tout de suite ce qu'il cherche.</p>
+        <span class="feature-icon"><img src="Photos/Demo Pierrard/Prestations.png" alt="Prestations de l'artisan"></span>
+        <div class="feature-body">
+          <div class="feature-name">Prestations mises en avant</div>
+          <p class="feature-desc">Maçonnerie générale, pierre naturelle, dallage, ravalement… chaque spécialité a sa fiche claire, pour que le visiteur trouve tout de suite ce qu'il cherche.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Photo.png" alt="Photo"></span>
-        <div class="feature-name">Galerie de chantiers filtrable</div>
-        <p class="feature-desc">Les réalisations sont classées par catégorie (maçonnerie, pierre, façade, dallage) et filtrables en un clic — la meilleure preuve du travail effectué.</p>
+        <span class="feature-icon"><img src="Photos/Demo Pierrard/Galerie.png" alt="Galerie de chantiers filtrable"></span>
+        <div class="feature-body">
+          <div class="feature-name">Galerie de chantiers filtrable</div>
+          <p class="feature-desc">Les réalisations sont classées par catégorie (maçonnerie, pierre, façade, dallage) et filtrables en un clic — la meilleure preuve du travail effectué.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/devis.png" alt="Devis"></span>
-        <div class="feature-name">Devis en ligne intégré</div>
-        <p class="feature-desc">Un formulaire directement sur le site, avec sélection du type de travaux — les demandes arrivent triées, prêtes à être traitées.</p>
+        <span class="feature-icon"><img src="Photos/Demo Pierrard/Devis.png" alt="Formulaire de devis en ligne"></span>
+        <div class="feature-body">
+          <div class="feature-name">Devis en ligne intégré</div>
+          <p class="feature-desc">Un formulaire directement sur le site, avec sélection du type de travaux — les demandes arrivent triées, prêtes à être traitées.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/étoile.png" alt="Étoile"></span>
-        <div class="feature-name">Avis clients mis en scène</div>
-        <p class="feature-desc">Les retours clients sont affichés avec soin pour rassurer un visiteur qui confie souvent un chantier important à un inconnu.</p>
+        <span class="feature-icon"><img src="Photos/Demo Pierrard/Avis.png" alt="Avis clients"></span>
+        <div class="feature-body">
+          <div class="feature-name">Avis clients mis en scène</div>
+          <p class="feature-desc">Les retours clients sont affichés avec soin pour rassurer un visiteur qui confie souvent un chantier important à un inconnu.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/smartphone.png" alt="Smartphone"></span>
-        <div class="feature-name">Pensé mobile</div>
-        <p class="feature-desc">Un client qui cherche un artisan en urgence est souvent sur son téléphone — le site est entièrement adapté à tous les écrans.</p>
+        <span class="feature-icon"><img src="Photos/Demo Pierrard/Mobile.png" alt="Version mobile du site"></span>
+        <div class="feature-body">
+          <div class="feature-name">Pensé mobile</div>
+          <p class="feature-desc">Un client qui cherche un artisan en urgence est souvent sur son téléphone — le site est entièrement adapté à tous les écrans.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -312,24 +430,32 @@
 
     <div class="feature-grid">
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/tableaubord.png" alt="Tableau de bord"></span>
-        <div class="feature-name">Tableau de bord en un coup d'œil</div>
-        <p class="feature-desc">Photos publiées, demandes de devis reçues — les chiffres essentiels affichés dès l'ouverture de l'espace admin.</p>
+        <span class="feature-icon"><img src="Photos/Demo Pierrard/Admintableaubord.png" alt="Tableau de bord dans l'admin"></span>
+        <div class="feature-body">
+          <div class="feature-name">Tableau de bord en un coup d'œil</div>
+          <p class="feature-desc">Photos publiées, demandes de devis reçues — les chiffres essentiels affichés dès l'ouverture de l'espace admin.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Photo.png" alt="Photo"></span>
-        <div class="feature-name">Galerie de chantiers par glisser-déposer</div>
-        <p class="feature-desc">Ajouter des photos depuis le chantier, les classer par catégorie et les réorganiser — sans aucune manipulation technique.</p>
+        <span class="feature-icon"><img src="Photos/Demo Pierrard/Admingalerie.png" alt="Galerie drag & drop dans l'admin"></span>
+        <div class="feature-body">
+          <div class="feature-name">Galerie de chantiers par glisser-déposer</div>
+          <p class="feature-desc">Ajouter des photos depuis le chantier, les classer par catégorie et les réorganiser — sans aucune manipulation technique.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/redaction.png" alt="Rédaction"></span>
-        <div class="feature-name">Textes & prestations modifiables</div>
-        <p class="feature-desc">Mettre à jour la présentation de l'entreprise ou la liste des prestations — les changements apparaissent instantanément sur le site public.</p>
+        <span class="feature-icon"><img src="Photos/Demo Pierrard/Adminredaction.png" alt="Édition des textes dans l'admin"></span>
+        <div class="feature-body">
+          <div class="feature-name">Textes & prestations modifiables</div>
+          <p class="feature-desc">Mettre à jour la présentation de l'entreprise ou la liste des prestations — les changements apparaissent instantanément sur le site public.</p>
+        </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/réglage.png" alt="Roue dentée"></span>
-        <div class="feature-name">Réglages de l'entreprise</div>
-        <p class="feature-desc">Coordonnées, zone d'intervention, mot de passe d'accès — tout se paramètre depuis un seul écran, à jour en permanence.</p>
+        <span class="feature-icon"><img src="Photos/Demo Pierrard/Adminreglages.png" alt="Réglages de l'entreprise dans l'admin"></span>
+        <div class="feature-body">
+          <div class="feature-name">Réglages de l'entreprise</div>
+          <p class="feature-desc">Coordonnées, zone d'intervention, mot de passe d'accès — tout se paramètre depuis un seul écran, à jour en permanence.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -357,6 +483,15 @@
   <div class="footer-copy">© 2026 — Corentin Vallet</div>
 </footer>
 
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Fermer">✕</button>
+  <button class="lightbox-prev" id="lightboxPrev" aria-label="Image précédente">←</button>
+  <img id="lightboxImg" src="" alt="">
+  <button class="lightbox-next" id="lightboxNext" aria-label="Image suivante">→</button>
+  <p class="lightbox-caption" id="lightboxCaption"></p>
+</div>
+
 <script>
   /* ── THEME TOGGLE ── */
   const html = document.documentElement;
@@ -373,6 +508,55 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.12 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  /* ── LIGHTBOX ── */
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxCaption = document.getElementById('lightboxCaption');
+  const galleryImgs = Array.from(document.querySelectorAll('.feature-icon img'));
+  let currentIndex = 0;
+
+  function openLightbox(index) {
+    currentIndex = index;
+    const img = galleryImgs[currentIndex];
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    lightboxCaption.textContent = img.alt;
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function showImage(delta) {
+    currentIndex = (currentIndex + delta + galleryImgs.length) % galleryImgs.length;
+    const img = galleryImgs[currentIndex];
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    lightboxCaption.textContent = img.alt;
+  }
+
+  galleryImgs.forEach((img, index) => {
+    img.addEventListener('click', () => openLightbox(index));
+  });
+
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  document.getElementById('lightboxPrev').addEventListener('click', () => showImage(-1));
+  document.getElementById('lightboxNext').addEventListener('click', () => showImage(1));
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') showImage(-1);
+    if (e.key === 'ArrowRight') showImage(1);
+  });
 </script>
 
 <script src="nav.js"></script>
