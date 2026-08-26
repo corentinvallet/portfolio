@@ -62,7 +62,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: calc(60px + env(safe-area-inset-top, 0px));
+    height: calc(66px + env(safe-area-inset-top, 0px));
     transition: background .3s;
   }
 
@@ -73,7 +73,9 @@
     color: var(--sand-300);
     letter-spacing: .02em;
     text-decoration: none;
-    line-height: 1.35;
+    line-height: 1.4;
+    padding-top: 6px;
+    display: inline-block;
   }
   .nav-logo span {
     display: block;
@@ -108,7 +110,7 @@
 
   .nav-menu {
     position: fixed;
-    top: calc(60px + env(safe-area-inset-top, 0px)); left: 0; right: 0;
+    top: calc(66px + env(safe-area-inset-top, 0px)); left: 0; right: 0;
     background: var(--stone-900);
     border-bottom: 3px solid var(--sand-500);
     display: flex;
@@ -152,7 +154,7 @@
   /* ── HERO ── */
   .hero {
     min-height: 100svh;
-    padding-top: calc(60px + env(safe-area-inset-top, 0px));
+    padding-top: calc(66px + env(safe-area-inset-top, 0px));
     background: var(--stone-900);
     position: relative;
     overflow: hidden;
