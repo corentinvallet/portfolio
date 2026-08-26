@@ -277,7 +277,7 @@
       font-family: 'Fraunces', serif;
       font-size: 1.2rem;
       font-weight: 400;
-      color: var(--text);
+      color: var(--accent);
       margin-bottom: 8px;
       letter-spacing: -0.02em;
     }
