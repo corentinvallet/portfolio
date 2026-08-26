@@ -91,6 +91,27 @@
 
     .nav-resa:hover { background: var(--or-clair) !important; }
 
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      z-index: 210;
+    }
+    .nav-burger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--creme);
+      transition: transform .25s, opacity .25s;
+    }
+    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
     /* ── HERO ── */
     #hero {
       min-height: 100vh;
@@ -772,8 +793,42 @@
       .galerie-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
       .galerie-item:first-child { grid-column: span 2; grid-row: span 1; }
       .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-      nav ul { display: none; }
+
+      .nav-burger { display: flex; }
+      nav ul {
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        flex-direction: column;
+        gap: 0;
+        background: rgba(26,18,8,0.98);
+        border-bottom: 1px solid var(--or);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .3s ease;
+      }
+      nav ul.open { max-height: 320px; }
+      nav ul li { width: 100%; }
+      nav ul a {
+        display: block;
+        padding: 1rem 5%;
+        border-top: 1px solid rgba(200,146,42,0.15);
+      }
+      nav ul .nav-resa { margin: 1rem 5%; text-align: center; }
+
+      .hero-infos {
+        position: static;
+        transform: none;
+        flex-direction: column;
+        align-items: center;
+        gap: .8rem;
+        white-space: normal;
+        margin-top: 2.5rem;
+      }
+      #hero { padding-bottom: 3rem; }
     }
+
+    /* Prevent any oversized element from creating horizontal scroll */
+    html, body { max-width: 100%; overflow-x: hidden; }
   </style>
 </head>
 <body>
@@ -781,12 +836,15 @@
 <!-- NAV -->
 <nav>
   <div class="nav-logo">Le Zinc</div>
-  <ul>
+  <ul id="nav-links">
     <li><a href="#apropos">Le bistrot</a></li>
     <li><a href="#menu">La carte</a></li>
     <li><a href="#galerie">Galerie</a></li>
     <li><a href="#reservation" class="nav-resa">Réserver</a></li>
   </ul>
+  <button class="nav-burger" id="nav-burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -1020,6 +1078,21 @@
 </footer>
 
 <script>
+  // ── MENU BURGER MOBILE ──
+  const navBurger = document.getElementById('nav-burger');
+  const navLinks = document.getElementById('nav-links');
+  navBurger.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    navBurger.classList.toggle('open', isOpen);
+    navBurger.setAttribute('aria-expanded', isOpen);
+    navBurger.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navBurger.classList.remove('open');
+    navBurger.setAttribute('aria-expanded', 'false');
+  }));
+
   // ── TABS MENU ──
   function showTab(id, btn) {
     document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
