@@ -356,28 +356,28 @@
 
     <div class="feature-grid">
             <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/capture-admin-reservations.png" alt="Suivi des réservations dans l'admin"></span>
+        <span class="feature-icon"><img src="Photos/Adminreservations.png" alt="Suivi des réservations dans l'admin"></span>
         <div class="feature-body">
           <div class="feature-name">Suivi des réservations en un coup d'œil</div>
           <p class="feature-desc">Total, réservations du jour, en attente de confirmation, nombre de couverts — les chiffres essentiels affichés dès l'ouverture de l'espace admin.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/capture-admin-carte.png" alt="Édition de la carte dans l'admin"></span>
+        <span class="feature-icon"><img src="Photos/Admincarte.png" alt="Édition de la carte dans l'admin"></span>
         <div class="feature-body">
           <div class="feature-name">Édition de la carte en temps réel</div>
           <p class="feature-desc">Ajouter, modifier ou réorganiser plats et catégories — les changements apparaissent instantanément sur le site public.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/capture-admin-galerie.png" alt="Galerie drag & drop dans l'admin"></span>
+        <span class="feature-icon"><img src="Photos/Admingalerie.png" alt="Galerie drag & drop dans l'admin"></span>
         <div class="feature-body">
           <div class="feature-name">Galerie par glisser-déposer</div>
           <p class="feature-desc">Ajouter de nouvelles photos ou réorganiser la galerie sans aucune manipulation technique.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/capture-admin-reglages.png" alt="Réglages horaires dans l'admin"></span>
+        <span class="feature-icon"><img src="Photos/Adminreglages.png" alt="Réglages horaires dans l'admin"></span>
         <div class="feature-body">
           <div class="feature-name">Réglages horaires & capacité</div>
           <p class="feature-desc">Définir les jours d'ouverture et le nombre de couverts disponibles par service — le formulaire de réservation s'adapte automatiquement.</p>
