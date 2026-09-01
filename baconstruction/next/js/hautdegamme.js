@@ -13,4 +13,12 @@
       nav.classList.remove('open');
       toggle.setAttribute('aria-expanded','false');
     }));
+  nav.querySelectorAll('.nav-sub-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const li = btn.closest('.has-dropdown');
+      if (!li) return;
+      const open = li.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
 })();
