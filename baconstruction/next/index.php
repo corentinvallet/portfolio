@@ -54,7 +54,7 @@ $preview = array_slice($gallery, 0, 3);
     <div class="hero-bg" style="background-image:url('<?= e($hero['image'] ?? '') ?>')"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <img class="hero-logo" src="<?= e($logo) ?>" alt="Logo B&amp;A Construction"/>
+      <img class="hero-logo" src="<?= e($logo) ?>" alt="Logo B&amp;A Construction" fetchpriority="high"/>
       <p class="hero-eyebrow"><?= e($hero['eyebrow'] ?? '') ?></p>
       <h1>B<em>&amp;</em>A<br>Construction</h1>
       <p class="hero-names"><?= e($hero['names'] ?? '') ?></p>
