@@ -265,7 +265,7 @@
  .service-card p{
      font-size:.86rem;
      line-height:1.78;
-     color:rgba(232,220,200,.6) 
+     color:rgba(232,220,200,.7) 
 }
  .service-card.is-link{
      cursor:pointer;
