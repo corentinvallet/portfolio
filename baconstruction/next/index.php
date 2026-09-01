@@ -31,12 +31,8 @@ $preview = array_slice($gallery, 0, 3);
 <html lang="fr">
 <head>
   <meta charset="UTF-8"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title><?= e($c['meta']['title'] ?? 'B&A Construction') ?></title>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap"></noscript>
   <link rel="preload" as="image" href="<?= e($hero['image'] ?? '') ?>">
   <link rel="stylesheet" href="css/base.css"/>
   <link rel="stylesheet" href="css/index.css"/>
