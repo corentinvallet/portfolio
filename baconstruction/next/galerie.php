@@ -25,11 +25,14 @@ $siteUrl = 'https://corentinvallet.fr/baconstruction';
 <html lang="fr">
 <head>
   <meta charset="UTF-8"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>Nos réalisations — B&amp;A Construction | Béton & caves à vin en Drôme-Ardèche</title>
   <meta name="description" content="Découvrez toutes les réalisations de B&amp;A Construction : terrasses en béton imprimé, béton ciré, béton désactivé, plages de piscine et caves à vin enterrées en Drôme et Ardèche."/>
   <link rel="canonical" href="<?= e($siteUrl) ?>/galerie.php"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap"></noscript>
   <link rel="stylesheet" href="css/base.css"/>
   <link rel="stylesheet" href="css/galerie.css"/>
   <link rel="stylesheet" href="css/lightbox.css"/>
