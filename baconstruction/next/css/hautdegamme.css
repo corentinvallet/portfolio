@@ -7,6 +7,11 @@
     gap:28px;
     list-style:none
 }
+/* ── DROPDOWN "Haut de gamme" ── */
+ .nav-links li{
+    position:relative;
+    list-style:none
+}
  .dropdown a.current{
     color:var(--accent)
 }
@@ -196,10 +201,6 @@
     }
      .nav-links li{
         width:100%
-    }/* ── DROPDOWN "Haut de gamme" ── */
-    .nav-links li{
-        position:relative;
-        list-style:none
     }
     .nav-links a{
         display:block;
