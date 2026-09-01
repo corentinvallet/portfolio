@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="css/hautdegamme.css"/>    
   <link rel="stylesheet" href="css/base.css"/>
+  <link rel="stylesheet" href="css/lightbox.css"/>
 </head>
 <body>
 
@@ -73,9 +74,9 @@
   <?php if ($gallery): ?>
   <div class="gallery-grid">
     <?php foreach ($gallery as $g): ?>
-    <div class="gallery-item">
+    <div class="gallery-item" data-src="<?= e($g['full'] ?? '') ?>">
       <img src="<?= e($g['thumb'] ?? ($g['full'] ?? '')) ?>" alt="<?= e($g['caption'] ?? '') ?>" loading="lazy">
-      <div class="gallery-caption"><span><?= e($g['caption'] ?? '') ?></span></div>
+      <div class="gallery-caption"><span><?= e($g['caption'] ?? '') ?></span><?php if (!empty($g['sub'])): ?><em><?= e($g['sub']) ?></em><?php endif; ?></div>
     </div>
     <?php endforeach; ?>
   </div>
@@ -103,8 +104,25 @@
   <p class="footer-copy">© <?= date('Y') ?> B&amp;A Construction — Tous droits réservés</p>
   <div id="cv-signature"></div>
 </footer>
+<!-- ═══════════════════════════════════════════
+     LIGHTBOX
+═══════════════════════════════════════════ -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Image agrandie">
+  <div class="lb-stage" id="lb-stage"></div>
+  <button id="lb-close" title="Fermer (Échap)">✕</button>
+  <button class="lb-btn" id="lb-prev" title="Précédent (←)">&#8592;</button>
+  <button class="lb-btn" id="lb-next" title="Suivant (→)">&#8594;</button>
+  <div id="lb-counter"></div>
+  <div class="lb-zoom-hint" id="lb-zoom-hint">🔍 Clic pour zoomer · Molette pour zoomer · Glisser pour naviguer</div>
+  <div class="lb-bar">
+    <div class="lb-caption" id="lb-caption"></div>
+    <div class="lb-hint">Échap pour fermer</div>
+  </div>
+</div>
 
+<script src="js/lightbox.js"></script>
 <script src="js/hautdegamme.js"></script>
 <script src="https://www.corentinvallet.fr/common/widgets/signature.js?v=1" defer></script>
+</body>
 </body>
 </html>
