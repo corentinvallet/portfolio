@@ -146,8 +146,8 @@
 }
  .btn-primary{
      padding:13px 36px;
-     background:var(--accent);
-     color:--dark-brown;
+     background:#936f38;
+     color:#fff;
      border:none;
      cursor:pointer;
      font-family:'Raleway',sans-serif;
