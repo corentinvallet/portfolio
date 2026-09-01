@@ -327,6 +327,7 @@ footer{
     transform:none;opacity:1;visibility:visible;box-shadow:none;
     background:rgba(196,148,74,.06);border:none;display:none;
   }
+  .has-dropdown:hover .dropdown,.has-dropdown:focus-within .dropdown{transform:none}
   .has-dropdown.is-open > .dropdown{display:block}
   .dropdown a{padding:12px 0 12px 30px;border-bottom:1px solid rgba(196,148,74,.1);font-size:.85rem;color:rgba(232,220,200,.75)}
   .dropdown a::before{content:"— ";color:var(--accent)}
