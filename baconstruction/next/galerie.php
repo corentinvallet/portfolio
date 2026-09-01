@@ -29,9 +29,9 @@ $siteUrl = 'https://corentinvallet.fr/baconstruction';
   <meta name="description" content="Découvrez toutes les réalisations de B&amp;A Construction : terrasses en béton imprimé, béton ciré, béton désactivé, plages de piscine et caves à vin enterrées en Drôme et Ardèche."/>
   <link rel="canonical" href="<?= e($siteUrl) ?>/galerie.php"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/base.css"/>
   <link rel="stylesheet" href="css/galerie.css"/>
   <link rel="stylesheet" href="css/lightbox.css"/>
-  <link rel="stylesheet" href="css/base.css"/>
 </head>
 <body>
 
