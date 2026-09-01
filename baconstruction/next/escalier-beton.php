@@ -16,6 +16,7 @@ $gallery = array_values(array_filter($c['gallery'] ?? [], fn($g) => in_array('es
 $PAGE_LABEL = 'Haut de gamme';
 $PAGE_TITLE = 'Escalier <em>béton</em>';
 $PAGE_INTRO = "Un escalier en béton coulé sur mesure, structure et finitions soignées.";
+$PAGE_DESCRIPTION = "Escaliers en béton coulé sur mesure par B&A Construction : ligne droite, quart tournant ou suspendu, en Drôme et Ardèche. Devis gratuit.";
 $CTA_TYPE   = 'Escalier béton';
 $GALLERY_CAT = 'escalier-beton';
 $GALLERY_TITLE = 'Nos escaliers béton en images';

@@ -16,6 +16,7 @@ $gallery = array_values(array_filter($c['gallery'] ?? [], fn($g) => in_array('ca
 $PAGE_LABEL = 'Haut de gamme';
 $PAGE_TITLE = 'Caves à <em>vin</em>';
 $PAGE_INTRO = "Une cave à vin souterraine, créée sur mesure sous votre habitation.";
+$PAGE_DESCRIPTION = "Cave à vin souterraine sur mesure en Drôme-Ardèche : B&A Construction creuse et aménage votre cave enterrée, fraîcheur naturelle garantie. Devis gratuit.";
 $CTA_TYPE   = 'Cave à vin';
 $GALLERY_CAT = 'cave-a-vin';
 $GALLERY_TITLE = 'Nos caves à vins en images';

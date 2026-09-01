@@ -16,6 +16,7 @@ $gallery = array_values(array_filter($c['gallery'] ?? [], fn($g) => in_array('be
 $PAGE_LABEL = 'Haut de gamme';
 $PAGE_TITLE = 'Finitions de <em>qualité</em>';
 $PAGE_INTRO = "Terrasses, allées, murets et plages avec textures bois, pierre ou ardoise.";
+$PAGE_DESCRIPTION = "Finitions haut de gamme en Drôme-Ardèche : béton imprimé, enduit de finition, béton ciré, terrasses, allées et plages de piscine texturées bois, pierre ou ardoise par B&A Construction. Devis gratuit.";
 $CTA_TYPE   = 'Béton imprimé';
 $GALLERY_CAT = 'beton-imprime';
 $GALLERY_TITLE = 'Nos finitions en images';
