@@ -1,154 +1,154 @@
 /* ============================================================ B&A Construction — Styles spécifiques : _hautdegamme-template.php Nécessite base.css (variables, reset, nav, boutons) ============================================================ */
  section[id]{
-    scroll-margin-top:80px
+     scroll-margin-top:80px 
 }
  .dropdown a.current{
-    color:var(--accent)
+     color:var(--accent) 
 }
 /* ── PAGE HEADER ── */
  .page-header{
-    padding:130px 5% 60px;
-    background:var(--dark-brown);
-    border-bottom:1px solid rgba(196,148,74,.2)
+     padding:130px 5% 60px;
+     background:var(--dark-brown);
+     border-bottom:1px solid rgba(196,148,74,.2) 
 }
  section{
-    padding:90px 5%
+     padding:90px 5% 
 }
 /* ── DETAIL (image + texte) ── */
  .detail-section{
-    background:var(--sand);
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:80px;
-    align-items:stretch
+     background:var(--sand);
+     display:grid;
+     grid-template-columns:1fr 1fr;
+     gap:80px;
+     align-items:stretch 
 }
  .detail-img-wrap{
-    position:relative;
-    height:100%
+     position:relative;
+     height:100% 
 }
  .detail-img-frame{
-    position:absolute;
-    inset:0;
-    overflow:hidden
+     position:absolute;
+     inset:0;
+     overflow:hidden 
 }
  .detail-img-frame img{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-    filter:sepia(15%) contrast(1.05)
+     position:absolute;
+     inset:0;
+     width:100%;
+     height:100%;
+     object-fit:cover;
+     display:block;
+     filter:sepia(15%) contrast(1.05) 
 }
  .detail-badge{
-    position:absolute;
-    bottom:-22px;
-    right:-22px;
-    width:108px;
-    height:108px;
-    background:var(--accent);
-    border-radius:50%;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center
+     position:absolute;
+     bottom:-22px;
+     right:-22px;
+     width:108px;
+     height:108px;
+     background:var(--accent);
+     border-radius:50%;
+     display:flex;
+     flex-direction:column;
+     align-items:center;
+     justify-content:center;
+     text-align:center 
 }
  .detail-badge strong{
-    font-size:1rem;
-    font-weight:500;
-    color:#fff;
-    line-height:1
+     font-size:1rem;
+     font-weight:500;
+     color:#fff;
+     line-height:1 
 }
  .detail-badge span{
-    font-size:.58rem;
-    letter-spacing:.1em;
-    text-transform:uppercase;
-    color:rgba(255,255,255,.82)
+     font-size:.58rem;
+     letter-spacing:.1em;
+     text-transform:uppercase;
+     color:rgba(255,255,255,.82) 
 }
  .detail-text .section-title{
-    color:var(--dark-brown)
+     color:var(--dark-brown) 
 }
  .detail-tags{
-    margin-top:30px;
-    display:flex;
-    gap:28px;
-    flex-wrap:wrap
+     margin-top:30px;
+     display:flex;
+     gap:28px;
+     flex-wrap:wrap 
 }
  .detail-tag{
-    border-left:3px solid var(--accent);
-    padding-left:15px
+     border-left:3px solid var(--accent);
+     padding-left:15px 
 }
  .detail-tag strong{
-    display:block;
-    font-size:.98rem;
-    color:var(--brown);
-    font-family:'Playfair Display',serif
+     display:block;
+     font-size:.98rem;
+     color:var(--brown);
+     font-family:'Playfair Display',serif 
 }
 /* ── GALERIE LIÉE ── */
  #related{
-    background:var(--cream)
+     background:var(--cream) 
 }
  .gallery-item{
-    overflow:hidden;
-    position:relative;
-    aspect-ratio:4/3
+     overflow:hidden;
+     position:relative;
+     aspect-ratio:4/3 
 }
  .gallery-empty{
-    padding:20px 0;
-    color:var(--brown);
-    opacity:.7;
-    font-size:.9rem
+     padding:20px 0;
+     color:var(--brown);
+     opacity:.7;
+     font-size:.9rem 
 }
  .gallery-link-banner{
      display:inline-flex;
-    flex-direction:column;
-    align-items:flex-start;
-    gap:4px;
+     flex-direction:column;
+     align-items:flex-start;
+     gap:4px;
      margin-top:36px;
-    padding:18px 28px;
+     padding:18px 28px;
      border:1px solid rgba(196,148,74,.4);
-    background:var(--accent);
+     background:var(--accent);
      text-decoration:none;
-    transition:background .25s,transform .2s;
+     transition:background .25s,transform .2s;
      cursor:pointer;
 }
  .gallery-link-banner:hover{
-    background:#a87836;
-    transform:translateX(4px)
+     background:#a87836;
+     transform:translateX(4px) 
 }
 /* ── CTA CONTACT ── */
  #cta{
-    background:var(--dark-brown);
-    text-align:center
+     background:var(--dark-brown);
+     text-align:center 
 }
  #cta .section-title{
-    color:var(--sand)
+     color:var(--sand) 
 }
  #cta .section-desc{
-    color:rgba(232,220,200,.65);
-    margin:0 auto 30px;
-    max-width:480px
+     color:rgba(232,220,200,.65);
+     margin:0 auto 30px;
+     max-width:480px 
 }
 /* ── RESPONSIVE ── */
  @media(max-width:900px){
      .detail-section{
-        grid-template-columns:1fr;
-        gap:50px
+         grid-template-columns:1fr;
+         gap:50px 
     }
      .detail-img-wrap{
-        height:340px
+         height:340px 
     }
      .detail-badge{
-        right:0
+         right:0 
     }
      .gallery-grid{
-        grid-template-columns:1fr 1fr
+         grid-template-columns:1fr 1fr 
     }
 }
  @media(max-width:560px){
      .gallery-grid{
-        grid-template-columns:1fr
+         grid-template-columns:1fr 
     }
 }
  
