@@ -10,6 +10,7 @@ function e($s) { return htmlspecialchars((string)($s ?? ''), ENT_QUOTES, 'UTF-8'
 
 $gallery    = $c['gallery'] ?? [];
 $logo       = $c['logo']    ?? 'Photos/Logo simplifié.webp';
+$SELF       = 'galerie.php';
 $categories = $c['categories'] ?? [
   ['value'=>'cave-a-vin','label'=>'Caves à vins'],
   ['value'=>'beton-cire','label'=>'Béton ciré'],
@@ -38,33 +39,7 @@ $siteUrl = 'https://corentinvallet.fr/baconstruction';
 <!-- ═══════════════════════════════════════════
      NAVIGATION
 ═══════════════════════════════════════════ -->
-<nav id="main-nav">
-  <a class="nav-logo" href="index.php">
-    <img src="<?= e($logo) ?>" style="width:50px;height:50px" alt="Logo B&amp;A Construction">
-    <div class="nav-brand">B<em>&amp;</em>A Construction</div>
-  </a>
-  <button class="nav-toggle" id="navToggle" aria-label="Ouvrir le menu"
-          aria-expanded="false" aria-controls="navLinks">
-    <span></span><span></span><span></span>
-  </button>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="index.php#services">Services</a></li>
-    <li class="has-dropdown">
-      <a href="index.php#hautdegamme">Haut de gamme</a>
-      <ul class="dropdown">
-        <li><a href="caves-a-vin.php">Caves à vin</a></li>
-        <li><a href="escalier-beton.php">Escalier béton</a></li>
-        <li><a href="beton-imprime.php">Finitions de qualité</a></li>
-      </ul>
-    </li>
-    <li><a href="index.php#realisations">Réalisations</a></li>
-    <li><a href="galerie.php">Galerie</a></li>
-    <li><a href="index.php#process">Méthode</a></li>
-    <li><a href="index.php#about">À propos</a></li>
-    <li><a href="index.php#contact">Contact</a></li>
-  </ul>
-</nav>
-
+<?php include __DIR__ . '/_nav.php'; ?>
 <!-- ═══════════════════════════════════════════
      EN-TÊTE GALERIE
 ═══════════════════════════════════════════ -->

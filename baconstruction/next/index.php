@@ -22,6 +22,7 @@ $stats   = $c['stats']        ?? [];
 $contact = $c['contact']      ?? [];
 $gallery = $c['gallery']      ?? [];
 $logo    = $c['logo']         ?? 'Photos/Logo simplifié.webp';
+$SELF    = 'index.php';
 
 // les 3 premières réalisations alimentent l'aperçu de la page d'accueil
 $preview = array_slice($gallery, 0, 3);
@@ -42,33 +43,7 @@ $preview = array_slice($gallery, 0, 3);
 <!-- ═══════════════════════════════════════════
      NAVIGATION (commune aux deux pages)
 ═══════════════════════════════════════════ -->
-<nav id="main-nav">
-  <a class="nav-logo" href="index.php">
-    <img src="<?= e($logo) ?>" style="width:50px;height:50px" alt="Logo B&amp;A Construction">
-    <div class="nav-brand">B<em>&amp;</em>A Construction</div>
-  </a>
-  <button class="nav-toggle" id="navToggle" aria-label="Ouvrir le menu"
-          aria-expanded="false" aria-controls="navLinks">
-    <span></span><span></span><span></span>
-  </button>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#services">Services</a></li>
-    <li class="has-dropdown">
-      <a href="#hautdegamme">Haut de gamme</a>
-      <ul class="dropdown">
-        <li><a href="caves-a-vin.php">Caves à vin</a></li>
-        <li><a href="escalier-beton.php">Escalier béton</a></li>
-        <li><a href="beton-imprime.php">Finitions de qualité</a></li>
-      </ul>
-    </li>
-    <li><a href="#realisations">Réalisations</a></li>
-    <li><a href="galerie.php">Galerie</a></li>
-    <li><a href="#process">Méthode</a></li>
-    <li><a href="#about">À propos</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
-
+<?php include __DIR__ . '/_nav.php'; ?>
 
 <!-- ═══════════════════════════════════════════
      PAGE ACCUEIL

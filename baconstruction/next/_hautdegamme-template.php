@@ -10,34 +10,7 @@
   <link rel="stylesheet" href="css/lightbox.css"/>
 </head>
 <body>
-
-<nav id="main-nav">
-  <a class="nav-logo" href="index.php">
-    <img src="<?= e($logo) ?>" style="width:50px;height:50px" alt="Logo B&amp;A Construction">
-    <div class="nav-brand">B<em>&amp;</em>A Construction</div>
-  </a>
-  <button class="nav-toggle" id="navToggle" aria-label="Ouvrir le menu"
-          aria-expanded="false" aria-controls="navLinks">
-    <span></span><span></span><span></span>
-  </button>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="index.php#services">Services</a></li>
-    <li class="has-dropdown">
-      <a href="index.php#hautdegamme">Haut de gamme</a>
-      <ul class="dropdown">
-        <li><a href="caves-a-vin.php" class="<?= $SELF === 'caves-a-vin.php' ? 'current' : '' ?>">Caves à vin</a></li>
-        <li><a href="escalier-beton.php" class="<?= $SELF === 'escalier-beton.php' ? 'current' : '' ?>">Escalier béton</a></li>
-        <li><a href="beton-imprime.php" class="<?= $SELF === 'beton-imprime.php' ? 'current' : '' ?>">Finitions de qualité</a></li>
-      </ul>
-    </li>
-    <li><a href="index.php#realisations">Réalisations</a></li>
-    <li><a href="galerie.php">Galerie</a></li>
-    <li><a href="index.php#process">Méthode</a></li>
-    <li><a href="index.php#about">À propos</a></li>
-    <li><a href="index.php#contact">Contact</a></li>
-  </ul>
-</nav>
-
+<?php include __DIR__ . '/_nav.php'; ?>
 <div class="page-header">
   <p class="section-label"><?= e($PAGE_LABEL) ?></p>
   <h1><?= $PAGE_TITLE /* contient volontairement une balise <em> */ ?></h1>
