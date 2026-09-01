@@ -196,12 +196,16 @@
     }
      .nav-links li{
         width:100%
+    }/* ── DROPDOWN "Haut de gamme" ── */
+    .nav-links li{
+        position:relative;
+        list-style:none
     }
-     .nav-links a{
+    .nav-links a{
         display:block;
         padding:15px 0;
         font-size:.9rem;
-         border-bottom:1px solid rgba(196,148,74,0.12)
+        border-bottom:1px solid rgba(196,148,74,0.12)
     }
 }
  @media(max-width:560px){
