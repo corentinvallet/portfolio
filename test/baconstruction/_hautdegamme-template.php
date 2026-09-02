@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title><?= e(strip_tags($PAGE_TITLE)) ?> — B&amp;A Construction</title>
   <meta name="description" content="<?= e($PAGE_DESCRIPTION ?? '') ?>"/>
+  <link rel="stylesheet" href="https://www.corentinvallet.fr/common/css/common.css"/>
   <link rel="stylesheet" href="css/base.css"/>
   <link rel="stylesheet" href="css/hautdegamme.css"/>    
   <link rel="stylesheet" href="css/lightbox.css"/>

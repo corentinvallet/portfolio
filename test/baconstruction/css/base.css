@@ -12,23 +12,7 @@
      margin:0;
      padding:0 
 }
-/* ── SCROLLBAR STYLISÉE ── */
-::-webkit-scrollbar{
-     width:6px
-}
-::-webkit-scrollbar-track{
-     background:var(--cream)
-}
-::-webkit-scrollbar-thumb{
-     background:#936f38;
-     border-radius:3px
-}
-::-webkit-scrollbar-thumb:hover{
-     background:#7a5c2c
-}
-html{
-     scrollbar-color:#936f38 var(--cream)
-}
+
  :root{
      --sand:#e8dcc8;
      --brown:#7a5c3e;
@@ -36,6 +20,8 @@ html{
      --cream:#f5f0e8;
      --accent:#c4944a;
      --text:#2a1f14;
+     --scrollbar-track:var(--cream);
+     --scrollbar-thumb:#936f38;
 }
  html{
      scroll-behavior:smooth 
