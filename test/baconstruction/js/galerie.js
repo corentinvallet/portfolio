@@ -64,10 +64,14 @@
     });
   });
 
-  // Catégorie passée par l'URL (clic sur une vignette de l'accueil) -> on pré-sélectionne.
-  const wanted = new URLSearchParams(location.search).get('cat');
-  const valid  = wanted && Array.from(btns).some(b => b.dataset.filter === wanted);
-  if (valid) selected.add(wanted);
+    // Catégorie(s) passées par l'URL (lien depuis une page "Haut de gamme") -> on pré-sélectionne.
+  const wantedParam = new URLSearchParams(location.search).get('cat');
+  if (wantedParam) {
+    const validFilters = new Set(Array.from(btns).map(b => b.dataset.filter));
+    wantedParam.split(',').forEach(cat => {
+      if (validFilters.has(cat)) selected.add(cat);
+    });
+  }
   render();
 })();
 

@@ -56,7 +56,7 @@
   <?php else: ?>
   <p class="gallery-empty">Photos à venir.</p>
   <?php endif; ?>
-  <a class="gallery-link-banner" href="galerie.php?cat=<?= e($GALLERY_CAT) ?>">
+  <a class="gallery-link-banner" href="galerie.php?cat=<?= rawurlencode($GALLERY_CAT) ?>">
     <span class="gallery-link-text">Voir toute la galerie →</span>
     <span class="gallery-link-sub">Filtré sur « <?= e($CTA_TYPE) ?> »</span>
   </a>
