@@ -29,7 +29,7 @@ $siteUrl = 'https://corentinvallet.fr/test/baconstruction';
   <title>Nos réalisations — B&amp;A Construction | Béton & caves à vin en Drôme-Ardèche</title>
   <meta name="description" content="Découvrez toutes les réalisations de B&amp;A Construction : terrasses en béton imprimé, béton ciré, béton désactivé, plages de piscine et caves à vin enterrées en Drôme et Ardèche."/>
   <link rel="canonical" href="<?= e($siteUrl) ?>/galerie.php"/>
-  <link rel="stylesheet" href="https://www.corentinvallet.fr/common/css/common.css"/>
+  <link rel="stylesheet" href="https://www.corentinvallet.fr/common/css/scrollbar.css"/>
   <link rel="stylesheet" href="css/base.css"/>
   <link rel="stylesheet" href="css/galerie.css"/>
   <link rel="stylesheet" href="css/lightbox.css"/>

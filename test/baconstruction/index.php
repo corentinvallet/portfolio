@@ -35,7 +35,7 @@ $preview = array_slice($gallery, 0, 3);
   <title><?= e($c['meta']['title'] ?? 'B&A Construction') ?></title>
   <meta name="description" content="<?= e($c['meta']['description'] ?? '') ?>"/>
   <link rel="preload" as="image" href="<?= e($hero['image'] ?? '') ?>">
-  <link rel="stylesheet" href="https://www.corentinvallet.fr/common/css/common.css"/>
+  <link rel="stylesheet" href="https://www.corentinvallet.fr/common/css/scrollbar.css"/>
   <link rel="stylesheet" href="css/base.css"/>
   <link rel="stylesheet" href="css/index.css"/>
 </head>
