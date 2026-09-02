@@ -94,6 +94,21 @@
      position:relative;
      aspect-ratio:4/3 
 }
+.gallery-caption span{
+     font-size:.75rem;
+     letter-spacing:.14em;
+     text-transform:uppercase;
+     color:var(--sand);
+     font-weight:500
+}
+.gallery-caption em{
+     font-style:normal;
+     font-size:.68rem;
+     letter-spacing:.08em;
+     text-transform:uppercase;
+     color:var(--sand);
+     opacity:.75
+}
  .gallery-empty{
      padding:20px 0;
      color:var(--brown);
