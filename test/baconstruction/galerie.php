@@ -19,7 +19,7 @@ $categories = $c['categories'] ?? [
   ['value'=>'beton-imprime','label'=>'Béton imprimé'],
   ['value'=>'escalier-beton','label'=>'Escalier béton'],
 ];
-$siteUrl = 'https://corentinvallet.fr/baconstruction';
+$siteUrl = 'https://corentinvallet.fr/test/baconstruction';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
