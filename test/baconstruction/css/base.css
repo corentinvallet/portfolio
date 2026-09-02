@@ -12,6 +12,24 @@
      margin:0;
      padding:0 
 }
+/* ── SCROLLBAR STYLISÉE ── */
+::-webkit-scrollbar{
+     width:10px
+}
+::-webkit-scrollbar-track{
+     background:var(--dark-brown)
+}
+::-webkit-scrollbar-thumb{
+     background:var(--accent);
+     border-radius:6px
+}
+::-webkit-scrollbar-thumb:hover{
+     background:#a87836
+}
+html{
+     scrollbar-width:thin;
+     scrollbar-color:var(--accent) var(--dark-brown)
+}
  :root{
      --sand:#e8dcc8;
      --brown:#7a5c3e;
