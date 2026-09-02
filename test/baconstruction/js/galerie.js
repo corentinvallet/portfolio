@@ -1,4 +1,4 @@
-/* ── Filtre galerie (+ pré-filtrage via ?cat= dans l'URL) ── */
+/* ── Filtre galerie multi-catégories (+ pré-filtrage via ?cat= dans l'URL) ── */
 (function(){
   const btns  = document.querySelectorAll('.filter-btn');
   const items = document.querySelectorAll('#gallery-grid .gallery-item[data-category]');
@@ -11,37 +11,64 @@
     'beton-cire':'réalisation(s) en béton ciré',
     'beton-desactive':'réalisation(s) en béton désactivé',
     'piscine':'réalisation(s) piscine',
-    'beton-imprime':'réalisation(s) en béton imprimé'
+    'beton-imprime':'réalisation(s) en béton imprimé',
+    'escalier-beton':'réalisation(s) escalier béton'
   };
+
+  let selected = new Set(); // catégories actuellement cochées ('all' = rien de coché)
 
   function hasCategory(item, cat) {
     return item.dataset.category.split(' ').includes(cat);
   }
 
-  function updateCount(filter) {
-    const n = filter === 'all'
-      ? items.length
-      : Array.from(items).filter(el => hasCategory(el, filter)).length;
-    count.textContent = n + ' ' + (labels[filter] || 'réalisations');
+  function matches(item) {
+    if (selected.size === 0) return true;
+    return Array.from(selected).some(cat => hasCategory(item, cat));
+  }
+
+  function updateCount() {
+    const visible = Array.from(items).filter(matches);
+    const n = visible.length;
+    let label;
+    if (selected.size === 0) {
+      label = labels['all'];
+    } else if (selected.size === 1) {
+      label = labels[Array.from(selected)[0]] || 'réalisations';
+    } else {
+      label = 'réalisations (' + Array.from(selected).map(c => labels[c]?.split('– ')[1] || labels[c]?.split('en ')[1] || c).join(', ') + ')';
+    }
+    count.textContent = n + ' ' + label;
     empty.style.display = n === 0 ? 'block' : 'none';
   }
 
-  function applyFilter(filter) {
-    btns.forEach(b => b.classList.toggle('active', b.dataset.filter === filter));
-    items.forEach(item => {
-      item.classList.toggle('hidden', filter !== 'all' && !hasCategory(item, filter));
+  function render() {
+    btns.forEach(b => {
+      const f = b.dataset.filter;
+      b.classList.toggle('active', f === 'all' ? selected.size === 0 : selected.has(f));
     });
-    updateCount(filter);
+    items.forEach(item => item.classList.toggle('hidden', !matches(item)));
+    updateCount();
   }
 
   btns.forEach(btn => {
-    btn.addEventListener('click', function() { applyFilter(this.dataset.filter); });
+    btn.addEventListener('click', function() {
+      const f = this.dataset.filter;
+      if (f === 'all') {
+        selected.clear();
+      } else if (selected.has(f)) {
+        selected.delete(f);
+      } else {
+        selected.add(f);
+      }
+      render();
+    });
   });
 
-  // Catégorie passée par l'URL (clic sur une vignette de l'accueil) -> on filtre d'emblee.
+  // Catégorie passée par l'URL (clic sur une vignette de l'accueil) -> on pré-sélectionne.
   const wanted = new URLSearchParams(location.search).get('cat');
   const valid  = wanted && Array.from(btns).some(b => b.dataset.filter === wanted);
-  applyFilter(valid ? wanted : 'all');
+  if (valid) selected.add(wanted);
+  render();
 })();
 
 (function(){
