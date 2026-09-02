@@ -97,5 +97,4 @@
 <script src="js/hautdegamme.js"></script>
 <script src="https://www.corentinvallet.fr/common/widgets/signature.js?v=1" defer></script>
 </body>
-</body>
 </html>

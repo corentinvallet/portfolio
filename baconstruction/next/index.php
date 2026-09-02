@@ -187,7 +187,7 @@ $preview = array_slice($gallery, 0, 3);
         <input type="email" name="email" placeholder="Adresse e-mail" required/>
         <input type="tel" name="telephone" placeholder="Téléphone"/>
         <select name="type_projet" aria-label="Type de projet"><option value="" disabled selected>Type de projet</option><option>Terrasse béton imprimé</option><option>Plage de piscine</option><option>Allée béton désactivé</option><option>Béton ciré</option><option>Gros œuvre / Dalle</option><option>Autre</option></select>
-        <textarea placeholder="Décrivez votre projet (surface, délais, contraintes…)"></textarea>
+        <textarea name="message" placeholder="Décrivez votre projet (surface, délais, contraintes…)"></textarea>
         <button type="submit" class="btn-primary">Envoyer ma demande →</button>
       </form>
     </div>
