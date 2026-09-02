@@ -14,14 +14,14 @@
 }
 /* ── SCROLLBAR STYLISÉE ── */
 ::-webkit-scrollbar{
-     width:10px
+     width:6px
 }
 ::-webkit-scrollbar-track{
      background:var(--cream)
 }
 ::-webkit-scrollbar-thumb{
      background:#936f38;
-     border-radius:6px
+     border-radius:3px
 }
 ::-webkit-scrollbar-thumb:hover{
      background:#7a5c2c
