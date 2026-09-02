@@ -108,8 +108,9 @@
      font-style:normal;
      font-size:.68rem;
      letter-spacing:.1em;
-     color:var(--accent);
-     text-transform:uppercase 
+     color:var(--sand);
+     text-transform:uppercase;
+     opacity:.75 
 }
  .lb-hint{
      font-size:.65rem;

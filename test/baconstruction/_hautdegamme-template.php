@@ -44,6 +44,7 @@
 <section id="related">
   <p class="section-label">Quelques réalisations</p>
   <h2 class="section-title"><?= e($GALLERY_TITLE ?? ('Nos ' . mb_strtolower($CTA_TYPE) . 's en images')) ?></h2>
+  <?php $gallery = array_slice($gallery, 0, 6); ?>
   <?php if ($gallery): ?>
   <div class="gallery-grid">
     <?php foreach ($gallery as $g): ?>
