@@ -126,4 +126,38 @@ function goToGallery(category) {
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
   });
+  (function(){
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+  const msg = document.getElementById('formMessage');
+  const btn = form.querySelector('button[type="submit"]');
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'Envoi en cours…';
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        msg.textContent = 'Merci, votre demande a bien été envoyée. Nous vous répondons rapidement.';
+        msg.className = 'form-message is-visible is-success';
+        form.reset();
+        btn.textContent = 'Demande envoyée ✓';
+      } else {
+        throw new Error('Erreur serveur');
+      }
+    } catch (err) {
+      msg.textContent = "Une erreur est survenue. Vous pouvez aussi nous appeler directement.";
+      msg.className = 'form-message is-visible is-error';
+      btn.disabled = false;
+      btn.textContent = 'Envoyer ma demande →';
+    }
+  });
+})
 })();

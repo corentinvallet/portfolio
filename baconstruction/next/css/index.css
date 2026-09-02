@@ -731,6 +731,26 @@
      transition:border-color .25s;
      appearance:none 
 }
+ .form-message{
+     padding:13px 17px;
+     font-size:.88rem;
+     line-height:1.5;
+     border-radius:2px;
+     display:none;
+}
+ .form-message.is-visible{
+     display:block;
+}
+ .form-message.is-success{
+     background:rgba(196,148,74,.12);
+     border:1px solid var(--accent);
+     color:var(--dark-brown);
+}
+ .form-message.is-error{
+     background:rgba(179,69,46,.1);
+     border:1px solid #b3452e;
+     color:#b3452e;
+}
  .contact-form input:focus,.contact-form textarea:focus,.contact-form select:focus{
      border-color:var(--accent) 
 }
