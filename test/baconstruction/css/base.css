@@ -17,18 +17,18 @@
      width:10px
 }
 ::-webkit-scrollbar-track{
-     background:var(--sand)
+     background:var(--cream)
 }
 ::-webkit-scrollbar-thumb{
-     background:var(--accent);
+     background:#936f38;
      border-radius:6px
 }
 ::-webkit-scrollbar-thumb:hover{
-     background:#a87836
+     background:#7a5c2c
 }
 html{
      scrollbar-width:thin;
-     scrollbar-color:var(--accent) var(--dark-brown)
+     scrollbar-color:#936f38 var(--cream)
 }
  :root{
      --sand:#e8dcc8;
