@@ -159,5 +159,5 @@ function goToGallery(category) {
       btn.textContent = 'Envoyer ma demande →';
     }
   });
-})
+})();
 })();
