@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Galerie — Francis Ferret, Sculpteur sur bois</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="css/theme.css" />
+        <link rel="stylesheet" href="css/galerie.css" />
+        <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
+        <link rel="apple-touch-icon" sizes="192x192" href="images/favicon-192x192.png" />
+        <meta name="description" content="Découvrez toutes les sculptures sur bois de Francis Ferret : animaux et personnages, façonnés à la main par cet artisan sculpteur." />
+        <link rel="canonical" href="https://francisferret.fr/galerie.html" />
+        <meta name="robots" content="index, follow" />
+
+        <!-- Open Graph -->
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Galerie — Francis Ferret, Sculpteur sur bois" />
+        <meta property="og:description" content="Découvrez toutes les sculptures sur bois de Francis Ferret : animaux et personnages, façonnés à la main." />
+        <meta property="og:image" content="https://res.cloudinary.com/de5u1njxn/image/upload/v1780118000/francis-ferret/tatgoqdeiws0f21horlt.jpg" />
+        <meta property="og:url" content="https://francisferret.fr/galerie.html" />
+        <meta property="og:locale" content="fr_FR" />
+    </head>
+
+    <body>
+        <nav id="nav">
+            <a href="index.html" class="nav-logo" id="navLogo">Francis Ferret</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#about">Portrait</a></li>
+                <li><a href="index.html#savoir">Savoir-faire</a></li>
+                <li><a href="galerie.html" class="active">Galerie</a></li>
+                <li><a href="index.html#evenements">Événements</a></li>
+                <li><a href="index.html#parcours">Parcours</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="index.html" class="nav-back"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg><span>Retour</span></a></li>
+            </ul>
+            <div class="nav-burger" id="burger"><span></span><span></span><span></span></div>
+        </nav>
+
+        <div class="galerie-hero">
+            <p class="galerie-hero-label" id="galLabel">Portfolio complet</p>
+            <h1 class="galerie-hero-title" id="galTitle"></h1>
+            <p class="galerie-hero-sub" id="galSub"></p>
+            <div class="hero-divider"></div>
+        </div>
+
+        <div class="filters-wrap" id="filtersWrap"></div>
+        <p class="filter-count" id="filterCount"><span id="visibleCount">0</span> œuvre(s) affichée(s)</p>
+
+        <div class="masonry-wrap">
+            <div class="masonry" id="masonry"></div>
+            <div class="no-results" id="noResults">Aucune œuvre dans cette catégorie.</div>
+        </div>
+
+        <div class="lightbox" id="lightbox">
+            <button class="lb-close" id="lbClose">×</button>
+            <button class="lb-arrow lb-prev" id="lbPrev">‹</button>
+            <img class="lb-img" id="lbImg" alt="" />
+            <button class="lb-arrow lb-next" id="lbNext">›</button>
+            <div class="lb-info">
+                <div class="lb-cat" id="lbCat"></div>
+                <div class="lb-counter" id="lbCounter"></div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-logo" id="footerLogo">Francis Ferret</div>
+            <div class="footer-sub" id="footerSub">Sculpteur sur bois — Saône-et-Loire</div>
+            <div class="footer-links">
+                <a href="index.html#about">Portrait</a>
+                <a href="index.html#savoir">Savoir-faire</a>
+                <a href="galerie.html">Galerie</a>
+                <a href="index.html#evenements">Événements</a>
+                <a href="index.html#parcours">Parcours</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+            <div class="footer-copy" id="footerCopy">© 2025 Francis Ferret — Tous droits réservés</div>
+            <div id="cv-signature"></div>
+        </footer>
+
+    <script src="js/config.js"></script>
+    <script src="https://www.corentinvallet.fr/common/widgets/signature.js?v=1" defer></script>
+    <script src="js/site-core.js"></script>
+    <script src="js/galerie.js"></script>
+
+    </body>
+</html>

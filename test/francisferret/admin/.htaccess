@@ -1,0 +1,13 @@
+
+# DO NOT REMOVE THIS LINE AND THE LINES BELOW PWPROTECTID:kqfYCSP0MT
+AuthType Basic
+AuthName "Restricted Access"
+AuthUserFile /home/u348430936/domains/francisferret.fr/public_html/admin/.htpasswd
+Require valid-user
+# DO NOT REMOVE THIS LINE AND THE LINES ABOVE kqfYCSP0MT:PWPROTECTID
+
+# Empêche le téléchargement direct du fichier de mots de passe et de sa sauvegarde
+<Files ".ht*">
+  Require all denied
+</Files>
+
