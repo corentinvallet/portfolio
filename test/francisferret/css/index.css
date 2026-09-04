@@ -13,7 +13,7 @@ html { scroll-behavior: smooth; }
             .nav-links a:hover::after { transform: scaleX(1); }
             .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
             .nav-burger span { display: block; width: 24px; height: 2px; background: var(--gold-light); transition: 0.3s; }
-            #hero { min-height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+            #hero { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
             .hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center top; filter: brightness(0.45) saturate(1.2); transform: scale(1.05); animation: heroZoom 20s ease-in-out infinite alternate; }
             @keyframes heroZoom { from { transform: scale(1.05); } to { transform: scale(1.12); } }
             .hero-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(61,26,14,0.6) 0%, rgba(120,53,32,0.3) 50%, rgba(61,26,14,0.7) 100%); }
