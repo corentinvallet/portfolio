@@ -93,9 +93,9 @@
             .footer-logo { font-family: "Cinzel Decorative", serif; font-size: 1.3rem; color: var(--gold-light); margin-bottom: 0.5rem; }
             .footer-sub { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 1rem; color: var(--tc-warm); margin-bottom: 2rem; }
             .footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; }
-            .footer-links a { font-family: "Raleway", sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+            .footer-links a { font-family: "Raleway", sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s; }
             .footer-links a:hover { color: var(--gold); }
-            .footer-copy { margin-top: 2rem; font-size: 0.8rem; color: rgba(255,255,255,0.2); }
+            .footer-copy { margin-top: 2rem; font-size: 0.8rem; color: rgba(255,255,255,0.5); }
             .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
             .reveal.visible { opacity: 1; transform: translateY(0); }
             @media (max-width: 900px) {
