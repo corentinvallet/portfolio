@@ -1,35 +1,6 @@
-html { scroll-behavior: smooth; }
-            body { font-family: "Cormorant Garamond", Georgia, serif; background: var(--tc-cream); color: var(--tc-deep); overflow-x: hidden; }
-            ::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 6px; }
             ::-webkit-scrollbar-track { background: var(--tc-pale); }
             ::-webkit-scrollbar-thumb { background: var(--tc-mid); border-radius: 3px; }
-            nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 3rem; background: rgba(61,26,14,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(200,169,110,0.3); transition: padding 0.3s; line-height: 1.5; }
-            nav.scrolled { padding: 0.6rem 3rem; }
-            .nav-logo { font-family: "Cinzel Decorative", serif; font-size: 1.1rem; color: var(--gold-light); text-decoration: none; letter-spacing: 0.05em; display: inline-block; min-width: 160px; }
-            .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-            .nav-links a { font-family: "Raleway", sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--tc-light); text-decoration: none; transition: color 0.2s; position: relative; }
-            .nav-links a::after { content: ""; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px; background: var(--gold); transform: scaleX(0); transition: transform 0.3s; }
-            .nav-links a:hover { color: var(--gold-light); }
-            .nav-links a:hover::after { transform: scaleX(1); }
-            .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-            .nav-burger span { display: block; width: 24px; height: 2px; background: var(--gold-light); transition: 0.3s; }
-            #hero { height: 100vh; height: 100dvh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-            .hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center top; filter: brightness(0.45) saturate(1.2); transform: scale(1.05); animation: heroZoom 20s ease-in-out infinite alternate; }
-            @keyframes heroZoom { from { transform: scale(1.05); } to { transform: scale(1.12); } }
-            .hero-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(61,26,14,0.6) 0%, rgba(120,53,32,0.3) 50%, rgba(61,26,14,0.7) 100%); }
-            .hero-content { position: relative; z-index: 1; text-align: center; padding: 2rem; animation: fadeUp 1.2s ease both; }
-            @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-            .hero-title { font-family: "Cinzel Decorative", serif; font-size: clamp(2.8rem, 8vw, 6.5rem); color: #fff; line-height: 1.1; text-shadow: 0 4px 30px rgba(0,0,0,0.5); animation: fadeUp 1.2s 0.4s ease both; }
-            .hero-title span { color: var(--gold-light); }
-            .hero-sub { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: clamp(1.1rem, 2.5vw, 1.6rem); color: var(--tc-light); margin-top: 1rem; letter-spacing: 0.05em; animation: fadeUp 1.2s 0.6s ease both; }
-            .hero-badges { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; animation: fadeUp 1.2s 0.8s ease both; }
-            .badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(200,169,110,0.15); border: 1px solid rgba(200,169,110,0.5); color: var(--gold-light); font-family: "Raleway", sans-serif; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.5rem 1.2rem; border-radius: 2px; backdrop-filter: blur(4px); }
-            .badge svg { width: 14px; height: 14px; fill: currentColor; }
-            .hero-cta { display: inline-block; margin-top: 2.5rem; padding: 0.85rem 2.5rem; background: var(--tc-mid); color: #fff; font-family: "Raleway", sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; border: 1px solid var(--tc-warm); transition: background 0.3s, transform 0.2s; animation: fadeUp 1.2s 1s ease both; }
-            .hero-cta:hover { background: var(--tc-warm); transform: translateY(-2px); }
-            .hero-scroll { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.4rem; color: rgba(255,255,255,0.5); font-family: "Raleway", sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; animation: bounce 2s 2s ease-in-out infinite; }
-            @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
-            .hero-scroll::after { content: ""; display: block; width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(200,169,110,0.6), transparent); }
             section { padding: 6rem 2rem; }
             .section-label { font-family: "Raleway", sans-serif; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.35em; text-transform: uppercase; color: var(--tc-mid); margin-bottom: 0.7rem; }
             .section-title { font-family: "Cinzel Decorative", serif; font-size: clamp(1.8rem, 4vw, 3rem); color: var(--tc-deep); line-height: 1.2; }
