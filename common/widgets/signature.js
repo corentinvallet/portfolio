@@ -42,9 +42,12 @@
       text-align: center;
     }
     .cv-signature a {
-      display: inline-block;
-      padding: 4px 6px;
-      margin: -4px -6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 24px;
+      padding: 6px 8px;
+      margin: -6px -8px;
       color: ${c.accent};
       text-decoration: none;
       font-weight: 600;
