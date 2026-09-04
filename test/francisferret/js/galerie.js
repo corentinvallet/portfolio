@@ -30,7 +30,7 @@ function render(c) {
         item.dataset.cat = photo.cat;
         item.style.animationDelay = `${i * 0.06}s`;
         const im = document.createElement("img");
-        im.src = photo.url; im.alt = photo.alt || ""; im.loading = "lazy";
+        im.src = cldUrl(photo.url, 500); im.alt = photo.alt || ""; im.loading = "lazy";
         const overlay = document.createElement("div");
         overlay.className = "item-overlay";
         overlay.innerHTML = `<span class="item-cat">${(CAT_LABELS[photo.cat]||photo.cat||"").replace(/</g,"&lt;")}</span>`;
@@ -61,7 +61,7 @@ function applyFilter(filter) {
 let lbIdx = 0;
 function getVisibleIndices(){ return PHOTOS.map((_,i)=>i).filter(i => activeFilter==="tous" || PHOTOS[i].cat===activeFilter); }
 function openLightbox(photoIdx){ const v=getVisibleIndices(); const pos=v.indexOf(photoIdx); if(pos===-1)return; lbIdx=pos; updateLightbox(v); $("lightbox").classList.add("open"); document.body.style.overflow="hidden"; }
-function updateLightbox(v){ const p=PHOTOS[v[lbIdx]]; $("lbImg").src=p.url; $("lbImg").alt=p.alt||""; $("lbCat").textContent=CAT_LABELS[p.cat]||p.cat||""; $("lbCounter").textContent=`${lbIdx+1} / ${v.length}`; }
+function updateLightbox(v){ const p=PHOTOS[v[lbIdx]]; $("lbImg").src=cldUrl(p.url, 1600); $("lbImg").alt=p.alt||""; $("lbCat").textContent=CAT_LABELS[p.cat]||p.cat||""; $("lbCounter").textContent=`${lbIdx+1} / ${v.length}`; }
 function closeLightbox(){ $("lightbox").classList.remove("open"); document.body.style.overflow=""; }
 
 function initNav() {

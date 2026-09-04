@@ -14,7 +14,7 @@ function render(c) {
     $("navLogo").textContent = c.brand.name;
 
     // HERO
-    $("heroBg").style.backgroundImage = `url("${img(c,"hero")}")`;
+    $("heroBg").style.backgroundImage = `url("${cldUrl(img(c,"hero"), 1600)}")`;
     $("heroTitle1").textContent = c.hero.title1;
     $("heroTitle2").textContent = c.hero.title2;
     $("heroSub").textContent = c.hero.sub;
@@ -23,7 +23,7 @@ function render(c) {
         `<span class="badge">${SHIELD}${b.replace(/</g,"&lt;")}</span>`).join("");
 
     // ABOUT
-    $("aboutImg").src = img(c,"portrait");
+    $("aboutImg").src = cldUrl(img(c,"portrait"), 800);
     $("aboutLabel").textContent = c.about.label;
     $("aboutTitle").innerHTML = fmtEm(c.about.title);
     $("aboutText").innerHTML = [c.about.p1, c.about.p2].filter(Boolean)
@@ -50,7 +50,7 @@ function render(c) {
         const item = document.createElement("div");
         item.className = "preview-item";
         const im = document.createElement("img");
-        im.src = p.url; im.alt = p.alt || ""; im.loading = "lazy";
+        im.src = cldUrl(p.url, 500); im.alt = p.alt || ""; im.loading = "lazy";
         item.appendChild(im);
         item.addEventListener("click", () => openLightbox(i));
         $("previewGrid").appendChild(item);
@@ -100,14 +100,14 @@ function renderStats(stats) {
 
 // ---- Lightbox ----
 let lbIdx = 0;
-function openLightbox(i){ lbIdx=i; $("lbImg").src=previewKeys[i]; $("lbCounter").textContent=`${i+1} / ${previewKeys.length}`; $("lightbox").classList.add("open"); document.body.style.overflow="hidden"; }
+function openLightbox(i){ lbIdx=i; $("lbImg").src=cldUrl(previewKeys[i], 1600); $("lbCounter").textContent=`${i+1} / ${previewKeys.length}`; $("lightbox").classList.add("open"); document.body.style.overflow="hidden"; }
 function closeLightbox(){ $("lightbox").classList.remove("open"); document.body.style.overflow=""; }
 
 function initInteractions() {
     $("lbClose").addEventListener("click", closeLightbox);
     $("lightbox").addEventListener("click", e => { if (e.target === $("lightbox")) closeLightbox(); });
-    $("lbPrev").addEventListener("click", e => { e.stopPropagation(); lbIdx=(lbIdx-1+previewKeys.length)%previewKeys.length; $("lbImg").src=previewKeys[lbIdx]; $("lbCounter").textContent=`${lbIdx+1} / ${previewKeys.length}`; });
-    $("lbNext").addEventListener("click", e => { e.stopPropagation(); lbIdx=(lbIdx+1)%previewKeys.length; $("lbImg").src=previewKeys[lbIdx]; $("lbCounter").textContent=`${lbIdx+1} / ${previewKeys.length}`; });
+    $("lbPrev").addEventListener("click", e => { e.stopPropagation(); lbIdx=(lbIdx-1+previewKeys.length)%previewKeys.length; $("lbImg").src=cldUrl(previewKeys[lbIdx], 1600); $("lbCounter").textContent=`${lbIdx+1} / ${previewKeys.length}`; });
+    $("lbNext").addEventListener("click", e => { e.stopPropagation(); lbIdx=(lbIdx+1)%previewKeys.length; $("lbImg").src=cldUrl(previewKeys[lbIdx], 1600); $("lbCounter").textContent=`${lbIdx+1} / ${previewKeys.length}`; });
     document.addEventListener("keydown", e => {
         if (!$("lightbox").classList.contains("open")) return;
         if (e.key==="Escape") closeLightbox();
