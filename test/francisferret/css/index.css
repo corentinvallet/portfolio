@@ -3,9 +3,9 @@ html { scroll-behavior: smooth; }
             ::-webkit-scrollbar { width: 6px; }
             ::-webkit-scrollbar-track { background: var(--tc-pale); }
             ::-webkit-scrollbar-thumb { background: var(--tc-mid); border-radius: 3px; }
-            nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 3rem; background: rgba(61,26,14,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(200,169,110,0.3); transition: padding 0.3s; }
+            nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 3rem; background: rgba(61,26,14,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(200,169,110,0.3); transition: padding 0.3s; line-height: 1.5; }
             nav.scrolled { padding: 0.6rem 3rem; }
-            .nav-logo { font-family: "Cinzel Decorative", serif; font-size: 1.1rem; color: var(--gold-light); text-decoration: none; letter-spacing: 0.05em; }
+            .nav-logo { font-family: "Cinzel Decorative", serif; font-size: 1.1rem; color: var(--gold-light); text-decoration: none; letter-spacing: 0.05em; display: inline-block; min-width: 160px; }
             .nav-links { display: flex; gap: 2.5rem; list-style: none; }
             .nav-links a { font-family: "Raleway", sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--tc-light); text-decoration: none; transition: color 0.2s; position: relative; }
             .nav-links a::after { content: ""; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px; background: var(--gold); transform: scaleX(0); transition: transform 0.3s; }
