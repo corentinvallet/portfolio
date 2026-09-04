@@ -75,7 +75,7 @@
   var wrapper = document.createElement('div');
   wrapper.className = 'cv-signature';
   wrapper.innerHTML = `
-    <a href="https://corentinvallet.fr?utm_source=signature-widget" target="_blank" rel="noopener"><img class="cv-logo" src="https://corentinvallet.fr/common/widgets/cv-logo-orange.png" alt="Corentin Vallet" width="18" height="18" /></a>
+        <a href="https://corentinvallet.fr?utm_source=signature-widget" target="_blank" rel="noopener"><img class="cv-logo" src="https://corentinvallet.fr/common/widgets/cv-logo-orange.webp" alt="Corentin Vallet" width="18" height="18" /></a>
     <span>
       <a href="https://corentinvallet.fr?utm_source=signature-widget" target="_blank" rel="noopener">Site réalisé par Corentin Vallet</a>
       <br/>

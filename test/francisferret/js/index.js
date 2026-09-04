@@ -23,7 +23,7 @@ function render(c) {
         `<span class="badge">${SHIELD}${b.replace(/</g,"&lt;")}</span>`).join("");
 
     // ABOUT
-    $("aboutImg").src = cldUrl(img(c,"portrait"), 800);
+    $("aboutImg").src = cldUrl(img(c,"portrait"), 650);
     $("aboutLabel").textContent = c.about.label;
     $("aboutTitle").innerHTML = fmtEm(c.about.title);
     $("aboutText").innerHTML = [c.about.p1, c.about.p2].filter(Boolean)
