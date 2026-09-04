@@ -32,7 +32,7 @@
       flex-direction: column;   /* ajouté */
       align-items: center;
       justify-content: center;
-      gap: 6px;                 /* tu peux réduire le gap vu qu'on empile */
+      gap: 10px;                /* agrandi pour laisser respirer les zones cliquables */
       padding: 18px 12px;
       margin-top: 20px;
       border-top: 1px solid ${c.border};
@@ -42,6 +42,9 @@
       text-align: center;
     }
     .cv-signature a {
+      display: inline-block;
+      padding: 4px 6px;
+      margin: -4px -6px;
       color: ${c.accent};
       text-decoration: none;
       font-weight: 600;
