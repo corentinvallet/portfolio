@@ -477,7 +477,7 @@
     .portfolio { background: var(--bg2); transition: background var(--transition); }
     .portfolio-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 24px;
       margin-top: 56px;
     }
