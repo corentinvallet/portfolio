@@ -294,7 +294,7 @@
 <section class="cote-client">
   <div class="section-inner">
     <div class="section-label fade-up">Ce que j'ai conçu</div>
-    <h2 class="section-title fade-up">Un site pensé pour raconter un gîte qui s'intègre <br/><em>naturellement</em>à son environnement</h2>
+    <h2 class="section-title fade-up">Un site pensé pour raconter un gîte qui s'intègre <br/><em>naturellement</em> à son environnement</h2>
     <p class="section-intro fade-up">Chaque section du site répond à une question qu'un visiteur se pose sur un gîte pour ses vacances : où est-il, à quoi ressemble-t-il, quelles sont les règles, le prix ?</p>
 
     <div class="feature-grid">
