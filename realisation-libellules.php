@@ -370,7 +370,7 @@
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/libellues-admin-tarifs.png" alt="Gestion des tarifs et conditions dans l'admin"></span>
+        <span class="feature-icon"><img src="Photos/Realisations/libellules-admin-tarifs.png" alt="Gestion des tarifs et conditions dans l'admin"></span>
         <div class="feature-body">
           <div class="feature-name">Tarifs et prestations paramétrables</div>
           <p class="feature-desc">Ajuster le tarifs, créer ou supprimer des prestations inclues.</p>
