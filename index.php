@@ -1342,7 +1342,7 @@
 
       <div class="portfolio-card fade-up">
         <a href="realisation-libellules.php" class="portfolio-preview" aria-label="Voir la réalisation pour l'Abri des Libellules">
-          <img src="Photos/Realisations/NOMCLIENT.jpg" alt="Site de l'Abri des Libellules, éco gîte" class="portfolio-preview-img">
+          <img src="Photos/Realisations/libellules.png" alt="Site de l'Abri des Libellules, éco gîte" class="portfolio-preview-img">
           <div class="preview-overlay">
             <span class="preview-btn">
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="14" height="14" rx="1"/><path d="M5 8h6M8 5l3 3-3 3"/></svg>
@@ -1351,7 +1351,7 @@
           </div>
         </a>
         <div class="portfolio-body">
-          <div class="portfolio-type">L'abri des Libellules · Éco gîte</div>
+          <div class="portfolio-type">Éco gîte · L'abri des Libellules</div>
           <div class="portfolio-name">Pauline et Sylvain Viallon</div>
           <p class="portfolio-desc">Un site pour mettre en évidence l'intégration du gîte dans son environnement. Galerie, infos pratiques, règlement intérieur.</p>
         </div>
