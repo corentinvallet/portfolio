@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Réalisation — Francis Ferret, sculpteur sur bois | Corentin Vallet</title>
-  <meta name="description" content="Découvrez le site que j'ai conçu et développé pour Francis Ferret, sculpteur sur bois formé à Moirans-en-Montagne : portrait, savoir-faire, galerie d'œuvres et prise de contact." />
+  <meta name="description" content="Découvrez le site que j'ai conçu et développé pour Pauline et Sylvain, gérants des éco gîte en Ardèche : galeries, lien réservations, règlement intérieur." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://corentinvallet.fr/realisation-francisferret.php" />
 
@@ -279,11 +279,11 @@
 <?php include __DIR__ . '/inc/nav.php'; ?>
 <!-- HERO -->
 <div class="hero">
-  <p class="hero-eyebrow">✦ Réalisation client · Artisan d'art ✦</p>
-  <h1 class="hero-title">Francis Ferret, un site à l'image<br>de son <em>savoir-faire</em></h1>
-  <p class="hero-desc">Francis Ferret est sculpteur sur bois, formé à Moirans-en-Montagne. Il avait besoin d'un site qui donne à voir son parcours, ses domaines de compétence (ébénisterie, marqueterie, tournage, sculpture) et ses œuvres, tout en restant simple à faire vivre au fil de ses expositions.</p>
+  <p class="hero-eyebrow">✦ Réalisation client · Gîte ✦</p>
+  <h1 class="hero-title">L'abri des libellules, un site<br>pour <em>mettre en valeur</em></h1>
+  <p class="hero-desc">Pauline et Sylvain gèrent un éco gîte sur la commune de Saint Romain de Lerps. L'objet du site est d'une part de restituer l'ambiance, la connexion à la nature de ce gîte, d'autre pas de centraliser toutes les informations pratiques.</p>
   <div class="hero-ctas">
-    <a href="https://www.francisferret.fr" target="_blank" rel="noopener" class="btn btn-primary">
+    <a href="https://www.abrideslibellules.fr" target="_blank" rel="noopener" class="btn btn-primary">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="14" height="14" rx="1"/><path d="M5 8h6M8 5l3 3-3 3"/></svg>
       Voir le site en ligne
     </a>
@@ -294,8 +294,8 @@
 <section class="cote-client">
   <div class="section-inner">
     <div class="section-label fade-up">Ce que j'ai conçu</div>
-    <h2 class="section-title fade-up">Un site pensé pour <em>raconter</em><br>un métier d'artisanat d'art</h2>
-    <p class="section-intro fade-up">Chaque section du site répond à une question qu'un visiteur se pose face au travail d'un sculpteur : qui est-il, que sait-il faire, qu'a-t-il créé, où peut-on le rencontrer ?</p>
+    <h2 class="section-title fade-up">Un site pensé pour raconter un gîte qui s'intègre <br/><em>naturellement</em>à son environnement</h2>
+    <p class="section-intro fade-up">Chaque section du site répond à une question qu'un visiteur se pose sur un gîte pour ses vacances : où est-il, à quoi ressemble-t-il, quelles sont les règles, le prix ?</p>
 
     <div class="feature-grid">
       
@@ -303,42 +303,42 @@
         <span class="feature-icon"><img src="Photos/Realisations/francisferret-identite.jpg" alt="Identité visuelle"></span>
         <div class="feature-body">
           <div class="feature-name">Identité visuelle</div>
-          <p class="feature-desc">Les œuvres de Francis sont magnifiques, il ne faut pas trop en faire visuellement. Travail autour d'une palette de couleurs rappelant le bois. Polices simples. Le travail de Francis est le centre du site.</p>
+          <p class="feature-desc">La situation et les photos du gîte parlent d'elles-mêmes. Le besoin est simplement de les laisser prendre leur place, tout en évoquant les couleurs de la nature. Couleurs douces, vert feuille, terra cotta.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
         <span class="feature-icon"><img src="Photos/Realisations/francisferret-galerie.jpg" alt="Galerie d'œuvres avec lightbox"></span>
         <div class="feature-body">
-          <div class="feature-name">Galerie d'œuvres</div>
-          <p class="feature-desc">Le centre névralgique du site. Un portfolio dédié aux créations, avec un aperçu en grand format au clic — la meilleure vitrine pour un travail avant tout visuel et manuel.</p>
-        </div>
-      </div>
-      <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/francisferret-portrait.jpg" alt="Portrait de Francis Ferret"></span>
-        <div class="feature-body">
-          <div class="feature-name">Portrait & histoire</div>
-          <p class="feature-desc">Une présentation personnelle pour donner un visage et une histoire à Francis et à son œuvre.</p>
-        </div>
-      </div>
-      <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/francisferret-evenements.jpg" alt="Agenda des événements"></span>
-        <div class="feature-body">
-          <div class="feature-name">Agenda & réalisations</div>
-          <p class="feature-desc">Un espace pour annoncer expositions, salons et événements à venir — pour que les visiteurs puissent le rencontrer et voir son travail en vrai.</p>
-        </div>
-      </div>
-      <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/francisferret-parcours.jpg" alt="Parcours et formation"></span>
-        <div class="feature-body">
-          <div class="feature-name">Parcours mis en valeur</div>
-          <p class="feature-desc">Formation, influences, étapes marquantes du parcours — de quoi rassurer un visiteur sur le sérieux et la légitimité du savoir-faire.</p>
+          <div class="feature-name">Galerie</div>
+          <p class="feature-desc">La section cruciale du site. Une galerie de photos pour que le visiteur puisse se projeter, visualiser le gîte et ses prestations.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
         <span class="feature-icon"><img src="Photos/Realisations/francisferret-contact.jpg" alt="Formulaire de contact"></span>
         <div class="feature-body">
-          <div class="feature-name">Prise de contact simplifiée</div>
-          <p class="feature-desc">Un formulaire avec sélection du type de demande (commande, question, presse…) pour que chaque message arrive déjà qualifié.</p>
+          <div class="feature-name">Action principale</div>
+          <p class="feature-desc">Un bouton toujours visible pour faire la réservation.</p>
+        </div>
+      </div>
+      <div class="feature-card fade-up">
+        <span class="feature-icon"><img src="Photos/Realisations/francisferret-portrait.jpg" alt="Portrait de Francis Ferret"></span>
+        <div class="feature-body">
+          <div class="feature-name">Infos pratiques</div>
+          <p class="feature-desc">Une présentation des informations pratiques du gîte.</p>
+        </div>
+      </div>
+      <div class="feature-card fade-up">
+        <span class="feature-icon"><img src="Photos/Realisations/francisferret-evenements.jpg" alt="Agenda des événements"></span>
+        <div class="feature-body">
+          <div class="feature-name">Tarifs</div>
+          <p class="feature-desc">L'offre tarifaire avec ce qu'elle inclue. Un lien permet d'aller consulter les disponibilités / réserver sur le site partenaire de Pauline et Sylvain.</p>
+        </div>
+      </div>
+      <div class="feature-card fade-up">
+        <span class="feature-icon"><img src="Photos/Realisations/francisferret-parcours.jpg" alt="Parcours et formation"></span>
+        <div class="feature-body">
+          <div class="feature-name">Accès</div>
+          <p class="feature-desc">Informations sur la façon de retrouver le gîte.</p>
         </div>
       </div>
     </div>
