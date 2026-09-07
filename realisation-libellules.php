@@ -350,37 +350,37 @@
 <!-- CE QU'IL GÈRE LUI-MÊME -->
 <section>
   <div class="section-inner">
-    <div class="section-label fade-up">Ce qu'il gère lui-même</div>
+    <div class="section-label fade-up">Ce qu'ils gèrent eux-mêmes</div>
     <h2 class="section-title fade-up">Un espace admin <em>simple</em>,<br>sans jamais toucher au code</h2>
-    <p class="section-intro fade-up">Derrière le site, un tableau de bord privé permet à Francis de faire vivre son travail au quotidien — nouvelles œuvres, événements à venir, mise à jour du bandeau d'accueil — sans dépendre de moi pour la moindre modification.</p>
+    <p class="section-intro fade-up">Derrière le site, un tableau de bord privé permet à Pauline et Sylvain de faire vivre son travail au quotidien — infos pratiques, tarifs, mise à jour du bandeau d'accueil — sans dépendre de moi pour la moindre modification.</p>
 
     <div class="feature-grid">
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/francisferret-admin-bandeau.jpg" alt="Édition du bandeau d'accueil dans l'admin"></span>
+        <span class="feature-icon"><img src="Photos/Realisations/libellules-admin-bandeau.jpg" alt="Édition du bandeau d'accueil dans l'admin"></span>
         <div class="feature-body">
           <div class="feature-name">Bandeau d'accueil modifiable</div>
-          <p class="feature-desc">Changer l'image de fond, le titre, le sous-titre et les badges mis en avant sur la page d'accueil — sans jamais toucher au code.</p>
+          <p class="feature-desc">Changer l'image de fond, le titre, le sous-titre et le texte du bouton mis en avant sur la page d'accueil — sans jamais toucher au code.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/francisferret-admin-galerie.jpg" alt="Gestion de la galerie dans l'admin"></span>
+        <span class="feature-icon"><img src="Photos/Realisations/libellules-admin-galerie.jpg" alt="Gestion de la galerie dans l'admin"></span>
         <div class="feature-body">
           <div class="feature-name">Galerie pilotée en quelques clics</div>
-          <p class="feature-desc">Ajouter de nouvelles photos d'œuvres, leur associer une description et une catégorie, les réorganiser ou les supprimer — les trois premières servent automatiquement d'aperçu sur la page d'accueil.</p>
+          <p class="feature-desc">Ajouter de nouvelles photos du gîte, leur associer une description et une catégorie, les réorganiser ou les supprimer.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/francisferret-admin-categories.jpg" alt="Gestion des catégories dans l'admin"></span>
+        <span class="feature-icon"><img src="Photos/Realisations/libellues-admin-tarifs.jpg" alt="Gestion des tarifs et conditions dans l'admin"></span>
         <div class="feature-body">
-          <div class="feature-name">Catégories personnalisables</div>
-          <p class="feature-desc">Créer ou supprimer les catégories qui servent à filtrer les œuvres dans la galerie (animaux, personnages, dessins…), pour que le classement suive l'évolution du travail de Francis.</p>
+          <div class="feature-name">Tarifs et prestations paramétrables</div>
+          <p class="feature-desc">Ajuster le tarifs, créer ou supprimer des prestations inclues.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/francisferret-admin-evenements.jpg" alt="Gestion de l'agenda dans l'admin"></span>
+        <span class="feature-icon"><img src="Photos/Realisations/libellules-admin-acces.png" alt="Gestion de l'agenda dans l'admin"></span>
         <div class="feature-body">
-          <div class="feature-name">Agenda des événements à jour</div>
-          <p class="feature-desc">Ajouter, réordonner ou retirer une compétition, une foire ou un salon à venir — l'agenda public reste toujours à jour, sans délai.</p>
+          <div class="feature-name">Informations d'accès au gîte</div>
+          <p class="feature-desc">Ajouter, réordonner ou retirer les informations pour accéder à l'éco gîte.</p>
         </div>
       </div>
     </div>
