@@ -280,7 +280,7 @@
 <!-- HERO -->
 <div class="hero">
   <p class="hero-eyebrow">✦ Étude de cas · Restaurateurs ✦</p>
-  <h1 class="hero-title">Le <em>Zinc</em>, un site pensé<br>pour un bistrot parisien</h1>
+  <h1 class="hero-title">Le <em>Zinc</em>, un site pensé<br>pour son ambiance</h1>
   <p class="hero-desc">Cette démo montre ce que je conçois pour un restaurateur : un site vitrine qui donne envie de pousser la porte, et un espace d'administration qui permet de tout gérer soi-même, sans aucune compétence technique.</p>
   <div class="hero-ctas">
     <a href="restaurant/index.html" target="_blank" rel="noopener" class="btn btn-primary">

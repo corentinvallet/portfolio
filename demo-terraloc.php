@@ -263,7 +263,7 @@
 <!-- HERO -->
 <div class="hero">
   <p class="hero-eyebrow">✦ Étude de cas · Commerces & location ✦</p>
-  <h1 class="hero-title">TerraLoc, un catalogue<br>qui donne envie de <em>réserver</em></h1>
+  <h1 class="hero-title">TerraLoc, un catalogue<br>qui donne <em>envie</em></h1>
   <p class="hero-desc">Cette démo montre ce que je conçois pour un commerce de location de matériel : un site vitrine avec catalogue filtrable et réservation en ligne, et un espace d'administration qui permet de tout gérer soi-même, sans aucune compétence technique.</p>
   <div class="hero-ctas">
     <a href="commerce/index.html" target="_blank" rel="noopener" class="btn btn-primary">

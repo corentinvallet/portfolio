@@ -282,7 +282,7 @@
 <!-- HERO -->
 <div class="hero">
   <p class="hero-eyebrow">✦ Étude de cas · Artisans du bâtiment ✦</p>
-  <h1 class="hero-title">Pierrard <em>Maçonnerie</em>, un site qui inspire confiance<br>avant même le premier appel</h1>
+  <h1 class="hero-title">Pierrard <em>Maçonnerie</em>, un site pour inspirer confiance</h1>
   <p class="hero-desc">Cette démo montre ce que je conçois pour un artisan maçon : un site vitrine qui met en valeur le savoir-faire et rassure sur le sérieux de l'entreprise, et un espace d'administration qui permet de tout gérer soi-même, sans aucune compétence technique.</p>
   <div class="hero-ctas">
     <a href="artisan/index.html" target="_blank" rel="noopener" class="btn btn-primary">
