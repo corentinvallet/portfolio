@@ -356,21 +356,21 @@
 
     <div class="feature-grid">
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/libellules-admin-bandeau.jpg" alt="Édition du bandeau d'accueil dans l'admin"></span>
+        <span class="feature-icon"><img src="Photos/Realisations/libellules-admin-bandeau.png" alt="Édition du bandeau d'accueil dans l'admin"></span>
         <div class="feature-body">
           <div class="feature-name">Bandeau d'accueil modifiable</div>
           <p class="feature-desc">Changer l'image de fond, le titre, le sous-titre et le texte du bouton mis en avant sur la page d'accueil — sans jamais toucher au code.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/libellules-admin-galerie.jpg" alt="Gestion de la galerie dans l'admin"></span>
+        <span class="feature-icon"><img src="Photos/Realisations/libellules-admin-galerie.png" alt="Gestion de la galerie dans l'admin"></span>
         <div class="feature-body">
           <div class="feature-name">Galerie pilotée en quelques clics</div>
           <p class="feature-desc">Ajouter de nouvelles photos du gîte, leur associer une description et une catégorie, les réorganiser ou les supprimer.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/libellues-admin-tarifs.jpg" alt="Gestion des tarifs et conditions dans l'admin"></span>
+        <span class="feature-icon"><img src="Photos/Realisations/libellues-admin-tarifs.png" alt="Gestion des tarifs et conditions dans l'admin"></span>
         <div class="feature-body">
           <div class="feature-name">Tarifs et prestations paramétrables</div>
           <p class="feature-desc">Ajuster le tarifs, créer ou supprimer des prestations inclues.</p>
