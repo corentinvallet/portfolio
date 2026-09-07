@@ -1351,8 +1351,8 @@
           </div>
         </a>
         <div class="portfolio-body">
-          <div class="portfolio-type">Éco gîte · L'abri des Libellules</div>
-          <div class="portfolio-name">Pauline et Sylvain Viallon</div>
+          <div class="portfolio-type">Éco gîte · Ardèche</div>
+          <div class="portfolio-name">L'abri des Libellules</div>
           <p class="portfolio-desc">Un site pour mettre en évidence l'intégration du gîte dans son environnement. Galerie, infos pratiques, règlement intérieur.</p>
         </div>
       </div>
