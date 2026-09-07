@@ -283,7 +283,7 @@
   <h1 class="hero-title">L'abri des libellules, un site<br>pour un gîte <em>naturel</em></h1>
   <p class="hero-desc">Pauline et Sylvain gèrent un éco gîte sur la commune de Saint Romain de Lerps. L'objet du site est d'une part de restituer l'ambiance, la connexion à la nature de ce gîte, d'autre pas de centraliser toutes les informations pratiques.</p>
   <div class="hero-ctas">
-    <a href="https://www.abrideslibellules.fr" target="_blank" rel="noopener" class="btn btn-primary">
+    <a href="https://abrideslibellules.fr/" target="_blank" rel="noopener" class="btn btn-primary">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="14" height="14" rx="1"/><path d="M5 8h6M8 5l3 3-3 3"/></svg>
       Voir le site en ligne
     </a>
