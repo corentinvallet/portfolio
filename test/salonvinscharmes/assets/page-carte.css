@@ -9,7 +9,8 @@
 }
 .svc-zone.is-selected .svc-region{ filter:brightness(1.22); }
 
-.svc-zone:focus-visible{ outline:none; }
+.svc-zone{ outline:none; }
+.svc-zone:focus{ outline:none; }
 .svc-zone:focus-visible .svc-region{
   outline:none;
   stroke:var(--amber);
