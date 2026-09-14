@@ -11,8 +11,9 @@
 
 .svc-zone:focus-visible{ outline:none; }
 .svc-zone:focus-visible .svc-region{
-  outline:3px solid var(--amber);
-  outline-offset:2px;
+  outline:none;
+  stroke:var(--amber);
+  stroke-width:4;
 }
 
 .svc-chip{
