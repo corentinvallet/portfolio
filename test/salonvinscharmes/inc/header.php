@@ -18,6 +18,7 @@ $activiteOn = in_array($active, ['voyages', 'cours'], true);
       <ul>
       <li><a href="<?= $prefix ?>#salon">Le Salon</a></li>
       <li><a href="exposants-club-oenologie.php"<?= $active==='exposants' ? ' class="current"' : '' ?>>Exposants</a></li>
+      <li><a href="sponsors-club-oenologie.php"<?= $active==='sponsors' ? ' class="current"' : '' ?>>Sponsors</a></li>
       <li class="has-sub">
         <button type="button" class="nav-sub-toggle<?= $activiteOn ? ' current' : '' ?>"
                 aria-expanded="false" aria-controls="sub-activites">

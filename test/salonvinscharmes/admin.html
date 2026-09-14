@@ -829,9 +829,15 @@ function render(){
             {hint:'Sert de texte alternatif pour l\u2019accessibilité.'}),
           textField('Site web (facultatif)', s.url, v=>s.url=v,
             {placeholder:'https://…', hint:'Laissez vide pour un logo non cliquable.'})),
+        selectField('Catégorie', s.categorie, [
+          ['Institutionnel','Institutionnel'],
+          ['Partenaire financier','Partenaire financier'],
+          ['Partenaire commerçant','Partenaire commerçant'],
+          ['Partenaire local','Partenaire local']
+        ], v=>s.categorie=v, {hint:'Détermine le filtre sur la page Sponsors.'}),
         photoField('Logo', s.logo, v=>s.logo=v)
       ],
-      ()=>({nom:'',logo:'',url:''}));
+      ()=>({nom:'',logo:'',url:'',categorie:''}));
     b.appendChild(wrap);
   }));
   /* ── CONTACT & PIED DE PAGE ── */
@@ -972,6 +978,17 @@ function render(){
             nomComplet:'',adresse:'',telephone:'',email:'',siteWeb:'',
             facebook:'',instagram:'',linkedin:'',photo:''}));
     b.appendChild(wrap);
+  }));
+  /* ══════════════ PAGE SPONSORS ══════════════ */
+  $app.appendChild(section('Page « Sponsors »', false, b=>{
+    const p = state.sponsorsPage = state.sponsorsPage || {};
+    b.appendChild(textField('Petit titre (haut de page)', p.eyebrow, v=>p.eyebrow=v,
+      {placeholder:'Ils nous soutiennent'}));
+    b.appendChild(textField('Titre de la page', p.title, v=>p.title=v,
+      {placeholder:'Sponsors & partenaires'}));
+    b.appendChild(textField('Introduction', p.intro, v=>p.intro=v, {multiline:true}));
+    b.appendChild(el('div',{class:'hint',style:'margin-top:10px'},
+      'La liste des sponsors et leur catégorie se gèrent dans la section « Sponsors & partenaires » ci-dessus.'));
   }));
   /* ══════════════ PAGE GALERIE ══════════════ */
   $app.appendChild(section('Page « Galerie »', false, b=>{

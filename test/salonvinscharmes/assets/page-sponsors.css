@@ -1,0 +1,64 @@
+/* ═══════════════════════════════════════════════════════════
+   Page Sponsors & partenaires
+═══════════════════════════════════════════════════════════ */
+
+.pagehead{padding-bottom:34px;}
+.pagehead p{max-width:60ch;}
+
+/* ===== Filtres ===== */
+.spo-filters{ display:flex; flex-wrap:wrap; gap:8px; margin:0 0 14px; }
+.spo-chip{
+  display:inline-flex; align-items:center; gap:7px;
+  padding:9px 16px; border-radius:999px;
+  border:1.5px solid var(--line); background:#fff;
+  font:inherit; font-size:0.86rem; font-weight:600; color:var(--ink-soft);
+  cursor:pointer; transition:background .2s, color .2s, border-color .2s;
+}
+.spo-chip:hover{ border-color:var(--grape); color:var(--grape); }
+.spo-chip.is-active{ background:var(--ink); border-color:var(--ink); color:var(--paper); }
+.spo-chip-n{
+  font-size:.72rem; font-weight:700; opacity:.65;
+  padding:1px 6px; border-radius:999px; background:rgba(27,20,64,.08);
+}
+.spo-chip.is-active .spo-chip-n{ background:rgba(247,242,231,.2); opacity:.9; }
+
+.spo-count{ margin:0 0 26px; font-size:.85rem; color:var(--ink-soft); }
+
+/* ===== Grille ===== */
+.spo-grid{
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
+  gap:22px; padding-bottom:90px;
+}
+
+.spo-card{
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+  background:#fff; border:1px solid var(--line); border-radius:16px;
+  padding:22px 18px; text-decoration:none; color:inherit;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+a.spo-card{ cursor:pointer; }
+a.spo-card:hover, a.spo-card:focus-visible{
+  transform:translateY(-4px); box-shadow:0 20px 36px -24px rgba(27,20,64,.28);
+  outline:none;
+}
+
+.spo-logo-wrap{
+  width:100%; aspect-ratio:3/2; display:flex; align-items:center; justify-content:center;
+  margin-bottom:14px;
+}
+.spo-logo-wrap img{ max-width:100%; max-height:100%; object-fit:contain; }
+.spo-logo-ph{ font-family:Fraunces,serif; font-weight:600; color:var(--ink-soft); }
+
+.spo-cat{
+  display:inline-block; padding:4px 11px; border-radius:100px;
+  font-size:0.7rem; font-weight:700; letter-spacing:0.02em;
+  background:#efe4f7; color:var(--grape); margin-bottom:8px;
+}
+
+.spo-card h3{ font-size:0.98rem; margin:0; }
+
+.spo-empty, .spo-nothing{
+  text-align:center; padding:70px 20px; color:var(--ink-soft);
+}
+.spo-nothing .swirl, .spo-empty{ }
+.spo-nothing .swirl{ width:2.2rem; height:2.2rem; margin-bottom:14px; }
