@@ -8,8 +8,7 @@
 $hero = $hero ?? [];
 ?>
 <figure class="carte-hero">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000.0 954.0" class="svc-carte" role="img" aria-labelledby="svc-t svc-d">
-<title id="svc-t">Carte des vignobles représentés au Salon des Vins de Charmes</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000.0 954.0" class="svc-carte" role="img" aria-label="Carte des vignobles représentés au Salon des Vins de Charmes" aria-describedby="svc-d">
 <desc id="svc-d">Carte de France illustrée situant les principales régions viticoles représentées au salon.</desc>
 <style>
 .svc-carte{width:100%;height:auto;display:block;overflow:visible}
