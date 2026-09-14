@@ -1,0 +1,186 @@
+/* ============================================================
+   Page « Galerie » — Club Œnologie Découvertes
+   (filtres par album, mosaïque, visionneuse plein écran)
+   ============================================================ */
+
+.pagehead + .wrap { padding-bottom: 20px; }
+
+/* ===== Barre de filtres ===== */
+.gal-toolbar{ margin: 6px 0 14px; }
+.gal-filters{ display:flex; flex-wrap:wrap; gap:8px; }
+.gal-chip{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:9px 16px;
+  font-family:'Inter',sans-serif; font-size:.86rem; font-weight:600;
+  color:var(--ink-soft);
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:999px;
+  cursor:pointer;
+  transition:background .2s, color .2s, border-color .2s, transform .15s;
+}
+.gal-chip:hover{ color:var(--ink); border-color:rgba(122,75,176,.4); transform:translateY(-1px); }
+.gal-chip:focus-visible{ outline:2px solid var(--grape); outline-offset:2px; }
+.gal-chip.is-active{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+.gal-chip-n{
+  font-size:.72rem; font-weight:700; line-height:1;
+  padding:3px 7px; border-radius:999px;
+  background:rgba(27,20,64,.08); color:inherit;
+}
+.gal-chip.is-active .gal-chip-n{ background:rgba(247,242,231,.22); }
+
+.gal-count{ margin:0 0 22px; font-size:.85rem; color:rgba(27,20,64,.55); }
+
+/* ===== Mosaïque ===== */
+.gal-grid{
+  columns: 3;
+  column-gap: 16px;
+  padding-bottom: 20px;
+}
+@media (max-width:920px){ .gal-grid{ columns:2; } }
+@media (max-width:520px){ .gal-grid{ columns:1; } }
+
+.gal-item{
+  display:block; position:relative;
+  width:100%; margin:0 0 16px;
+  padding:0; border:none; background:var(--paper-2);
+  border-radius:16px; overflow:hidden;
+  cursor:zoom-in;
+  break-inside:avoid;
+  -webkit-column-break-inside:avoid;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.gal-item[hidden]{ display:none; }
+.gal-item img{
+  display:block; width:100%; height:auto;
+  transition:transform .35s ease;
+}
+.gal-item:hover{ box-shadow:0 24px 40px -26px rgba(27,20,64,.45); }
+.gal-item:hover img{ transform:scale(1.04); }
+.gal-item:focus-visible{ outline:3px solid var(--grape); outline-offset:3px; }
+
+/* légende au survol */
+.gal-cap{
+  position:absolute; left:0; right:0; bottom:0;
+  padding:26px 14px 12px;
+  font-family:'Inter',sans-serif; font-size:.82rem; font-weight:500; line-height:1.35;
+  color:#fff; text-align:left;
+  background:linear-gradient(to top, rgba(27,20,64,.85), rgba(27,20,64,0));
+  opacity:0; transform:translateY(6px);
+  transition:opacity .25s ease, transform .25s ease;
+}
+.gal-item:hover .gal-cap,
+.gal-item:focus-visible .gal-cap{ opacity:1; transform:none; }
+
+/* pastille loupe */
+.gal-zoom{
+  position:absolute; top:10px; right:10px;
+  width:34px; height:34px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(247,242,231,.92); color:var(--ink);
+  opacity:0; transform:scale(.85);
+  transition:opacity .2s ease, transform .2s ease;
+}
+.gal-zoom svg{ width:16px; height:16px; }
+.gal-item:hover .gal-zoom,
+.gal-item:focus-visible .gal-zoom{ opacity:1; transform:none; }
+
+/* ===== États vides ===== */
+.gal-empty,
+.gal-nothing{
+  margin:26px auto 40px; padding:38px 24px;
+  text-align:center; color:rgba(27,20,64,.6);
+  background:rgba(122,75,176,.05); border-radius:16px;
+}
+.gal-nothing .swirl{ width:2.2rem; height:2.2rem; margin-bottom:10px; }
+.gal-nothing p{ margin:0; }
+
+/* ===== Encart bas de page ===== */
+.join.gal-cta{
+  display:flex; align-items:center; justify-content:space-between; gap:24px;
+  flex-wrap:wrap;
+  margin:10px 0 80px; padding:30px 34px;
+  background:var(--paper-2); border:1px solid var(--line); border-radius:20px;
+}
+.join.gal-cta h3{ font-size:1.2rem; margin-bottom:6px; }
+.join.gal-cta p{ margin:0; color:var(--ink-soft); font-size:.92rem; line-height:1.55; }
+
+/* ===== Visionneuse ===== */
+.gal-lightbox{
+  position:fixed; inset:0; z-index:200;
+  display:flex; align-items:center; justify-content:center;
+  padding:56px 20px;
+  background:rgba(20,14,48,.94);
+  backdrop-filter:blur(4px);
+  animation:galFade .18s ease;
+}
+.gal-lightbox[hidden]{ display:none; }
+@keyframes galFade{ from{opacity:0} to{opacity:1} }
+
+.gal-lb-figure{
+  margin:0; max-width:1200px; width:100%;
+  display:flex; flex-direction:column; align-items:center; gap:14px;
+}
+.gal-lb-figure img{
+  max-width:100%; max-height:74vh;
+  border-radius:12px; display:block;
+  background:rgba(255,255,255,.05);
+  box-shadow:0 40px 80px -40px rgba(0,0,0,.8);
+}
+.gal-lb-figure figcaption{
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+  text-align:center; max-width:70ch;
+}
+.gal-lb-album{
+  font-size:.74rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:#F2BC7A;
+}
+.gal-lb-legende{
+  font-family:'Inter',sans-serif; font-size:.95rem; line-height:1.5;
+  color:rgba(247,242,231,.92);
+}
+.gal-lb-counter{ font-size:.8rem; color:rgba(247,242,231,.5); }
+
+.gal-lb-close,
+.gal-lb-nav{
+  position:absolute; z-index:2;
+  display:flex; align-items:center; justify-content:center;
+  border:1px solid rgba(247,242,231,.22);
+  background:rgba(247,242,231,.08);
+  color:var(--paper);
+  border-radius:50%; cursor:pointer;
+  transition:background .2s, transform .15s, border-color .2s;
+}
+.gal-lb-close:hover,
+.gal-lb-nav:hover{ background:rgba(247,242,231,.2); border-color:rgba(247,242,231,.5); }
+.gal-lb-close:focus-visible,
+.gal-lb-nav:focus-visible{ outline:2px solid #F2BC7A; outline-offset:3px; }
+
+.gal-lb-close{ top:16px; right:18px; width:44px; height:44px; font-size:1.05rem; line-height:1; }
+.gal-lb-nav{ top:50%; transform:translateY(-50%); width:50px; height:50px; }
+.gal-lb-nav svg{ width:24px; height:24px; }
+.gal-lb-nav:hover{ transform:translateY(-50%) scale(1.06); }
+.gal-lb-prev{ left:18px; }
+.gal-lb-next{ right:18px; }
+.gal-lb-nav[disabled]{ opacity:.25; cursor:default; }
+.gal-lb-nav[disabled]:hover{ transform:translateY(-50%); background:rgba(247,242,231,.08); }
+
+@media (max-width:700px){
+  .gal-lightbox{ padding:64px 12px 96px; }
+  .gal-lb-figure img{ max-height:64vh; }
+  .gal-lb-nav{ top:auto; bottom:20px; transform:none; width:52px; height:52px; }
+  .gal-lb-nav:hover{ transform:none; }
+  .gal-lb-prev{ left:calc(50% - 66px); }
+  .gal-lb-next{ right:calc(50% - 66px); }
+  .join.gal-cta{ padding:24px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .gal-item,
+  .gal-item img,
+  .gal-cap,
+  .gal-zoom,
+  .gal-chip{ transition:none !important; }
+  .gal-item:hover img{ transform:none; }
+  .gal-lightbox{ animation:none; }
+}

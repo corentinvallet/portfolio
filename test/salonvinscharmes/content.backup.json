@@ -1,0 +1,579 @@
+{
+    "meta": {
+        "title": "Club Œnologie Découvertes — Salon des Vins de France"
+    },
+    "logo": "assets/logo-cod.png",
+    "hero": {
+        "eyebrow": "22e édition — 27, 28 & 29 mars 2026",
+        "title": "Le Salon des Vins de France, *raconté* en couleurs.",
+        "lede": "À Charmes-sur-Rhône, 61 vignerons indépendants, 8 producteurs régionaux et une poignée de chefs étoilés se retrouvent chaque printemps pour un salon pensé comme une dégustation : curieux, chaleureux, sans chichi.",
+        "ctaPrimary": "Découvrir les vignerons",
+        "ctaSecondary": "Voir les activités du club",
+        "sealNum": "130+",
+        "sealLabel": "Appellations réunies"
+    },
+    "stats": [
+        {
+            "num": "61",
+            "label": "Vignerons indépendants"
+        },
+        {
+            "num": "8",
+            "label": "Producteurs régionaux"
+        },
+        {
+            "num": "3",
+            "label": "Jours de salon, fin mars"
+        }
+    ],
+    "exposantsHome": {
+        "tag": "Exposants 2026",
+        "title": "Un panorama du vignoble français",
+        "intro": "Des vignerons venus des plus grandes régions viticoles, aux côtés de producteurs qui font la part belle au terroir ardéchois — de la bière artisanale au whisky local.",
+        "cards": [
+            {
+                "icon": "V",
+                "title": "Viticulteurs",
+                "text": "61 domaines indépendants, plus de 130 appellations : la liste complète des vignerons présents cette année.",
+                "linkText": "Voir les vignerons →",
+                "linkHref": "exposants-club-oenologie.php?type=Vigneron"
+            },
+            {
+                "icon": "P",
+                "title": "Produits régionaux",
+                "text": "Charcuterie, macarons, miel, picodon, huile d'olive, chocolat... et le whisky ardéchois, révélation 2026.",
+                "linkText": "Voir les producteurs →",
+                "linkHref": "exposants-club-oenologie.php?type=Producteur"
+            },
+            {
+                "icon": "⚑",
+                "title": "Plan & liste PDF",
+                "text": "Retrouvez la liste complète des exposants et le plan du salon, prêts à télécharger avant votre visite.",
+                "linkText": "Télécharger le PDF →",
+                "linkHref": "#"
+            }
+        ]
+    },
+    "activites": {
+        "tag": "Toute l'année",
+        "title": "Les activités du club",
+        "intro": "Le salon n'est qu'un rendez-vous parmi d'autres : le club vit toute l'année autour du vin, de la dégustation et du voyage.",
+        "panels": [
+            {
+                "variant": "voyages",
+                "tagline": "en immersion",
+                "title": "Voyages œnologiques",
+                "text": "Des escapades organisées chez les producteurs, à la rencontre des terroirs et des femmes et hommes qui les font vivre.",
+                "cta": "Voir les prochains voyages",
+                "href": "#"
+            },
+            {
+                "variant": "cours",
+                "tagline": "pas à pas",
+                "title": "Cours d'initiation à la dégustation",
+                "text": "Un cycle de séances pour apprendre à observer, sentir et goûter — ouvert à tous, sans prérequis.",
+                "cta": "Voir le programme 2025–2026",
+                "href": "#"
+            }
+        ]
+    },
+    "equipeHome": {
+        "tag": "Les bénévoles",
+        "title": "L'équipe derrière le salon",
+        "intro": "Une association de passionnés, portée par ses bénévoles — et par quelques belles rencontres chaque année.",
+        "members": [
+            {
+                "initials": "JT",
+                "name": "Johan Thyriot",
+                "role": "Chef parrain 2026"
+            },
+            {
+                "initials": "OS",
+                "name": "Oscar Marceau",
+                "role": "Chef étoilé"
+            },
+            {
+                "initials": "LF",
+                "name": "Laurent Froment",
+                "role": "Fromagère"
+            },
+            {
+                "initials": "DR",
+                "name": "Damine Michel",
+                "role": "Chocolatier"
+            },
+            {
+                "initials": "GR",
+                "name": "Grégory Robinet",
+                "role": "Œnologue"
+            },
+            {
+                "initials": "GP",
+                "name": "Georges Perraud",
+                "role": "Sommelier conseil"
+            }
+        ]
+    },
+    "presseHome": {
+        "tag": "Revue de presse",
+        "title": "Ils en parlent",
+        "intro": "Le salon dans le Dauphiné Libéré, l'Hebdo de l'Ardèche et l'Écho.",
+        "items": [
+            {
+                "source": "Dauphiné Libéré",
+                "text": "Lancement de la 22e édition",
+                "date": "13/03/2026"
+            },
+            {
+                "source": "Hebdo Ardèche",
+                "text": "Portrait du salon et de ses exposants",
+                "date": "19/03/2026"
+            },
+            {
+                "source": "L'Écho",
+                "text": "Un rendez-vous incontournable",
+                "date": "21/03/2026"
+            },
+            {
+                "source": "Dauphiné Libéré",
+                "text": "Bilan de l'édition 2026",
+                "date": "28/04/2026"
+            }
+        ]
+    },
+    "contact": {
+        "phone": "",
+        "email": "",
+        "facebook": "#",
+        "instagram": "#",
+        "mentionsLegales": "#",
+        "warning": "L'abus d'alcool est dangereux pour la santé, à consommer avec modération."
+    },
+    "equipePage": {
+        "eyebrow": "Association loi 1901",
+        "title": "L'équipe du club",
+        "intro": "Un bureau de bénévoles passionnés, épaulé chaque année par des chefs, un œnologue et un sommelier — et par tous ceux qui donnent un coup de main le temps du salon.",
+        "bureau": {
+            "tag": "Le bureau",
+            "title": "Ceux qui font tourner le club",
+            "intro": "Élu chaque année en assemblée générale, le bureau organise le salon et anime la vie du club au fil des saisons.",
+            "members": [
+                {
+                    "initials": "MB",
+                    "color": "var(--grape)",
+                    "name": "Marcelle Berthaud",
+                    "role": "Présidente",
+                    "text": "Adhérente depuis 2015, elle coordonne l'organisation générale du salon et représente le club."
+                },
+                {
+                    "initials": "PL",
+                    "color": "var(--amber)",
+                    "name": "Pierre Lacombe",
+                    "role": "Trésorier",
+                    "text": "Suit les comptes de l'association et le budget de chaque édition du salon."
+                },
+                {
+                    "initials": "CV",
+                    "color": "var(--ink)",
+                    "name": "Clara Viquier",
+                    "role": "Vice-présidente",
+                    "text": "Pilote la relation avec les vignerons et la logistique du week-end du salon."
+                }
+            ]
+        },
+        "guests": {
+            "tag": "Invités d'honneur",
+            "title": "Les experts qui animent le salon",
+            "intro": "Chaque édition s'appuie sur des professionnels reconnus pour partager leur savoir-faire lors d'ateliers et de dégustations commentées.",
+            "items": [
+                {
+                    "tagline": "chef parrain",
+                    "name": "Julien Thévenin",
+                    "role": "Chef, parrain de l'édition 2026",
+                    "text": "Anime les ateliers accords mets-vins et parraine le thème « Les couleurs du vin »."
+                },
+                {
+                    "tagline": "à la dégustation",
+                    "name": "Georges Perraud",
+                    "role": "Œnologue conseil",
+                    "text": "Encadre les cours d'initiation à la dégustation proposés par le club toute l'année."
+                },
+                {
+                    "tagline": "au service",
+                    "name": "Georges Perraud",
+                    "role": "Sommelier conseil",
+                    "text": "Conseille les visiteurs sur le salon et accompagne les accords proposés par les exposants."
+                }
+            ]
+        },
+        "benevoles": {
+            "tag": "Merci à eux",
+            "title": "Les bénévoles du week-end",
+            "intro": "Une trentaine de bénévoles se relaient chaque année pour l'accueil, la billetterie et le service.",
+            "items": [
+                {
+                    "initials": "LR",
+                    "name": "Lucie Roux",
+                    "since": "Bénévole depuis 2020"
+                },
+                {
+                    "initials": "TF",
+                    "name": "Thomas Faure",
+                    "since": "Bénévole depuis 2018"
+                },
+                {
+                    "initials": "AN",
+                    "name": "Amandine Noël",
+                    "since": "Bénévole depuis 2022"
+                },
+                {
+                    "initials": "SR",
+                    "name": "Sébastien Roy",
+                    "since": "Bénévole depuis 2016"
+                },
+                {
+                    "initials": "EC",
+                    "name": "Émilie Charrier",
+                    "since": "Bénévole depuis 2023"
+                },
+                {
+                    "initials": "+",
+                    "name": "Et bien d'autres",
+                    "since": "Rejoignez-les !"
+                }
+            ]
+        },
+        "join": {
+            "title": "Envie de rejoindre l'équipe ?",
+            "text": "Le club recrute des bénévoles pour chaque édition du salon, sans engagement à l'année. Une bonne façon de découvrir les coulisses, un verre à la main.",
+            "cta": "Devenir bénévole"
+        }
+    },
+    "exposantsPage": {
+        "eyebrow": "Salon 2026 — 22e édition",
+        "title": "Les exposants du salon",
+        "intro": "61 vignerons indépendants et 8 producteurs régionaux, réunis les 27, 28 et 29 mars 2026 à Charmes-sur-Rhône. Filtrez par type, région ou appellation pour préparer votre visite.",
+        "list": [
+            {
+                "nom": "Herrbasch André",
+                "type": "Vigneron",
+                "region": "Alsace",
+                "appellations": [
+                    "Sylvaner",
+                    "Gewurztraminer",
+                    "Riesling",
+                    "Pinot gris",
+                    "Pinot noir",
+                    "Edelzwicker",
+                    "Muscat"
+                ],
+                "desc": "Bla bla\nBla",
+                "nomComplet": "Herrbasch André",
+                "adresse": "3 et 6 rue du Bernstein\n67650 Dambach La Ville",
+                "telephone": "+33 03 88 92 45 56",
+                "email": "herrbach.vin@gmail.com",
+                "siteWeb": "https://www.herrbachvins.com/",
+                "photo": ""
+            },
+            {
+                "nom": "Domaine de l'Oriel",
+                "type": "Vigneron",
+                "region": "Alsace",
+                "appellations": [
+                    "Sylvaner",
+                    "Gewurztraminer",
+                    "Riesling",
+                    "Riesling Grand Cru",
+                    "Pinot gris",
+                    "Pinot noir",
+                    "Pinot blanc",
+                    "Crémant d'Alsace"
+                ],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "133, rue des trois épis\n68230 NIEDERMORSCHWIHR",
+                "telephone": "+33 3 89 27 40 55",
+                "email": "",
+                "siteWeb": "https://domainedeloriel.fr/",
+                "photo": ""
+            },
+            {
+                "nom": "Domaine de la Paillardière",
+                "type": "Vigneron",
+                "region": "Beaujolais",
+                "appellations": [
+                    "Morgon",
+                    "Brouilly",
+                    "Moulin à Vent",
+                    "Beaujolais",
+                    "Beaujolais Villages"
+                ],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "190 rue de la condemine, 69220 Corcelles-en-Beaujolais",
+                "telephone": "06 08 36 83 45",
+                "email": "",
+                "siteWeb": "https://www.domaine-de-la-paillardiere.com/",
+                "photo": ""
+            },
+            {
+                "nom": "Château Boujut",
+                "type": "Vigneron",
+                "region": "Bordelais",
+                "appellations": [
+                    "Lalande de Pomerol"
+                ],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "7 route des Annereaux\n33500 LALANDE DE POMEROL",
+                "telephone": "06 09 13 33 68",
+                "email": "chateauboujut@gmail.com",
+                "siteWeb": "https://lalande-pomerol.com/project/chateau-boujut/",
+                "photo": ""
+            },
+            {
+                "nom": "Château Haut Fayan",
+                "type": "Vigneron",
+                "region": "Bordelais",
+                "appellations": [
+                    "Puisseguin",
+                    "Saint Emilion"
+                ],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": ""
+            },
+            {
+                "nom": "Château Haut Bergeron",
+                "type": "Vigneron",
+                "region": "Bordelais",
+                "appellations": [
+                    "Graves",
+                    "Sauternes"
+                ],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": ""
+            },
+            {
+                "nom": "Château La Fon du Berger",
+                "type": "Vigneron",
+                "region": "Bordelais",
+                "appellations": [
+                    "Pauillac",
+                    "Haut Médoc"
+                ],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": ""
+            },
+            {
+                "nom": "Domaine Pelletier Hibon",
+                "type": "Vigneron",
+                "region": "Bourgogne",
+                "appellations": [
+                    "Givry",
+                    "Crémant de Bourgogne"
+                ],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": ""
+            },
+            {
+                "nom": "Domaine Pagnier Jean-Pierre",
+                "type": "Vigneron",
+                "region": "Bourgogne",
+                "appellations": [
+                    "Petit Chablis",
+                    "Chablis",
+                    "Chablis 1er cru"
+                ],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": ""
+            },
+            {
+                "nom": "Domaine le Virolys",
+                "type": "Vigneron",
+                "region": "Bourgogne",
+                "appellations": [
+                    "Viré Clessé",
+                    "Mâcon-Village",
+                    "Crémant de Bourgogne"
+                ],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": ""
+            },
+            {
+                "nom": "Charcuterie Maureen Branger",
+                "type": "Producteur",
+                "region": "",
+                "appellations": [],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": ""
+            },
+            {
+                "nom": "Brasserie de la Grange du Seigneur",
+                "type": "Producteur",
+                "region": "",
+                "appellations": [],
+                "desc": "Bière artisanale ",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": ""
+            },
+            {
+                "nom": "Dominique Riou",
+                "type": "Producteur",
+                "region": "",
+                "appellations": [],
+                "desc": "Artisan chocolatier",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": ""
+            },
+            {
+                "nom": "GAEC du Champ du Riou",
+                "type": "Producteur",
+                "region": "",
+                "appellations": [],
+                "desc": "Fromagerie, picodons",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": ""
+            },
+            {
+                "nom": "Le Vieux Moulin",
+                "type": "Producteur",
+                "region": "",
+                "appellations": [],
+                "desc": "Huiles d'olives et produits dérivés ",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": ""
+            },
+            {
+                "nom": "GAEC l'Abeille Turquoise",
+                "type": "Producteur",
+                "region": "",
+                "appellations": [],
+                "desc": "Miel",
+                "nomComplet": "",
+                "adresse": "",
+                "telephone": "",
+                "email": "",
+                "siteWeb": "",
+                "photo": ""
+            }
+        ]
+    },
+    "pressePage": {
+        "eyebrow": "Ils parlent du salon",
+        "title": "Revue de presse",
+        "intro": "Les articles parus dans la presse locale et régionale autour du Salon des Vins de France, édition après édition.",
+        "kit": {
+            "title": "Vous êtes journaliste ?",
+            "text": "Un kit presse avec photos haute définition, chiffres clés et contacts du bureau est disponible sur simple demande.",
+            "cta": "Demander le kit presse"
+        },
+        "articles": [
+            {
+                "source": "Dauphiné Libéré",
+                "titre": "Lancement de la 22e édition du salon",
+                "date": "13/03/2026",
+                "annee": "2026",
+                "resume": "À quelques semaines de l'ouverture, le journal revient sur le thème « Les couleurs du vin » et sur les nouveaux exposants attendus cette année."
+            },
+            {
+                "source": "Hebdo Ardèche",
+                "titre": "Portrait du salon et de ses exposants",
+                "date": "19/03/2026",
+                "annee": "2026",
+                "resume": "Un reportage au long cours chez plusieurs vignerons et producteurs régionaux, à quelques jours du salon."
+            },
+            {
+                "source": "L'Écho",
+                "titre": "Un rendez-vous incontournable en Ardèche",
+                "date": "21/03/2026",
+                "annee": "2026",
+                "resume": "Le journal souligne la place prise par le salon dans l'agenda viticole régional depuis plus de vingt ans."
+            },
+            {
+                "source": "Dauphiné Libéré",
+                "titre": "Bilan de l'édition 2026",
+                "date": "28/04/2026",
+                "annee": "2026",
+                "resume": "Fréquentation, ambiance et retours des exposants : le compte-rendu complet de cette 22e édition."
+            },
+            {
+                "source": "L'Écho",
+                "titre": "Le whisky ardéchois, révélation du salon",
+                "date": "30/03/2025",
+                "annee": "2025",
+                "resume": "Zoom sur une distillerie locale qui a attiré l'attention des visiteurs lors de l'édition précédente."
+            },
+            {
+                "source": "Hebdo Ardèche",
+                "titre": "Les chefs étoilés donnent le ton",
+                "date": "25/03/2025",
+                "annee": "2025",
+                "resume": "Retour sur les ateliers animés par des chefs invités, entre accords mets-vins et dégustations commentées."
+            },
+            {
+                "source": "Dauphiné Libéré",
+                "titre": "20 ans de salon : rencontre avec les fondateurs",
+                "date": "22/03/2024",
+                "annee": "2024",
+                "resume": "À l'occasion d'un anniversaire rond, les bénévoles historiques racontent la création du club et du salon."
+            }
+        ]
+    },
+    "settings": {
+        "cloudinary": {
+            "cloudName": "",
+            "uploadPreset": ""
+        }
+    }
+}

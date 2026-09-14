@@ -1,0 +1,46 @@
+/* --- carte des vignobles interactive (clic → liste des exposants filtrée) --- */
+.carte-hero{ position:relative; }
+
+.svc-zone{ cursor:pointer; }
+.svc-zone .svc-region{ transition:filter .15s ease; }
+
+@media (hover:hover){
+  .svc-zone:hover .svc-region{ filter:brightness(1.18); }
+}
+.svc-zone.is-selected .svc-region{ filter:brightness(1.22); }
+
+.svc-zone:focus-visible{ outline:none; }
+.svc-zone:focus-visible .svc-region{
+  outline:3px solid var(--amber);
+  outline-offset:2px;
+}
+
+.svc-chip{
+  position:absolute; left:0; top:0;
+  transform:translate(-50%, 14px) scale(.92);
+  background:var(--ink); color:var(--paper);
+  border:1px solid rgba(247,242,231,0.18);
+  border-radius:12px; padding:10px 14px; min-width:150px;
+  box-shadow:0 14px 34px rgba(0,0,0,.35);
+  font-family:'Inter',sans-serif; text-align:center;
+  opacity:0; pointer-events:none;
+  transition:opacity .15s ease, transform .15s ease;
+  z-index:5;
+}
+.svc-chip::before{
+  content:""; position:absolute; left:50%; top:-6px;
+  width:12px; height:12px; background:var(--ink);
+  transform:translateX(-50%) rotate(45deg);
+  border-left:1px solid rgba(247,242,231,0.18);
+  border-top:1px solid rgba(247,242,231,0.18);
+}
+.svc-chip.is-visible{ opacity:1; transform:translate(-50%, 14px) scale(1); pointer-events:auto; }
+
+.svc-chip-label{ display:block; font-family:'Fraunces',Georgia,serif; font-style:italic; font-weight:600; font-size:1.05rem; }
+.svc-chip-count{ display:block; font-size:.82rem; color:#C9A7EA; margin-top:2px; }
+.svc-chip-cta{
+  display:none; margin-top:8px; font-size:.85rem; font-weight:600;
+  color:var(--ink); background:var(--amber); border-radius:8px;
+  padding:6px 12px; text-decoration:none;
+}
+.svc-chip.is-tactile .svc-chip-cta{ display:inline-block; }
