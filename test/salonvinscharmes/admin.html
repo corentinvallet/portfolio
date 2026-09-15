@@ -933,14 +933,18 @@ function render(){
     const bWrap = el('div',{style:'margin-top:10px'});
     repeatList(bWrap, bureau.members, 'Membre du bureau',
       (m)=>[
+        photoField('Photo', m.photo, v=>m.photo=v),
         el('div',{class:'grid3'},
           textField('Initiales', m.initials, v=>m.initials=v),
           textField('Couleur (variable CSS)', m.color, v=>m.color=v, {hint:'ex: var(--grape)'}),
           textField('Nom', m.name, v=>m.name=v)),
         textField('Rôle', m.role, v=>m.role=v),
-        textField('Texte', m.text, v=>m.text=v, {multiline:true})
+        textField('Texte', m.text, v=>m.text=v, {multiline:true}),
+        el('div',{class:'grid2'},
+          textField('Email', m.email, v=>m.email=v),
+          textField('Téléphone', m.telephone, v=>m.telephone=v))
       ],
-      ()=>({initials:'',color:'var(--ink)',name:'',role:'',text:''}));
+      ()=>({initials:'',color:'var(--ink)',name:'',role:'',text:'',photo:'',email:'',telephone:''}));
     b.appendChild(bWrap);
   /* ── FAQ ── */
     $app.appendChild(section('FAQ', false, b => {
@@ -974,13 +978,17 @@ function render(){
     const gWrap = el('div',{style:'margin-top:10px'});
     repeatList(gWrap, guests.items, 'Invité',
       (g)=>[
+        photoField('Photo', g.photo, v=>g.photo=v),
         el('div',{class:'grid2'},
           textField('Légende manuscrite', g.tagline, v=>g.tagline=v),
           textField('Nom', g.name, v=>g.name=v)),
         textField('Rôle', g.role, v=>g.role=v),
-        textField('Texte', g.text, v=>g.text=v, {multiline:true})
+        textField('Texte', g.text, v=>g.text=v, {multiline:true}),
+        el('div',{class:'grid2'},
+          textField('Email', g.email, v=>g.email=v),
+          textField('Téléphone', g.telephone, v=>g.telephone=v))
       ],
-      ()=>({tagline:'',name:'',role:'',text:''}));
+      ()=>({tagline:'',name:'',role:'',text:'',photo:'',email:'',telephone:''}));
     b.appendChild(gWrap);
 
     // Bénévoles
@@ -992,11 +1000,18 @@ function render(){
     benevoles.items = benevoles.items || [];
     const bnWrap = el('div',{style:'margin-top:10px'});
     repeatList(bnWrap, benevoles.items, 'Bénévole',
-      (v0)=>[ el('div',{class:'grid3'},
-        textField('Initiales', v0.initials, v=>v0.initials=v),
-        textField('Nom', v0.name, v=>v0.name=v),
-        textField('Depuis', v0.since, v=>v0.since=v)) ],
-      ()=>({initials:'',name:'',since:''}));
+      (v0)=>[
+        photoField('Photo', v0.photo, v=>v0.photo=v),
+        el('div',{class:'grid3'},
+          textField('Initiales', v0.initials, v=>v0.initials=v),
+          textField('Nom', v0.name, v=>v0.name=v),
+          textField('Depuis', v0.since, v=>v0.since=v)),
+        textField('Fonction / rôle', v0.role, v=>v0.role=v),
+        el('div',{class:'grid2'},
+          textField('Email', v0.email, v=>v0.email=v),
+          textField('Téléphone', v0.telephone, v=>v0.telephone=v))
+      ],
+      ()=>({initials:'',name:'',since:'',photo:'',role:'',email:'',telephone:''}));
     b.appendChild(bnWrap);
 
     // Rejoindre
