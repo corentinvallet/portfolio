@@ -83,6 +83,7 @@ $home = false; $active = 'exposants';
   .badge{display:inline-block;padding:4px 11px;border-radius:100px;font-size:0.72rem;font-weight:700;letter-spacing:0.02em;margin-bottom:14px;}
   .badge.vign{background:#efe4f7;color:var(--grape);}
   .badge.prod{background:#fbe9d6;color:var(--amber);}
+  .badge.stand{background:var(--paper-2,#f0ebe0);color:var(--ink-soft);margin-left:6px;}  
   .exp-card h3{font-size:1.12rem;margin-bottom:6px;}
   .exp-card .region{font-size:0.86rem;color:var(--bordeaux);font-weight:600;margin-bottom:2px;}
   .exp-card .appellations{font-size:0.8rem;color:var(--ink-soft);font-weight:500;margin-bottom:10px;}
@@ -113,8 +114,13 @@ $home = false; $active = 'exposants';
     background:#fff;font-size:1.1rem;line-height:1;color:var(--ink-soft);cursor:pointer;
   }
   .modal-close:hover{background:var(--paper-2,#f0ebe0);}
-  .modal-photo{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;margin-bottom:18px;}
+  .modal-photo{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;margin-bottom:10px;}
+  .modal-photos-strip{display:flex;gap:8px;overflow-x:auto;margin-bottom:18px;padding-bottom:2px;}
+  .modal-thumb{width:60px;height:60px;object-fit:cover;border-radius:8px;flex:none;cursor:pointer;opacity:0.55;border:2px solid transparent;transition:opacity .15s ease,border-color .15s ease;}
+  .modal-thumb:hover{opacity:0.85;}
+  .modal-thumb.active{opacity:1;border-color:var(--bordeaux);}
   .modal-box h2{font-size:1.3rem;margin-bottom:4px;}
+  .modal-box .stand-num{font-size:0.82rem;color:var(--ink-soft);font-weight:600;margin-bottom:4px;}
   .modal-box .region{font-size:0.9rem;color:var(--bordeaux);font-weight:600;margin-bottom:4px;}
   .modal-box .appellations{font-size:0.84rem;color:var(--ink-soft);margin-bottom:14px;}
   .modal-box .modal-info{margin-top:14px;display:flex;flex-direction:column;gap:8px;}
@@ -253,16 +259,20 @@ $home = false; $active = 'exposants';
     }
     grid.style.display = 'grid'; empty.style.display = 'none';
 
-    grid.innerHTML = list.map(e => `
+    grid.innerHTML = list.map(e => {
+      const thumb = (e.photos && e.photos.length) ? e.photos[0] : e.photo;
+      return `
       <div class="exp-card" data-index="${exposants.indexOf(e)}">
-        ${e.photo ? `<img class="photo-thumb" src="${e.photo}" alt="">` : ''}
+        ${thumb ? `<img class="photo-thumb" src="${thumb}" alt="">` : ''}
         <span class="badge ${e.type==='Vigneron'?'vign':'prod'}">${e.type === 'Vigneron' ? 'Vigneron' : 'Producteur régional'}</span>
+        ${e.numeroStand ? `<span class="badge stand">Stand ${e.numeroStand}</span>` : ''}
         <h3>${e.nom}</h3>
         ${e.region ? `<div class="region">${e.region}</div>` : ''}
         ${(e.appellations && e.appellations.length) ? `<div class="appellations">${e.appellations.join(', ')}</div>` : ''}
         <p>${e.desc}</p>
       </div>
-    `).join('');
+    `;
+    }).join('');
   }
 
   /* ── Modale fiche exposant ── */
@@ -284,9 +294,18 @@ $home = false; $active = 'exposants';
   }
 
   function openModal(e){
+    const photos = (e.photos && e.photos.length) ? e.photos : (e.photo ? [e.photo] : []);
     let html = '<button class="modal-close" id="modalCloseBtn" aria-label="Fermer">✕</button>';
-    if(e.photo) html += `<img class="modal-photo" src="${e.photo}" alt="">`;
+    if(photos.length){
+      html += `<img class="modal-photo" id="modalMainPhoto" src="${photos[0]}" alt="">`;
+      if(photos.length > 1){
+        html += '<div class="modal-photos-strip">' + photos.map((src,i)=>
+          `<img class="modal-thumb${i===0?' active':''}" src="${src}" data-i="${i}" alt="">`
+        ).join('') + '</div>';
+      }
+    }
     html += `<h2>${e.nomComplet || e.nom}</h2>`;
+    if(e.numeroStand) html += `<div class="stand-num">Stand n° ${e.numeroStand}</div>`;
     if(e.region) html += `<div class="region">${e.region}</div>`;
     if(e.appellations && e.appellations.length) html += `<div class="appellations">${e.appellations.join(', ')}</div>`;
 
@@ -303,6 +322,17 @@ $home = false; $active = 'exposants';
     modalBox.innerHTML = html;
     modalBackdrop.classList.add('open');
     document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+
+    if(photos.length > 1){
+      const mainImg = document.getElementById('modalMainPhoto');
+      modalBox.querySelectorAll('.modal-thumb').forEach(thumb=>{
+        thumb.addEventListener('click', ()=>{
+          mainImg.src = photos[thumb.dataset.i];
+          modalBox.querySelectorAll('.modal-thumb').forEach(t=>t.classList.remove('active'));
+          thumb.classList.add('active');
+        });
+      });
+    }
   }
   function closeModal(){ modalBackdrop.classList.remove('open'); }
 

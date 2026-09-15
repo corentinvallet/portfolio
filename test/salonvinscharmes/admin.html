@@ -347,6 +347,72 @@ function photoField(labelTxt, value, onChange){
     clearBtn.style.display = 'none';
   });
 
+    return f;
+}
+
+/* ── Champ liste de photos (upload multiple Cloudinary, réordonnancement, suppression) ── */
+function photoListField(labelTxt, arr){
+  const f = el('div',{class:'field'}, el('label',{class:'lbl'},labelTxt));
+  const grid = el('div',{style:'display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px;'});
+
+  function move(i, delta){
+    const j = i + delta;
+    if(j < 0 || j >= arr.length) return;
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+    markDirty(); draw();
+  }
+
+  function draw(){
+    grid.innerHTML = '';
+    arr.forEach((src, i)=>{
+      const card = el('div',{style:'position:relative;width:100px;'});
+      card.appendChild(el('img',{src, alt:'',
+        style:'width:100px;height:100px;object-fit:cover;border-radius:10px;border:1px solid var(--line);display:block;'}));
+      card.appendChild(el('div',{style:'display:flex;gap:4px;margin-top:4px;justify-content:center;'},
+        el('button',{class:'btn btn-ghost btn-sm',type:'button',disabled:i===0||null,
+          onclick:()=>move(i,-1)},'↑'),
+        el('button',{class:'btn btn-ghost btn-sm',type:'button',disabled:i===arr.length-1||null,
+          onclick:()=>move(i,1)},'↓'),
+        el('button',{class:'btn btn-danger btn-sm',type:'button',
+          onclick:()=>{ if(confirm('Supprimer cette photo ?')){ arr.splice(i,1); markDirty(); draw(); } }},'✕')
+      ));
+      grid.appendChild(card);
+    });
+  }
+  draw();
+  f.appendChild(grid);
+
+  const uploadBtn = el('button',{class:'btn btn-ghost btn-sm',type:'button'},'📷 Ajouter des photos');
+  f.appendChild(uploadBtn);
+  f.appendChild(el('div',{class:'hint'},'La première photo sert de vignette sur la liste. Sélection multiple possible.'));
+
+  uploadBtn.addEventListener('click', ()=>{
+    const cfg = (state.settings && state.settings.cloudinary) || {};
+    if(!cfg.cloudName || !cfg.uploadPreset){
+      alert('Configurez d\u2019abord le Cloud name et l\u2019Upload preset Cloudinary dans la section « Réglages ».');
+      return;
+    }
+    if(typeof cloudinary === 'undefined'){
+      alert('Le module Cloudinary n\u2019a pas pu se charger (vérifiez la connexion internet).');
+      return;
+    }
+    let added = 0;
+    const widget = cloudinary.createUploadWidget(
+      { cloudName: cfg.cloudName, uploadPreset: cfg.uploadPreset,
+        multiple: true, maxFiles: 20, sources:['local','camera','url'] },
+      (error, result)=>{
+        if(error || !result) return;
+        if(result.event === 'success'){
+          arr.push(result.info.secure_url);
+          added++; markDirty();
+        }
+        if(result.event === 'queues-end' || result.event === 'close'){
+          if(added){ added = 0; draw(); }
+        }
+      });
+    widget.open();
+  });
+
   return f;
 }
 
@@ -951,15 +1017,19 @@ function render(){
     b.appendChild(el('div',{class:'hint',style:'margin:14px 0'},
       p.list.length+' exposants. Le type détermine le badge et le filtre sur la page. La région et les appellations sont utilisées comme filtres.'));
     const wrap = el('div');
-    repeatList(wrap, p.list, 'Exposant',
-      (x)=>[
+        repeatList(wrap, p.list, 'Exposant',
+      (x)=>{
+        x.photos = (x.photos && x.photos.length) ? x.photos : (x.photo ? [x.photo] : []);
+        return [
         el('div',{class:'grid2'},
           textField('Nom', x.nom, v=>x.nom=v),
           selectField('Type', x.type, [['Vigneron','Vigneron'],['Producteur','Producteur']], v=>x.type=v)),
+        textField('Numéro de stand', x.numeroStand, v=>x.numeroStand=v,
+          {hint:'Affiché sur la vignette et la fiche détaillée.'}),
         textField('Région (laisser vide pour un producteur)', x.region, v=>x.region=v),
         tagsField('Appellations (laisser vide pour un producteur)', x.appellations, v=>x.appellations=v),
         textField('Description', x.desc, v=>x.desc=v, {multiline:true}),
-        photoField('Photo', x.photo, v=>x.photo=v),
+        photoListField('Photos', x.photos),
         el('div',{style:'margin-top:6px;font-weight:700;font-family:Fraunces,serif;font-size:0.92rem;'},'Fiche détaillée (fenêtre au clic sur la vignette)'),
         el('div',{class:'hint',style:'margin-bottom:10px;'},'Seuls les champs renseignés seront affichés sur le site.'),
         textField('Nom complet', x.nomComplet, v=>x.nomComplet=v, {hint:'Si différent du nom affiché sur la vignette.'}),
@@ -973,10 +1043,11 @@ function render(){
           textField('Facebook', x.facebook, v=>x.facebook=v),
           textField('Instagram', x.instagram, v=>x.instagram=v)),
         textField('LinkedIn', x.linkedin, v=>x.linkedin=v)
-      ],
-      ()=>({nom:'',type:'Vigneron',region:'',appellations:[],desc:'',
+        ];
+      },
+      ()=>({nom:'',type:'Vigneron',numeroStand:'',region:'',appellations:[],desc:'',
             nomComplet:'',adresse:'',telephone:'',email:'',siteWeb:'',
-            facebook:'',instagram:'',linkedin:'',photo:''}));
+            facebook:'',instagram:'',linkedin:'',photos:[]}));
     b.appendChild(wrap);
   }));
   /* ══════════════ PAGE SPONSORS ══════════════ */
