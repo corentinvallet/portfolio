@@ -314,8 +314,17 @@ $svcRegionCounts = svc_region_counts($c['exposantsPage']['list'] ?? [], $svcSlug
       <h1><?= emph($hero['title'] ?? '') ?></h1>
       <p class="lede"><?= ml($hero['lede'] ?? '') ?></p>
       <div class="hero-actions">
-        <a href="exposants-club-oenologie.php" class="btn btn-solid"><?= e($hero['ctaPrimary'] ?? '') ?></a>
-        <a href="#activites" class="btn btn-ghost"><?= e($hero['ctaSecondary'] ?? '') ?></a>
+        <?php if (($hero['ctaMode'] ?? 'classic') === 'invitation'): ?>
+          <?php if (!empty($hero['invitationPdf'])): ?>
+          <a href="<?= e($hero['invitationPdf']) ?>" class="btn btn-solid" target="_blank" rel="noopener">
+            <?= e($hero['ctaInvitationLabel'] ?? "Télécharger l'invitation") ?>
+          </a>
+          <?php endif; ?>
+          <a href="faq-club-oenologie.php" class="btn btn-ghost"><?= e($hero['ctaVisiteLabel'] ?? 'Préparer ma visite') ?></a>
+        <?php else: ?>
+          <a href="exposants-club-oenologie.php" class="btn btn-solid"><?= e($hero['ctaPrimary'] ?? '') ?></a>
+          <a href="#activites" class="btn btn-ghost"><?= e($hero['ctaSecondary'] ?? '') ?></a>
+        <?php endif; ?>
       </div>
     </div>
     <script>window.svcRegionCounts = <?= json_encode($svcRegionCounts, JSON_UNESCAPED_UNICODE) ?>;</script>

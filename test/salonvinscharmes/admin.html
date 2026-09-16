@@ -347,10 +347,64 @@ function photoField(labelTxt, value, onChange){
     clearBtn.style.display = 'none';
   });
 
-    return f;
-}
+/* ── Champ PDF (upload Cloudinary + suppression) ── */
+function pdfField(labelTxt, value, onChange){
+  const f = el('div',{class:'field'}, el('label',{class:'lbl'},labelTxt));
 
-/* ── Champ liste de photos (upload multiple Cloudinary, réordonnancement, suppression) ── */
+  const preview = el('div',{style:'margin-bottom:10px;'});
+  function drawPreview(){
+    preview.innerHTML = '';
+    if(value){
+      preview.appendChild(el('a',{href:value,target:'_blank',rel:'noopener',
+        style:'display:inline-flex;align-items:center;gap:6px;font-size:0.9rem;'},
+        '📄 Voir le PDF actuel'));
+    }
+  }
+  drawPreview();
+  f.appendChild(preview);
+
+  const row = el('div',{style:'display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;'});
+  const uploadBtn = el('button',{class:'btn btn-ghost btn-sm',type:'button'},'📄 Uploader un PDF');
+  const clearBtn = el('button',{class:'btn btn-ghost btn-sm',type:'button',style:value?'':'display:none;'},'Supprimer le PDF');
+  row.appendChild(uploadBtn); row.appendChild(clearBtn);
+  f.appendChild(row);
+
+  uploadBtn.addEventListener('click', ()=>{
+    const cfg = (state.settings && state.settings.cloudinary) || {};
+    if(!cfg.cloudName || !cfg.uploadPreset){
+      alert('Configurez d\u2019abord le Cloud name et l\u2019Upload preset Cloudinary dans la section « Réglages ».');
+      return;
+    }
+    if(typeof cloudinary === 'undefined'){
+      alert('Le module Cloudinary n\u2019a pas pu se charger (vérifiez la connexion internet).');
+      return;
+    }
+    const widget = cloudinary.createUploadWidget(
+      { cloudName: cfg.cloudName, uploadPreset: cfg.uploadPreset, multiple:false,
+        resourceType:'auto', clientAllowedFormats:['pdf'], sources:['local','url'] },
+      (error, result) => {
+        if(!error && result && result.event === 'success'){
+          value = result.info.secure_url;
+          onChange(value);
+          markDirty();
+          drawPreview();
+          clearBtn.style.display = '';
+        }
+      }
+    );
+    widget.open();
+  });
+
+  clearBtn.addEventListener('click', ()=>{
+    value = '';
+    onChange('');
+    markDirty();
+    drawPreview();
+    clearBtn.style.display = 'none';
+  });
+
+  return f;
+}
 function photoListField(labelTxt, arr){
   const f = el('div',{class:'field'}, el('label',{class:'lbl'},labelTxt));
   const grid = el('div',{style:'display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px;'});
@@ -788,8 +842,21 @@ function render(){
       hint:'Entourez un mot de *astérisques* pour le mettre en italique (ex: *raconté*).'}));
     b.appendChild(textField('Phrase d’accroche', h.lede, v=>h.lede=v, {multiline:true}));
     b.appendChild(el('div',{class:'grid2'},
-      textField('Bouton principal', h.ctaPrimary, v=>h.ctaPrimary=v),
-      textField('Bouton secondaire', h.ctaSecondary, v=>h.ctaSecondary=v)));
+      textField('Bouton principal (ancien mode)', h.ctaPrimary, v=>h.ctaPrimary=v),
+      textField('Bouton secondaire (ancien mode)', h.ctaSecondary, v=>h.ctaSecondary=v)));
+
+    b.appendChild(el('div',{style:'margin-top:26px;font-weight:700;font-family:Fraunces,serif;'},'Boutons du hero'));
+    b.appendChild(selectField('Mode d’affichage', h.ctaMode || 'classic', [
+      ['classic','Ancien — Découvrir les vignerons / Voir les activités'],
+      ['invitation','Nouveau — Télécharger l’invitation / Préparer ma visite']
+    ], v=>h.ctaMode=v));
+    b.appendChild(el('div',{class:'grid2'},
+      textField('Libellé — bouton invitation', h.ctaInvitationLabel || "Télécharger l'invitation",
+        v=>h.ctaInvitationLabel=v),
+      textField('Libellé — bouton visite', h.ctaVisiteLabel || 'Préparer ma visite',
+        v=>h.ctaVisiteLabel=v)));
+    b.appendChild(pdfField('PDF de l’invitation (nouveau mode)', h.invitationPdf, v=>h.invitationPdf=v));
+
     b.appendChild(el('div',{class:'grid2'},
       textField('Cachet — chiffre', h.sealNum, v=>h.sealNum=v),
       textField('Cachet — légende', h.sealLabel, v=>h.sealLabel=v)));
