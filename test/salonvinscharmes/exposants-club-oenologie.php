@@ -25,7 +25,7 @@ $home = false; $active = 'exposants';
     position:sticky;top:78px;z-index:40;background:var(--paper);
     border-bottom:1px solid var(--line);padding:16px 0;margin-bottom:34px;
     overflow:hidden;
-    transition:height .25s ease;
+    transition:height .25s ease, padding .25s ease, border-color .25s ease;
   }
   .filter-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
   .search-input{
@@ -391,6 +391,19 @@ $home = false; $active = 'exposants';
   window.addEventListener('resize', setupFilterbarMode);
   window.addEventListener('load', setupFilterbarMode);
 
+  function openFilterbar(){
+    filterbar.style.height = filterbarHeight + 'px';
+    filterbar.style.paddingTop = '';
+    filterbar.style.paddingBottom = '';
+    filterbar.style.borderColor = '';
+  }
+  function closeFilterbar(){
+    filterbar.style.height = '0px';
+    filterbar.style.paddingTop = '0px';
+    filterbar.style.paddingBottom = '0px';
+    filterbar.style.borderColor = 'transparent';
+  }
+
   window.addEventListener('scroll', () => {
     if (!mobileQuery.matches) {
       lastScrollY = window.scrollY;
@@ -400,11 +413,11 @@ $home = false; $active = 'exposants';
     const scrollingDown = currentScrollY > lastScrollY;
 
     if (currentScrollY < 80) {
-      filterbar.style.height = filterbarHeight + 'px';
+      openFilterbar();
     } else if (scrollingDown) {
-      filterbar.style.height = '0px';
+      closeFilterbar();
     } else {
-      filterbar.style.height = filterbarHeight + 'px';
+      openFilterbar();
     }
     lastScrollY = currentScrollY;
   }, { passive: true });
