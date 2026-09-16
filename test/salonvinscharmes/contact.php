@@ -27,8 +27,8 @@ use PHPMailer\PHPMailer\Exception;
    Hostinger fournit en général : host = smtp.hostinger.com, port 465 en SSL. */
 const SMTP_HOST   = 'smtp.hostinger.com';
 const SMTP_PORT   = 465;
-const SMTP_USER   = 'contact@corentinvallet.fr';   // adresse mail Hostinger du client
-const SMTP_PASS   = 'w^&D#7Q3NMUjWHnh1^v&';
+const SMTP_USER      = 'noreply@corentinvallet.fr';
+const SMTP_PASS      = 'jIH>bvF0!';
 const SMTP_FROM   = SMTP_USER;                    // l'expéditeur doit être la boîte mail elle-même
 const SMTP_FROM_NAME = 'Club Œnologie Découvertes';
 

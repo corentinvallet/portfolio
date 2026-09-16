@@ -25,8 +25,8 @@ use PHPMailer\PHPMailer\Exception;
 /* ─── Configuration SMTP (compte mail Hostinger corentinvallet.fr) ─── */
 const SMTP_HOST      = 'smtp.hostinger.com';
 const SMTP_PORT      = 465;
-const SMTP_USER      = 'contact@corentinvallet.fr';
-const SMTP_PASS      = 'w^&D#7Q3NMUjWHnh1^v&';
+const SMTP_USER      = 'noreply@corentinvallet.fr';
+const SMTP_PASS      = 'jIH>bvF0!';
 const SMTP_FROM      = SMTP_USER;
 const SMTP_FROM_NAME = 'B&A Construction — Site web';
 
