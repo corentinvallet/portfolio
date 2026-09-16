@@ -24,6 +24,7 @@ $home = false; $active = 'exposants';
   .filterbar{
     position:sticky;top:78px;z-index:40;background:var(--paper);
     border-bottom:1px solid var(--line);padding:16px 0;margin-bottom:34px;
+    transition:transform .25s ease;
   }
   .filter-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
   .search-input{
@@ -46,6 +47,7 @@ $home = false; $active = 'exposants';
 /* filter bar — compact sur mobile */
   @media (max-width:640px){
     .filterbar{padding:12px 0}
+    .filterbar.filterbar-hidden{transform:translateY(-100%);}
     .filter-row{
       display:grid;
       grid-template-columns:1fr 1fr;
@@ -369,6 +371,30 @@ $home = false; $active = 'exposants';
     b.classList.toggle('active', b.dataset.type === state.type);
   });
   render();
+
+  /* filtre : masquage au scroll (mobile uniquement) */
+  const filterbar = document.querySelector('.filterbar');
+  let lastScrollY = window.scrollY;
+  const mobileQuery = window.matchMedia('(max-width:640px)');
+
+  window.addEventListener('scroll', () => {
+    if (!mobileQuery.matches) {
+      filterbar.classList.remove('filterbar-hidden');
+      lastScrollY = window.scrollY;
+      return;
+    }
+    const currentScrollY = window.scrollY;
+    const scrollingDown = currentScrollY > lastScrollY;
+
+    if (currentScrollY < 80) {
+      filterbar.classList.remove('filterbar-hidden');
+    } else if (scrollingDown) {
+      filterbar.classList.add('filterbar-hidden');
+    } else {
+      filterbar.classList.remove('filterbar-hidden');
+    }
+    lastScrollY = currentScrollY;
+  }, { passive: true });
 </script>
 <?php include __DIR__ . '/inc/mobile-menu.php'; ?>
 </body>
