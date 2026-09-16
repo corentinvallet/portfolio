@@ -347,6 +347,9 @@ function photoField(labelTxt, value, onChange){
     clearBtn.style.display = 'none';
   });
 
+  return f;
+}
+
 /* ── Champ PDF (upload Cloudinary + suppression) ── */
 function pdfField(labelTxt, value, onChange){
   const f = el('div',{class:'field'}, el('label',{class:'lbl'},labelTxt));
