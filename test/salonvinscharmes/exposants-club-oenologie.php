@@ -26,6 +26,7 @@ $home = false; $active = 'exposants';
     border-bottom:1px solid var(--line);padding:16px 0;margin-bottom:34px;
     transition:transform .25s ease;
   }
+  .filterbar-spacer{display:none;}
   .filter-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
   .search-input{
     display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);
@@ -46,8 +47,12 @@ $home = false; $active = 'exposants';
   .result-count{font-size:0.86rem;color:var(--ink-soft);margin-top:12px;}
 /* filter bar — compact sur mobile */
   @media (max-width:640px){
-    .filterbar{padding:12px 0}
+    .filterbar{
+      padding:12px 0;
+      position:fixed;top:78px;left:0;right:0;
+    }
     .filterbar.filterbar-hidden{transform:translateY(-100%);}
+    .filterbar-spacer{display:block;}
     .filter-row{
       display:grid;
       grid-template-columns:1fr 1fr;
@@ -187,6 +192,7 @@ $home = false; $active = 'exposants';
     <div class="result-count" id="resultCount"></div>
   </div>
 </div>
+<div class="filterbar-spacer" id="filterbarSpacer"></div>
 
 <div class="wrap">
   <div class="grid" id="grid"></div>
@@ -373,9 +379,18 @@ $home = false; $active = 'exposants';
   render();
 
   /* filtre : masquage au scroll (mobile uniquement) */
+  /* filtre : masquage au scroll (mobile uniquement) */
   const filterbar = document.querySelector('.filterbar');
+  const filterbarSpacer = document.getElementById('filterbarSpacer');
   let lastScrollY = window.scrollY;
   const mobileQuery = window.matchMedia('(max-width:640px)');
+
+  function syncFilterbarSpacer(){
+    filterbarSpacer.style.height = mobileQuery.matches ? filterbar.offsetHeight + 'px' : '0px';
+  }
+  syncFilterbarSpacer();
+  window.addEventListener('resize', syncFilterbarSpacer);
+  window.addEventListener('load', syncFilterbarSpacer);
 
   window.addEventListener('scroll', () => {
     if (!mobileQuery.matches) {
