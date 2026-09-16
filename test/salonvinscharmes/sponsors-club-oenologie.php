@@ -5,8 +5,8 @@ $sp = $c['sponsors'] ?? [];
 $p  = $c['sponsorsPage'] ?? [];
 $items = array_values(array_filter($sp['items'] ?? [], fn($s) => !empty($s['nom']) || !empty($s['logo'])));
 
-// Ordre canonique des catégories pour les puces de filtre
-$ordreCategories = ['Institutionnel', 'Partenaire financier', 'Partenaire commerçant', 'Partenaire local'];
+// Ordre des catégories pour les puces de filtre (défini dans l'admin, page Sponsors)
+$ordreCategories = $sp['categories'] ?? ['Institutionnel', 'Partenaire financier', 'Partenaire commerçant', 'Partenaire local'];
 
 // Catégories réellement présentes dans les données, avec leur nombre
 $categories = [];

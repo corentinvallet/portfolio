@@ -951,11 +951,15 @@ function render(){
       ()=>({source:'',text:'',date:''}));
     b.appendChild(wrap);
   }));
-  /* ── SPONSORS ── */
+    /* ── SPONSORS ── */
   $app.appendChild(section('Sponsors & partenaires', false, b=>{
     const sp = state.sponsors = state.sponsors || {};
     b.appendChild(textField('Titre de la bande', sp.titre, v=>sp.titre=v,
       {placeholder:'Ils soutiennent le salon'}));
+    sp.categories = (sp.categories && sp.categories.length) ? sp.categories :
+      ['Institutionnel','Partenaire financier','Partenaire commerçant','Partenaire local'];
+    b.appendChild(tagsField('Catégories de sponsors', sp.categories, v=>{sp.categories=v;},
+      {hint:'Servent de filtres sur la page Sponsors et alimentent la liste déroulante « Catégorie » ci-dessous. L\u2019ordre donné ici est l\u2019ordre des filtres sur le site.'}));
     sp.items = sp.items || [];
     const wrap = el('div',{style:'margin-top:14px'});
     repeatList(wrap, sp.items, 'Partenaire',
@@ -965,15 +969,11 @@ function render(){
             {hint:'Sert de texte alternatif pour l\u2019accessibilité.'}),
           textField('Site web (facultatif)', s.url, v=>s.url=v,
             {placeholder:'https://…', hint:'Laissez vide pour un logo non cliquable.'})),
-        selectField('Catégorie', s.categorie, [
-          ['Institutionnel','Institutionnel'],
-          ['Partenaire financier','Partenaire financier'],
-          ['Partenaire commerçant','Partenaire commerçant'],
-          ['Partenaire local','Partenaire local']
-        ], v=>s.categorie=v, {hint:'Détermine le filtre sur la page Sponsors.'}),
+        selectField('Catégorie', s.categorie, sp.categories.map(cat=>[cat,cat]),
+          v=>s.categorie=v, {hint:'Détermine le filtre sur la page Sponsors.'}),
         photoField('Logo', s.logo, v=>s.logo=v)
       ],
-      ()=>({nom:'',logo:'',url:'',categorie:''}));
+      ()=>({nom:'',logo:'',url:'',categorie:sp.categories[0] || ''}));
     b.appendChild(wrap);
   }));
   /* ── CONTACT & PIED DE PAGE ── */
