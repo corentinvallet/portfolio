@@ -221,6 +221,7 @@ $svcRegionCounts = svc_region_counts($c['exposantsPage']['list'] ?? [], $svcSlug
     display:block;font-size:0.8rem;font-weight:600;color:var(--ink);margin-bottom:6px;
   }
   .contact-form input,
+  .contact-form select,
   .contact-form textarea{
     width:100%;padding:12px 14px;border-radius:10px;
     border:1.5px solid var(--line);background:#fff;
@@ -228,6 +229,7 @@ $svcRegionCounts = svc_region_counts($c['exposantsPage']['list'] ?? [], $svcSlug
     transition:border-color .2s ease;
   }
   .contact-form input:focus,
+  .contact-form select:focus,
   .contact-form textarea:focus{
     outline:none;border-color:var(--grape);
   }
@@ -457,18 +459,28 @@ if ($sponsorItems):
       <h3>Nous contacter</h3>
       <p class="sub">Une question sur le salon, un partenariat, une suggestion ? Écrivez-nous.</p>
 
-      <form class="contact-form" id="contact-form" action="https://formspree.io/f/VOTRE_FORM_ID" method="POST">
+      <form class="contact-form" id="contact-form" action="contact.php" method="POST">
         <div>
           <label for="cf-name">Nom</label>
           <input type="text" id="cf-name" name="name" required autocomplete="name">
         </div>
         <div>
           <label for="cf-email">Email</label>
-          <input type="email" id="cf-email" name="_replyto" required autocomplete="email">
+          <input type="email" id="cf-email" name="email" required autocomplete="email">
+        </div>
+        <div class="field-full">
+          <label for="cf-type">Vous êtes concerné·e par</label>
+          <select id="cf-type" name="type" required>
+            <option value="" disabled selected>Choisissez un type de demande</option>
+            <option value="Salon">Le Salon des Vins</option>
+            <option value="Exposants">Exposants</option>
+            <option value="Bénévoles">Bénévoles</option>
+            <option value="Communication">Communication</option>
+          </select>
         </div>
         <div class="field-full">
           <label for="cf-subject">Sujet</label>
-          <input type="text" id="cf-subject" name="_subject" value="Message depuis le site — Club Œnologie Découvertes">
+          <input type="text" id="cf-subject" name="subject" value="Message depuis le site — Club Œnologie Découvertes">
         </div>
         <div class="field-full">
           <label for="cf-message">Message</label>
@@ -509,8 +521,8 @@ if ($sponsorItems):
         form.reset();
       } else {
         response.json().then(function(data){
-          status.textContent = (data && data.errors)
-            ? data.errors.map(function(err){ return err.message; }).join(', ')
+          status.textContent = (data && data.error)
+            ? data.error
             : 'Une erreur est survenue. Merci de réessayer.';
           status.className = 'form-status is-error';
         }).catch(function(){
