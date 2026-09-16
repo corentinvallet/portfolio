@@ -1,8 +1,8 @@
 {
     "meta": {
-        "title": "Salon des Vins de France - Charmes-sur-Rhône"
+        "title": "Salon des Vins de France - Charmes-sur-Rhône" 
     },
-    "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1789447115/jz1dq3rln610j1spgume.png",
+    "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786612004/mypsvmeg0mkn4tzrn67i.png",
     "hero": {
         "eyebrow": "22e édition — 27, 28 & 29 mars 2026",
         "title": "Salon des *Vins de France* de Charmes-sur-Rhône",
@@ -29,7 +29,7 @@
     ],
     "exposantsHome": {
         "tag": "Exposants 2026",
-        "title": "Des appellations de tous les territoires",
+        "title": "Un panorama du vignoble français",
         "intro": "Des vignerons venus des plus grandes régions viticoles Françaises (Alsace, Beaujolais, Bordelais, Bourgogne, Champagne, Corse, Jura et tant d'autres). Des vins pour tous budgets, toutes tables. A leurs côtés, des producteurs qui font la part belle au terroir ardéchois — de la bière artisanale au whisky local.",
         "cards": [
             {
@@ -253,7 +253,7 @@
     "exposantsPage": {
         "eyebrow": "Salon 2026 — 22e édition",
         "title": "Les exposants du salon",
-        "intro": "61 vignerons indépendants et 8 producteurs régionaux.",
+        "intro": "61 vignerons indépendants et 8 producteurs régionaux, réunis les 27, 28 et 29 mars 2026 à Charmes-sur-Rhône. Filtrez par type, région ou appellation pour préparer votre visite.",
         "list": [
             {
                 "nom": "Herrbasch André",
@@ -564,62 +564,52 @@
             {
                 "nom": "Crédit Mutuel",
                 "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135104/fbe2wytjdzvdtidbcz7d.png",
-                "url": "https://www.creditmutuel.fr/home/index.html",
-                "categorie": "Partenaire financier"
+                "url": "https://www.creditmutuel.fr/home/index.html"
             },
             {
                 "nom": "Intermarché",
                 "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135272/tpaq6j0sahvgltabxmfl.png",
-                "url": "https://www.intermarche.com/?srsltid=AfmBOopHfBJ934nxbQpUCZiGUWwvn_gGUDbhDATrzwoXydCJIGZo8qAe",
-                "categorie": "Partenaire commerçant"
+                "url": "https://www.intermarche.com/?srsltid=AfmBOopHfBJ934nxbQpUCZiGUWwvn_gGUDbhDATrzwoXydCJIGZo8qAe"
             },
             {
                 "nom": "Ardèche Le département",
                 "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135313/mfa0ho0bn8pg1nhulpde.png",
-                "url": "https://www.ardeche.fr/",
-                "categorie": "Institutionnel"
+                "url": "https://www.ardeche.fr/"
             },
             {
                 "nom": "Région Auvergne Rhône Alpes",
                 "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135387/xdhyvxqp6zys4ld0eula.webp",
-                "url": "https://www.auvergnerhonealpes.fr/",
-                "categorie": "Institutionnel"
+                "url": "https://www.auvergnerhonealpes.fr/"
             },
             {
                 "nom": "Rampa Energies",
                 "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135414/bkzyeehsomyfpa0n4eun.png",
-                "url": "https://rampa-energies.com/",
-                "categorie": "Partenaire local"
+                "url": "https://rampa-energies.com/"
             },
             {
                 "nom": "Le Carré d'Aléthius",
                 "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135601/g798v3o9y0cav77yqxrj.jpg",
-                "url": "https://www.lecarredalethius.com/fr/",
-                "categorie": "Partenaire commerçant"
+                "url": "https://www.lecarredalethius.com/fr/"
             },
             {
                 "nom": "Droit de bouchon",
                 "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135607/gkviq5pqk6pugdcwc9jg.webp",
-                "url": "https://droit-de-bouchon.fr/",
-                "categorie": "Partenaire commerçant"
+                "url": "https://droit-de-bouchon.fr/"
             },
             {
                 "nom": "Ardrom Groupe",
                 "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135615/khrbjh6kbbsmo2ysmgii.png",
-                "url": "https://www.ardrom.fr/",
-                "categorie": "Partenaire local"
+                "url": "https://www.ardrom.fr/"
             },
             {
                 "nom": "Crussol Menuiseries",
                 "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135621/zblk8rvdqlbsyxutwtvi.jpg",
-                "url": "https://crussolmenuiseries.fr/",
-                "categorie": "Partenaire commerçant"
+                "url": "https://crussolmenuiseries.fr/"
             },
             {
                 "nom": "Printicy",
                 "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786135627/bcspf04knmvlho8lhp34.png",
-                "url": "https://www.printicy.com/",
-                "categorie": "Partenaire commerçant"
+                "url": "https://www.printicy.com/"
             }
         ]
     },
@@ -1356,6 +1346,5 @@
             "cloudName": "de5u1njxn",
             "uploadPreset": "salonvinscharmes"
         }
-    },
-    "sponsorsPage": []
+    }
 }
