@@ -95,7 +95,8 @@ try {
   $mail->addReplyTo($email, $name);
 
   $mail->Subject = "[$type] " . ($subject !== '' ? $subject : "Message depuis le site — Club Œnologie Découvertes");
-  $mail->Body    = "Nouveau message ($type)\n\n"
+  $mail->Body    = "Nouveau message\n\n
+                  . "Type : $type)\n"
                   . "Nom : $name\n"
                   . "Email : $email\n\n"
                   . "Message :\n$message";
