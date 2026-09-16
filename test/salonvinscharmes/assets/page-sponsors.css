@@ -36,6 +36,7 @@
   padding:22px 18px; text-decoration:none; color:inherit;
   transition:transform .18s ease, box-shadow .18s ease;
 }
+.spo-card[hidden]{ display:none; }
 a.spo-card{ cursor:pointer; }
 a.spo-card:hover, a.spo-card:focus-visible{
   transform:translateY(-4px); box-shadow:0 20px 36px -24px rgba(27,20,64,.28);
