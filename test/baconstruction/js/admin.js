@@ -467,6 +467,8 @@ function render(){
       textField('Téléphone 1', c.phone1, v=>c.phone1=v),
       textField('Téléphone 2', c.phone2, v=>c.phone2=v)));
     b.appendChild(textField('E-mail', c.email, v=>c.email=v));
+    b.appendChild(textField('Email destinataire (formulaire)', c.emailDestinataire, v=>c.emailDestinataire=v,
+      {hint:'Les demandes de devis envoyées depuis le site arriveront à cette adresse.'}));
     b.appendChild(textField('Zone d’intervention', c.zone, v=>c.zone=v, {multiline:true}));
   }));
 

@@ -198,7 +198,8 @@
         "phone1": "Bruno : 06 69 01 92 39",
         "phone2": "Alex : 06 68 11 90 63",
         "email": "salgadobati@hotmail.fr",
-        "zone": "Région de Valence\n26 000"
+        "zone": "Région de Valence\n26 000",
+        "emailDestinataire": "salgadobati@hotmail.fr"
     },
     "categories": [
         {

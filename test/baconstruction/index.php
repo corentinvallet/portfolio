@@ -178,8 +178,7 @@ $preview = array_slice($gallery, 0, 3);
           <div class="contact-item"><span class="contact-icon">📍</span><div><strong>Zone d'intervention</strong><p><?= ml($contact['zone'] ?? '') ?></p></div></div>
         </div>
       </div>      
-      <form class="contact-form" id="contactForm" action="https://formspree.io/f/mljroqno" method="POST">
-        <input type="hidden" name="_subject" value="Nouvelle demande de contact - B&amp;A Construction">
+      <form class="contact-form" id="contactForm" action="envoi-contact.php" method="POST">
         <input type="text" name="_gotcha" style="display:none">
         <div class="form-row">
           <input type="text" name="prenom" placeholder="Prénom" required/>
