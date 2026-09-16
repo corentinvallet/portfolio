@@ -914,6 +914,18 @@ function render(){
       textField('Lien Instagram', ct.instagram, v=>ct.instagram=v)));
     b.appendChild(textField('Lien Mentions légales', ct.mentionsLegales, v=>ct.mentionsLegales=v));
     b.appendChild(textField('Message d’avertissement (pied de page)', ct.warning, v=>ct.warning=v, {multiline:true}));
+
+    b.appendChild(el('h3', {class:'subhead'}, 'Formulaire de contact — types de demande'));
+    ct.types = ct.types || [];
+    const typesWrap = el('div',{style:'margin-top:10px'});
+    repeatList(typesWrap, ct.types, 'Type de demande',
+      (t)=>[
+        el('div',{class:'grid2'},
+          textField('Libellé (affiché dans le menu déroulant)', t.label, v=>t.label=v),
+          textField('Email destinataire', t.email, v=>t.email=v, {hint:'Les messages de ce type seront envoyés à cette adresse.'}))
+      ],
+      ()=>({label:'',email:''}));
+    b.appendChild(typesWrap);
   }));
 
   /* ══════════════ PAGE ÉQUIPE ══════════════ */

@@ -33,13 +33,18 @@ const SMTP_FROM   = SMTP_USER;                    // l'expéditeur doit être la
 const SMTP_FROM_NAME = 'Club Œnologie Découvertes';
 
 /* ─── Routage par catégorie ───────────────────────────────────────── */
-const RECIPIENTS = [
-  'Salon'         => 'contact@corentinvallet.fr',
-  'Exposants'     => 'corentin.vallet234@gmail.com',
-  'Bénévoles'     => 'contact@corentinvallet.fr',
-  'Communication' => 'corentin.vallet234@gmail.com',
-];
-const DEFAULT_RECIPIENT = 'Communication'; // utilisé si le type est absent/invalide
+/* ─── Routage par catégorie (géré depuis l'admin) ─────────────────── */
+require __DIR__ . '/inc/functions.php';
+$content    = load_content();
+$contactCfg = $content['contact'] ?? [];
+
+$RECIPIENTS = [];
+foreach (($contactCfg['types'] ?? []) as $t) {
+  if (!empty($t['label']) && !empty($t['email'])) {
+    $RECIPIENTS[$t['label']] = $t['email'];
+  }
+}
+$DEFAULT_RECIPIENT_EMAIL = $contactCfg['email'] ?: (reset($RECIPIENTS) ?: null);
 
 /* ─── Lecture et validation des champs ────────────────────────────── */
 $name    = trim($_POST['name'] ?? '');
@@ -59,14 +64,18 @@ $errors = [];
 if ($name === '')                                   $errors[] = "Le nom est requis.";
 if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "L'adresse email est invalide.";
 if ($message === '')                                 $errors[] = "Le message est requis.";
-if (!array_key_exists($type, RECIPIENTS))            $errors[] = "Le type de demande est invalide.";
+if (!array_key_exists($type, $RECIPIENTS))            $errors[] = "Le type de demande est invalide.";
 
 if ($errors) {
   http_response_code(400);
   exit(json_encode(['ok' => false, 'error' => implode(' ', $errors)]));
 }
 
-$to = RECIPIENTS[$type] ?? RECIPIENTS[DEFAULT_RECIPIENT];
+$to = $RECIPIENTS[$type] ?? $DEFAULT_RECIPIENT_EMAIL;
+if (!$to) {
+  http_response_code(500);
+  exit(json_encode(['ok' => false, 'error' => "Aucune adresse de destination n'est configurée. Contactez l'administrateur du site."]));
+}
 
 /* ─── Envoi via PHPMailer ──────────────────────────────────────────── */
 $mail = new PHPMailer(true);

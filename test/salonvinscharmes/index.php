@@ -472,10 +472,9 @@ if ($sponsorItems):
           <label for="cf-type">Vous êtes concerné·e par</label>
           <select id="cf-type" name="type" required>
             <option value="" disabled selected>Choisissez un type de demande</option>
-            <option value="Salon">Le Salon des Vins</option>
-            <option value="Exposants">Exposants</option>
-            <option value="Bénévoles">Bénévoles</option>
-            <option value="Communication">Communication</option>
+            <?php foreach (($contact['types'] ?? []) as $t): ?>
+              <option value="<?= e($t['label'] ?? '') ?>"><?= e($t['label'] ?? '') ?></option>
+            <?php endforeach; ?>
           </select>
         </div>
         <div class="field-full">
