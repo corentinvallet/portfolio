@@ -24,7 +24,6 @@ $heroMobile  = cl_tr($heroImg, 'f_auto,q_auto,c_fill,ar_4:5,g_auto,w_900');
 $svcSlugs = ['champagne','bourgogne','alsace','jura','beaujolais','savoie','bordelais','sud-ouest','languedoc','rhone','provence','corse','loire','poitou'];
 $svcRegionCounts = svc_region_counts($c['exposantsPage']['list'] ?? [], $svcSlugs);
 ?>
-?>
 <!doctype html>
 <html lang="fr">
 <head>
