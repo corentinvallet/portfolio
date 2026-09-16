@@ -1,6 +1,6 @@
 {
     "meta": {
-        "title": "Salon des Vins de France - Charmes-sur-Rhône" 
+        "title": "Salon des Vins de France - Charmes-sur-Rhône"
     },
     "logo": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786612004/mypsvmeg0mkn4tzrn67i.png",
     "hero": {
@@ -11,7 +11,9 @@
         "ctaSecondary": "Voir les activités du club",
         "sealNum": "130+",
         "sealLabel": "Appellations réunies",
-        "image": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786612323/ahg5mlax7diziyjfjbzk.png"
+        "image": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786612323/ahg5mlax7diziyjfjbzk.png",
+        "ctaMode": "invitation",
+        "invitationPdf": "https://res.cloudinary.com/de5u1njxn/image/upload/v1789557373/ed3bwji85npnmneslgoy.pdf"
     },
     "stats": [
         {
@@ -148,7 +150,8 @@
         "facebook": "#",
         "instagram": "#",
         "mentionsLegales": "#",
-        "warning": "L'abus d'alcool est dangereux pour la santé, à consommer avec modération."
+        "warning": "L'abus d'alcool est dangereux pour la santé, à consommer avec modération.",
+        "types": []
     },
     "equipePage": {
         "eyebrow": "Association loi 1901",
@@ -277,7 +280,8 @@
                 "photo": "",
                 "facebook": "https://www.facebook.com/herrbachvins",
                 "instagram": "",
-                "linkedin": ""
+                "linkedin": "",
+                "photos": []
             },
             {
                 "nom": "Domaine de l'Oriel",
@@ -302,7 +306,8 @@
                 "photo": "",
                 "facebook": "",
                 "instagram": "",
-                "linkedin": ""
+                "linkedin": "",
+                "photos": []
             },
             {
                 "nom": "Domaine de la Paillardière",
@@ -324,7 +329,8 @@
                 "photo": "",
                 "facebook": "",
                 "instagram": "",
-                "linkedin": ""
+                "linkedin": "",
+                "photos": []
             },
             {
                 "nom": "Château Boujut",
@@ -342,7 +348,8 @@
                 "photo": "",
                 "facebook": "",
                 "instagram": "",
-                "linkedin": ""
+                "linkedin": "",
+                "photos": []
             },
             {
                 "nom": "Château Haut Fayan",
@@ -361,7 +368,8 @@
                 "photo": "",
                 "facebook": "",
                 "instagram": "",
-                "linkedin": ""
+                "linkedin": "",
+                "photos": []
             },
             {
                 "nom": "Château Haut Bergeron",
@@ -380,7 +388,8 @@
                 "photo": "",
                 "facebook": "",
                 "instagram": "",
-                "linkedin": ""
+                "linkedin": "",
+                "photos": []
             },
             {
                 "nom": "Château La Fon du Berger",
@@ -399,7 +408,8 @@
                 "photo": "",
                 "facebook": "",
                 "instagram": "",
-                "linkedin": ""
+                "linkedin": "",
+                "photos": []
             },
             {
                 "nom": "Domaine Pelletier Hibon",
@@ -418,7 +428,8 @@
                 "photo": "",
                 "facebook": "",
                 "instagram": "",
-                "linkedin": ""
+                "linkedin": "",
+                "photos": []
             },
             {
                 "nom": "Domaine Pagnier Jean-Pierre",
@@ -438,7 +449,8 @@
                 "photo": "",
                 "facebook": "",
                 "instagram": "",
-                "linkedin": ""
+                "linkedin": "",
+                "photos": []
             },
             {
                 "nom": "Domaine le Virolys",
@@ -458,7 +470,8 @@
                 "photo": "",
                 "facebook": "",
                 "instagram": "",
-                "linkedin": ""
+                "linkedin": "",
+                "photos": []
             },
             {
                 "nom": "Charcuterie Maureen Branger",
@@ -474,7 +487,8 @@
                 "photo": "",
                 "facebook": "",
                 "instagram": "",
-                "linkedin": ""
+                "linkedin": "",
+                "photos": []
             },
             {
                 "nom": "Brasserie de la Grange du Seigneur",
@@ -490,7 +504,8 @@
                 "photo": "",
                 "facebook": "",
                 "instagram": "",
-                "linkedin": ""
+                "linkedin": "",
+                "photos": []
             },
             {
                 "nom": "Dominique Riou",
@@ -506,7 +521,8 @@
                 "photo": "",
                 "facebook": "",
                 "instagram": "",
-                "linkedin": ""
+                "linkedin": "",
+                "photos": []
             },
             {
                 "nom": "GAEC du Champ du Riou",
@@ -522,7 +538,8 @@
                 "photo": "",
                 "facebook": "",
                 "instagram": "",
-                "linkedin": ""
+                "linkedin": "",
+                "photos": []
             },
             {
                 "nom": "Le Vieux Moulin",
@@ -538,7 +555,8 @@
                 "photo": "",
                 "facebook": "",
                 "instagram": "",
-                "linkedin": ""
+                "linkedin": "",
+                "photos": []
             },
             {
                 "nom": "GAEC l'Abeille Turquoise",
@@ -554,7 +572,8 @@
                 "photo": "",
                 "facebook": "",
                 "instagram": "",
-                "linkedin": ""
+                "linkedin": "",
+                "photos": []
             }
         ]
     },
@@ -1346,5 +1365,6 @@
             "cloudName": "de5u1njxn",
             "uploadPreset": "salonvinscharmes"
         }
-    }
+    },
+    "sponsorsPage": []
 }
