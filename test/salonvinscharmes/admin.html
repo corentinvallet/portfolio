@@ -1121,6 +1121,8 @@ function render(){
         el('div',{class:'grid2'},
           textField('Nom', x.nom, v=>x.nom=v),
           selectField('Type', x.type, [['Vigneron','Vigneron'],['Producteur','Producteur']], v=>x.type=v)),
+        selectField('Agriculture biologique', x.bio ? 'oui' : 'non',
+          [['non','Non'],['oui','Oui']], v=>x.bio = (v==='oui')),
         textField('Numéro de stand', x.numeroStand, v=>x.numeroStand=v,
           {hint:'Affiché sur la vignette et la fiche détaillée.'}),
         textField('Région (laisser vide pour un producteur)', x.region, v=>x.region=v),
@@ -1144,7 +1146,7 @@ function render(){
       },
       ()=>({nom:'',type:'Vigneron',numeroStand:'',region:'',appellations:[],desc:'',
             nomComplet:'',adresse:'',telephone:'',email:'',siteWeb:'',
-            facebook:'',instagram:'',linkedin:'',photos:[]}));
+            facebook:'',instagram:'',linkedin:'',photos:[],bio:false}));
     b.appendChild(wrap);
   }));
   /* ══════════════ PAGE SPONSORS ══════════════ */

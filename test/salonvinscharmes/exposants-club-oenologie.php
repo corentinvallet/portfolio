@@ -44,6 +44,12 @@ $home = false; $active = 'exposants';
   .type-toggle button.active{background:var(--ink);color:var(--paper);}
   .reset-link{font-size:0.86rem;font-weight:600;color:var(--bordeaux);text-decoration:none;white-space:nowrap;}
   .reset-link:hover{text-decoration:underline;}
+  .bio-toggle{
+    display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);
+    border-radius:10px;padding:10px 16px;font:inherit;font-size:0.86rem;font-weight:600;color:var(--ink-soft);
+    white-space:nowrap;transition:background .15s ease,border-color .15s ease,color .15s ease;
+  }
+  .bio-toggle.active{background:#e6f0da;border-color:#8fae5e;color:#4a6b2a;}
   .result-count{font-size:0.86rem;color:var(--ink-soft);margin-top:12px;}
 /* filter bar — compact sur mobile */
   @media (max-width:640px){
@@ -69,6 +75,10 @@ $home = false; $active = 'exposants';
       grid-column:2 / span 1;
       text-align:right;
       align-self:center;
+    }
+    .bio-toggle{
+      grid-column:1 / -1;
+      justify-content:center;
     }
     .result-count{margin-top:6px;}
   }
@@ -182,6 +192,7 @@ $home = false; $active = 'exposants';
         <option value="">Toutes les appellations</option>
       </select>
       <div class="search-input">🔍 <input id="searchInput" placeholder="Rechercher..."></div>
+      <button type="button" class="bio-toggle" id="bioToggle" aria-pressed="false">🌱 Bio</button>
       <a href="#" class="reset-link" id="resetLink">Réinitialiser</a>
     </div>
     <div class="result-count" id="resultCount"></div>
@@ -206,7 +217,7 @@ $home = false; $active = 'exposants';
   const exposants = <?= json_encode($list, JSON_UNESCAPED_UNICODE) ?>;
 
   const params = new URLSearchParams(location.search);
-  let state = { type: params.get('type') || "", region:"", appellation:"", q:"" };
+  let state = { type: params.get('type') || "", region:"", appellation:"", q:"", bio:false };
 
   // peupler la liste des régions dynamiquement
   const regionSelect = document.getElementById('regionFilter');
@@ -241,6 +252,7 @@ $home = false; $active = 'exposants';
     if(state.type && e.type !== state.type) return false;
     if(state.region && e.region !== state.region) return false;
     if(state.appellation && !(e.appellations || []).includes(state.appellation)) return false;
+    if(state.bio && !e.bio) return false;
     if(state.q){
       const q = state.q.toLowerCase();
       if(!e.nom.toLowerCase().includes(q) && !e.desc.toLowerCase().includes(q)) return false;
@@ -355,15 +367,24 @@ $home = false; $active = 'exposants';
     state.type = btn.dataset.type;
     render();
   });
+  document.getElementById('bioToggle').addEventListener('click', ()=>{
+    state.bio = !state.bio;
+    const btn = document.getElementById('bioToggle');
+    btn.classList.toggle('active', state.bio);
+    btn.setAttribute('aria-pressed', state.bio ? 'true' : 'false');
+    render();
+  });
   regionSelect.addEventListener('change', ()=>{ state.region = regionSelect.value; render(); });
   appSelect.addEventListener('change', ()=>{ state.appellation = appSelect.value; render(); });
   document.getElementById('searchInput').addEventListener('input', e=>{ state.q = e.target.value; render(); });
   document.getElementById('resetLink').addEventListener('click', e=>{
     e.preventDefault();
-    state = {type:"", region:"", appellation:"", q:""};
+    state = {type:"", region:"", appellation:"", q:"", bio:false};
     document.querySelectorAll('#typeToggle button').forEach(b=>b.classList.remove('active'));
     document.querySelector('#typeToggle button[data-type=""]').classList.add('active');
     regionSelect.value = ""; appSelect.value = ""; document.getElementById('searchInput').value = "";
+    const bioBtn = document.getElementById('bioToggle');
+    bioBtn.classList.remove('active'); bioBtn.setAttribute('aria-pressed', 'false');
     render();
   });
 
