@@ -143,6 +143,8 @@ $home = false; $active = 'exposants';
   .modal-box h2{font-size:1.3rem;margin-bottom:4px;}
   .modal-hve{display:flex;align-items:center;gap:8px;margin:6px 0 10px;font-size:0.84rem;font-weight:600;color:#8a5a1e;}
   .modal-hve img{width:28px;height:28px;object-fit:contain;}
+  .modal-bio{display:flex;align-items:center;gap:8px;margin:6px 0 10px;font-size:0.84rem;font-weight:600;color:#4a6b2a;}
+  .modal-bio span{font-size:1.2rem;}
   .modal-box .stand-num{font-size:0.82rem;color:var(--ink-soft);font-weight:600;margin-bottom:4px;}
   .modal-box .region{font-size:0.9rem;color:var(--bordeaux);font-weight:600;margin-bottom:4px;}
   .modal-box .appellations{font-size:0.84rem;color:var(--ink-soft);margin-bottom:14px;}
@@ -332,6 +334,7 @@ $home = false; $active = 'exposants';
     }
     html += `<h2>${e.nomComplet || e.nom}</h2>`;
     if(e.hve && hveIcon) html += `<div class="modal-hve"><img src="${hveIcon}" alt="Certifié HVE">Certifié Haute Valeur Environnementale</div>`;
+    if(e.bio) html += `<div class="modal-bio"><span>🌱</span>Agriculture biologique</div>`;
     if(e.numeroStand) html += `<div class="stand-num">Stand n° ${e.numeroStand}</div>`;
     if(e.region) html += `<div class="region">${e.region}</div>`;
     if(e.appellations && e.appellations.length) html += `<div class="appellations">${e.appellations.join(', ')}</div>`;
