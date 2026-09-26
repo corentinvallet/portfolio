@@ -295,7 +295,9 @@
                     "https://res.cloudinary.com/de5u1njxn/image/upload/v1789557991/mgbyz9nnpjq2qzom6tiy.jpg",
                     "https://res.cloudinary.com/de5u1njxn/image/upload/v1790354132/vccibi5wwmvvzrrzkwz6.png"
                 ],
-                "numeroStand": "15"
+                "numeroStand": "15",
+                "bio": true,
+                "hve": true
             },
             {
                 "nom": "Domaine de l'Oriel",
@@ -1402,5 +1404,6 @@
             "uploadPreset": "salonvinscharmes"
         }
     },
-    "sponsorsPage": []
+    "sponsorsPage": [],
+    "hveIcon": "https://res.cloudinary.com/de5u1njxn/image/upload/v1790458514/lvgyi8u6ehtp4alqoioi.png"
 }
