@@ -834,6 +834,9 @@ function render(){
       {hint:'Identifiant de votre compte Cloudinary.'}));
     b.appendChild(textField('Upload preset (non signé)', cloud.cloudinary.uploadPreset, v=>cloud.cloudinary.uploadPreset=v,
       {hint:'À créer dans Cloudinary : Settings → Upload → Add upload preset, en mode "Unsigned". Tant que ces deux champs sont vides, l\u2019upload de photo est désactivé.'}));
+
+    b.appendChild(el('div',{style:'margin-top:26px;font-weight:700;font-family:Fraunces,serif;'},'Badge HVE'));
+    b.appendChild(photoField('Icône HVE (affichée sur la fiche des exposants certifiés)', state.hveIcon, v=>state.hveIcon=v));
   }));
 
   /* ── HERO (accueil) ── */
@@ -1121,8 +1124,11 @@ function render(){
         el('div',{class:'grid2'},
           textField('Nom', x.nom, v=>x.nom=v),
           selectField('Type', x.type, [['Vigneron','Vigneron'],['Producteur','Producteur']], v=>x.type=v)),
-        selectField('Agriculture biologique', x.bio ? 'oui' : 'non',
-          [['non','Non'],['oui','Oui']], v=>x.bio = (v==='oui')),
+        el('div',{class:'grid2'},
+          selectField('Agriculture biologique', x.bio ? 'oui' : 'non',
+            [['non','Non'],['oui','Oui']], v=>x.bio = (v==='oui')),
+          selectField('Certifié HVE', x.hve ? 'oui' : 'non',
+            [['non','Non'],['oui','Oui']], v=>x.hve = (v==='oui'))),
         textField('Numéro de stand', x.numeroStand, v=>x.numeroStand=v,
           {hint:'Affiché sur la vignette et la fiche détaillée.'}),
         textField('Région (laisser vide pour un producteur)', x.region, v=>x.region=v),
@@ -1146,7 +1152,7 @@ function render(){
       },
       ()=>({nom:'',type:'Vigneron',numeroStand:'',region:'',appellations:[],desc:'',
             nomComplet:'',adresse:'',telephone:'',email:'',siteWeb:'',
-            facebook:'',instagram:'',linkedin:'',photos:[],bio:false}));
+            facebook:'',instagram:'',linkedin:'',photos:[],bio:false,hve:false}));
     b.appendChild(wrap);
   }));
   /* ══════════════ PAGE SPONSORS ══════════════ */

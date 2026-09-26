@@ -92,6 +92,10 @@ $home = false; $active = 'exposants';
   .exp-card{
     background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;
     transition:transform .18s ease, box-shadow .18s ease;
+    position:relative;
+  }
+  .hve-badge{
+    position:absolute;top:14px;right:14px;width:36px;height:36px;object-fit:contain;
   }
   .exp-card:hover{transform:translateY(-5px);box-shadow:0 24px 40px -26px rgba(27,20,64,0.3);}
   .badge{display:inline-block;padding:4px 11px;border-radius:100px;font-size:0.72rem;font-weight:700;letter-spacing:0.02em;margin-bottom:14px;}
@@ -134,6 +138,8 @@ $home = false; $active = 'exposants';
   .modal-thumb:hover{opacity:0.85;}
   .modal-thumb.active{opacity:1;border-color:var(--bordeaux);}
   .modal-box h2{font-size:1.3rem;margin-bottom:4px;}
+  .modal-hve{display:flex;align-items:center;gap:8px;margin:6px 0 10px;font-size:0.84rem;font-weight:600;color:#8a5a1e;}
+  .modal-hve img{width:28px;height:28px;object-fit:contain;}
   .modal-box .stand-num{font-size:0.82rem;color:var(--ink-soft);font-weight:600;margin-bottom:4px;}
   .modal-box .region{font-size:0.9rem;color:var(--bordeaux);font-weight:600;margin-bottom:4px;}
   .modal-box .appellations{font-size:0.84rem;color:var(--ink-soft);margin-bottom:14px;}
@@ -217,6 +223,7 @@ $home = false; $active = 'exposants';
 
 <script>
   const exposants = <?= json_encode($list, JSON_UNESCAPED_UNICODE) ?>;
+  const hveIcon = <?= json_encode($c['hveIcon'] ?? '', JSON_UNESCAPED_UNICODE) ?>;
 
   const params = new URLSearchParams(location.search);
   let state = { type: params.get('type') || "", region:"", appellation:"", q:"", bio:false };
@@ -279,6 +286,7 @@ $home = false; $active = 'exposants';
       const thumb = (e.photos && e.photos.length) ? e.photos[0] : e.photo;
       return `
       <div class="exp-card" data-index="${exposants.indexOf(e)}">
+        ${(e.hve && hveIcon) ? `<img class="hve-badge" src="${hveIcon}" alt="Certifié HVE" title="Certifié Haute Valeur Environnementale">` : ''}
         ${thumb ? `<img class="photo-thumb" src="${thumb}" alt="">` : ''}
         <span class="badge ${e.type==='Vigneron'?'vign':'prod'}">${e.type === 'Vigneron' ? 'Vigneron' : 'Producteur régional'}</span>
         ${e.numeroStand ? `<span class="badge stand">Stand ${e.numeroStand}</span>` : ''}
@@ -321,6 +329,7 @@ $home = false; $active = 'exposants';
       }
     }
     html += `<h2>${e.nomComplet || e.nom}</h2>`;
+    if(e.hve && hveIcon) html += `<div class="modal-hve"><img src="${hveIcon}" alt="Certifié HVE">Certifié Haute Valeur Environnementale</div>`;
     if(e.numeroStand) html += `<div class="stand-num">Stand n° ${e.numeroStand}</div>`;
     if(e.region) html += `<div class="region">${e.region}</div>`;
     if(e.appellations && e.appellations.length) html += `<div class="appellations">${e.appellations.join(', ')}</div>`;
