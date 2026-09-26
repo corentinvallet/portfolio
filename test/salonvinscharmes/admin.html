@@ -487,23 +487,38 @@ function selectField(labelTxt, value, options, onChange){
 
 /* ── Carte répétable générique ──
    fields: fonction qui reçoit l'item et retourne un tableau d'éléments de champ */
-function repeatList(container, arr, tagLabel, buildFields, newItem){
+function repeatList(container, arr, tagLabel, buildFields, newItem, opts={}){
+  const { collapsible=false, titleFn=null } = opts;
   const list = el('div');
   function draw(){
     list.innerHTML='';
     arr.forEach((item,i)=>{
       const card = el('div',{class:'repeat'});
-      card.appendChild(el('div',{class:'rowtop'},
-        el('span',{class:'tag'}, tagLabel+' '+(i+1)),
+      const extra = (collapsible && titleFn && titleFn(item)) ? ' — '+titleFn(item) : '';
+      const chevron = el('span',{class:'chevron',style:'margin-right:6px;'}, collapsible ? '▸' : '');
+      const tagKids = collapsible ? [chevron, tagLabel+' '+(i+1)+extra] : [tagLabel+' '+(i+1)+extra];
+      const tagSpan = el('span',{class:'tag',style: collapsible ? 'cursor:pointer;' : undefined}, ...tagKids);
+      const rowtop = el('div',{class:'rowtop'}, tagSpan,
         el('div',{class:'reorder'},
           el('button',{class:'btn btn-ghost btn-sm',type:'button',disabled:i===0||null,
-            onclick:()=>{ [arr[i-1],arr[i]]=[arr[i],arr[i-1]]; markDirty(); draw(); } },'↑'),
+            onclick:(e)=>{ e.stopPropagation(); [arr[i-1],arr[i]]=[arr[i],arr[i-1]]; markDirty(); draw(); } },'↑'),
           el('button',{class:'btn btn-ghost btn-sm',type:'button',disabled:i===arr.length-1||null,
-            onclick:()=>{ [arr[i+1],arr[i]]=[arr[i],arr[i+1]]; markDirty(); draw(); } },'↓'),
+            onclick:(e)=>{ e.stopPropagation(); [arr[i+1],arr[i]]=[arr[i],arr[i+1]]; markDirty(); draw(); } },'↓'),
           el('button',{class:'btn btn-danger btn-sm',type:'button',
-            onclick:()=>{ if(confirm('Supprimer ?')){ arr.splice(i,1); markDirty(); draw(); } }},'Supprimer')
-        )));
-      buildFields(item, i).forEach(f=>card.appendChild(f));
+            onclick:(e)=>{ e.stopPropagation(); if(confirm('Supprimer ?')){ arr.splice(i,1); markDirty(); draw(); } }},'Supprimer')
+        ));
+      card.appendChild(rowtop);
+
+      const body = collapsible ? el('div',{class:'repeat-body',style:'display:none;'}) : card;
+      buildFields(item, i).forEach(f=>body.appendChild(f));
+      if(collapsible){
+        card.appendChild(body);
+        tagSpan.addEventListener('click', ()=>{
+          const open = body.style.display !== 'none';
+          body.style.display = open ? 'none' : '';
+          chevron.textContent = open ? '▸' : '▾';
+        });
+      }
       list.appendChild(card);
     });
   }
@@ -978,7 +993,7 @@ function render(){
       {placeholder:'Ils soutiennent le salon'}));
     b.appendChild(textField('Vitesse de défilement', String(sp.vitesseDefilement ?? 4),
       v=>{ const n = parseFloat(v.replace(',', '.')); sp.vitesseDefilement = isNaN(n) ? 4 : n; },
-      {hint:'Secondes par logo. Plus le chiffre est grand, plus le défilement est lent (4 = vitesse actuelle).'}));
+      {hint:'Secondes par logo. Plus le chiffre est grand, plus le défilement est lent (4 = vitesse par défaut).'}));
     sp.categories = (sp.categories && sp.categories.length) ? sp.categories :
       ['Institutionnel','Partenaire financier','Partenaire commerçant','Partenaire local'];
     b.appendChild(tagsField('Catégories de sponsors', sp.categories, v=>{sp.categories=v;},
@@ -1172,7 +1187,8 @@ function render(){
       },
       ()=>({nom:'',type:'Vigneron',numeroStand:'',region:'',appellations:[],desc:'',
             nomComplet:'',adresse:'',telephone:'',email:'',siteWeb:'',
-            facebook:'',instagram:'',linkedin:'',photos:[],bio:false,hve:false}));
+            facebook:'',instagram:'',linkedin:'',photos:[],bio:false,hve:false}),
+      {collapsible:true, titleFn:x=>x.nom});
     b.appendChild(wrap);
   }));
   /* ══════════════ PAGE SPONSORS ══════════════ */
