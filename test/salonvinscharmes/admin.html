@@ -863,6 +863,23 @@ function render(){
         v=>h.ctaVisiteLabel=v)));
     b.appendChild(pdfField('PDF de l’invitation (nouveau mode)', h.invitationPdf, v=>h.invitationPdf=v));
 
+    const dlBox = el('div',{class:'field'});
+    dlBox.appendChild(el('label',{class:'lbl'},'Téléchargements de l’invitation'));
+    const dlCount = el('div',{style:'font-family:Fraunces,serif;font-size:1.6rem;font-weight:700;color:var(--grape);'},'…');
+    dlBox.appendChild(dlCount);
+    const dlReset = el('button',{class:'btn btn-ghost btn-sm',type:'button',style:'margin-top:8px;'},'Réinitialiser le compteur');
+    dlReset.addEventListener('click', async ()=>{
+      if(!confirm('Remettre le compteur à zéro ?')) return;
+      try{
+        const res = await fetch('invitation-stats.php', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({action:'reset'})});
+        const out = await res.json();
+        dlCount.textContent = out.count ?? 0;
+      }catch(e){ alert('Échec de la réinitialisation.'); }
+    });
+    dlBox.appendChild(dlReset);
+    b.appendChild(dlBox);
+    fetch('invitation-stats.php').then(r=>r.json()).then(d=>{ dlCount.textContent = d.count ?? 0; }).catch(()=>{ dlCount.textContent = '—'; });
+
     b.appendChild(el('div',{class:'grid2'},
       textField('Cachet — chiffre', h.sealNum, v=>h.sealNum=v),
       textField('Cachet — légende', h.sealLabel, v=>h.sealLabel=v)));

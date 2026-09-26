@@ -317,7 +317,7 @@ $svcRegionCounts = svc_region_counts($c['exposantsPage']['list'] ?? [], $svcSlug
         <?php if (($hero['ctaMode'] ?? 'classic') === 'invitation'): ?>
           <a href="faq-club-oenologie.php" class="btn btn-solid"><?= e($hero['ctaVisiteLabel'] ?? 'Préparer ma visite') ?></a>
           <?php if (!empty($hero['invitationPdf'])): ?>
-          <a href="<?= e($hero['invitationPdf']) ?>" class="btn btn-ghost" target="_blank" rel="noopener">
+          <a href="dl-invitation.php" class="btn btn-ghost" target="_blank" rel="noopener">
             <?= e($hero['ctaInvitationLabel'] ?? "Télécharger l'invitation") ?>
           </a>
           <?php endif; ?>
