@@ -1011,7 +1011,8 @@ function render(){
           v=>s.categorie=v, {hint:'Détermine le filtre sur la page Sponsors.'}),
         photoField('Logo', s.logo, v=>s.logo=v)
       ],
-      ()=>({nom:'',logo:'',url:'',categorie:sp.categories[0] || ''}));
+      ()=>({nom:'',logo:'',url:'',categorie:sp.categories[0] || ''}),
+      {collapsible:true, titleFn:s=>s.nom});
     b.appendChild(wrap);
   }));
   /* ── CONTACT & PIED DE PAGE ── */
