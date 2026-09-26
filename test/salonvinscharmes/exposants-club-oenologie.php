@@ -95,7 +95,10 @@ $home = false; $active = 'exposants';
     position:relative;
   }
   .hve-badge{
-    position:absolute;top:14px;right:14px;width:36px;height:36px;object-fit:contain;
+    width:22px;height:22px;object-fit:contain;vertical-align:middle;margin-left:8px;
+  }
+  .bio-badge{
+    font-size:1rem;vertical-align:middle;margin-left:8px;
   }
   .exp-card:hover{transform:translateY(-5px);box-shadow:0 24px 40px -26px rgba(27,20,64,0.3);}
   .badge{display:inline-block;padding:4px 11px;border-radius:100px;font-size:0.72rem;font-weight:700;letter-spacing:0.02em;margin-bottom:14px;}
@@ -286,11 +289,10 @@ $home = false; $active = 'exposants';
       const thumb = (e.photos && e.photos.length) ? e.photos[0] : e.photo;
       return `
       <div class="exp-card" data-index="${exposants.indexOf(e)}">
-        ${(e.hve && hveIcon) ? `<img class="hve-badge" src="${hveIcon}" alt="Certifié HVE" title="Certifié Haute Valeur Environnementale">` : ''}
         ${thumb ? `<img class="photo-thumb" src="${thumb}" alt="">` : ''}
         <span class="badge ${e.type==='Vigneron'?'vign':'prod'}">${e.type === 'Vigneron' ? 'Vigneron' : 'Producteur régional'}</span>
         ${e.numeroStand ? `<span class="badge stand">Stand ${e.numeroStand}</span>` : ''}
-        <h3>${e.nom}</h3>
+        <h3>${e.nom}${e.bio ? ` <span class="bio-badge" title="Agriculture biologique">🌱</span>` : ''}${(e.hve && hveIcon) ? ` <img class="hve-badge" src="${hveIcon}" alt="Certifié HVE" title="Certifié Haute Valeur Environnementale">` : ''}</h3>
         ${e.region ? `<div class="region">${e.region}</div>` : ''}
         ${(e.appellations && e.appellations.length) ? `<div class="appellations">${e.appellations.join(', ')}</div>` : ''}
         <p>${e.desc}</p>

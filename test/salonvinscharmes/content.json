@@ -593,7 +593,6 @@
     },
     "sponsors": {
         "titre": "Ils soutiennent le salon",
-        "vitesseDefilement": 4,
         "items": [
             {
                 "nom": "Crédit Mutuel",
