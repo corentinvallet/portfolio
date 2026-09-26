@@ -996,11 +996,11 @@ function render(){
     const typesWrap = el('div',{style:'margin-top:10px'});
     repeatList(typesWrap, ct.types, 'Type de demande',
       (t)=>[
-        el('div',{class:'grid2'},
-          textField('Libellé (affiché dans le menu déroulant)', t.label, v=>t.label=v),
-          textField('Email destinataire', t.email, v=>t.email=v, {hint:'Les messages de ce type seront envoyés à cette adresse.'}))
+        textField('Libellé (affiché dans le menu déroulant)', t.label, v=>t.label=v),
+        tagsField('Emails destinataires', t.emails || (t.email ? [t.email] : []), v=>{t.emails=v; delete t.email;},
+          {hint:'Séparez plusieurs adresses par une virgule. Tous les destinataires recevront les messages de ce type.'})
       ],
-      ()=>({label:'',email:''}));
+      ()=>({label:'',emails:[]}));
     b.appendChild(typesWrap);
   }));
 

@@ -40,11 +40,14 @@ $contactCfg = $content['contact'] ?? [];
 
 $RECIPIENTS = [];
 foreach (($contactCfg['types'] ?? []) as $t) {
-  if (!empty($t['label']) && !empty($t['email'])) {
-    $RECIPIENTS[$t['label']] = $t['email'];
+  if (empty($t['label'])) continue;
+  $emails = !empty($t['emails']) ? $t['emails'] : (!empty($t['email']) ? [$t['email']] : []);
+  $emails = array_values(array_filter($emails, fn($e) => filter_var($e, FILTER_VALIDATE_EMAIL)));
+  if ($emails) {
+    $RECIPIENTS[$t['label']] = $emails;
   }
 }
-$DEFAULT_RECIPIENT_EMAIL = $contactCfg['email'] ?: (reset($RECIPIENTS) ?: null);
+$DEFAULT_RECIPIENT_EMAILS = $contactCfg['email'] ? [$contactCfg['email']] : (reset($RECIPIENTS) ?: null);
 
 /* ─── Lecture et validation des champs ────────────────────────────── */
 $name    = trim($_POST['name'] ?? '');
@@ -71,7 +74,7 @@ if ($errors) {
   exit(json_encode(['ok' => false, 'error' => implode(' ', $errors)]));
 }
 
-$to = $RECIPIENTS[$type] ?? $DEFAULT_RECIPIENT_EMAIL;
+$to = $RECIPIENTS[$type] ?? $DEFAULT_RECIPIENT_EMAILS;
 if (!$to) {
   http_response_code(500);
   exit(json_encode(['ok' => false, 'error' => "Aucune adresse de destination n'est configurée. Contactez l'administrateur du site."]));
@@ -91,7 +94,9 @@ try {
   $mail->CharSet    = 'UTF-8';
 
   $mail->setFrom(SMTP_FROM, SMTP_FROM_NAME);
-  $mail->addAddress($to);
+  foreach ($to as $addr) {
+    $mail->addAddress($addr);
+  }
   $mail->addReplyTo($email, $name);
 
   $mail->Subject = "[$type] " . ($subject !== '' ? $subject : "Message depuis le site — Club Œnologie Découvertes");
