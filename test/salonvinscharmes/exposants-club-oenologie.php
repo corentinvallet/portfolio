@@ -69,6 +69,7 @@ $home = false; $active = 'exposants';
     select.filter{width:100%;font-size:0.85rem;padding:9px 10px;}
     .search-input{
       grid-column:2 / span 1;
+      grid-row:3;
       min-width:0;
     }
     .reset-link{
@@ -78,6 +79,7 @@ $home = false; $active = 'exposants';
     }
     .bio-toggle{
       grid-column:1 / span 1;
+      grid-row:3;
       justify-content:center;
     }
     .result-count{margin-top:6px;}
