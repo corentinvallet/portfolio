@@ -12,7 +12,7 @@
         "sealNum": "130+",
         "sealLabel": "Appellations réunies",
         "image": "https://res.cloudinary.com/de5u1njxn/image/upload/v1786612323/ahg5mlax7diziyjfjbzk.png",
-        "ctaMode": "invitation",
+        "ctaMode": "classic",
         "invitationPdf": "https://res.cloudinary.com/de5u1njxn/image/upload/v1789557373/ed3bwji85npnmneslgoy.pdf"
     },
     "stats": [
@@ -153,8 +153,12 @@
         "warning": "L'abus d'alcool est dangereux pour la santé, à consommer avec modération.",
         "types": [
             {
-                "label": "",
-                "email": ""
+                "label": "Exposants",
+                "email": "corentin.vallet234@gmail.com"
+            },
+            {
+                "label": "Partenaires",
+                "email": "contact@corentinvallet.fr"
             }
         ]
     },
@@ -264,7 +268,7 @@
         "intro": "61 vignerons indépendants et 8 producteurs régionaux, réunis les 27, 28 et 29 mars 2026 à Charmes-sur-Rhône. Filtrez par type, région ou appellation pour préparer votre visite.",
         "list": [
             {
-                "nom": "Herrbasch André",
+                "nom": "Herrbach André",
                 "type": "Vigneron",
                 "region": "Alsace",
                 "appellations": [
@@ -276,8 +280,8 @@
                     "Edelzwicker",
                     "Muscat"
                 ],
-                "desc": "Bla bla\nBla",
-                "nomComplet": "Herrbasch André",
+                "desc": "Références : Guide Hachette 2001\nConcours des féminalises à Beaunes : 1 médaille d'or et 2 médailles d'argent en 2012",
+                "nomComplet": "Herrbach André",
                 "adresse": "3 et 6 rue du Bernstein\n67650 Dambach La Ville",
                 "telephone": "+33 03 88 92 45 56",
                 "email": "herrbach.vin@gmail.com",
@@ -288,9 +292,10 @@
                 "linkedin": "https://ch.linkedin.com/in/marie-herrbach-731b9a200",
                 "photos": [
                     "https://res.cloudinary.com/de5u1njxn/image/upload/v1789557991/qynkpcvrnmbslxezlizp.avif",
-                    "https://res.cloudinary.com/de5u1njxn/image/upload/v1789557991/mgbyz9nnpjq2qzom6tiy.jpg"
+                    "https://res.cloudinary.com/de5u1njxn/image/upload/v1789557991/mgbyz9nnpjq2qzom6tiy.jpg",
+                    "https://res.cloudinary.com/de5u1njxn/image/upload/v1790354132/vccibi5wwmvvzrrzkwz6.png"
                 ],
-                "numeroStand": "12"
+                "numeroStand": "15"
             },
             {
                 "nom": "Domaine de l'Oriel",
@@ -655,6 +660,12 @@
                 "url": "https://www.printicy.com/",
                 "categorie": "Partenaire local"
             }
+        ],
+        "categories": [
+            "Institutionnel",
+            "Partenaire financier",
+            "Partenaire commerçant",
+            "Partenaire local"
         ]
     },
     "faqPage": {
