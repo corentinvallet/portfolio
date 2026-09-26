@@ -193,8 +193,8 @@ $home = false; $active = 'exposants';
       <select class="filter" id="appellationFilter">
         <option value="">Toutes les appellations</option>
       </select>
-      <div class="search-input">🔍 <input id="searchInput" placeholder="Rechercher..."></div>
       <button type="button" class="bio-toggle" id="bioToggle" aria-pressed="false">🌱 Bio</button>
+      <div class="search-input">🔍 <input id="searchInput" placeholder="Rechercher..."></div>
       <a href="#" class="reset-link" id="resetLink">Réinitialiser</a>
     </div>
     <div class="result-count" id="resultCount"></div>
