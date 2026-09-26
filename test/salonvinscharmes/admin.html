@@ -959,6 +959,9 @@ function render(){
     const sp = state.sponsors = state.sponsors || {};
     b.appendChild(textField('Titre de la bande', sp.titre, v=>sp.titre=v,
       {placeholder:'Ils soutiennent le salon'}));
+    b.appendChild(textField('Vitesse de défilement', String(sp.vitesseDefilement ?? 4),
+      v=>{ const n = parseFloat(v.replace(',', '.')); sp.vitesseDefilement = isNaN(n) ? 4 : n; },
+      {hint:'Secondes par logo. Plus le chiffre est grand, plus le défilement est lent (4 = vitesse actuelle).'}));
     sp.categories = (sp.categories && sp.categories.length) ? sp.categories :
       ['Institutionnel','Partenaire financier','Partenaire commerçant','Partenaire local'];
     b.appendChild(tagsField('Catégories de sponsors', sp.categories, v=>{sp.categories=v;},

@@ -269,7 +269,7 @@ $svcRegionCounts = svc_region_counts($c['exposantsPage']['list'] ?? [], $svcSlug
   .sponsors-track{
     display:flex;align-items:center;gap:56px;
     list-style:none;margin:0;padding:0;width:max-content;
-    animation:sponsors-scroll calc(var(--count) * 4s) linear infinite;
+    animation:sponsors-scroll calc(var(--count) * var(--speed, 4) * 1s) linear infinite;
   }
   .sponsors-viewport:hover .sponsors-track{animation-play-state:paused;}
   .sponsors-viewport:has(a:focus-visible) .sponsors-track{animation-play-state:paused;}
@@ -367,6 +367,7 @@ $sponsorItems = array_values(array_filter($sponsors['items'] ?? [], fn($s) => !e
 if ($sponsorItems):
     // On répète la liste pour remplir la piste sans trou visible
     $sponsorRepeat = max(2, (int) ceil(10 / count($sponsorItems)));
+    $sponsorSpeed  = (float) ($sponsors['vitesseDefilement'] ?? 4);
 ?>
 <div class="sponsors">
   <div class="wrap">
@@ -375,7 +376,7 @@ if ($sponsorItems):
       <?= e($sponsors['titre'] ?? 'Ils soutiennent le salon') ?>
     </h2>
     <div class="sponsors-viewport">
-      <ul class="sponsors-track" style="--repeat:<?= $sponsorRepeat ?>;--count:<?= count($sponsorItems) ?>;">
+      <ul class="sponsors-track" style="--repeat:<?= $sponsorRepeat ?>;--count:<?= count($sponsorItems) ?>;--speed:<?= $sponsorSpeed ?>;">
         <?php for ($r = 0; $r < $sponsorRepeat; $r++): ?>
           <?php foreach ($sponsorItems as $sp): ?>
           <li class="sponsors-item"<?= $r > 0 ? ' aria-hidden="true"' : '' ?>>
