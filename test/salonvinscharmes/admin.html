@@ -852,6 +852,10 @@ function render(){
 
     b.appendChild(el('div',{style:'margin-top:26px;font-weight:700;font-family:Fraunces,serif;'},'Badge HVE'));
     b.appendChild(photoField('Icône HVE (affichée sur la fiche des exposants certifiés)', state.hveIcon, v=>state.hveIcon=v));
+
+    b.appendChild(el('div',{style:'margin-top:26px;font-weight:700;font-family:Fraunces,serif;'},'Badges bio'));
+    b.appendChild(photoField('Icône Ecocert', state.ecocertIcon, v=>state.ecocertIcon=v));
+    b.appendChild(photoField('Icône Agriculture Biologique (AB)', state.abIcon, v=>state.abIcon=v));
   }));
 
   /* ── HERO (accueil) ── */
@@ -1161,8 +1165,8 @@ function render(){
           textField('Nom', x.nom, v=>x.nom=v),
           selectField('Type', x.type, [['Vigneron','Vigneron'],['Producteur','Producteur']], v=>x.type=v)),
         el('div',{class:'grid2'},
-          selectField('Agriculture biologique', x.bio ? 'oui' : 'non',
-            [['non','Non'],['oui','Oui']], v=>x.bio = (v==='oui')),
+          selectField('Certification bio', x.bio || 'non',
+            [['non','Non'],['ecocert','Ecocert'],['ab','Agriculture Biologique']], v=>x.bio = v),
           selectField('Certifié HVE', x.hve ? 'oui' : 'non',
             [['non','Non'],['oui','Oui']], v=>x.hve = (v==='oui'))),
         textField('Numéro de stand', x.numeroStand, v=>x.numeroStand=v,
@@ -1188,7 +1192,7 @@ function render(){
       },
       ()=>({nom:'',type:'Vigneron',numeroStand:'',region:'',appellations:[],desc:'',
             nomComplet:'',adresse:'',telephone:'',email:'',siteWeb:'',
-            facebook:'',instagram:'',linkedin:'',photos:[],bio:false,hve:false}),
+            facebook:'',instagram:'',linkedin:'',photos:[],bio:'non',hve:false}),
       {collapsible:true, titleFn:x=>x.nom});
     b.appendChild(wrap);
   }));
