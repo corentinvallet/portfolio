@@ -22,10 +22,8 @@ $home = false; $active = 'exposants';
 
   /* filter bar */
   .filterbar{
-    position:sticky;top:78px;z-index:40;background:var(--paper);
+    background:var(--paper);
     border-bottom:1px solid var(--line);padding:16px 0;margin-bottom:34px;
-    overflow:hidden;
-    transition:height .25s ease, padding .25s ease, border-color .25s ease;
   }
   .filter-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
   .search-input{
@@ -409,64 +407,6 @@ $home = false; $active = 'exposants';
   });
   render();
 
-  /* filtre : masquage au scroll (mobile uniquement) */
-  const filterbar = document.querySelector('.filterbar');
-  let lastScrollY = window.scrollY;
-  const mobileQuery = window.matchMedia('(max-width:640px)');
-  let filterbarHeight = 0;
-
-  function setupFilterbarMode(){
-    if (mobileQuery.matches) {
-      filterbar.style.height = 'auto';
-      filterbarHeight = filterbar.scrollHeight;
-      filterbar.style.height = filterbarHeight + 'px';
-    } else {
-      filterbar.style.height = '';
-    }
-  }
-  setupFilterbarMode();
-  window.addEventListener('resize', setupFilterbarMode);
-  window.addEventListener('load', setupFilterbarMode);
-
-  function openFilterbar(){
-    filterbar.style.height = filterbarHeight + 'px';
-    filterbar.style.paddingTop = '';
-    filterbar.style.paddingBottom = '';
-    filterbar.style.borderColor = '';
-  }
-  function closeFilterbar(){
-    filterbar.style.height = '0px';
-    filterbar.style.paddingTop = '0px';
-    filterbar.style.paddingBottom = '0px';
-    filterbar.style.borderColor = 'transparent';
-  }
-
-  let filterbarOpen = true;
-  const SCROLL_THRESHOLD = 10; // ignore les micro-mouvements < 10px
-
-  window.addEventListener('scroll', () => {
-    if (!mobileQuery.matches) {
-      lastScrollY = window.scrollY;
-      return;
-    }
-    const currentScrollY = window.scrollY;
-    const delta = currentScrollY - lastScrollY;
-
-    if (currentScrollY < 80) {
-      if (!filterbarOpen) { openFilterbar(); filterbarOpen = true; }
-      lastScrollY = currentScrollY;
-      return;
-    }
-
-    if (Math.abs(delta) < SCROLL_THRESHOLD) return; // trop petit : on ignore, on ne touche pas lastScrollY
-
-    if (delta > 0 && filterbarOpen) {
-      closeFilterbar(); filterbarOpen = false;
-    } else if (delta < 0 && !filterbarOpen) {
-      openFilterbar(); filterbarOpen = true;
-    }
-    lastScrollY = currentScrollY;
-  }, { passive: true });
 </script>
 <?php include __DIR__ . '/inc/mobile-menu.php'; ?>
 </body>
