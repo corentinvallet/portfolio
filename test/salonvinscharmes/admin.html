@@ -852,6 +852,9 @@ function render(){
 
     b.appendChild(el('div',{style:'margin-top:26px;font-weight:700;font-family:Fraunces,serif;'},'Badge HVE'));
     b.appendChild(photoField('Icône HVE (affichée sur la fiche des exposants certifiés)', state.hveIcon, v=>state.hveIcon=v));
+
+    b.appendChild(el('div',{style:'margin-top:26px;font-weight:700;font-family:Fraunces,serif;'},'Badge Bio'));
+    b.appendChild(photoField('Icône Bio (affichée sur la fiche des exposants certifiés)', state.bioIcon, v=>state.bioIcon=v));
   }));
 
   /* ── HERO (accueil) ── */

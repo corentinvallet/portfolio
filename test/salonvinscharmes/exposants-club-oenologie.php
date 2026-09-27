@@ -96,7 +96,7 @@ $home = false; $active = 'exposants';
     width:22px;height:22px;object-fit:contain;vertical-align:middle;margin-left:8px;
   }
   .bio-badge{
-    font-size:1rem;vertical-align:middle;margin-left:8px;
+    width:22px;height:22px;object-fit:contain;vertical-align:middle;margin-left:8px;
   }
   .exp-card:hover{transform:translateY(-5px);box-shadow:0 24px 40px -26px rgba(27,20,64,0.3);}
   .badge{display:inline-block;padding:4px 11px;border-radius:100px;font-size:0.72rem;font-weight:700;letter-spacing:0.02em;margin-bottom:14px;}
@@ -142,7 +142,7 @@ $home = false; $active = 'exposants';
   .modal-hve{display:flex;align-items:center;gap:8px;margin:6px 0 10px;font-size:0.84rem;font-weight:600;color:#8a5a1e;}
   .modal-hve img{width:28px;height:28px;object-fit:contain;}
   .modal-bio{display:flex;align-items:center;gap:8px;margin:6px 0 10px;font-size:0.84rem;font-weight:600;color:#4a6b2a;}
-  .modal-bio span{font-size:1.2rem;}
+  .modal-bio img{width:28px;height:28px;object-fit:contain;}
   .modal-box .stand-num{font-size:0.82rem;color:var(--ink-soft);font-weight:600;margin-bottom:4px;}
   .modal-box .region{font-size:0.9rem;color:var(--bordeaux);font-weight:600;margin-bottom:4px;}
   .modal-box .appellations{font-size:0.84rem;color:var(--ink-soft);margin-bottom:14px;}
@@ -227,6 +227,7 @@ $home = false; $active = 'exposants';
 <script>
   const exposants = <?= json_encode($list, JSON_UNESCAPED_UNICODE) ?>;
   const hveIcon = <?= json_encode($c['hveIcon'] ?? '', JSON_UNESCAPED_UNICODE) ?>;
+  const bioIcon = <?= json_encode($c['bioIcon'] ?? '', JSON_UNESCAPED_UNICODE) ?>;
 
   const params = new URLSearchParams(location.search);
   let state = { type: params.get('type') || "", region:"", appellation:"", q:"", bio:false };
@@ -292,7 +293,7 @@ $home = false; $active = 'exposants';
         ${thumb ? `<img class="photo-thumb" src="${thumb}" alt="">` : ''}
         <span class="badge ${e.type==='Vigneron'?'vign':'prod'}">${e.type === 'Vigneron' ? 'Vigneron' : 'Producteur régional'}</span>
         ${e.numeroStand ? `<span class="badge stand">Stand ${e.numeroStand}</span>` : ''}
-        <h3>${e.nom}${e.bio ? ` <span class="bio-badge" title="Agriculture biologique">🌱</span>` : ''}${(e.hve && hveIcon) ? ` <img class="hve-badge" src="${hveIcon}" alt="Certifié HVE" title="Certifié Haute Valeur Environnementale">` : ''}</h3>
+        <h3>${e.nom}${(e.bio && bioIcon) ? ` <img class="bio-badge" src="${bioIcon}" alt="Agriculture biologique" title="Agriculture biologique">` : ''}${(e.hve && hveIcon) ? ` <img class="hve-badge" src="${hveIcon}" alt="Certifié HVE" title="Certifié Haute Valeur Environnementale">` : ''}</h3>
         ${e.region ? `<div class="region">${e.region}</div>` : ''}
         ${(e.appellations && e.appellations.length) ? `<div class="appellations">${e.appellations.join(', ')}</div>` : ''}
         <p>${e.desc}</p>
@@ -348,7 +349,7 @@ $home = false; $active = 'exposants';
     }
     html += `<h2>${e.nomComplet || e.nom}</h2>`;
     if(e.hve && hveIcon) html += `<div class="modal-hve"><img src="${hveIcon}" alt="Certifié HVE">Certifié Haute Valeur Environnementale</div>`;
-    if(e.bio) html += `<div class="modal-bio"><span>🌱</span>Agriculture biologique</div>`;
+    if(e.bio && bioIcon) html += `<div class="modal-bio"><img src="${bioIcon}" alt="Agriculture biologique">Agriculture biologique</div>`;
     if(e.numeroStand) html += `<div class="stand-num">Stand n° ${e.numeroStand}</div>`;
     if(e.region) html += `<div class="region">${e.region}</div>`;
     if(e.appellations && e.appellations.length) html += `<div class="appellations">${e.appellations.join(', ')}</div>`;
