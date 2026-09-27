@@ -441,20 +441,29 @@ $home = false; $active = 'exposants';
     filterbar.style.borderColor = 'transparent';
   }
 
+  let filterbarOpen = true;
+  const SCROLL_THRESHOLD = 10; // ignore les micro-mouvements < 10px
+
   window.addEventListener('scroll', () => {
     if (!mobileQuery.matches) {
       lastScrollY = window.scrollY;
       return;
     }
     const currentScrollY = window.scrollY;
-    const scrollingDown = currentScrollY > lastScrollY;
+    const delta = currentScrollY - lastScrollY;
 
     if (currentScrollY < 80) {
-      openFilterbar();
-    } else if (scrollingDown) {
-      closeFilterbar();
-    } else {
-      openFilterbar();
+      if (!filterbarOpen) { openFilterbar(); filterbarOpen = true; }
+      lastScrollY = currentScrollY;
+      return;
+    }
+
+    if (Math.abs(delta) < SCROLL_THRESHOLD) return; // trop petit : on ignore, on ne touche pas lastScrollY
+
+    if (delta > 0 && filterbarOpen) {
+      closeFilterbar(); filterbarOpen = false;
+    } else if (delta < 0 && !filterbarOpen) {
+      openFilterbar(); filterbarOpen = true;
     }
     lastScrollY = currentScrollY;
   }, { passive: true });
