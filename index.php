@@ -1358,7 +1358,7 @@
       </div>
       <div class="portfolio-card fade-up">
         <a href="realisation-betaconstruction.php" class="portfolio-preview" aria-label="Voir la réalisation pour B&A Construction">
-          <img src="Photos/Realisations/libellules.png" alt="Site de l'Abri des Libellules, éco gîte" class="portfolio-preview-img">
+          <img src="Photos/Realisations/ba-identite.png" alt="Site de B&A Construction, maçonnerie générale" class="portfolio-preview-img">
           <div class="preview-overlay">
             <span class="preview-btn">
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="14" height="14" rx="1"/><path d="M5 8h6M8 5l3 3-3 3"/></svg>

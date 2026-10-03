@@ -283,7 +283,7 @@
   <h1 class="hero-title">B&A Construction<br>de la maçonnerie <em>qualitative</em></h1>
   <p class="hero-desc">Bruno Salgado et Alex Freitas sont maçons à Beaumont-Les-Valence dans la Drôme. Le site devait leur servir à mettre en avant leurs prestations haut de gamme qui font leur singularité (béton imprimé, escaliers béton, caves à vin), sans pour autant oublier les standards du métier.</p>
   <div class="hero-ctas">
-    <a href="https://www.francisferret.fr" target="_blank" rel="noopener" class="btn btn-primary">
+    <a href="https://www.beta-construction.fr" target="_blank" rel="noopener" class="btn btn-primary">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="14" height="14" rx="1"/><path d="M5 8h6M8 5l3 3-3 3"/></svg>
       Voir le site en ligne
     </a>
@@ -300,59 +300,59 @@
     <div class="feature-grid">
       
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/francisferret-identite.jpg" alt="Identité visuelle"></span>
+        <span class="feature-icon"><img src="Photos/Realisations/ba-identite.png" alt="Identité visuelle"></span>
         <div class="feature-body">
           <div class="feature-name">Identité visuelle</div>
           <p class="feature-desc">Bruno et Alex disposent déjà d'un logo réussi, le site en respecte la charte graphique. Le visuel de la bannière d'accueil doit tout de suite donner une impression de qualité. Le sur titre présente la fonction traditionnelle du métier de maçon, le sous-titre étend tout de suite aux prestations spécifiques.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/francisferret-galerie.jpg" alt="Galerie d'œuvres avec lightbox"></span>
+        <span class="feature-icon"><img src="Photos/Realisations/ba-galerie.png" alt="Galerie d'ouvrages avec lightbox"></span>
         <div class="feature-body">
           <div class="feature-name">Galerie de chantiers</div>
           <p class="feature-desc">Un vrai point de passage du site. Sur Facebook, les photos étaient noyées dans l'historique. Avec une galerie filtrable, les utilisateurs peuvent facilement voir les réalisations, qui parlent d'elles-mêmes.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/francisferret-portrait.jpg" alt="Portrait de Francis Ferret"></span>
+        <span class="feature-icon"><img src="Photos/Realisations/ba-savoirfaire.png" alt="Savoir-faire de B&A Construction"></span>
         <div class="feature-body">
           <div class="feature-name">Savoir-faire</div>
           <p class="feature-desc">Le site met très tôt en avant les différentes prestations qui font la singularité et la valeur ajoutée de B&A Construction.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/francisferret-evenements.jpg" alt="Agenda des événements"></span>
+        <span class="feature-icon"><img src="Photos/Realisations/ba-ouvrages.jpg" alt="Ouvrages spécifiques, caves à vin, escaliers béton, béton imprimé"></span>
         <div class="feature-body">
           <div class="feature-name">Ouvrages d'exception</div>
           <p class="feature-desc">Un espace qui appuie sur les grandes spécialités de B&A Construction. Chaque image renvoie à une page spécifique décrivant l'activité en question.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/francisferret-parcours.jpg" alt="Parcours et formation"></span>
+        <span class="feature-icon"><img src="Photos/Realisations/ba-pagespe.jpg" alt="Page spécifique par type d'ouvrage"></span>
+        <div class="feature-body">
+          <div class="feature-name">Pages spécifique</div>
+          <p class="feature-desc">Pour chaque prestation particulière, ces pages détaillent la proposition, et font un lien direct vers la galerie, préfiltrée avec les bonne valeurs.</p>
+        </div>
+      </div>
+      <div class="feature-card fade-up">
+        <span class="feature-icon"><img src="Photos/Realisations/ba-accompagnement.jpg" alt="Méthodes d'accompagnement"></span>
         <div class="feature-body">
           <div class="feature-name">Accompagnement</div>
           <p class="feature-desc">Un visiteur qui a pris la peine d'atteindre cette section du site veut en savoir plus. Les différentes étapes d'accompagnement sont précisées, simplement, clairement.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/francisferret-contact.jpg" alt="Formulaire de contact"></span>
+        <span class="feature-icon"><img src="Photos/Realisations/ba-philosophie.jpg" alt="Présentation de la philosophie de travail"></span>
         <div class="feature-body">
           <div class="feature-name">Philosophie de travail</div>
           <p class="feature-desc">Bruno, Alex et leur équipe prêtent une attention particulière à leur prestations. Ils aiment travailler pour leurs clients comme si c'était pour leur maison. Cette section vient étayer cette idée.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/francisferret-parcours.jpg" alt="Parcours et formation"></span>
+        <span class="feature-icon"><img src="Photos/Realisations/ba-contact.jpg" alt="Formulaire de contact"></span>
         <div class="feature-body">
           <div class="feature-name">Contact</div>
           <p class="feature-desc">Un formulaire de contact permet d'adresser simplement un message pour demander un devis ou des informations.</p>
-        </div>
-      </div>
-      <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Realisations/francisferret-contact.jpg" alt="Formulaire de contact"></span>
-        <div class="feature-body">
-          <div class="feature-name">Pages spécifique</div>
-          <p class="feature-desc">Pour chaque prestation particulière, ces pages détaillent la proposition, et font un lien direct vers la galerie, préfiltrée avec les bonne valeurs.</p>
         </div>
       </div>
     </div>

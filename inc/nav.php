@@ -17,6 +17,7 @@ $prefix = $home ? '' : 'index.php';
       <ul class="nav-dropdown-menu">
         <li><a href="realisation-francisferret.php">Artiste</a></li>
         <li><a href="realisation-libellules.php">Gîte</a></li>
+        <li><a href="realisation-betaconstruction.php">Artisan</a></li>
       </ul>
     </li>
     <li class="nav-dropdown">
