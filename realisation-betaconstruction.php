@@ -280,7 +280,7 @@
 <!-- HERO -->
 <div class="hero">
   <p class="hero-eyebrow">✦ Réalisation client · Artisan ✦</p>
-  <h1 class="hero-title">B&A Construction<br>de la maçonnerie <em>qualitative</em></h1>
+  <h1 class="hero-title">B&A Construction<br>La maçonnerie <em>qualitative</em></h1>
   <p class="hero-desc">Bruno Salgado et Alex Freitas sont maçons à Beaumont-Les-Valence dans la Drôme. Le site devait leur servir à mettre en avant leurs prestations haut de gamme qui font leur singularité (béton imprimé, escaliers béton, caves à vin), sans pour autant oublier les standards du métier.</p>
   <div class="hero-ctas">
     <a href="https://www.beta-construction.fr" target="_blank" rel="noopener" class="btn btn-primary">
