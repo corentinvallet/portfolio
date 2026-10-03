@@ -313,13 +313,19 @@ $home = false; $active = 'exposants';
     document.body.style.top = `-${savedScrollY}px`;
     document.body.style.left = '0';
     document.body.style.right = '0';
+    document.body.style.width = '100%';
   }
   function unlockBodyScroll(){
+    const html = document.documentElement;
+    const prevBehavior = html.style.scrollBehavior;
+    html.style.scrollBehavior = 'auto';
     document.body.style.position = '';
     document.body.style.top = '';
     document.body.style.left = '';
     document.body.style.right = '';
+    document.body.style.width = '';
     window.scrollTo(0, savedScrollY);
+    html.style.scrollBehavior = prevBehavior;
   }
 
   const RESEAUX = [

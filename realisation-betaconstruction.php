@@ -294,8 +294,8 @@
 <section class="cote-client">
   <div class="section-inner">
     <div class="section-label fade-up">Ce que j'ai conçu</div>
-    <h2 class="section-title fade-up">Un site pensé pour <em>mettre en avant</em><br>des prestations de <em>de qualité</em></h2>
-    <p class="section-intro fade-up">Le site est conçu pour afficher clairement les prestations de B&A construction y compris celles qui sort de l'ordinaire. Une galerie met en avant les photos et chantiers, la méthode et la philosophie sont présentées, et un formulaire de contact facilite la demande de devis.</p>
+    <h2 class="section-title fade-up">Un site pensé pour <em>mettre en avant</em><br>des prestations de <em>qualité</em></h2>
+    <p class="section-intro fade-up">Le site est conçu pour afficher clairement les prestations de B&A construction, y compris celles qui sortent de l'ordinaire. Une galerie met en avant les photos et chantiers, la méthode et la philosophie sont présentées, et un formulaire de contact facilite la demande de devis.</p>
 
     <div class="feature-grid">
       
