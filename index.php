@@ -1333,7 +1333,7 @@
             </span>
           </div>
         </a>
-                <div class="portfolio-body">
+        <div class="portfolio-body">
           <div class="portfolio-type">Artisan d'art · Sculpteur sur bois</div>
           <div class="portfolio-name">Francis Ferret</div>
           <p class="portfolio-desc">Site vitrine pour un sculpteur sur bois formé à Moirans-en-Montagne : portrait, savoir-faire, galerie d'œuvres, agenda d'événements et prise de contact — pensé pour mettre en valeur un travail d'artisanat d'art.</p>
@@ -1354,6 +1354,22 @@
           <div class="portfolio-type">Éco gîte · Ardèche</div>
           <div class="portfolio-name">L'abri des Libellules</div>
           <p class="portfolio-desc">Un site pour mettre en évidence l'intégration du gîte dans son environnement. Galerie, infos pratiques, règlement intérieur.</p>
+        </div>
+      </div>
+      <div class="portfolio-card fade-up">
+        <a href="realisation-betaconstruction.php" class="portfolio-preview" aria-label="Voir la réalisation pour B&A Construction">
+          <img src="Photos/Realisations/libellules.png" alt="Site de l'Abri des Libellules, éco gîte" class="portfolio-preview-img">
+          <div class="preview-overlay">
+            <span class="preview-btn">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="14" height="14" rx="1"/><path d="M5 8h6M8 5l3 3-3 3"/></svg>
+              Voir la réalisation
+            </span>
+          </div>
+        </a>
+        <div class="portfolio-body">
+          <div class="portfolio-type">Maçon · Drôme</div>
+          <div class="portfolio-name">B&A Construction</div>
+          <p class="portfolio-desc">Un site pour mettre en avant les prestations de qualité d'un maçon, sans pour autant oublier les ouvrages traditionnels.</p>
         </div>
       </div>
     </div>
