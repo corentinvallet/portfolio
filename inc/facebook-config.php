@@ -1,7 +1,7 @@
 <?php
 /* Configuration Facebook — ne jamais publier ce fichier ailleurs que sur le serveur */
 return [
-    'dry_run'       => true,   // true = simulation : rien n'est envoyé à Facebook
+    'dry_run'       => false,   // true = simulation : rien n'est envoyé à Facebook
     'unpublished'   => true,  // true = publication invisible du public (visible des admins de la Page)
     'graph_version' => 'v26.0',
     'page_id'       => '123448216422915',
