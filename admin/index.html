@@ -1215,7 +1215,7 @@ a { color: inherit; text-decoration: none; }
               <input type="checkbox" id="blog-f-published" style="width:auto;"/>
               <label style="margin:0;">Publié (visible sur le site)</label>
             </div>
-            <div class="field" style="display:none;flex-direction:row;align-items:center;gap:8px;">
+            <div class="field" style="flex-direction:row;align-items:center;gap:8px;">
               <input type="checkbox" id="blog-f-fb" style="width:auto;"/>
               <label style="margin:0;">Publier aussi sur Facebook</label>
             </div>
@@ -1556,20 +1556,42 @@ window.saveSection = async function(btn) {
   setTimeout(() => { btn.classList.remove('saved'); btn.innerHTML = orig; }, 2500);
 };
 
-function showToast() {
+let _toastTimer = null;
+function toastMsg(text, isError, ms) {
   const t = document.getElementById('toast');
-  t.textContent = '✓ Publié en ligne (content.json)';
-  t.style.background = '';
+  t.textContent = text;
+  t.style.background = isError ? 'var(--red)' : '';
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => { t.classList.remove('show'); t.style.background = ''; }, ms || 2500);
 }
+function showToast()      { toastMsg('✓ Publié en ligne (content.json)', false, 2500); }
+function showToastError() { toastMsg('✗ Erreur de sauvegarde', true, 3000); }
 
-function showToastError() {
-  const t = document.getElementById('toast');
-  t.textContent = '✗ Erreur de sauvegarde';
-  t.style.background = 'var(--red)';
-  t.classList.add('show');
-  setTimeout(() => { t.classList.remove('show'); t.style.background = ''; }, 3000);
+async function publishToFacebook(payload, force) {
+  toastMsg('Publication sur Facebook…', false, 15000);
+  try {
+    const res = await fetch(FB_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-admin-token': SAVE_TOKEN },
+      body: JSON.stringify(force ? Object.assign({}, payload, { force: true }) : payload)
+    });
+    const out = await res.json().catch(() => ({}));
+    if (res.ok && out.ok) {
+      toastMsg(out.dry_run ? '✓ Facebook : simulation, rien publié' : '✓ Publié sur Facebook', false, 4000);
+      return;
+    }
+    if (out.code === 'already_posted') {
+      if (confirm('Cet article a déjà été publié sur Facebook. Le publier à nouveau ?')) {
+        return publishToFacebook(payload, true);
+      }
+      toastMsg('Facebook : publication annulée', false, 3000);
+      return;
+    }
+    toastMsg('✗ Facebook : ' + (out.error || 'erreur inconnue'), true, 7000);
+  } catch (e) {
+    toastMsg('✗ Facebook : ' + e.message, true, 7000);
+  }
 }
 
 /* ══ PHOTOS ══ */
@@ -1868,22 +1890,10 @@ window.saveBlogPost = async function() {
     document.getElementById('blog-form-card').style.display = 'none';
 
     if (postToFb && published) {
-      const status = document.getElementById('blog-fb-status');
-      status.textContent = 'Publication sur Facebook…';
-      try {
-        const fbRes = await fetch(FB_ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'x-admin-token': SAVE_TOKEN },
-          body: JSON.stringify({
-            message: title + (excerpt ? '\n\n' + excerpt : ''),
-            link: SITE_URL + '/blog-post.php?slug=' + encodeURIComponent(slug)
-          })
-        });
-        const fbOut = await fbRes.json().catch(() => ({}));
-        status.textContent = (fbRes.ok && fbOut.ok) ? '✓ Publié sur Facebook' : ('✗ Facebook : ' + (fbOut.error || 'erreur inconnue'));
-      } catch (e) {
-        status.textContent = '✗ Facebook : ' + e.message;
-      }
+      await publishToFacebook({
+        message: title + (excerpt ? '\n\n' + excerpt : ''),
+        link: SITE_URL + '/blog-post.php?slug=' + encodeURIComponent(slug)
+      });
     }
   } catch (e) {
     console.error(e);

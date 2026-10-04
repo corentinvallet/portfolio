@@ -12,7 +12,9 @@ if ($post) {
     ? $post['excerpt']
     : mb_substr(trim(preg_replace('/\s+/', ' ', strip_tags($post['content']))), 0, 155);
   $pageUrl   = $base . '/blog-post.php?slug=' . rawurlencode($post['slug']);
-  $ogImage   = (strpos($post['image'], 'http') === 0) ? $post['image'] : $base . '/Photos/og-image.png';
+  if ($post['image'] === '')                    $ogImage = $base . '/Photos/og-image.png';
+  elseif (strpos($post['image'], 'http') === 0) $ogImage = $post['image'];
+  else                                          $ogImage = $base . '/' . ltrim($post['image'], '/');
 } else {
   $pageTitle = 'Article introuvable | Corentin Vallet';
   $pageDesc  = '';

@@ -1,91 +1,75 @@
 <?php
-/* =====================================================================
-   post-facebook.php — Publie un article de blog sur la Page Facebook
-   --------------------------------------------------------------------
-   Appelé par l'admin (uniquement) quand la case "Publier aussi sur
-   Facebook" est cochée en enregistrant un article.
-
-   INSTALLATION
-   1. Déposez ce fichier à la racine du site, à côté de save-blog.php.
-   2. Remplissez FB_PAGE_ID et FB_PAGE_TOKEN ci-dessous (voir le guide
-      pour les obtenir : developers.facebook.com > votre app > Graph API
-      Explorer > générer un token de Page longue durée).
-   3. Le token admin ci-dessous doit être identique à SAVE_TOKEN dans
-      /admin/index.html.
-
-   Ce fichier ne fait rien tant que FB_PAGE_ID / FB_PAGE_TOKEN ne sont
-   pas renseignés — il renvoie juste une erreur explicite.
-   ===================================================================== */
-
+/* post-facebook.php — publie un lien d'article sur la Page Facebook (appelé par l'admin) */
 header('Content-Type: application/json; charset=utf-8');
 
-// >>> À PERSONNALISER <<< (même valeur que SAVE_TOKEN dans /admin/index.html)
+// >>> Même valeur que SAVE_TOKEN dans admin/index.html <<<
 $ADMIN_TOKEN = 'pigzefi86123!:;AZE';
 
-// >>> À PERSONNALISER <<< (voir instructions ci-dessus)
-$FB_PAGE_ID    = '';   // ex: '123456789012345'
-$FB_PAGE_TOKEN = '';   // le Page Access Token longue durée
-
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['error' => 'Méthode non autorisée']);
+function out($code, $arr) {
+    http_response_code($code);
+    echo json_encode($arr, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit;
 }
 
-$tok = isset($_SERVER['HTTP_X_ADMIN_TOKEN']) ? $_SERVER['HTTP_X_ADMIN_TOKEN'] : '';
-if (!hash_equals($ADMIN_TOKEN, $tok)) {
-    http_response_code(401);
-    echo json_encode(['error' => 'Non autorisé']);
-    exit;
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') out(405, ['error' => 'Méthode non autorisée']);
+if ($ADMIN_TOKEN === '') out(500, ['error' => 'Token non configuré dans post-facebook.php']);
+if (!hash_equals($ADMIN_TOKEN, $_SERVER['HTTP_X_ADMIN_TOKEN'] ?? '')) out(401, ['error' => 'Non autorisé']);
+
+$cfgFile = __DIR__ . '/inc/facebook-config.php';
+if (!is_file($cfgFile)) out(500, ['error' => 'inc/facebook-config.php manquant']);
+$cfg = require $cfgFile;
+
+$data    = json_decode(file_get_contents('php://input'), true);
+$message = trim((string)($data['message'] ?? ''));
+$link    = trim((string)($data['link'] ?? ''));
+$force   = !empty($data['force']);
+
+// On n'accepte que des liens vers les articles du blog
+if ($message === '' || mb_strlen($message) > 2000) out(400, ['error' => 'Message vide ou trop long']);
+if (!preg_match('#^https://corentinvallet\.fr/blog-post\.php\?slug=[a-z0-9-]+$#', $link)) {
+    out(400, ['error' => 'Lien invalide']);
 }
 
-if ($FB_PAGE_ID === '' || $FB_PAGE_TOKEN === '') {
-    http_response_code(400);
-    echo json_encode(['error' => "Publication Facebook non configurée — renseignez FB_PAGE_ID et FB_PAGE_TOKEN dans post-facebook.php."]);
-    exit;
+// Simulation
+if (!empty($cfg['dry_run'])) {
+    out(200, ['ok' => true, 'dry_run' => true, 'would_post' => ['message' => $message, 'link' => $link]]);
 }
 
-$raw  = file_get_contents('php://input');
-$data = json_decode($raw, true);
-
-$message = isset($data['message']) ? trim($data['message']) : '';
-$link    = isset($data['link'])    ? trim($data['link'])    : '';
-
-if ($message === '' || $link === '') {
-    http_response_code(400);
-    echo json_encode(['error' => 'message et link sont requis']);
-    exit;
+if (empty($cfg['page_id']) || empty($cfg['page_token'])) {
+    out(500, ['error' => 'page_id ou page_token manquant dans inc/facebook-config.php']);
 }
 
-$endpoint = "https://graph.facebook.com/v21.0/{$FB_PAGE_ID}/feed";
+// Anti-doublon : un même article n'est republié que sur demande explicite
+$logFile = __DIR__ . '/facebook-posted.json';
+$log = is_file($logFile) ? (json_decode((string)file_get_contents($logFile), true) ?: []) : [];
+if (isset($log[$link]) && !$force) {
+    out(409, ['error' => 'Déjà publié sur Facebook', 'code' => 'already_posted']);
+}
 
-$ch = curl_init($endpoint);
+$fields = ['message' => $message, 'link' => $link, 'access_token' => $cfg['page_token']];
+if (!empty($cfg['unpublished'])) $fields['published'] = 'false';
+
+$ch = curl_init('https://graph.facebook.com/' . $cfg['graph_version'] . '/' . $cfg['page_id'] . '/feed');
 curl_setopt_array($ch, [
     CURLOPT_POST           => true,
+    CURLOPT_POSTFIELDS     => http_build_query($fields),
     CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_POSTFIELDS     => http_build_query([
-        'message'      => $message,
-        'link'         => $link,
-        'access_token' => $FB_PAGE_TOKEN,
-    ]),
+    CURLOPT_TIMEOUT        => 20,
 ]);
-$response = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-$curlErr  = curl_error($ch);
+$res  = curl_exec($ch);
+$http = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$cerr = curl_error($ch);
 curl_close($ch);
 
-if ($curlErr) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Erreur cURL : ' . $curlErr]);
-    exit;
+if ($res === false) out(502, ['error' => 'Connexion à Facebook impossible : ' . $cerr]);
+
+$json = json_decode($res, true);
+if ($http >= 400 || !is_array($json) || empty($json['id'])) {
+    $msg = is_array($json) && isset($json['error']['message']) ? $json['error']['message'] : ('HTTP ' . $http);
+    out(502, ['error' => $msg]);
 }
 
-$result = json_decode($response, true);
+$log[$link] = ['id' => $json['id'], 'date' => date('c')];
+@file_put_contents($logFile, json_encode($log, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES), LOCK_EX);
 
-if ($httpCode >= 200 && $httpCode < 300 && isset($result['id'])) {
-    echo json_encode(['ok' => true, 'fb_post_id' => $result['id']]);
-} else {
-    http_response_code(502);
-    $fbError = isset($result['error']['message']) ? $result['error']['message'] : 'Réponse Facebook inattendue';
-    echo json_encode(['error' => $fbError, 'raw' => $result]);
-}
+out(200, ['ok' => true, 'id' => $json['id']]);
