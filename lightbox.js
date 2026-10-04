@@ -5,7 +5,7 @@
 
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxCaption = document.getElementById('lightboxCaption');
-  const galleryImgs = Array.from(document.querySelectorAll('.feature-icon img'));
+  const galleryImgs = Array.from(document.querySelectorAll('.feature-icon img, .post-gallery img'));
   let currentIndex = 0;
 
   /* ── ZOOM / PAN TACTILE (pincement à 2 doigts, glisser à 1 doigt une fois zoomé) ── */

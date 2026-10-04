@@ -1203,11 +1203,10 @@ a { color: inherit; text-decoration: none; }
           </div>
           <div class="field"><label>Date</label><input type="date" id="blog-f-date"/></div>
           <div class="field">
-            <label>Image de couverture</label>
-            <div style="display:flex;align-items:center;gap:12px;">
-              <img id="blog-f-image-preview" src="" alt="" style="display:none;width:80px;height:60px;object-fit:cover;border-radius:6px;border:1px solid var(--border);"/>
-              <input type="file" id="blog-f-image-input" accept="image/*" onchange="handleBlogImage(event)"/>
-            </div>
+            <label>Photos (la première sert de couverture)</label>
+            <input type="file" id="blog-f-images-input" accept="image/*" multiple onchange="handleBlogImages(event)"/>
+            <div id="blog-f-images" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;"></div>
+            <span class="field-hint">12 photos maximum. ★ = choisir la couverture, ‹ › = réordonner, ✕ = retirer.</span>
           </div>
           <div class="field"><label>Extrait (résumé affiché dans la liste)</label><textarea id="blog-f-excerpt" placeholder="Un ou deux phrases qui donnent envie de lire la suite…"></textarea></div>
           <div class="field"><label>Contenu de l'article (HTML simple accepté : &lt;p&gt;, &lt;h2&gt;, &lt;strong&gt;, &lt;a&gt;…)</label><textarea id="blog-f-content" rows="10" style="min-height:220px;"></textarea></div>
@@ -1653,6 +1652,7 @@ async function persistBlogPosts() {
   });
   const out = await res.json().catch(() => ({}));
   if (!res.ok || !out.ok) throw new Error(out.error || ('HTTP ' + res.status));
+  await loadBlogPosts();   // récupère les chemins d'images définitifs
 }
 
 function renderBlogList() {
@@ -1715,8 +1715,8 @@ window.newBlogPost = function() {
   document.getElementById('blog-f-content').value = '';
   document.getElementById('blog-f-published').checked = false;
   document.getElementById('blog-f-fb').checked = false;
-  document.getElementById('blog-f-image-preview').style.display = 'none';
-  document.getElementById('blog-f-image-preview').dataset.src = '';
+  blogImages = [];
+  renderBlogImages();
   document.getElementById('blog-fb-status').textContent = '';
   document.getElementById('blog-form-card').style.display = 'block';
   document.getElementById('blog-form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1735,9 +1735,8 @@ window.editBlogPost = function(id) {
   document.getElementById('blog-f-content').value = p.content || '';
   document.getElementById('blog-f-published').checked = !!p.published;
   document.getElementById('blog-f-fb').checked = false;
-  const preview = document.getElementById('blog-f-image-preview');
-  if (p.image) { preview.src = p.image; preview.style.display = 'block'; preview.dataset.src = p.image; }
-  else { preview.style.display = 'none'; preview.dataset.src = ''; }
+  blogImages = (Array.isArray(p.images) && p.images.length) ? [...p.images] : (p.image ? [p.image] : []);
+  renderBlogImages();
   document.getElementById('blog-fb-status').textContent = '';
   document.getElementById('blog-form-card').style.display = 'block';
   document.getElementById('blog-form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1747,28 +1746,83 @@ window.cancelBlogEdit = function() {
   document.getElementById('blog-form-card').style.display = 'none';
 };
 
-window.handleBlogImage = function(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    const img = new Image();
-    img.onload = () => {
-      const MAX = 1200;
-      const ratio = Math.min(1, MAX / img.width);
-      const canvas = document.createElement('canvas');
-      canvas.width  = Math.round(img.width * ratio);
-      canvas.height = Math.round(img.height * ratio);
-      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
-      const preview = document.getElementById('blog-f-image-preview');
-      preview.src = dataUrl;
-      preview.style.display = 'block';
-      preview.dataset.src = dataUrl;
+let blogImages = [];   // chemins ou data:URL ; la première = couverture
+
+function blogImgSrc(s) {
+  return /^(data:|https?:|\/)/.test(s) ? s : '../' + s;
+}
+
+function resizeImageFile(file, maxSide, quality) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error('Lecture impossible : ' + file.name));
+    reader.onload = ev => {
+      const img = new Image();
+      img.onerror = () => reject(new Error('Image illisible : ' + file.name));
+      img.onload = () => {
+        const ratio  = Math.min(1, maxSide / Math.max(img.width, img.height));
+        const canvas = document.createElement('canvas');
+        canvas.width  = Math.round(img.width * ratio);
+        canvas.height = Math.round(img.height * ratio);
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.src = ev.target.result;
     };
-    img.src = ev.target.result;
-  };
-  reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
+  });
+}
+
+window.handleBlogImages = async function(e) {
+  const files = Array.from(e.target.files || []);
+  e.target.value = '';
+  for (const file of files) {
+    if (blogImages.length >= 12) { alert('12 photos maximum par article.'); break; }
+    try { blogImages.push(await resizeImageFile(file, 1600, 0.82)); }
+    catch (err) { alert(err.message); }
+  }
+  renderBlogImages();
+};
+
+function renderBlogImages() {
+  const box = document.getElementById('blog-f-images');
+  box.innerHTML = '';
+  const btn = 'flex:1;padding:4px 0;font-size:0.8rem;background:var(--bg2);color:var(--text);border:1px solid var(--border);justify-content:center;';
+  blogImages.forEach((src, i) => {
+    const item = document.createElement('div');
+    item.style.cssText = 'width:140px;border:1px solid var(--border);border-radius:6px;overflow:hidden;background:var(--bg2);';
+    item.innerHTML = `
+      <div style="position:relative;aspect-ratio:4/3;">
+        <img src="${escapeHtml(blogImgSrc(src))}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">
+        ${i === 0 ? '<span class="badge badge-accent" style="position:absolute;top:6px;left:6px;">Couverture</span>' : ''}
+      </div>
+      <div style="display:flex;gap:4px;padding:6px;">
+        <button type="button" class="save-btn" style="${btn}" onclick="moveBlogImage(${i},-1)" title="Reculer">‹</button>
+        <button type="button" class="save-btn" style="${btn}" onclick="makeBlogCover(${i})" title="Mettre en couverture">★</button>
+        <button type="button" class="save-btn" style="${btn}" onclick="moveBlogImage(${i},1)" title="Avancer">›</button>
+        <button type="button" class="save-btn" style="${btn}color:var(--red,#c0392b);" onclick="removeBlogImage(${i})" title="Retirer">✕</button>
+      </div>`;
+    box.appendChild(item);
+  });
+}
+
+window.moveBlogImage = function(i, dir) {
+  const j = i + dir;
+  if (j < 0 || j >= blogImages.length) return;
+  [blogImages[i], blogImages[j]] = [blogImages[j], blogImages[i]];
+  renderBlogImages();
+};
+window.makeBlogCover = function(i) {
+  if (i === 0) return;
+  blogImages.unshift(blogImages.splice(i, 1)[0]);
+  renderBlogImages();
+};
+window.removeBlogImage = function(i) {
+  blogImages.splice(i, 1);
+  renderBlogImages();
 };
 
 window.deleteBlogPost = async function(id) {
@@ -1793,7 +1847,7 @@ window.saveBlogPost = async function() {
   const content   = document.getElementById('blog-f-content').value;
   const published = document.getElementById('blog-f-published').checked;
   const postToFb  = document.getElementById('blog-f-fb').checked;
-  const image     = document.getElementById('blog-f-image-preview').dataset.src || '';
+  const images    = [...blogImages];
 
   if (!title) { alert('Le titre est obligatoire.'); return; }
   if (!slug)  { alert('Le slug est obligatoire.'); return; }
@@ -1803,7 +1857,7 @@ window.saveBlogPost = async function() {
   }
 
   const existingIndex = blogPosts.findIndex(p => String(p.id) === String(id));
-  const post = { id, title, slug, date, excerpt, content, image, published };
+  const post = { id, title, slug, date, excerpt, content, image: images[0] || '', images, published };
   if (existingIndex >= 0) blogPosts[existingIndex] = post;
   else blogPosts.push(post);
 

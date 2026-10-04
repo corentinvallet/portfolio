@@ -6,6 +6,14 @@ function blog_e($s) {
 }
 
 function blog_normalize(array $p): array {
+    $images = [];
+    if (!empty($p['images']) && is_array($p['images'])) {
+        foreach ($p['images'] as $src) {
+            if (is_string($src) && $src !== '') $images[] = $src;
+        }
+    } elseif (!empty($p['image'])) {
+        $images[] = (string)$p['image'];
+    }
     return [
         'id'        => (string)($p['id'] ?? ''),
         'title'     => (string)($p['title'] ?? ''),
@@ -13,7 +21,8 @@ function blog_normalize(array $p): array {
         'date'      => (string)($p['date'] ?? ''),
         'excerpt'   => (string)($p['excerpt'] ?? ''),
         'content'   => (string)($p['content'] ?? ''),
-        'image'     => (string)($p['image'] ?? ''),
+        'image'     => $images[0] ?? '',
+        'images'    => $images,
         'published' => !empty($p['published']),
     ];
 }

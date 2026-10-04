@@ -171,3 +171,20 @@ body {
 @media (max-width: 560px) {
   .blog-grid { grid-template-columns: 1fr; }
 }
+/* ── Couverture cliquable (la lightbox vient de lightbox.css) ── */
+.post-cover-wrap {
+  position: relative; margin-bottom: 40px;
+  border-radius: 4px; overflow: hidden;
+}
+.post-cover-wrap .post-cover {
+  margin-bottom: 0; cursor: zoom-in;
+  transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+}
+.post-cover-wrap:hover .post-cover { transform: scale(1.02); }
+.post-cover-count {
+  position: absolute; right: 14px; bottom: 14px; pointer-events: none;
+  background: rgba(0,0,0,0.65); color: #fff;
+  font-family: 'DM Mono', monospace; font-size: 0.68rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 6px 12px; border-radius: 2px;
+}

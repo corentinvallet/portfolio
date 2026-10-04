@@ -60,7 +60,8 @@ if ($post) {
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Mono:wght@300;400&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="nav.css">
-  <link rel="stylesheet" href="blog.css?v=1">
+  <link rel="stylesheet" href="blog.css?v=3">
+  <link rel="stylesheet" href="lightbox.css">
 </head>
 <body>
 <?php include __DIR__ . '/inc/nav.php'; ?>
@@ -78,8 +79,18 @@ if ($post) {
       <?php endif; ?>
     </header>
 
-    <?php if ($post['image'] !== ''): ?>
-      <img class="post-cover" src="<?= blog_e($post['image']) ?>" alt="<?= blog_e($post['title']) ?>" width="1200" height="675">
+    <?php if ($post['images']): $nbImg = count($post['images']); ?>
+      <div class="post-gallery">
+        <div class="post-cover-wrap">
+          <img class="post-cover" src="<?= blog_e($post['images'][0]) ?>" alt="<?= blog_e($post['title'] . ($nbImg > 1 ? ' — photo 1 / ' . $nbImg : '')) ?>" width="1200" height="675">
+          <?php if ($nbImg > 1): ?>
+            <span class="post-cover-count"><?= $nbImg ?> photos</span>
+          <?php endif; ?>
+        </div>
+        <?php for ($i = 1; $i < $nbImg; $i++): ?>
+          <img src="<?= blog_e($post['images'][$i]) ?>" alt="<?= blog_e($post['title'] . ' — photo ' . ($i + 1) . ' / ' . $nbImg) ?>" hidden>
+        <?php endfor; ?>
+      </div>
     <?php endif; ?>
 
     <div class="post-content">
@@ -98,6 +109,8 @@ if ($post) {
   <p class="post-lead">Cet article n'existe pas ou n'est plus en ligne.</p>
 <?php endif; ?>
 </main>
+
+<?php if ($post && $post['images']) include __DIR__ . '/inc/lightbox.php'; ?>
 
 <?php include __DIR__ . '/inc/blog-footer.php'; ?>
 </body>

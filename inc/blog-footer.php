@@ -3,5 +3,6 @@
   <div class="footer-copy">© <?= date('Y') ?> · Sites web pour artisans et indépendants · Valence</div>
 </footer>
 
-<script src="blog.js?v=1"></script>
+<script src="blog.js?v=3"></script>
+<script src="lightbox.js"></script>
 <script src="nav.js"></script>
