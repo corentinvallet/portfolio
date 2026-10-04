@@ -6,10 +6,10 @@
         "date": "2026-10-04",
         "excerpt": "Marre de copier un post à plusieurs endroits ?",
         "content": "Marre de copier un post à plusieurs endroits ?\nLa communication doit se faire sur plusieurs supports (Facebook, Instagram notamment). Maintenir la cohérence entre les différents réseaux n'est pas toujours chose facile.\nGrâce à l'API Meta, il est possible de poster sur son site, et que ce post soit posté simultanément sur Facebook, sans action supplémentaire !\nC'est le cas de celui-ci, la preuve ici !\nhttps://www.corentinvallet.fr/blog-post.php?slug=posts-simultanes-facebook",
-        "image": "Photos/Blog/eb43525f2df0705a.jpg",
+        "image": "Photos/Blog/8461ffef21cff1e8.jpg",
         "images": [
-            "Photos/Blog/eb43525f2df0705a.jpg",
-            "Photos/Blog/8461ffef21cff1e8.jpg"
+            "Photos/Blog/8461ffef21cff1e8.jpg",
+            "Photos/Blog/eb43525f2df0705a.jpg"
         ],
         "published": true
     },
@@ -65,12 +65,12 @@
         "date": "2026-08-20",
         "excerpt": "Artisans, pas le temps de communiquer ?",
         "content": "Vous êtes artisan, vous travaillez, pas le temps de communiquer. Les chantiers s'enchaînent, et la visibilité passe au second plan.\nAlors j'ai conçu Pierrard Maçonnerie, le site d'un maçon. Établissement fictif, site bien réel.\nJe prends en charge le site, de bout en bout. Rédaction des textes, charte graphique, structure du site. Vous me donnez vos objectifs, je conçois votre site\nVos clients retrouvent tout ce qu'il faut sur votre site : réalisations, prestations possibles, coordonnées. Une galerie filtrable leur permet de voir vos œuvres !\nIls vous contactent directement en ligne. La demande arrive dans votre boîte mail, plus qu'à le contacter. Fini les appels pendant le coup de feu.\nAu besoin, un espace admin peut même vous permettre de modifier vous-même le contenu, sans connaissance technique !\nLa démo complète est visible ici 👉 corentinvallet.fr/artisan\nL'espace admin : www.corentinvallet.fr/artisan/admin.html\n⚠️ Pierrard Maçonnerie est un établissement fictif : adresse, téléphone et avis sont inventés pour la démonstration.",
-        "image": "Photos/Blog/28c81c98c85b66b3.jpg",
+        "image": "Photos/Blog/76801ee9054442e5.jpg",
         "images": [
-            "Photos/Blog/28c81c98c85b66b3.jpg",
+            "Photos/Blog/76801ee9054442e5.jpg",
             "Photos/Blog/6f87a37d977f9a9f.jpg",
             "Photos/Blog/e5a20b93ad1660a0.jpg",
-            "Photos/Blog/76801ee9054442e5.jpg"
+            "Photos/Blog/28c81c98c85b66b3.jpg"
         ],
         "published": true
     },
@@ -84,9 +84,9 @@
         "image": "Photos/Blog/674b9ef934e70763.jpg",
         "images": [
             "Photos/Blog/674b9ef934e70763.jpg",
-            "Photos/Blog/fedcf6d0d0d9acee.jpg",
-            "Photos/Blog/75961f9b7507097a.jpg",
-            "Photos/Blog/e61ff72944a5223b.jpg"
+            "Photos/Blog/417308b4d0bb2b2a.jpg",
+            "Photos/Blog/e61ff72944a5223b.jpg",
+            "Photos/Blog/75961f9b7507097a.jpg"
         ],
         "published": true
     },
@@ -100,9 +100,9 @@
         "image": "Photos/Blog/2cedaa35147dbe6a.jpg",
         "images": [
             "Photos/Blog/2cedaa35147dbe6a.jpg",
-            "Photos/Blog/c497bdabe050a8e9.jpg",
-            "Photos/Blog/d1267a628d1d8a08.jpg",
-            "Photos/Blog/277bc2f1e4dab4c6.jpg"
+            "Photos/Blog/567a81587dfa1e19.jpg",
+            "Photos/Blog/ee9fe4ee4f6bc108.jpg",
+            "Photos/Blog/422d6e149a4076d6.jpg"
         ],
         "published": true
     }
