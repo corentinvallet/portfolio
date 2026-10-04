@@ -1568,6 +1568,27 @@ function toastMsg(text, isError, ms) {
 function showToast()      { toastMsg('✓ Publié en ligne (content.json)', false, 2500); }
 function showToastError() { toastMsg('✗ Erreur de sauvegarde', true, 3000); }
 
+function htmlToPlainText(html) {
+  let src = String(html || '');
+  if (/<(p|h[2-4]|ul|ol|li|blockquote|br)\b/i.test(src)) {
+    src = src
+      .replace(/<br\s*\/?>/gi, '\n')
+      .replace(/<\/(p|h[2-4]|blockquote|ul|ol)>/gi, '\n\n')
+      .replace(/<li\b[^>]*>/gi, '• ')
+      .replace(/<\/li>/gi, '\n')
+      .replace(/<a\b[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi, (m, href, text) => {
+        const t = text.replace(/<[^>]+>/g, '').trim();
+        return (t && t !== href) ? t + ' (' + href + ')' : href;
+      });
+  }
+  const doc = new DOMParser().parseFromString(src, 'text/html');
+  return (doc.body.textContent || '')
+    .replace(/\r/g, '')
+    .replace(/[ \t]+\n/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
 async function publishToFacebook(payload, force) {
   toastMsg('Publication sur Facebook…', false, 15000);
   try {
@@ -1891,7 +1912,7 @@ window.saveBlogPost = async function() {
 
     if (postToFb && published) {
       await publishToFacebook({
-        message: title + (excerpt ? '\n\n' + excerpt : ''),
+        message: htmlToPlainText(content) || excerpt || title,
         link: SITE_URL + '/blog-post.php?slug=' + encodeURIComponent(slug)
       });
     }
