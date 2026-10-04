@@ -60,7 +60,7 @@ if ($post) {
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Mono:wght@300;400&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="nav.css">
-  <link rel="stylesheet" href="blog.css?v=3">
+  <link rel="stylesheet" href="blog.css?v=4">
   <link rel="stylesheet" href="lightbox.css">
 </head>
 <body>
@@ -79,17 +79,25 @@ if ($post) {
       <?php endif; ?>
     </header>
 
-    <?php if ($post['images']): $nbImg = count($post['images']); ?>
-      <div class="post-gallery">
-        <div class="post-cover-wrap">
-          <img class="post-cover" src="<?= blog_e($post['images'][0]) ?>" alt="<?= blog_e($post['title'] . ($nbImg > 1 ? ' — photo 1 / ' . $nbImg : '')) ?>" width="1200" height="675">
-          <?php if ($nbImg > 1): ?>
-            <span class="post-cover-count"><?= $nbImg ?> photos</span>
+    <?php if ($post['images']):
+      $nbImg   = count($post['images']);
+      $mosaicN = min($nbImg, 5);
+    ?>
+      <div class="post-gallery post-mosaic n<?= $mosaicN ?>">
+        <?php foreach ($post['images'] as $i => $src):
+          $alt = $post['title'] . ($nbImg > 1 ? ' — photo ' . ($i + 1) . ' / ' . $nbImg : '');
+        ?>
+          <?php if ($i < 5): ?>
+            <div class="post-mosaic-item">
+              <img class="post-mosaic-img" src="<?= blog_e($src) ?>" alt="<?= blog_e($alt) ?>"<?= $i === 0 ? ' width="1200" height="675"' : ' loading="lazy"' ?>>
+              <?php if ($i === 4 && $nbImg > 5): ?>
+                <span class="post-mosaic-more">+<?= $nbImg - 5 ?></span>
+              <?php endif; ?>
+            </div>
+          <?php else: ?>
+            <img src="<?= blog_e($src) ?>" alt="<?= blog_e($alt) ?>" hidden>
           <?php endif; ?>
-        </div>
-        <?php for ($i = 1; $i < $nbImg; $i++): ?>
-          <img src="<?= blog_e($post['images'][$i]) ?>" alt="<?= blog_e($post['title'] . ' — photo ' . ($i + 1) . ' / ' . $nbImg) ?>" hidden>
-        <?php endfor; ?>
+        <?php endforeach; ?>
       </div>
     <?php endif; ?>
 
