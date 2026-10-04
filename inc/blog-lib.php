@@ -58,11 +58,21 @@ function blog_date_fr(string $date): string {
     return (int)date('j', $t) . ' ' . $mois[(int)date('n', $t) - 1] . ' ' . date('Y', $t);
 }
 
-/* Nettoie le HTML de l'article : balises autorisées uniquement, pas d'attributs dangereux */
+/* Nettoie le HTML de l'article : balises autorisées uniquement, pas d'attributs dangereux.
+   Texte brut accepté : les lignes vides font des paragraphes, les URL deviennent des liens. */
 function blog_clean_html(string $html): string {
     $allowed = '<p><h2><h3><h4><ul><ol><li><strong><b><em><i><a><br><blockquote><img>';
     $html = strip_tags($html, $allowed);
     if (trim($html) === '') return '';
+
+    // Texte brut (aucune balise de bloc) : lignes vides => paragraphes, retours => <br>
+    if (!preg_match('/<(p|h[2-4]|ul|ol|blockquote)\b/i', $html)) {
+        $paras = preg_split('/\R\s*\R/', trim($html));
+        $html = '';
+        foreach ($paras as $para) {
+            $html .= '<p>' . nl2br(trim($para), false) . '</p>';
+        }
+    }
 
     $dom = new DOMDocument();
     libxml_use_internal_errors(true);
@@ -70,13 +80,54 @@ function blog_clean_html(string $html): string {
     libxml_clear_errors();
 
     $xpath = new DOMXPath($dom);
-    $keep  = ['href', 'src', 'alt', 'title', 'width', 'height'];
+
+    // Liens automatiques : les URL en texte brut (hors balise <a>) deviennent cliquables
+    $pattern = '~(https?://[^\s<>"\']+|www\.[^\s<>"\']+)~i';
+    foreach (iterator_to_array($xpath->query('//text()[not(ancestor::a)]')) as $node) {
+        $text = $node->nodeValue;
+        if (!preg_match($pattern, $text)) continue;
+
+        $parts = preg_split($pattern, $text, -1, PREG_SPLIT_DELIM_CAPTURE);
+        $frag  = $dom->createDocumentFragment();
+        foreach ($parts as $k => $part) {
+            if ($part === '') continue;
+            if ($k % 2 === 1) {
+                // On laisse la ponctuation finale hors du lien
+                $url = $part;
+                $trail = '';
+                while (preg_match('/[.,;:!?)\]]$/', $url)) {
+                    $trail = substr($url, -1) . $trail;
+                    $url   = substr($url, 0, -1);
+                }
+                $href = (stripos($url, 'www.') === 0) ? 'https://' . $url : $url;
+                $a = $dom->createElement('a');
+                $a->setAttribute('href', $href);
+                $a->appendChild($dom->createTextNode($url));
+                $frag->appendChild($a);
+                if ($trail !== '') $frag->appendChild($dom->createTextNode($trail));
+            } else {
+                $frag->appendChild($dom->createTextNode($part));
+            }
+        }
+        $node->parentNode->replaceChild($frag, $node);
+    }
+
+    // Nettoyage des attributs
+    $keep = ['href', 'src', 'alt', 'title', 'width', 'height'];
     foreach (iterator_to_array($xpath->query('//@*')) as $attr) {
         $name  = strtolower($attr->nodeName);
         $value = preg_replace('/[\x00-\x20]+/', '', (string)$attr->nodeValue);
         $bad = !in_array($name, $keep, true)
             || (($name === 'href' || $name === 'src') && preg_match('/^(javascript|vbscript|data):/i', $value));
         if ($bad) $attr->ownerElement->removeAttributeNode($attr);
+    }
+
+    // Liens externes : nouvel onglet, sans transmettre l'origine
+    foreach ($xpath->query('//a[@href]') as $a) {
+        if (preg_match('#^https?://#i', $a->getAttribute('href'))) {
+            $a->setAttribute('target', '_blank');
+            $a->setAttribute('rel', 'noopener noreferrer');
+        }
     }
 
     $root = $dom->getElementsByTagName('div')->item(0);
