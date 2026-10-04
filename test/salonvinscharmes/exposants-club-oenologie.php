@@ -98,6 +98,12 @@ $home = false; $active = 'exposants';
   .bio-badge{
     width:22px;height:22px;object-fit:contain;vertical-align:middle;margin-left:8px;
   }
+  .cert-txt{
+    display:inline-block;vertical-align:middle;margin-left:8px;padding:2px 8px;border-radius:100px;
+    font-family:'Inter',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.02em;line-height:1.4;
+  }
+  .cert-txt.bio{background:#e6f0da;color:#4a6b2a;}
+  .cert-txt.hve{background:#fbe9d6;color:#8a5a1e;}
   .exp-card:hover{transform:translateY(-5px);box-shadow:0 24px 40px -26px rgba(27,20,64,0.3);}
   .badge{display:inline-block;padding:4px 11px;border-radius:100px;font-size:0.72rem;font-weight:700;letter-spacing:0.02em;margin-bottom:14px;}
   .badge.vign{background:#efe4f7;color:var(--grape);}
@@ -293,7 +299,7 @@ $home = false; $active = 'exposants';
         ${thumb ? `<img class="photo-thumb" src="${thumb}" alt="">` : ''}
         <span class="badge ${e.type==='Vigneron'?'vign':'prod'}">${e.type === 'Vigneron' ? 'Vigneron' : 'Producteur régional'}</span>
         ${e.numeroStand ? `<span class="badge stand">Stand ${e.numeroStand}</span>` : ''}
-        <h3>${e.nom}${(e.bio && bioIcon) ? ` <img class="bio-badge" src="${bioIcon}" alt="Agriculture biologique" title="Agriculture biologique">` : ''}${(e.hve && hveIcon) ? ` <img class="hve-badge" src="${hveIcon}" alt="Certifié HVE" title="Certifié Haute Valeur Environnementale">` : ''}</h3>
+        <h3>${e.nom}${e.bio ? (bioIcon ? ` <img class="bio-badge" src="${bioIcon}" alt="Agriculture biologique" title="Agriculture biologique">` : ` <span class="cert-txt bio" title="Agriculture biologique">Bio</span>`) : ''}${e.hve ? (hveIcon ? ` <img class="hve-badge" src="${hveIcon}" alt="Certifié HVE" title="Certifié Haute Valeur Environnementale">` : ` <span class="cert-txt hve" title="Certifié Haute Valeur Environnementale">HVE</span>`) : ''}</h3>
         ${e.region ? `<div class="region">${e.region}</div>` : ''}
         ${(e.appellations && e.appellations.length) ? `<div class="appellations">${e.appellations.join(', ')}</div>` : ''}
         <p>${e.desc}</p>
@@ -354,8 +360,8 @@ $home = false; $active = 'exposants';
       }
     }
     html += `<h2>${e.nomComplet || e.nom}</h2>`;
-    if(e.hve && hveIcon) html += `<div class="modal-hve"><img src="${hveIcon}" alt="Certifié HVE">Certifié Haute Valeur Environnementale</div>`;
-    if(e.bio && bioIcon) html += `<div class="modal-bio"><img src="${bioIcon}" alt="Agriculture biologique">Agriculture biologique</div>`;
+    if(e.hve) html += `<div class="modal-hve">${hveIcon ? `<img src="${hveIcon}" alt="Certifié HVE">` : ''}Certifié Haute Valeur Environnementale</div>`;
+    if(e.bio) html += `<div class="modal-bio">${bioIcon ? `<img src="${bioIcon}" alt="Agriculture biologique">` : ''}Agriculture biologique</div>`;
     if(e.numeroStand) html += `<div class="stand-num">Stand n° ${e.numeroStand}</div>`;
     if(e.region) html += `<div class="region">${e.region}</div>`;
     if(e.appellations && e.appellations.length) html += `<div class="appellations">${e.appellations.join(', ')}</div>`;
