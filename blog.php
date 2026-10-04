@@ -33,7 +33,7 @@ $posts = blog_published_posts();
 
 <main class="blog-main">
   <div class="blog-eyebrow">Le blog</div>
-  <h1 class="blog-title">Conseils web pour <em>artisans</em><br>et indépendants.</h1>
+  <h1 class="blog-title">Conseils web pour <em>artisans</em><br>et <em>indépendants</em>.</h1>
   <p class="blog-intro">Retours d'expérience, bonnes pratiques et conseils concrets pour réussir votre présence en ligne à Valence, en Drôme et en Ardèche.</p>
 
   <?php if (!$posts): ?>
