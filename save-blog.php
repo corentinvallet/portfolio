@@ -1,66 +1,60 @@
 <?php
-/* =====================================================================
-   save-blog.php — Enregistrement de blog-posts.json
-   --------------------------------------------------------------------
-   Même principe que save.php, mais pour les articles de blog.
-   L'admin (/admin/) envoie ici la liste complète des articles, et ce
-   script réécrit blog-posts.json à la racine du site.
-
-   INSTALLATION
-   1. Déposez ce fichier à la racine du site (public_html), à côté de
-      index.php, content.json et save.php.
-   2. Le token ci-dessous DOIT être identique à SAVE_TOKEN dans
-      /admin/index.html (même valeur que pour save.php).
-   3. Vérifiez que blog-posts.json est inscriptible (droits 644/664 sur
-      le fichier, 755 sur le dossier).
-   ===================================================================== */
-
+/* save-blog.php — enregistre blog-posts.json (appelé par l'admin) */
 header('Content-Type: application/json; charset=utf-8');
 
-// >>> À PERSONNALISER <<< (doit être identique à SAVE_TOKEN dans /admin/index.html)
-$ADMIN_TOKEN = 'pigzefi86123!:;AZE';
+// >>> Même valeur que $ADMIN_TOKEN dans save.php <<<
+$ADMIN_TOKEN = '';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['error' => 'Méthode non autorisée']);
+function fail($code, $msg) {
+    http_response_code($code);
+    echo json_encode(['error' => $msg]);
     exit;
 }
 
-if ($ADMIN_TOKEN !== '') {
-    $tok = isset($_SERVER['HTTP_X_ADMIN_TOKEN']) ? $_SERVER['HTTP_X_ADMIN_TOKEN'] : '';
-    if (!hash_equals($ADMIN_TOKEN, $tok)) {
-        http_response_code(401);
-        echo json_encode(['error' => 'Non autorisé']);
-        exit;
-    }
-}
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') fail(405, 'Méthode non autorisée');
+if ($ADMIN_TOKEN === '') fail(500, 'Token non configuré dans save-blog.php');
 
-$raw  = file_get_contents('php://input');
-$data = json_decode($raw, true);
+$tok = $_SERVER['HTTP_X_ADMIN_TOKEN'] ?? '';
+if (!hash_equals($ADMIN_TOKEN, $tok)) fail(401, 'Non autorisé');
+
+$data = json_decode(file_get_contents('php://input'), true);
 if (!is_array($data) || !isset($data['posts']) || !is_array($data['posts'])) {
-    http_response_code(400);
-    echo json_encode(['error' => 'JSON invalide — attendu { "posts": [...] }']);
-    exit;
+    fail(400, 'JSON invalide');
 }
 
-$posts = $data['posts'];
+$clean = [];
+$slugs = [];
+foreach ($data['posts'] as $p) {
+    if (!is_array($p)) continue;
 
-$json = json_encode(
-    $posts,
-    JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
-);
+    $slug = (string)($p['slug'] ?? '');
+    if (!preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $slug)) fail(400, 'Slug invalide : ' . $slug);
+    if (isset($slugs[$slug])) fail(400, 'Slug en double : ' . $slug);
+    $slugs[$slug] = true;
+
+    $date  = (string)($p['date'] ?? '');
+    $image = (string)($p['image'] ?? '');
+    if (!preg_match('#^(https?://|data:image/(jpeg|png|webp|gif);base64,|[\w./-]+$)#i', $image)) $image = '';
+
+    $clean[] = [
+        'id'        => (string)($p['id'] ?? uniqid()),
+        'title'     => trim((string)($p['title'] ?? '')),
+        'slug'      => $slug,
+        'date'      => preg_match('/^\d{4}-\d{2}-\d{2}$/', $date) ? $date : date('Y-m-d'),
+        'excerpt'   => trim((string)($p['excerpt'] ?? '')),
+        'content'   => (string)($p['content'] ?? ''),
+        'image'     => $image,
+        'published' => !empty($p['published']),
+    ];
+}
+
+$json = json_encode($clean, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+if (strlen($json) > 8 * 1024 * 1024) fail(413, 'Fichier trop volumineux (images trop lourdes ?)');
 
 $path = __DIR__ . '/blog-posts.json';
-
-// Petite sauvegarde de l'ancienne version, au cas où.
-if (file_exists($path)) {
-    @copy($path, __DIR__ . '/blog-posts.backup.json');
-}
+if (file_exists($path)) @copy($path, __DIR__ . '/blog-posts.backup.json');
 
 if (file_put_contents($path, $json, LOCK_EX) === false) {
-    http_response_code(500);
-    echo json_encode(['error' => "Écriture impossible — vérifiez les droits du dossier."]);
-    exit;
+    fail(500, 'Écriture impossible — vérifiez les droits du dossier.');
 }
-
 echo json_encode(['ok' => true]);

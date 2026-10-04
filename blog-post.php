@@ -1,38 +1,22 @@
 <?php
-/* =====================================================================
-   blog-post.php — Affiche un article de blog (?slug=...)
-   Chaque article a son propre <title>, meta description, Open Graph
-   et JSON-LD Article — c'est ça qui aide au référencement, contrairement
-   à une page unique où tout le contenu serait injecté en JS.
-   ===================================================================== */
+require __DIR__ . '/inc/blog-lib.php';
 
-$postsPath = __DIR__ . '/blog-posts.json';
-$allPosts  = [];
-if (file_exists($postsPath)) {
-    $raw = file_get_contents($postsPath);
-    $decoded = json_decode($raw, true);
-    if (is_array($decoded)) $allPosts = $decoded;
+$slug = isset($_GET['slug']) ? (string)$_GET['slug'] : '';
+$post = preg_match('/^[a-z0-9-]+$/', $slug) ? blog_find_post($slug) : null;
+if (!$post) { http_response_code(404); }
+
+$base = 'https://corentinvallet.fr';
+if ($post) {
+  $pageTitle = $post['title'] . ' | Corentin Vallet';
+  $pageDesc  = $post['excerpt'] !== ''
+    ? $post['excerpt']
+    : mb_substr(trim(preg_replace('/\s+/', ' ', strip_tags($post['content']))), 0, 155);
+  $pageUrl   = $base . '/blog-post.php?slug=' . rawurlencode($post['slug']);
+  $ogImage   = (strpos($post['image'], 'http') === 0) ? $post['image'] : $base . '/Photos/og-image.png';
+} else {
+  $pageTitle = 'Article introuvable | Corentin Vallet';
+  $pageDesc  = '';
 }
-
-$slug = isset($_GET['slug']) ? $_GET['slug'] : '';
-$post = null;
-foreach ($allPosts as $p) {
-    if (($p['slug'] ?? '') === $slug && !empty($p['published'])) {
-        $post = $p;
-        break;
-    }
-}
-
-function h($s) { return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
-
-if (!$post) {
-    http_response_code(404);
-}
-
-$title = $post ? $post['title'] . ' | Blog Corentin Vallet' : 'Article introuvable | Corentin Vallet';
-$desc  = $post ? ($post['excerpt'] ?? '') : "Cet article n'existe pas ou plus.";
-$url   = 'https://corentinvallet.fr/blog-post.php?slug=' . urlencode($slug);
-$image = $post && !empty($post['image']) ? $post['image'] : 'https://corentinvallet.fr/Photos/og-image.png';
 ?>
 <!DOCTYPE html>
 <html lang="fr" data-theme="light">
@@ -40,104 +24,81 @@ $image = $post && !empty($post['image']) ? $post['image'] : 'https://corentinval
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title><?= h($title) ?></title>
-  <meta name="description" content="<?= h($desc) ?>" />
-  <meta name="robots" content="<?= $post ? 'index, follow' : 'noindex, follow' ?>" />
-  <?php if ($post): ?><link rel="canonical" href="<?= h($url) ?>" /><?php endif; ?>
-  <link rel="stylesheet" href="nav.css">
-  <link rel="icon" type="image/ico" href="Photos/Favicon_transp48.png">
+  <title><?= blog_e($pageTitle) ?></title>
+<?php if ($post): ?>
+  <meta name="description" content="<?= blog_e($pageDesc) ?>" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="<?= blog_e($pageUrl) ?>" />
 
   <meta property="og:type" content="article" />
   <meta property="og:locale" content="fr_FR" />
-  <meta property="og:title" content="<?= h($title) ?>" />
-  <meta property="og:description" content="<?= h($desc) ?>" />
-  <meta property="og:url" content="<?= h($url) ?>" />
-  <meta property="og:image" content="<?= h($image) ?>" />
+  <meta property="og:title" content="<?= blog_e($post['title']) ?>" />
+  <meta property="og:description" content="<?= blog_e($pageDesc) ?>" />
+  <meta property="og:url" content="<?= blog_e($pageUrl) ?>" />
+  <meta property="og:image" content="<?= blog_e($ogImage) ?>" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+<?php
+  $ld = [
+    '@context' => 'https://schema.org',
+    '@type' => 'BlogPosting',
+    'headline' => $post['title'],
+    'datePublished' => $post['date'],
+    'author' => ['@type' => 'Person', 'name' => 'Corentin Vallet'],
+    'mainEntityOfPage' => $pageUrl,
+    'image' => $ogImage,
+  ];
+?>
+  <script type="application/ld+json"><?= json_encode($ld, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG) ?></script>
+<?php else: ?>
+  <meta name="robots" content="noindex" />
+<?php endif; ?>
+  <link rel="icon" type="image/ico" href="Photos/Favicon_transp48.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Mono:wght@300;400&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <?php if ($post): ?>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": <?= json_encode($post['title'] ?? '', JSON_UNESCAPED_UNICODE) ?>,
-    "description": <?= json_encode($post['excerpt'] ?? '', JSON_UNESCAPED_UNICODE) ?>,
-    "datePublished": <?= json_encode($post['date'] ?? '', JSON_UNESCAPED_UNICODE) ?>,
-    "author": { "@type": "Person", "name": "Corentin Vallet" },
-    "publisher": { "@type": "Person", "name": "Corentin Vallet" },
-    "mainEntityOfPage": <?= json_encode($url, JSON_UNESCAPED_UNICODE) ?>,
-    "image": <?= json_encode($image, JSON_UNESCAPED_UNICODE) ?>
-  }
-  </script>
-  <?php endif; ?>
-
-  <style>
-    :root {
-      --bg:#f5f2ec; --bg2:#eee9df; --surface:#ffffff; --border:rgba(0,0,0,0.10);
-      --text:#1a1714; --text2:#5a5046; --accent:#c45c2a; --accent2:#e8a97e;
-      --card-shadow:0 2px 24px rgba(0,0,0,0.07); --transition:0.35s cubic-bezier(.4,0,.2,1);
-    }
-    [data-theme="dark"] {
-      --bg:#141210; --bg2:#1e1b17; --surface:#272320; --border:rgba(255,255,255,0.09);
-      --text:#f0ebe3; --text2:#9e9080; --accent:#e07848; --accent2:#c45c2a;
-      --card-shadow:0 2px 24px rgba(0,0,0,0.4);
-    }
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);padding-top:72px;}
-    a{color:inherit;text-decoration:none;}
-    .wrap{max-width:760px;margin:0 auto;padding:0 24px;}
-    article{padding:56px 0 80px;}
-    .post-date{font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:.05em;color:var(--accent);text-transform:uppercase;margin-bottom:16px;display:block;}
-    h1{font-family:'Fraunces',serif;font-weight:600;font-size:2.2rem;line-height:1.2;margin-bottom:26px;}
-    .post-image{width:100%;border-radius:14px;margin-bottom:32px;box-shadow:var(--card-shadow);}
-    .post-body{font-size:1.05rem;line-height:1.8;color:var(--text);}
-    .post-body p{margin-bottom:1.2em;}
-    .post-body h2{font-family:'Fraunces',serif;font-size:1.4rem;margin:1.6em 0 .6em;}
-    .not-found{padding:80px 0;text-align:center;}
-    footer.site{border-top:1px solid var(--border);padding:28px 0;text-align:center;color:var(--text2);font-size:0.85rem;}
-  </style>
+  <link rel="stylesheet" href="nav.css">
+  <link rel="stylesheet" href="blog.css?v=1">
 </head>
 <body>
-
 <?php include __DIR__ . '/inc/nav.php'; ?>
 
+<main class="post">
 <?php if ($post): ?>
-<article>
-  <div class="wrap">
-    <a href="/blog.php" style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--text2);display:inline-block;margin-bottom:20px;">← Tous les articles</a>
-    <span class="post-date"><?= h(date('d M Y', strtotime($post['date'] ?? 'now'))) ?></span>
-    <h1><?= h($post['title'] ?? '') ?></h1>
-    <?php if (!empty($post['image'])): ?>
-      <img class="post-image" src="<?= h($post['image']) ?>" alt="<?= h($post['title'] ?? '') ?>" />
+  <a href="blog.php" class="post-back">← Tous les articles</a>
+
+  <article>
+    <header>
+      <time class="post-date" datetime="<?= blog_e($post['date']) ?>"><?= blog_e(blog_date_fr($post['date'])) ?></time>
+      <h1 class="post-title"><?= blog_e($post['title']) ?></h1>
+      <?php if ($post['excerpt'] !== ''): ?>
+        <p class="post-lead"><?= blog_e($post['excerpt']) ?></p>
+      <?php endif; ?>
+    </header>
+
+    <?php if ($post['image'] !== ''): ?>
+      <img class="post-cover" src="<?= blog_e($post['image']) ?>" alt="<?= blog_e($post['title']) ?>" width="1200" height="675">
     <?php endif; ?>
-    <div class="post-body"><?= $post['content'] ?? '' /* HTML de confiance : saisi par l'admin, non par un visiteur */ ?></div>
-  </div>
-</article>
+
+    <div class="post-content">
+      <?= blog_clean_html($post['content']) ?>
+    </div>
+  </article>
+
+  <aside class="post-cta">
+    <div class="post-cta-title">Un projet de site web ?</div>
+    <p>Artisan, commerçant ou indépendant à Valence, en Drôme ou en Ardèche : parlons de votre projet, sans engagement.</p>
+    <a href="index.php#contact" class="post-cta-btn">Me contacter</a>
+  </aside>
 <?php else: ?>
-<div class="wrap not-found">
-  <h1>Article introuvable</h1>
-  <p style="margin-top:14px;color:var(--text2);">Cet article n'existe pas ou a été dépublié.</p>
-  <p style="margin-top:24px;"><a class="back-link" href="/blog.php">← Retour au blog</a></p>
-</div>
+  <a href="blog.php" class="post-back">← Tous les articles</a>
+  <h1 class="post-title">Article introuvable</h1>
+  <p class="post-lead">Cet article n'existe pas ou n'est plus en ligne.</p>
 <?php endif; ?>
+</main>
 
-<footer class="site">
-  <div class="wrap">© <?= date('Y') ?> Corentin Vallet — Création de sites web à Valence</div>
-</footer>
-
-<script src="nav.js"></script>
-<script>
-  const html = document.documentElement;
-  const btn = document.getElementById('themeToggle');
-  btn.addEventListener('click', () => {
-    html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('theme', html.dataset.theme);
-  });
-  const saved = localStorage.getItem('theme');
-  if (saved) html.dataset.theme = saved;
-</script>
+<?php include __DIR__ . '/inc/blog-footer.php'; ?>
 </body>
 </html>

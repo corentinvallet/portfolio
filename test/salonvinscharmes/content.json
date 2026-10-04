@@ -175,15 +175,15 @@
                     "initials": "CB",
                     "color": "var(--grape)",
                     "name": "Céline Buffat",
-                    "role": "Présidente",
+                    "role": "Co-Présidente et Co-Responsable de la commission Salon et logistique",
                     "text": "Adhérente depuis la création du salon, elle coordonne l'organisation générale du salon et représente le club."
                 },
                 {
                     "initials": "GB",
                     "color": "var(--amber)",
                     "name": "Gilbert Balay",
-                    "role": "Vice-président",
-                    "text": "Pilote la relation avec les vignerons et la logistique du week-end du salon.\n"
+                    "role": "Co-Président et Responsable de la commission Cours d'oenologie",
+                    "text": "Coordonne l'organisation générale du salon, représente le club et organise les cours d'oenologie\n"
                 },
                 {
                     "initials": "VB",
@@ -197,6 +197,166 @@
                     "color": "var(--ink)",
                     "name": "Nadeige Barbe",
                     "role": "Trésorière adjointe",
+                    "text": "Suit les comptes de l'association et le budget de chaque édition du salon.",
+                    "photo": "",
+                    "email": "",
+                    "telephone": ""
+                },
+                {
+                    "initials": "AC",
+                    "color": "var(--ink)",
+                    "name": "Audrey Constantin",
+                    "role": "Secrétaire et responsable de la commission Bénévoles",
+                    "text": "Gère la communication et les échanges avec les bénévoles",
+                    "photo": "",
+                    "email": "",
+                    "telephone": ""
+                },
+                {
+                    "initials": "MS",
+                    "color": "var(--ink)",
+                    "name": "Maxime Sermoz",
+                    "role": "Secrétaire-Adjoint et membre de la commission Bénévoles",
+                    "text": "",
+                    "photo": "",
+                    "email": "",
+                    "telephone": ""
+                },
+                {
+                    "initials": "LC",
+                    "color": "var(--ink)",
+                    "name": "Ludovic Collange",
+                    "role": "Responsable de la commission Communication",
+                    "text": "Gère l’ensemble des communications et rédactionnels liés aux activités du COD",
+                    "photo": "",
+                    "email": "ludovic.collange@cluboenologie.com",
+                    "telephone": ""
+                },
+                {
+                    "initials": "JD",
+                    "color": "var(--ink)",
+                    "name": "Julie Dupinay",
+                    "role": "Membre de la commission Communication",
+                    "text": "",
+                    "photo": "",
+                    "email": "",
+                    "telephone": ""
+                },
+                {
+                    "initials": "SK",
+                    "color": "var(--ink)",
+                    "name": "Stéphane Kielbasa",
+                    "role": "Responsable de la commission Exposants",
+                    "text": "Gère la communication et les échanges avec les exposants",
+                    "photo": "",
+                    "email": "",
+                    "telephone": ""
+                },
+                {
+                    "initials": "NC",
+                    "color": "var(--ink)",
+                    "name": "Nathalie Crouzet",
+                    "role": "Responsable de la commission Sponsors et membre de la commission Exposants",
+                    "text": "Gère la communication et les échanges avec les sponsors",
+                    "photo": "",
+                    "email": "",
+                    "telephone": ""
+                },
+                {
+                    "initials": "PP",
+                    "color": "var(--ink)",
+                    "name": "Patrick Pontal",
+                    "role": "Responsable de la commission Repas / Buvette",
+                    "text": "Prépare et organise la restauration lors des activités du COD",
+                    "photo": "",
+                    "email": "",
+                    "telephone": ""
+                },
+                {
+                    "initials": "SC",
+                    "color": "var(--ink)",
+                    "name": "Stéphane Como",
+                    "role": "Co-Responsable de la commission Salon et logistique",
+                    "text": "Prépare et organise le Salon des Vins",
+                    "photo": "",
+                    "email": "",
+                    "telephone": ""
+                },
+                {
+                    "initials": "TL",
+                    "color": "var(--ink)",
+                    "name": "Thierry Loffi",
+                    "role": "Responsable de la commission Sécurité",
+                    "text": "Gère la sécurité lors du Salon des Vins",
+                    "photo": "",
+                    "email": "",
+                    "telephone": ""
+                },
+                {
+                    "initials": "FV",
+                    "color": "var(--ink)",
+                    "name": "François Volle",
+                    "role": "Responsable de la commission Voyage",
+                    "text": "Organise les voyages proposés aux adhérents du Club Oenologie et Découvertes",
+                    "photo": "",
+                    "email": "",
+                    "telephone": ""
+                },
+                {
+                    "initials": "RP",
+                    "color": "var(--ink)",
+                    "name": "Roland Pelurson",
+                    "role": "Membre de la commission Aide au pilotage et de la commission Communication",
+                    "text": "Veille au bon déroulement et à la transmission de l'expérience auprès de la nouvelle équipe",
+                    "photo": "",
+                    "email": "",
+                    "telephone": ""
+                },
+                {
+                    "initials": "MJ",
+                    "color": "var(--ink)",
+                    "name": "Michel Javelas",
+                    "role": "Membre de la commission Aide au pilotage et de la commission Repas/Buvette",
+                    "text": "Veille au bon déroulement et à la transmission de l'expérience auprès de la nouvelle équipe",
+                    "photo": "",
+                    "email": "",
+                    "telephone": ""
+                },
+                {
+                    "initials": "AR",
+                    "color": "var(--ink)",
+                    "name": "Alain Roustand",
+                    "role": "Membre de la commission Aide au pilotage et de la commission Communication",
+                    "text": "Veille au bon déroulement et à la transmission de l'expérience auprès de la nouvelle équipe",
+                    "photo": "",
+                    "email": "",
+                    "telephone": ""
+                },
+                {
+                    "initials": "RM",
+                    "color": "var(--ink)",
+                    "name": "Roger Mazoyer",
+                    "role": "Membre de la commission Sponsors",
+                    "text": "",
+                    "photo": "",
+                    "email": "",
+                    "telephone": ""
+                },
+                {
+                    "initials": "RB",
+                    "color": "var(--ink)",
+                    "name": "René Benoît",
+                    "role": "Membre de la commission Sponsors",
+                    "text": "",
+                    "photo": "",
+                    "email": "",
+                    "telephone": ""
+                },
+                {
+                    "initials": "MD",
+                    "color": "var(--ink)",
+                    "name": "Mikaël Dalleau",
+                    "role": "Membre de la commission Repas / Buvette",
                     "text": "",
                     "photo": "",
                     "email": "",
@@ -235,29 +395,65 @@
             "intro": "Une trentaine de bénévoles se relaient chaque année pour l'accueil, la billetterie et le service.",
             "items": [
                 {
-                    "initials": "LR",
-                    "name": "Lucien Requin",
-                    "since": "Bénévole depuis 2020"
+                    "initials": "AA",
+                    "name": "Aurélien Alibert",
+                    "since": ""
                 },
                 {
-                    "initials": "TF",
-                    "name": "Théo Fortin",
-                    "since": "Bénévole depuis 2018"
+                    "initials": "LA",
+                    "name": "Laurence Allombert",
+                    "since": ""
                 },
                 {
-                    "initials": "AN",
-                    "name": "Alexia Nellin",
-                    "since": "Bénévole depuis 2022"
+                    "initials": "CA",
+                    "name": "Christine Alluis",
+                    "since": ""
                 },
                 {
-                    "initials": "SR",
-                    "name": "Serge Ritou",
-                    "since": "Bénévole depuis 2016"
+                    "initials": "NA",
+                    "name": "Nuno Almas",
+                    "since": ""
                 },
                 {
-                    "initials": "EC",
-                    "name": "Éléonore Charreton",
-                    "since": "Bénévole depuis 2023"
+                    "initials": "JA",
+                    "name": "Josette Arnault",
+                    "since": ""
+                },
+                {
+                    "initials": "BA",
+                    "name": "Béatrice Astier",
+                    "since": "",
+                    "photo": "",
+                    "role": "",
+                    "email": "",
+                    "telephone": ""
+                },
+                {
+                    "initials": "NA",
+                    "name": "Nano Avon",
+                    "since": "",
+                    "photo": "",
+                    "role": "",
+                    "email": "",
+                    "telephone": ""
+                },
+                {
+                    "initials": "OA",
+                    "name": "Odile Avon",
+                    "since": "",
+                    "photo": "",
+                    "role": "",
+                    "email": "",
+                    "telephone": ""
+                },
+                {
+                    "initials": "CB",
+                    "name": "Claudine Balay",
+                    "since": "",
+                    "photo": "",
+                    "role": "",
+                    "email": "",
+                    "telephone": ""
                 },
                 {
                     "initials": "+",
@@ -1512,6 +1708,336 @@
                     "https://res.cloudinary.com/de5u1njxn/image/upload/v1791048245/w2olw7fjacn9gurbzzpb.jpg"
                 ],
                 "bio": false,
+                "hve": false
+            },
+            {
+                "nom": "Domaine de la Sarbèche - Cyril Milochevitch",
+                "type": "Vigneron",
+                "numeroStand": "",
+                "region": "Vallée du Rhône",
+                "appellations": [
+                    "St Péray",
+                    "Vin de France"
+                ],
+                "desc": "",
+                "nomComplet": "Domaine de la Sarbèche - Cyril Milochevitch",
+                "adresse": "Le Haut de Fauterie \n07130 St PERAY",
+                "telephone": "06 59 51 14 29",
+                "email": "domainesarbeche@gmail.com",
+                "siteWeb": "",
+                "facebook": "https://www.facebook.com/domainedelasarbeche/",
+                "instagram": "",
+                "linkedin": "",
+                "photos": [
+                    "https://res.cloudinary.com/de5u1njxn/image/upload/v1791110122/fkrmd48i8znyxphzmnlp.jpg"
+                ],
+                "bio": false,
+                "hve": false
+            },
+            {
+                "nom": "Domaine de Mirabel Charmis - Rémi Léorat",
+                "type": "Vigneron",
+                "numeroStand": "",
+                "region": "Vallée du Rhône",
+                "appellations": [
+                    "IGP Ardèche"
+                ],
+                "desc": "",
+                "nomComplet": "Domaine de Mirabel Charmis - Rémi Léorat",
+                "adresse": "1, Chemin de Mirabel \n07800 CHARMES-SUR-RHONE",
+                "telephone": "06 09 91 38 96",
+                "email": "domaine@mirabelcharmis.com",
+                "siteWeb": "https://mirabelcharmis.com/?fbclid=IwY2xjawUu_5RleHRuA2FlbQIxMABwZG9mBWJyaWQRMXp3WUR4NTFhM3d1eVljclpzcnRjBmFwcF9pZBAyMjIwMzkxNzg4MjAwODkyAAEep29FYMrAKIL5ovxslT1RVVM7n3aac8ytrUIwEyEgqJfJoA5kj2nOH3XitmE_aem_YjOhic6l9elIVSPTz4t_JA",
+                "facebook": "https://www.facebook.com/DomaineMirabelCharmis/",
+                "instagram": "https://www.instagram.com/domaine_mirabel_charmis/",
+                "linkedin": "",
+                "photos": [
+                    "https://res.cloudinary.com/de5u1njxn/image/upload/v1791107435/wznjav0fuzotinqkxmck.jpg"
+                ],
+                "bio": false,
+                "hve": false
+            },
+            {
+                "nom": "Domaine de Magord",
+                "type": "Vigneron",
+                "numeroStand": "",
+                "region": "Vallée du Rhône",
+                "appellations": [
+                    "​Clairette de Die"
+                ],
+                "desc": "Références : Guide Hachette 2005/10/13",
+                "nomComplet": "Domaine de Magord",
+                "adresse": "Quartier Magord \n26150 BARSAC",
+                "telephone": "04 75 21 71 43",
+                "email": "domainedemagord@orange.fr",
+                "siteWeb": "https://www.cavevincent.com/",
+                "facebook": "https://www.facebook.com/CaveVincentcom-199110850162550/?tn-str=k*F",
+                "instagram": "",
+                "linkedin": "",
+                "photos": [
+                    "https://res.cloudinary.com/de5u1njxn/image/upload/v1791109336/fof2lnf0bripmx83mzvs.jpg"
+                ],
+                "bio": false,
+                "hve": true
+            },
+            {
+                "nom": "Domaine de Cheylus - Gerben Tonkens",
+                "type": "Vigneron",
+                "numeroStand": "",
+                "region": "Vallée du Rhône",
+                "appellations": [
+                    "Collines Rhodaniennes",
+                    "Côtes du Rhône"
+                ],
+                "desc": "",
+                "nomComplet": "Domaine de Cheylus - Gerben Tonkens",
+                "adresse": "07000 FLAVIAC",
+                "telephone": "04.75.65.73.17 / 06.62.09.73.17",
+                "email": "gerben.tonkens@orange.fr",
+                "siteWeb": "http://www.chateaudecheylus.com/",
+                "facebook": "https://www.facebook.com/p/Chateau-de-Cheylus-100069459350665/",
+                "instagram": "",
+                "linkedin": "",
+                "photos": [
+                    "https://res.cloudinary.com/de5u1njxn/image/upload/v1791109598/d8eh8ky2cz08edazdgax.jpg"
+                ],
+                "bio": false,
+                "hve": false
+            },
+            {
+                "nom": "Domaine de la Girardière",
+                "type": "Vigneron",
+                "numeroStand": "",
+                "region": "Vallée du Rhône",
+                "appellations": [
+                    "Rasteau"
+                ],
+                "desc": "Références : Guide Hachette 2012 - Revue des Vins de France 2011",
+                "nomComplet": "Domaine de la Girardière",
+                "adresse": "593 Chemin du Plan \n84110 RASTEAU",
+                "telephone": "09 64 09 16 75 / 06 87 68 58 73",
+                "email": "lagirardiere@rasteau.fr",
+                "siteWeb": "https://domainelagirardiere-rasteau.fr/",
+                "facebook": "https://www.facebook.com/domainedelagirardiere/",
+                "instagram": "",
+                "linkedin": "",
+                "photos": [
+                    "https://res.cloudinary.com/de5u1njxn/image/upload/v1791109960/gnigkw48lp6f2y70onmy.jpg"
+                ],
+                "bio": false,
+                "hve": false
+            },
+            {
+                "nom": "Domaine de La Tuilière - Bezert Didier",
+                "type": "Vigneron",
+                "numeroStand": "",
+                "region": "Vallée du Rhône",
+                "appellations": [
+                    "Gigondas"
+                ],
+                "desc": "Références : Guide Hachette 2011 Revues des vins de France 2009/10/11 Vins et gastronomie 2010/12",
+                "nomComplet": "Domaine de La Tuilière - Bezert Didier",
+                "adresse": "720 route de Vaison la Romaine \n84190 GIGONDAS",
+                "telephone": "04 90 65 82 19",
+                "email": "cavetuiliere@orange.fr",
+                "siteWeb": "https://www.gigondas-vin.com/vigneron/domaine-de-la-tuiliere/",
+                "facebook": "https://www.facebook.com/domaine.latuiliere/",
+                "instagram": "",
+                "linkedin": "",
+                "photos": [
+                    "https://res.cloudinary.com/de5u1njxn/image/upload/v1791110463/aeegz3112ugvcfnp15b6.jpg"
+                ],
+                "bio": false,
+                "hve": false
+            },
+            {
+                "nom": "Domaine Maître Curnier",
+                "type": "Vigneron",
+                "numeroStand": "",
+                "region": "Vallée du Rhône",
+                "appellations": [
+                    "Vacqueyras"
+                ],
+                "desc": "",
+                "nomComplet": "Domaine Maître Curnier",
+                "adresse": "1166 Chemin des abreuvoirs\n84190 VACQUEYRAS",
+                "telephone": "09 75 41 24 58",
+                "email": "guintrandhenry@aol.com",
+                "siteWeb": "https://maitrecurnier.fr/",
+                "facebook": "https://www.facebook.com/DomaineMaitreCurnier/",
+                "instagram": "https://www.instagram.com/domainemaitrecurnier",
+                "linkedin": "",
+                "photos": [
+                    "https://res.cloudinary.com/de5u1njxn/image/upload/v1791110651/jhyvcy257ucg2j6iw7ju.jpg"
+                ],
+                "bio": false,
+                "hve": false
+            },
+            {
+                "nom": "Mas de Bois Lauzon",
+                "type": "Vigneron",
+                "numeroStand": "",
+                "region": "Vallée du Rhône",
+                "appellations": [
+                    "Châteauneuf du Pape",
+                    "Côtes du Rhône Villages"
+                ],
+                "desc": "Références : Guide Hachette 2010, 2012 à 2014, 2019 - Guide Parker 2012 à 2019 - Revue des Vins de France 2017",
+                "nomComplet": "Mas de Bois Lauzon",
+                "adresse": "Quartier Bois Lauzon \n84100 ORANGE",
+                "telephone": "04 90 34 46 49",
+                "email": "masdeboislauzon@wanadoo.fr",
+                "siteWeb": "https://www.masdeboislauzon.fr/",
+                "facebook": "https://www.facebook.com/Mas-de-Boislauzon-1554276278201490/",
+                "instagram": "https://www.instagram.com/masdeboislauzon/",
+                "linkedin": "",
+                "photos": [
+                    "https://res.cloudinary.com/de5u1njxn/image/upload/v1791110864/nngtavosgualqx2fwqaa.jpg"
+                ],
+                "bio": true,
+                "hve": false
+            },
+            {
+                "nom": "Domaine du Serre des Vignes",
+                "type": "Vigneron",
+                "numeroStand": "",
+                "region": "Vallée du Rhône",
+                "appellations": [
+                    "Grignan les Adhémar"
+                ],
+                "desc": "",
+                "nomComplet": "",
+                "adresse": "505, traverse du Serre des Vignes\n26770 LA ROCHE SAINT-SECRET",
+                "telephone": "09 65 27 30 87 / 06 75 06 93 38",
+                "email": "info@serredesvignes.com",
+                "siteWeb": "http://www.serredesvignes.com/",
+                "facebook": "https://www.facebook.com/serredesvignes#",
+                "instagram": "",
+                "linkedin": "",
+                "photos": [
+                    "https://res.cloudinary.com/de5u1njxn/image/upload/v1791111117/xquvtf8eq8vueymduk2r.jpg"
+                ],
+                "bio": true,
+                "hve": false
+            },
+            {
+                "nom": "Domaine de la Croix Blanche",
+                "type": "Vigneron",
+                "numeroStand": "",
+                "region": "Vallée du Rhône",
+                "appellations": [
+                    "St Andéol Côtes du Rhône village",
+                    "IGP Coteaux de l'Ardèche"
+                ],
+                "desc": "Références : Guide Hachette 2001 à 2003, 2007, 2009, 2020\nDussert-Gerber 2014/20 - Guide Millésimes 2014/17",
+                "nomComplet": "",
+                "adresse": "130 Chemin Neuf\n07700 SAINT MARTIN D''ARDECHE",
+                "telephone": "04 75 04 65 07",
+                "email": "contact@domainedelacroixblanche.fr",
+                "siteWeb": "http://www.domainedelacroixblanche.com/",
+                "facebook": "https://www.facebook.com/domaine.croix.blanche/",
+                "instagram": "https://www.instagram.com/explore/tags/domainedelacroixblanche/?hl=fr",
+                "linkedin": "",
+                "photos": [
+                    "https://res.cloudinary.com/de5u1njxn/image/upload/v1791111426/mlvvgoneoyjiddd8o0rz.jpg"
+                ],
+                "bio": true,
+                "hve": false
+            },
+            {
+                "nom": "Domaine Alain Dumarcher",
+                "type": "Vigneron",
+                "numeroStand": "",
+                "region": "Vallée du Rhône",
+                "appellations": [
+                    "IGP Ardèche",
+                    "Côtes du Vivarais"
+                ],
+                "desc": "Références: Guide Hachette 2008 à 2010, 2017\nGault et Millau 2013 -Gilbert et Gaillard 2014/15 - Revue des vins de France 2008 - Régal 2008 - Guide du Routard 2020 (chaque année depuis 2002)\nMédaille d'or du concours des vins et des spiritueux 2026",
+                "nomComplet": "Domaine Alain Dumarcher",
+                "adresse": "Le Clos de Prime \n250 Chemin de Combe Charel \n07700 GRAS",
+                "telephone": "04 75 04 31 82 / 06 32 36 51 19",
+                "email": "a.dumarcher@orange.fr",
+                "siteWeb": "https://www.domainealaindumarcher.com/",
+                "facebook": "https://www.facebook.com/DOMAINEALAINDUMARCHER/",
+                "instagram": "",
+                "linkedin": "",
+                "photos": [
+                    "https://res.cloudinary.com/de5u1njxn/image/upload/v1791125605/rree31ni9jqzd6mmg470.jpg"
+                ],
+                "bio": false,
+                "hve": true
+            },
+            {
+                "nom": "Domaine Chapelle Saint Heyries",
+                "type": "Vigneron",
+                "numeroStand": "",
+                "region": "Vallée du Rhône",
+                "appellations": [
+                    "Ventoux",
+                    "Vin de Pays Vaucluse"
+                ],
+                "desc": "Références: Guide Hachette 2015",
+                "nomComplet": "Domaine Chapelle Saint Heyries",
+                "adresse": "589 chemin de la croix du coq \n84220 GORDES",
+                "telephone": "04 90 72 00 53",
+                "email": "earl.imbertetienne@orange.fr",
+                "siteWeb": "https://www.domainechapellestheyries.fr/",
+                "facebook": "https://www.facebook.com/chapellesaintheyries.imbert",
+                "instagram": "",
+                "linkedin": "",
+                "photos": [
+                    "https://res.cloudinary.com/de5u1njxn/image/upload/v1791125776/vxlhjndl8h5izi2r6zlc.jpg"
+                ],
+                "bio": false,
+                "hve": false
+            },
+            {
+                "nom": "Domaine des Césars",
+                "type": "Vigneron",
+                "numeroStand": "",
+                "region": "Vallée du Rhône",
+                "appellations": [
+                    "AOP Côtes du Rhône"
+                ],
+                "desc": "",
+                "nomComplet": "Domaine des Césars",
+                "adresse": "152, rue Paul Ruat \n26790 TULETTE",
+                "telephone": "06 10 53 61 83",
+                "email": "lecabanondecesar@gmail.com",
+                "siteWeb": "https://www.domaine-des-cesars.com/",
+                "facebook": "",
+                "instagram": "",
+                "linkedin": "",
+                "photos": [
+                    "https://res.cloudinary.com/de5u1njxn/image/upload/v1791125976/u0hvfkujwjbhnwvcyr5c.jpg"
+                ],
+                "bio": false,
+                "hve": false
+            },
+            {
+                "nom": "Domaine le Puy de Maupas",
+                "type": "Vigneron",
+                "numeroStand": "",
+                "region": "Vallée du Rhône",
+                "appellations": [
+                    "AOP Vinsobres",
+                    "Puyméras",
+                    "Côtes du Rhône"
+                ],
+                "desc": "",
+                "nomComplet": "Domaine le Puy de Maupas",
+                "adresse": "1678 Route de Nyons\n84110 PUYMERAS",
+                "telephone": "04 90 46 47 43 / 06 18 54 12 75",
+                "email": "domaine@puy-du-maupas.com",
+                "siteWeb": "https://www.puy-du-maupas.com/",
+                "facebook": "https://www.facebook.com/puydumaupas/",
+                "instagram": "",
+                "linkedin": "",
+                "photos": [
+                    "https://res.cloudinary.com/de5u1njxn/image/upload/v1791126171/gjjg7ojm1vefzcnkdlwo.jpg"
+                ],
+                "bio": true,
                 "hve": false
             }
         ]
