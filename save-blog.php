@@ -3,7 +3,7 @@
 header('Content-Type: application/json; charset=utf-8');
 
 // >>> Même valeur que $ADMIN_TOKEN dans save.php <<<
-$ADMIN_TOKEN = '';
+$ADMIN_TOKEN = 'pigzefi86123!:;AZE';
 
 function fail($code, $msg) {
     http_response_code($code);
