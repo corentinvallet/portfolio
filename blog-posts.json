@@ -1,1 +1,109 @@
-[]
+[
+    {
+        "id": "1791147670839",
+        "title": "Posts simultanés Facebook",
+        "slug": "posts-simultanes-facebook",
+        "date": "2026-10-04",
+        "excerpt": "Marre de copier un post à plusieurs endroits ?",
+        "content": "Marre de copier un post à plusieurs endroits ?\nLa communication doit se faire sur plusieurs supports (Facebook, Instagram notamment). Maintenir la cohérence entre les différents réseaux n'est pas toujours chose facile.\nGrâce à l'API Meta, il est possible de poster sur son site, et que ce post soit posté simultanément sur Facebook, sans action supplémentaire !\nC'est le cas de celui-ci, la preuve ici !\nhttps://www.corentinvallet.fr/blog-post.php?slug=posts-simultanes-facebook",
+        "image": "Photos/Blog/eb43525f2df0705a.jpg",
+        "images": [
+            "Photos/Blog/eb43525f2df0705a.jpg",
+            "Photos/Blog/8461ffef21cff1e8.jpg"
+        ],
+        "published": true
+    },
+    {
+        "id": "1791147837424",
+        "title": "Annonce",
+        "slug": "annonce",
+        "date": "2026-08-05",
+        "excerpt": "C'est officiel !",
+        "content": "C'est officiel ! Je crée des sites web pour les indépendants de la Drôme et de l'Ardèche.\nConcrètement, je m'occupe de tout :\n– la conception et le design du site\n– les textes, si vous n'avez pas le temps de les écrire\n– le référencement local, pour qu'on vous trouve sur Google\n– un espace d'administration simple est possible, pour que vous puissiez modifier vos photos, vos tarifs ou votre carte vous-même\nUn projet cadré, un prix fixé à l'avance, une livraison. Pas de devis qui s'allonge.\nArtisans, restaurateurs, commerçants, professions libérales : si vous vous dites depuis deux ans qu'il faudrait « faire un site », je peux vous faire gratuitement une maquette de ce que serait votre site.\nExemples de réalisations et démos complètes ici :\ncorentinvallet.fr\n📞 06 63 69 40 08\nUn like ou un partage m'aiderait beaucoup pour lancer cette page. Merci",
+        "image": "Photos/Blog/9d39dc57d6089eff.jpg",
+        "images": [
+            "Photos/Blog/9d39dc57d6089eff.jpg"
+        ],
+        "published": true
+    },
+    {
+        "id": "1791147871753",
+        "title": "Démonstration - Location de matétiel",
+        "slug": "demonstration-location-de-matetiel",
+        "date": "2026-08-12",
+        "excerpt": "« Bonjour, la mini-pelle, elle est libre samedi ? »",
+        "content": "Quand vous louez du matériel, vous répondez à cette question quinze fois par jour. Souvent pendant que vous chargez une remorque.\nAlors j'ai conçu TerraLoc : le site d'un loueur de matériel jardin et bricolage à Valence. Entreprise fictive, site bien réel.\nLe client voit le matériel, les caractéristiques, le prix à la journée. Il choisit ses dates et envoie sa demande. Vous, vous recevez un mail avec tout ce qu'il faut pour répondre en trois lignes — et vous mettez le catalogue à jour vous-même depuis votre téléphone quand une machine part en révision.\nCe n'est pas réservé à la location. Un traiteur, un fleuriste, un loueur de salle : dès qu'il y a un catalogue et des disponibilités, c'est le même principe.\nLa démo complète est visible ici 👉 corentinvallet.fr/commerce\n⚠️ TerraLoc est une entreprise fictive : adresse, téléphone et avis sont inventés pour l'exemple.",
+        "image": "Photos/Blog/ebebfb8162bd390c.jpg",
+        "images": [
+            "Photos/Blog/ebebfb8162bd390c.jpg",
+            "Photos/Blog/54e290b6d59c6b33.jpg",
+            "Photos/Blog/cd55e4b8b11b70f6.jpg",
+            "Photos/Blog/fc8a3bedceeefe5c.jpg"
+        ],
+        "published": true
+    },
+    {
+        "id": "1791147903478",
+        "title": "Démonstration - Restaurateurs",
+        "slug": "demonstration-restaurateurs",
+        "date": "2026-08-15",
+        "excerpt": "La carte de votre restaurant change. Votre site, non ?",
+        "content": "La carte de votre restaurant change. Votre site, non ?\nC'est le problème numéro un des sites de restaurant : un PDF de la carte mis en ligne une fois, jamais remplacé. Le client arrive, voit un plat qui n'existe plus, et vous passez votre service à vous excuser.\nAlors j'ai conçu Le Zinc, le site d'un bistrot parisien. Établissement fictif, site bien réel.\nLe patron change sa carte depuis son téléphone, entre deux services. Il ajoute le plat du jour, retire ce qui est épuisé, ajuste un prix. Trente secondes, aucune compétence technique, et personne à rappeler.\nEt les clients réservent directement en ligne : date, heure, nombre de couverts. La demande arrive dans sa boîte mail, il confirme. Fini les appels pendant le coup de feu.\nLa démo complète est visible ici 👉 corentinvallet.fr/restaurant\nL'espace admin : www.corentinvallet.fr/restaurant/admin.html\n⚠️ Le Zinc est un établissement fictif : adresse, téléphone et avis sont inventés pour la démonstration.",
+        "image": "Photos/Blog/dced1dca89fc1433.jpg",
+        "images": [
+            "Photos/Blog/dced1dca89fc1433.jpg",
+            "Photos/Blog/2c71bb6db1f423ba.jpg",
+            "Photos/Blog/7bc53bf06b6b7b72.jpg",
+            "Photos/Blog/12a95a1998a24494.jpg"
+        ],
+        "published": true
+    },
+    {
+        "id": "1791147961292",
+        "title": "Démonstration - Artisans",
+        "slug": "demonstration-artisans",
+        "date": "2026-08-20",
+        "excerpt": "Artisans, pas le temps de communiquer ?",
+        "content": "Vous êtes artisan, vous travaillez, pas le temps de communiquer. Les chantiers s'enchaînent, et la visibilité passe au second plan.\nAlors j'ai conçu Pierrard Maçonnerie, le site d'un maçon. Établissement fictif, site bien réel.\nJe prends en charge le site, de bout en bout. Rédaction des textes, charte graphique, structure du site. Vous me donnez vos objectifs, je conçois votre site\nVos clients retrouvent tout ce qu'il faut sur votre site : réalisations, prestations possibles, coordonnées. Une galerie filtrable leur permet de voir vos œuvres !\nIls vous contactent directement en ligne. La demande arrive dans votre boîte mail, plus qu'à le contacter. Fini les appels pendant le coup de feu.\nAu besoin, un espace admin peut même vous permettre de modifier vous-même le contenu, sans connaissance technique !\nLa démo complète est visible ici 👉 corentinvallet.fr/artisan\nL'espace admin : www.corentinvallet.fr/artisan/admin.html\n⚠️ Pierrard Maçonnerie est un établissement fictif : adresse, téléphone et avis sont inventés pour la démonstration.",
+        "image": "Photos/Blog/28c81c98c85b66b3.jpg",
+        "images": [
+            "Photos/Blog/28c81c98c85b66b3.jpg",
+            "Photos/Blog/6f87a37d977f9a9f.jpg",
+            "Photos/Blog/e5a20b93ad1660a0.jpg",
+            "Photos/Blog/76801ee9054442e5.jpg"
+        ],
+        "published": true
+    },
+    {
+        "id": "1791148010704",
+        "title": "Francis Ferret - Artiste sculpteur sur bois",
+        "slug": "francis-ferret-artiste-sculpteur-sur-bois",
+        "date": "2026-08-26",
+        "excerpt": "Nouvelle réalisation !!🥳",
+        "content": "Nouvelle réalisation !!🥳\nUn grand merci à Francis Ferret sculpteur créateur pour sa confiance. \nArtiste sculpteur sur bois, Francis est deux fois champion de France de sculpture à la tronçonneuse et réalise de nombreuses pièces, personnages ou animaux !\nQue vous soyez déjà client, curieux, ou simplement amateur de belles pièces en bois, on vous invite à venir jeter un œil (et à nous dire ce que vous en pensez !) 👇\nwww.francisferret.fr ",
+        "image": "Photos/Blog/674b9ef934e70763.jpg",
+        "images": [
+            "Photos/Blog/674b9ef934e70763.jpg",
+            "Photos/Blog/fedcf6d0d0d9acee.jpg",
+            "Photos/Blog/75961f9b7507097a.jpg",
+            "Photos/Blog/e61ff72944a5223b.jpg"
+        ],
+        "published": true
+    },
+    {
+        "id": "1791148069568",
+        "title": "B&A Construction : Maçonnerie générale et ouvrages spécifiques",
+        "slug": "b-a-construction-maconnerie-generale-et-ouvrages-specifiques",
+        "date": "2026-10-03",
+        "excerpt": "Nouvelle réalisation !!🥳",
+        "content": "Nouvelle réalisation ! 🥳\nMille mercis à B&A Construction pour leur confiance dans la réalisation de leur site.\nBruno Salgado et Alex Freitas sont deux maçons qui réalisent des ouvrages traditionnels, mais aussi haut de gamme. Piscines, caves à vins, escaliers bétons ou encore bétons imprimés, les possibilités sont nombreuses, n'hésitez pas à aller voir leur oeuvres sur leur nouveau site, et à nous dire ce que vous en pensez ! 👇\nwww.beta-construction.fr",
+        "image": "Photos/Blog/2cedaa35147dbe6a.jpg",
+        "images": [
+            "Photos/Blog/2cedaa35147dbe6a.jpg",
+            "Photos/Blog/c497bdabe050a8e9.jpg",
+            "Photos/Blog/d1267a628d1d8a08.jpg",
+            "Photos/Blog/277bc2f1e4dab4c6.jpg"
+        ],
+        "published": true
+    }
+]
