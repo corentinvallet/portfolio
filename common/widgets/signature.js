@@ -51,12 +51,14 @@
       color: ${c.accent};
       text-decoration: none;
       font-weight: 600;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s ease;
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s ease;
     }
     .cv-signature a:hover,
-    .cv-signature a:focus {
-      border-bottom: 1px solid ${c.accent};
+    .cv-signature a:focus-visible {
+      text-decoration-color: ${c.accent};
     }
     .cv-signature .cv-logo {
       width: 32px;
