@@ -506,6 +506,7 @@ if ($sponsorItems):
     </div>
 
     <div class="warning"><?= e($contact['warning'] ?? '') ?></div>
+    <div id="cv-signature"></div>
   </div>
 </footer>
 
@@ -568,6 +569,7 @@ if ($sponsorItems):
 })();
 </script>
 <script src="assets/script-carte.js" defer></script>
+<script src="https://www.corentinvallet.fr/common/widgets/signature.js?v=1" defer></script>
 
 <!-- Matomo -->
 <script>
