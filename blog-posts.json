@@ -105,5 +105,21 @@
             "Photos/Blog/422d6e149a4076d6.jpg"
         ],
         "published": true
+    },
+    {
+        "id": "1793046166266",
+        "title": "L'Abri des Libellules - Un écogîte au coeur de l'Ardèche",
+        "slug": "nouvelle-realisation-l-abri-des-libellules",
+        "date": "2026-10-26",
+        "excerpt": "Nouvelle réalisation !!🥳",
+        "content": "Nouvelle réalisation ! 🥳\nGrosse reconnaissance à l'Abri des Libellules pour leur confiance sur ce projet.\nPauline et Sylvain Viallon vous accueillent dans leur gîte nature à Saint Romain de Lerps en Ardèche. Leur dôme sera votre cocon, dans un écrin de verdure, ambiance bucolique garantie !\nN'hésitez pas à aller voir le site, et à faire un retour en commentaire !  👇\nwww.abrideslibellules.fr\nPour le détail de la réalisation, c'est par ici !  👇\nhttps://www.corentinvallet.fr/realisation-libellules.php",
+        "image": "Photos/Blog/fdddedf91f11a235.jpg",
+        "images": [
+            "Photos/Blog/fdddedf91f11a235.jpg",
+            "Photos/Blog/d09db9e704392caa.jpg",
+            "Photos/Blog/acbbc22c0a973990.jpg",
+            "Photos/Blog/3cd4f69f90f1466a.jpg"
+        ],
+        "published": true
     }
 ]
