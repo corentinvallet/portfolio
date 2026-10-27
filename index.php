@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- SEO de base -->
-  <title>Création de site web à Valence (Drôme) | Corentin Vallet</title>
+  <title>Création de sites web à Valence (Drôme) | Corentin Vallet</title>
   <meta name="description" content="Sites web clé en main pour indépendants et petites entreprises à Valence et dans la Drôme/Ardèche. Design sur-mesure, livraison rapide, accompagnement de A à Z." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://corentinvallet.fr/" />
