@@ -276,7 +276,7 @@
   </style>
 </head>
 <body>
-<?php include __DIR__ . '/../inc/nav.php'; ?>
+<?php $root = '../'; include __DIR__ . '/../inc/nav.php'; ?>
 <!-- HERO -->
 <div class="hero">
   <p class="hero-eyebrow">✦ Étude de cas · Restaurateurs ✦</p>
