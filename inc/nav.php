@@ -5,10 +5,11 @@
            false / absent ailleurs (les ancres sont alors préfixées par index.php)
 */
 $home   = $home ?? false;
-$prefix = $home ? '' : 'index.php';
+$root   = $root ?? '';
+$prefix = $home ? '' : $root . 'index.php';
 ?>
 <nav>
-  <a href="index.php" class="nav-logo"><img src="Photos/Logo sans texte.png" alt="Corentin Vallet" class="nav-logo-img"> Corentin <span>Vallet</span></a>
+  <a href="<?= $root ?>index.php" class="nav-logo"><img src="<?= $root ?>Photos/Logo sans texte.png" alt="Corentin Vallet" class="nav-logo-img"> Corentin <span>Vallet</span></a>
   <ul class="nav-links" id="nav-links">
     <li><a href="<?= $prefix ?>#approche">Approche</a></li>
     <li><a href="<?= $prefix ?>#services">Services</a></li>

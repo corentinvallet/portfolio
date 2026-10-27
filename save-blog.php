@@ -95,8 +95,8 @@ foreach ($data['posts'] as $p) {
 
 $json = json_encode($clean, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
-$path = __DIR__ . '/blog-posts.json';
-if (file_exists($path)) @copy($path, __DIR__ . '/blog-posts.backup.json');
+$path = __DIR__ . '/blog/blog-posts.json';
+if (file_exists($path)) @copy($path, __DIR__ . '/blog/blog-posts.backup.json');
 
 if (file_put_contents($path, $json, LOCK_EX) === false) {
     fail(500, 'Écriture impossible — vérifiez les droits du dossier.');

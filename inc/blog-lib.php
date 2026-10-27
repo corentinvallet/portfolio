@@ -5,6 +5,13 @@ function blog_e($s) {
     return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
 }
 
+/* Chemin d'image utilisable depuis /blog/ : URL http(s) et chemins absolus inchangés, les autres préfixés par / */
+function blog_img($src) {
+    $src = (string)$src;
+    if ($src === '' || preg_match('#^(https?:)?//#i', $src) || $src[0] === '/') return $src;
+    return '/' . $src;
+}
+
 function blog_normalize(array $p): array {
     $images = [];
     if (!empty($p['images']) && is_array($p['images'])) {
@@ -29,7 +36,7 @@ function blog_normalize(array $p): array {
 
 /* Articles publiés, du plus récent au plus ancien */
 function blog_published_posts(): array {
-    $file = __DIR__ . '/../blog-posts.json';
+    $file = __DIR__ . '/../blog/blog-posts.json';
     if (!is_file($file)) return [];
     $data = json_decode((string)file_get_contents($file), true);
     if (!is_array($data)) return [];

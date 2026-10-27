@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/inc/blog-lib.php';
+require __DIR__ . '/../inc/blog-lib.php';
 $posts = blog_published_posts();
 ?>
 <!DOCTYPE html>
@@ -11,25 +11,25 @@ $posts = blog_published_posts();
   <title>Blog — Sites web pour artisans et indépendants à Valence | Corentin Vallet</title>
   <meta name="description" content="Conseils et retours d'expérience sur la création de site web pour artisans, commerçants et indépendants à Valence, en Drôme et en Ardèche." />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://corentinvallet.fr/blog.php" />
-  <link rel="icon" type="image/ico" href="Photos/Favicon_transp48.png">
+  <link rel="canonical" href="https://corentinvallet.fr/blog/blog.php" />
+  <link rel="icon" type="image/ico" href="../Photos/Favicon_transp48.png">
 
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:title" content="Blog — Sites web pour artisans et indépendants à Valence" />
   <meta property="og:description" content="Conseils et retours d'expérience sur la création de site web pour artisans et indépendants en Drôme et Ardèche." />
-  <meta property="og:url" content="https://corentinvallet.fr/blog.php" />
+  <meta property="og:url" content="https://corentinvallet.fr/blog/blog.php" />
   <meta property="og:image" content="https://corentinvallet.fr/Photos/og-image.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Mono:wght@300;400&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="nav.css">
+  <link rel="stylesheet" href="../nav.css">
   <link rel="stylesheet" href="blog.css?v=3">
 </head>
 <body>
-<?php include __DIR__ . '/inc/nav.php'; ?>
+<?php $root = '../'; include __DIR__ . '/../inc/nav.php'; ?>
 
 <main class="blog-main">
   <div class="blog-eyebrow">Le blog</div>
@@ -45,7 +45,7 @@ $posts = blog_published_posts();
           <a class="blog-card-link" href="blog-post.php?slug=<?= rawurlencode($p['slug']) ?>">
             <div class="blog-card-cover">
               <?php if ($p['image'] !== ''): ?>
-                <img src="<?= blog_e($p['image']) ?>" alt="" width="640" height="360" loading="lazy">
+                <img src="<?= blog_e(blog_img($p['image'])) ?>" alt="" width="640" height="360" loading="lazy">
               <?php endif; ?>
             </div>
             <div class="blog-card-body">
@@ -63,6 +63,6 @@ $posts = blog_published_posts();
   <?php endif; ?>
 </main>
 
-<?php include __DIR__ . '/inc/blog-footer.php'; ?>
+<?php include __DIR__ . '/../inc/blog-footer.php'; ?>
 </body>
 </html>

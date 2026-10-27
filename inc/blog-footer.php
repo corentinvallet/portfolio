@@ -4,5 +4,5 @@
 </footer>
 
 <script src="blog.js?v=3"></script>
-<script src="lightbox.js"></script>
-<script src="nav.js"></script>
+<script src="../lightbox.js"></script>
+<script src="../nav.js"></script>

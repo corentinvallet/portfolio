@@ -26,7 +26,7 @@ $force   = !empty($data['force']);
 
 // On n'accepte que des liens vers les articles du blog
 if ($message === '' || mb_strlen($message) > 8000) out(400, ['error' => 'Message vide ou trop long']);
-if (!preg_match('#^https://corentinvallet\.fr/blog-post\.php\?slug=[a-z0-9-]+$#', $link)) {
+if (!preg_match('#^https://corentinvallet\.fr/blog/blog-post\.php\?slug=[a-z0-9-]+$#', $link)) {
     out(400, ['error' => 'Lien invalide']);
 }
 

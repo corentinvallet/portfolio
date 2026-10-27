@@ -11,7 +11,7 @@ if ($post) {
   $pageDesc  = $post['excerpt'] !== ''
     ? $post['excerpt']
     : mb_substr(trim(preg_replace('/\s+/', ' ', strip_tags($post['content']))), 0, 155);
-  $pageUrl   = $base . '/blog-post.php?slug=' . rawurlencode($post['slug']);
+  $pageUrl   = $base . '/blog/blog-post.php?slug=' . rawurlencode($post['slug']);
   if ($post['image'] === '')                    $ogImage = $base . '/Photos/og-image.png';
   elseif (strpos($post['image'], 'http') === 0) $ogImage = $post['image'];
   else                                          $ogImage = $base . '/' . ltrim($post['image'], '/');
@@ -63,7 +63,7 @@ if ($post) {
 
   <link rel="stylesheet" href="nav.css">
   <link rel="stylesheet" href="blog.css?v=4">
-  <link rel="stylesheet" href="lightbox.css">
+  <link rel="stylesheet" href="../lightbox.css">
 </head>
 <body>
 <?php include __DIR__ . '/inc/nav.php'; ?>
@@ -91,7 +91,7 @@ if ($post) {
         ?>
           <?php if ($i < 5): ?>
             <div class="post-mosaic-item">
-              <img class="post-mosaic-img" src="<?= blog_e($src) ?>" alt="<?= blog_e($alt) ?>"<?= $i === 0 ? ' width="1200" height="675"' : ' loading="lazy"' ?>>
+              <img class="post-mosaic-img" src="<?= blog_e(blog_img($src)) ?>" alt="<?= blog_e($alt) ?>"<?= $i === 0 ? ' width="1200" height="675"' : ' loading="lazy"' ?>>
               <?php if ($i === 4 && $nbImg > 5): ?>
                 <span class="post-mosaic-more">+<?= $nbImg - 5 ?></span>
               <?php endif; ?>
@@ -111,7 +111,7 @@ if ($post) {
   <aside class="post-cta">
     <div class="post-cta-title">Un projet de site web ?</div>
     <p>Artisan, commerçant ou indépendant à Valence, en Drôme ou en Ardèche : parlons de votre projet, sans engagement.</p>
-    <a href="index.php#contact" class="post-cta-btn">Me contacter</a>
+    <a href="../index.php#contact" class="post-cta-btn">Me contacter</a>
   </aside>
 <?php else: ?>
   <a href="blog.php" class="post-back">← Tous les articles</a>
@@ -120,7 +120,7 @@ if ($post) {
 <?php endif; ?>
 </main>
 
-<?php if ($post && $post['images']) include __DIR__ . '/inc/lightbox.php'; ?>
+<?php if ($post && $post['images']) include __DIR__ . '/../inc/lightbox.php'; ?>
 
 <?php include __DIR__ . '/inc/blog-footer.php'; ?>
 </body>

@@ -1176,7 +1176,7 @@ a { color: inherit; text-decoration: none; }
     <div class="topbar">
       <div>
         <div class="page-title">Articles de <em>blog</em></div>
-        <div class="page-subtitle">Gérez les articles publiés sur /blog.php</div>
+        <div class="page-subtitle">Gérez les articles publiés sur /blog/blog.php</div>
       </div>
       <button class="save-btn" onclick="newBlogPost()">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -1668,7 +1668,7 @@ function renderPhotos() {
    de content.json, et sont sauvegardés via save-blog.php. Même token
    d'admin (SAVE_TOKEN) que pour le reste.
    ═══════════════════════════════════════════════════════════════════ */
-const BLOG_URL      = '../blog-posts.json';
+const BLOG_URL      = '../blog/blog-posts.json';
 const BLOG_ENDPOINT = '../save-blog.php';
 const FB_ENDPOINT   = '../post-facebook.php';
 const SITE_URL      = 'https://corentinvallet.fr';
@@ -1715,7 +1715,7 @@ function renderBlogList() {
     row.innerHTML = `
       <div style="min-width:0;">
         <div style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(p.title || '(sans titre)')}</div>
-        <div style="font-size:0.78rem;color:var(--text2);font-family:'DM Mono',monospace;">${escapeHtml(p.date || '')} · /blog-post.php?slug=${escapeHtml(p.slug || '')}</div>
+        <div style="font-size:0.78rem;color:var(--text2);font-family:'DM Mono',monospace;">${escapeHtml(p.date || '')} · /blog/blog-post.php?slug=${escapeHtml(p.slug || '')}</div>
       </div>
       <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
         ${badge}
