@@ -1,2 +1,5 @@
-
-
+RewriteEngine On
+RewriteRule ^blog\.php$ /blog/blog.php [R=301,L]
+RewriteRule ^blog-post\.php$ /blog/blog-post.php [R=301,L]
+RewriteRule ^demo-(zinc|pierrard|terraloc)\.php$ /demo/demo-$1.php [R=301,L]
+RewriteRule ^(restaurant|artisan|commerce)/(.*)$ /demo/$1/$2 [R=301,L]

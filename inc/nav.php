@@ -24,9 +24,9 @@ $prefix = $home ? '' : $root . 'index.php';
     <li class="nav-dropdown">
       <a href="<?= $prefix ?>#realisations" class="nav-dropdown-trigger" aria-expanded="false">Démonstrations</a>
       <ul class="nav-dropdown-menu">
-        <li><a href="<?= $root ?>demo-zinc.php">Restaurant</a></li>
-        <li><a href="<?= $root ?>demo-pierrard.php">Artisan</a></li>
-        <li><a href="<?= $root ?>demo-terraloc.php">Commerce</a></li>
+        <li><a href="<?= $root ?>demo/demo-zinc.php">Restaurant</a></li>
+        <li><a href="<?= $root ?>demo/demo-pierrard.php">Artisan</a></li>
+        <li><a href="<?= $root ?>demo/demo-terraloc.php">Commerce</a></li>
       </ul>
     </li>
     <li><a href="<?= $prefix ?>#profil">Profil</a></li>

@@ -7,15 +7,15 @@
   <title>Étude de cas — Le Zinc, site pour restaurateur | Corentin Vallet</title>
   <meta name="description" content="Découvrez en détail la démo Le Zinc : un site vitrine pour bistrot avec réservation en ligne, et un espace admin pour tout gérer sans compétence technique." />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://corentinvallet.fr/demo-zinc.php" />
+  <link rel="canonical" href="https://corentinvallet.fr/demo/demo-zinc.php" />
 
-  <link rel="icon" type="image/ico" href="Photos/Favicon_transp48.png">
+  <link rel="icon" type="image/ico" href="../Photos/Favicon_transp48.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Mono:wght@300;400&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="nav.css">
-  <link rel="stylesheet" href="lightbox.css">
+  <link rel="stylesheet" href="../nav.css">
+  <link rel="stylesheet" href="../lightbox.css">
   <style>
     :root {
       --bg:       #f5f2ec;
@@ -276,7 +276,7 @@
   </style>
 </head>
 <body>
-<?php include __DIR__ . '/inc/nav.php'; ?>
+<?php include __DIR__ . '/../inc/nav.php'; ?>
 <!-- HERO -->
 <div class="hero">
   <p class="hero-eyebrow">✦ Étude de cas · Restaurateurs ✦</p>
@@ -303,42 +303,42 @@
 
     <div class="feature-grid">
             <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Zinc/Identitevisuelle.png" alt="Identité visuelle du site"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Zinc/Identitevisuelle.png" alt="Identité visuelle du site"></span>
         <div class="feature-body">
           <div class="feature-name">Identité visuelle sur mesure</div>
           <p class="feature-desc">Palette, typographies et ambiance visuelle propres au bistrot — noir, or et cuivre pour évoquer un lieu chaleureux et authentique.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Zinc/Menu.png" alt="Carte du restaurant"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Zinc/Menu.png" alt="Carte du restaurant"></span>
         <div class="feature-body">
           <div class="feature-name">Carte mise en avant</div>
           <p class="feature-desc">Entrées, plats, desserts organisés en onglets clairs, avec descriptions et prix — la carte se met à jour automatiquement dès que le restaurateur la modifie.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Zinc/Reservation.png" alt="Formulaire de réservation"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Zinc/Reservation.png" alt="Formulaire de réservation"></span>
         <div class="feature-body">
           <div class="feature-name">Réservation en ligne intégrée</div>
           <p class="feature-desc">Un formulaire directement sur le site, avec créneaux et jours d'ouverture qui se ferment automatiquement une fois complets.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Zinc/Avis.png" alt="Avis clients"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Zinc/Avis.png" alt="Avis clients"></span>
         <div class="feature-body">
           <div class="feature-name">Avis clients mis en scène</div>
           <p class="feature-desc">Les retours clients sont affichés avec soin pour rassurer un visiteur qui découvre l'établissement pour la première fois.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Zinc/Galerie.png" alt="Galerie photo"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Zinc/Galerie.png" alt="Galerie photo"></span>
         <div class="feature-body">
           <div class="feature-name">Galerie immersive</div>
           <p class="feature-desc">Photos de la salle, des plats et de l'ambiance pour donner un aperçu concret du lieu avant même d'y avoir mis les pieds.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Zinc/Mobile.png" alt="Version mobile du site"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Zinc/Mobile.png" alt="Version mobile du site"></span>
         <div class="feature-body">
           <div class="feature-name">Pensé mobile</div>
           <p class="feature-desc">La grande majorité des visiteurs consultent un restaurant depuis leur téléphone — le site est entièrement adapté à tous les écrans.</p>
@@ -359,28 +359,28 @@
 
     <div class="feature-grid">
             <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Zinc/Adminreservations.png" alt="Suivi des réservations dans l'admin"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Zinc/Adminreservations.png" alt="Suivi des réservations dans l'admin"></span>
         <div class="feature-body">
           <div class="feature-name">Suivi des réservations en un coup d'œil</div>
           <p class="feature-desc">Total, réservations du jour, en attente de confirmation, nombre de couverts — les chiffres essentiels affichés dès l'ouverture de l'espace admin.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Zinc/Admincarte.png" alt="Édition de la carte dans l'admin"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Zinc/Admincarte.png" alt="Édition de la carte dans l'admin"></span>
         <div class="feature-body">
           <div class="feature-name">Édition de la carte en temps réel</div>
           <p class="feature-desc">Ajouter, modifier ou réorganiser plats et catégories — les changements apparaissent instantanément sur le site public.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Zinc/Admingalerie.png" alt="Galerie drag & drop dans l'admin"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Zinc/Admingalerie.png" alt="Galerie drag & drop dans l'admin"></span>
         <div class="feature-body">
           <div class="feature-name">Galerie par glisser-déposer</div>
           <p class="feature-desc">Ajouter de nouvelles photos ou réorganiser la galerie sans aucune manipulation technique.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Zinc/Adminreglages.png" alt="Réglages horaires dans l'admin"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Zinc/Adminreglages.png" alt="Réglages horaires dans l'admin"></span>
         <div class="feature-body">
           <div class="feature-name">Réglages horaires & capacité</div>
           <p class="feature-desc">Définir les jours d'ouverture et le nombre de couverts disponibles par service — le formulaire de réservation s'adapte automatiquement.</p>
@@ -397,8 +397,8 @@
     <h2 class="section-title fade-up">Restaurant, commerce, artisanat —<br>chaque secteur a <em>sa propre démo</em></h2>
     <p class="section-intro fade-up">Ce principe (site vitrine + espace admin sur mesure) s'adapte à votre activité. Découvrez les autres exemples ou échangeons directement sur votre projet.</p>
     <div class="hero-ctas fade-up">
-      <a href="index.php#realisations" class="btn btn-outline">Voir les autres réalisations</a>
-      <a href="index.php#contact" class="btn btn-primary">
+      <a href="../index.php#realisations" class="btn btn-outline">Voir les autres réalisations</a>
+      <a href="../index.php#contact" class="btn btn-primary">
         Discuter de mon projet
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
@@ -412,7 +412,7 @@
   <div class="footer-copy">© 2026 — Corentin Vallet</div>
 </footer>
 
-<?php include __DIR__ . '/inc/lightbox.php'; ?>
+<?php include __DIR__ . '/../inc/lightbox.php'; ?>
 
 <script>
   /* ── THEME TOGGLE ── */
@@ -432,8 +432,8 @@
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
 </script>
-<script src="lightbox.js"></script>
+<script src="../lightbox.js"></script>
 
-<script src="nav.js"></script>
+<script src="../nav.js"></script>
 </body>
 </html>

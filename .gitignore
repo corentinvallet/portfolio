@@ -1,4 +1,6 @@
 test/salonvinscharmes/analytics/
 test/francisferret/stats
 blog-posts.json
+blog-posts.backup.json
+facebook-posted.json
 content.json

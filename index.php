@@ -1395,7 +1395,7 @@
           </div>
         </div>
 
-        <a href="demo-zinc.php" class="tab-preview night sector-preview-link" aria-label="Voir la démo Le Zinc">
+        <a href="demo/demo-zinc.php" class="tab-preview night sector-preview-link" aria-label="Voir la démo Le Zinc">
           <svg viewBox="0 0 320 190" width="100%" height="100%" style="position:absolute;inset:0;" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
             <rect width="320" height="190" fill="#0e0e0e"/>
             <line x1="24" y1="38" x2="296" y2="38" stroke="#c8a96e" stroke-width="0.5" opacity="0.5"/>
@@ -1419,7 +1419,7 @@
 
         <div class="tab-body">
           <p class="tab-desc">Identité visuelle forte, carte du jour mise en avant, réservation intégrée côté client ; mise à jour de la carte, gestion des réservations et suivi des avis côté admin. Atmosphère conviviale et authentique, pensée pour donner envie de pousser la porte.</p>
-          <a href="demo-zinc.php" class="sector-link">
+          <a href="demo/demo-zinc.php" class="sector-link">
             Découvrir la démo complète
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
           </a>
@@ -1436,7 +1436,7 @@
           </div>
         </div>
 
-        <a href="demo-pierrard.php" class="tab-preview stone sector-preview-link" aria-label="Voir la démo Pierrard Maçonnerie">
+        <a href="demo/demo-pierrard.php" class="tab-preview stone sector-preview-link" aria-label="Voir la démo Pierrard Maçonnerie">
           <svg viewBox="0 0 320 190" width="100%" height="100%" style="position:absolute;inset:0;" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
             <rect width="320" height="190" fill="#ECE4D1"/>
             <line x1="24" y1="38" x2="296" y2="38" stroke="#c8a96e" stroke-width="0.5" opacity="0.5"/>
@@ -1460,7 +1460,7 @@
 
         <div class="tab-body">
           <p class="tab-desc">Galerie de chantiers, devis en ligne, témoignages clients et labels mis en avant côté client ; ajout de réalisations, suivi des demandes de devis et mise à jour des services côté admin. Un site qui inspire confiance avant même le premier appel.</p>
-          <a href="demo-pierrard.php" class="sector-link">
+          <a href="demo/demo-pierrard.php" class="sector-link">
             Découvrir la démo complète
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
           </a>
@@ -1477,7 +1477,7 @@
           </div>
         </div>
 
-        <a href="demo-terraloc.php" class="tab-preview sage sector-preview-link" aria-label="Voir la démo TerraLoc">
+        <a href="demo/demo-terraloc.php" class="tab-preview sage sector-preview-link" aria-label="Voir la démo TerraLoc">
           <svg viewBox="0 0 320 190" width="100%" height="100%" style="position:absolute;inset:0;" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
             <rect width="320" height="190" fill="#1b3a24"/>
             <line x1="24" y1="38" x2="296" y2="38" stroke="#c8a96e" stroke-width="0.5" opacity="0.5"/>
@@ -1501,7 +1501,7 @@
 
         <div class="tab-body">
           <p class="tab-desc">Catalogue de location filtrable, avis clients, formulaire de réservation côté client ; gestion du catalogue, des photos et des avis côté admin. Un site conçu pour simplifier la prise de contact.</p>
-          <a href="demo-terraloc.php" class="sector-link">
+          <a href="demo/demo-terraloc.php" class="sector-link">
             Découvrir la démo complète
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
           </a>

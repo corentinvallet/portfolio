@@ -4,18 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Étude de cas — TerraLoc, site pour un loueur de matériel | Corentin Vallet</title>
-  <meta name="description" content="Découvrez en détail la démo TerraLoc : un site vitrine pour un commerce de location de matériel jardin & bricolage avec catalogue et réservation en ligne, et un espace admin pour tout gérer sans compétence technique." />
+  <title>Étude de cas — Pierrard Maçonnerie, site pour artisan maçon | Corentin Vallet</title>
+  <meta name="description" content="Découvrez en détail la démo Pierrard Maçonnerie : un site vitrine pour artisan du bâtiment avec galerie de chantiers et devis en ligne, et un espace admin pour tout gérer sans compétence technique." />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://corentinvallet.fr/demo-terraloc.php" />
+  <link rel="canonical" href="https://corentinvallet.fr/demo/demo-pierrard.php" />
 
-  <link rel="icon" type="image/ico" href="Photos/Favicon_transp48.png">
+  <link rel="icon" type="image/ico" href="../Photos/Favicon_transp48.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Mono:wght@300;400&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="nav.css">
-  <link rel="stylesheet" href="lightbox.css">
+
+  <link rel="stylesheet" href="../nav.css">
+  <link rel="stylesheet" href="../lightbox.css">
 
   <style>
     :root {
@@ -256,21 +257,39 @@
       footer { padding: 32px 24px; }
       .nav-back span.nav-back-text { display: none; }
     }
+
+    /* ── SMARTPHONES ── */
+    @media (max-width: 600px) {
+      html { font-size: 15px; }
+      .hero { padding: 100px 20px 48px; }
+      .hero-title br,
+      .section-title br { display: none; }
+      section { padding: 48px 20px; }
+      .section-inner { max-width: 100%; }
+      .hero-ctas { flex-direction: column; align-items: stretch; }
+      .hero-ctas .btn { justify-content: center; }
+      .feature-body { padding: 20px 20px 24px; }
+      .feature-name { font-size: 1.08rem; }
+      footer { flex-direction: column; text-align: center; padding: 28px 20px; }
+    }
+
+    /* Avoid horizontal overflow from any oversized inline element */
+    img { max-width: 100%; height: auto; }
   </style>
 </head>
 <body>
-<?php include __DIR__ . '/inc/nav.php'; ?>
+<?php $root = '../'; include __DIR__ . '/../inc/nav.php'; ?>
 <!-- HERO -->
 <div class="hero">
-  <p class="hero-eyebrow">✦ Étude de cas · Commerces & location ✦</p>
-  <h1 class="hero-title">TerraLoc, un catalogue<br>qui donne <em>envie</em></h1>
-  <p class="hero-desc">Cette démo montre ce que je conçois pour un commerce de location de matériel : un site vitrine avec catalogue filtrable et réservation en ligne, et un espace d'administration qui permet de tout gérer soi-même, sans aucune compétence technique.</p>
+  <p class="hero-eyebrow">✦ Étude de cas · Artisan du bâtiment ✦</p>
+  <h1 class="hero-title">Pierrard <em>Maçonnerie</em>, un site pour inspirer confiance</h1>
+  <p class="hero-desc">Cette démo montre ce que je conçois pour un artisan maçon : un site vitrine qui met en valeur le savoir-faire et rassure sur le sérieux de l'entreprise, et un espace d'administration qui permet de tout gérer soi-même, sans aucune compétence technique.</p>
   <div class="hero-ctas">
-    <a href="commerce/index.html" target="_blank" rel="noopener" class="btn btn-primary">
+    <a href="artisan/index.html" target="_blank" rel="noopener" class="btn btn-primary">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="14" height="14" rx="1"/><path d="M5 8h6M8 5l3 3-3 3"/></svg>
       Voir le site vitrine
     </a>
-    <a href="commerce/admin.html" target="_blank" rel="noopener" class="btn btn-outline">
+    <a href="artisan/admin.html" target="_blank" rel="noopener" class="btn btn-outline">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="14" height="14" rx="1"/><path d="M5 8h6M8 5l3 3-3 3"/></svg>
       Voir l'espace admin
     </a>
@@ -281,50 +300,50 @@
 <section class="cote-client">
   <div class="section-inner">
     <div class="section-label fade-up">Ce que voit votre client</div>
-    <h2 class="section-title fade-up">Une <em>vitrine</em> qui donne envie<br>de réserver du matériel</h2>
-    <p class="section-intro fade-up">Le site public met en avant le catalogue et la simplicité de la démarche : chaque élément est pensé pour transformer un visiteur en réservation, sans qu'il ait besoin de décrocher son téléphone.</p>
+    <h2 class="section-title fade-up">Une <em>vitrine</em> qui donne envie<br>de demander un devis</h2>
+    <p class="section-intro fade-up">Le site public met en avant le savoir-faire de l'artisan : chantiers réalisés, spécialités, avis clients. Chaque élément est pensé pour transformer un visiteur en demande de devis.</p>
 
     <div class="feature-grid">
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Terraloc/Identitevisuelle.png" alt="Identité visuelle du site"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Pierrard/Identitevisuelle.png" alt="Identité visuelle du site"></span>
         <div class="feature-body">
           <div class="feature-name">Identité visuelle sur mesure</div>
-          <p class="feature-desc">Palette et typographie propres à l'enseigne — un univers qui inspire confiance, entre matériel professionnel et service de proximité.</p>
+          <p class="feature-desc">Palette pierre et terre, typographie sobre — une identité qui évoque le sérieux et le savoir-faire artisanal, loin des sites génériques du BTP.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Terraloc/Catalogue.png" alt="Catalogue filtrable"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Pierrard/Prestations.png" alt="Prestations de l'artisan"></span>
         <div class="feature-body">
-          <div class="feature-name">Catalogue filtrable par catégorie</div>
-          <p class="feature-desc">Jardin, bricolage, terrassement… chaque référence a sa fiche avec prix à la journée, filtrable en un clic pour trouver le bon outil rapidement.</p>
+          <div class="feature-name">Prestations mises en avant</div>
+          <p class="feature-desc">Maçonnerie générale, pierre naturelle, dallage, ravalement… chaque spécialité a sa fiche claire, pour que le visiteur trouve tout de suite ce qu'il cherche.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Terraloc/Reservation.png" alt="Formulaire de réservation"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Pierrard/Galerie.png" alt="Galerie de chantiers filtrable"></span>
         <div class="feature-body">
-          <div class="feature-name">Réservation en ligne intégrée</div>
-          <p class="feature-desc">Un formulaire directement sur le site, avec sélection du matériel et des dates — la demande arrive prête à être confirmée.</p>
+          <div class="feature-name">Galerie de chantiers filtrable</div>
+          <p class="feature-desc">Les réalisations sont classées par catégorie (maçonnerie, pierre, façade, dallage) et filtrables en un clic — la meilleure preuve du travail effectué.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Terraloc/Parcours.png" alt="Parcours client guidé"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Pierrard/Devis.png" alt="Formulaire de devis en ligne"></span>
         <div class="feature-body">
-          <div class="feature-name">Parcours client guidé</div>
-          <p class="feature-desc">Les 4 étapes de la location (choisir, réserver, récupérer, restituer) sont expliquées simplement pour rassurer les nouveaux clients.</p>
+          <div class="feature-name">Devis en ligne intégré</div>
+          <p class="feature-desc">Un formulaire directement sur le site, avec sélection du type de travaux — les demandes arrivent triées, prêtes à être traitées.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Terraloc/Avis.png" alt="Avis clients"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Pierrard/Avis.png" alt="Avis clients"></span>
         <div class="feature-body">
           <div class="feature-name">Avis clients mis en scène</div>
-          <p class="feature-desc">Les retours clients sont affichés avec soin pour rassurer un visiteur qui loue du matériel pour la première fois.</p>
+          <p class="feature-desc">Les retours clients sont affichés avec soin pour rassurer un visiteur qui confie souvent un chantier important à un inconnu.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Terraloc/Mobile.png" alt="Version mobile du site"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Pierrard/Mobile.png" alt="Version mobile du site"></span>
         <div class="feature-body">
           <div class="feature-name">Pensé mobile</div>
-          <p class="feature-desc">La grande majorité des visiteurs consultent un catalogue depuis leur téléphone, souvent la veille d'un chantier — le site s'adapte à tous les écrans.</p>
+          <p class="feature-desc">Un client qui cherche un artisan en urgence est souvent sur son téléphone — le site est entièrement adapté à tous les écrans.</p>
         </div>
       </div>
     </div>
@@ -338,35 +357,35 @@
   <div class="section-inner">
     <div class="section-label fade-up">Ce que vous gérez vous-même</div>
     <h2 class="section-title fade-up">Un espace admin <em>simple</em>,<br>sans jamais toucher au code</h2>
-    <p class="section-intro fade-up">Derrière le site, un tableau de bord privé permet de garder la main sur son catalogue et son activité au quotidien — comme dans les grandes plateformes, mais sur son propre site.</p>
+    <p class="section-intro fade-up">Derrière le site, un tableau de bord privé permet à l'artisan de garder la main sur son activité au quotidien — comme dans les grandes plateformes, mais sur son propre site.</p>
 
     <div class="feature-grid">
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Terraloc/Admincatalogue.png" alt="Édition du catalogue dans l'admin"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Pierrard/Admintableaubord.png" alt="Tableau de bord dans l'admin"></span>
         <div class="feature-body">
-          <div class="feature-name">Catalogue de matériel éditable</div>
-          <p class="feature-desc">Ajouter une référence, modifier un prix ou une catégorie, mettre en avant un produit populaire ou nouveau — tout se fait en quelques clics.</p>
+          <div class="feature-name">Tableau de bord en un coup d'œil</div>
+          <p class="feature-desc">Photos publiées, demandes de devis reçues — les chiffres essentiels affichés dès l'ouverture de l'espace admin.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Terraloc/Adminbanniere.png" alt="Édition de la bannière dans l'admin"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Pierrard/Admingalerie.png" alt="Galerie drag & drop dans l'admin"></span>
         <div class="feature-body">
-          <div class="feature-name">Bannière & bandeau modifiables</div>
-          <p class="feature-desc">Changer l'image d'accueil ou les messages clés du bandeau (livraison, horaires, garanties) pour coller à l'actualité du commerce.</p>
+          <div class="feature-name">Galerie de chantiers par glisser-déposer</div>
+          <p class="feature-desc">Ajouter des photos depuis le chantier, les classer par catégorie et les réorganiser — sans aucune manipulation technique.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Terraloc/Adminphotos.png" alt="Gestion des photos dans l'admin"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Pierrard/Adminredaction.png" alt="Édition des textes dans l'admin"></span>
         <div class="feature-body">
-          <div class="feature-name">Photos gérées en un clic</div>
-          <p class="feature-desc">Chaque image de produit ou de bannière s'upload directement depuis l'admin, hébergée automatiquement sur le cloud.</p>
+          <div class="feature-name">Textes & prestations modifiables</div>
+          <p class="feature-desc">Mettre à jour la présentation de l'entreprise ou la liste des prestations — les changements apparaissent instantanément sur le site public.</p>
         </div>
       </div>
       <div class="feature-card fade-up">
-        <span class="feature-icon"><img src="Photos/Demo Terraloc/Adminavis.png" alt="Gestion des avis dans l'admin"></span>
+        <span class="feature-icon"><img src="../Photos/Demo Pierrard/Adminreglages.png" alt="Réglages de l'entreprise dans l'admin"></span>
         <div class="feature-body">
-          <div class="feature-name">Avis clients à jour</div>
-          <p class="feature-desc">Ajouter les derniers retours clients pour que la section avis reste vivante et représentative de l'activité récente.</p>
+          <div class="feature-name">Réglages de l'entreprise</div>
+          <p class="feature-desc">Coordonnées, zone d'intervention, mot de passe d'accès — tout se paramètre depuis un seul écran, à jour en permanence.</p>
         </div>
       </div>
     </div>
@@ -380,8 +399,8 @@
     <h2 class="section-title fade-up">Restaurant, commerce, artisanat —<br>chaque secteur a <em>sa propre démo</em></h2>
     <p class="section-intro fade-up">Ce principe (site vitrine + espace admin sur mesure) s'adapte à votre activité. Découvrez les autres exemples ou échangeons directement sur votre projet.</p>
     <div class="hero-ctas fade-up">
-      <a href="index.php#realisations" class="btn btn-outline">Voir les autres réalisations</a>
-      <a href="index.php#contact" class="btn btn-primary">
+      <a href="../index.php#realisations" class="btn btn-outline">Voir les autres réalisations</a>
+      <a href="../index.php#contact" class="btn btn-primary">
         Discuter de mon projet
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
@@ -395,7 +414,7 @@
   <div class="footer-copy">© 2026 — Corentin Vallet</div>
 </footer>
 
-<?php include __DIR__ . '/inc/lightbox.php'; ?>
+<?php include __DIR__ . '/../inc/lightbox.php'; ?>
 
 <script>
   /* ── THEME TOGGLE ── */
@@ -415,8 +434,8 @@
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
 </script>
-<script src="lightbox.js"></script>
+<script src="../lightbox.js"></script>
 
-<script src="nav.js"></script>
+<script src="../nav.js"></script>
 </body>
 </html>
