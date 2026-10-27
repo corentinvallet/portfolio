@@ -1913,7 +1913,7 @@ window.saveBlogPost = async function() {
     if (postToFb && published) {
       await publishToFacebook({
         message: htmlToPlainText(content) || excerpt || title,
-        link: SITE_URL + '/blog-post.php?slug=' + encodeURIComponent(slug)
+        link: SITE_URL + '/blog/blog-post.php?slug=' + encodeURIComponent(slug)
       });
     }
   } catch (e) {

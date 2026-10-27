@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/inc/blog-lib.php';
+require __DIR__ . '/../inc/blog-lib.php';
 
 $slug = isset($_GET['slug']) ? (string)$_GET['slug'] : '';
 $post = preg_match('/^[a-z0-9-]+$/', $slug) ? blog_find_post($slug) : null;
@@ -55,18 +55,18 @@ if ($post) {
 <?php else: ?>
   <meta name="robots" content="noindex" />
 <?php endif; ?>
-  <link rel="icon" type="image/ico" href="Photos/Favicon_transp48.png">
+  <link rel="icon" type="image/ico" href="../Photos/Favicon_transp48.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Mono:wght@300;400&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="nav.css">
+  <link rel="stylesheet" href="../nav.css">
   <link rel="stylesheet" href="blog.css?v=4">
   <link rel="stylesheet" href="../lightbox.css">
 </head>
 <body>
-<?php include __DIR__ . '/inc/nav.php'; ?>
+<?php $root = '../'; include __DIR__ . '/../inc/nav.php'; ?>
 
 <main class="post">
 <?php if ($post): ?>
@@ -97,7 +97,7 @@ if ($post) {
               <?php endif; ?>
             </div>
           <?php else: ?>
-            <img src="<?= blog_e($src) ?>" alt="<?= blog_e($alt) ?>" hidden>
+            <img src="<?= blog_e(blog_img($src)) ?>" alt="<?= blog_e($alt) ?>" hidden>
           <?php endif; ?>
         <?php endforeach; ?>
       </div>
@@ -122,6 +122,6 @@ if ($post) {
 
 <?php if ($post && $post['images']) include __DIR__ . '/../inc/lightbox.php'; ?>
 
-<?php include __DIR__ . '/inc/blog-footer.php'; ?>
+<?php include __DIR__ . '/../inc/blog-footer.php'; ?>
 </body>
 </html>
