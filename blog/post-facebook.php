@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') out(405, ['error' => 'Méthode non au
 if ($ADMIN_TOKEN === '') out(500, ['error' => 'Token non configuré dans post-facebook.php']);
 if (!hash_equals($ADMIN_TOKEN, $_SERVER['HTTP_X_ADMIN_TOKEN'] ?? '')) out(401, ['error' => 'Non autorisé']);
 
-$cfgFile = __DIR__ . '/inc/facebook-config.php';
+$cfgFile = __DIR__ . '/../inc/facebook-config.php';
 if (!is_file($cfgFile)) out(500, ['error' => 'inc/facebook-config.php manquant']);
 $cfg = require $cfgFile;
 

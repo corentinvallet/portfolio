@@ -29,7 +29,7 @@ function blog_store_image(string $src): string {
         $types = [IMAGETYPE_JPEG => 'jpg', IMAGETYPE_PNG => 'png', IMAGETYPE_WEBP => 'webp'];
         if (!isset($types[$info[2]])) return '';
 
-        $dir = __DIR__ . '/' . BLOG_IMG_DIR;
+        $dir = __DIR__ . '/../' . BLOG_IMG_DIR;
         if (!is_dir($dir) && !@mkdir($dir, 0755, true)) fail(500, 'Impossible de créer le dossier ' . BLOG_IMG_DIR);
 
         $name = substr(sha1($bin), 0, 16) . '.' . $types[$info[2]];
@@ -95,8 +95,8 @@ foreach ($data['posts'] as $p) {
 
 $json = json_encode($clean, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
-$path = __DIR__ . '/blog/blog-posts.json';
-if (file_exists($path)) @copy($path, __DIR__ . '/blog/blog-posts.backup.json');
+$path = __DIR__ . '/blog-posts.json';
+if (file_exists($path)) @copy($path, __DIR__ . '/blog-posts.backup.json');
 
 if (file_put_contents($path, $json, LOCK_EX) === false) {
     fail(500, 'Écriture impossible — vérifiez les droits du dossier.');
