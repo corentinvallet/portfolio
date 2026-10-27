@@ -16,21 +16,21 @@ $prefix = $home ? '' : $root . 'index.php';
     <li class="nav-dropdown">
       <a href="<?= $prefix ?>#projetsclients" class="nav-dropdown-trigger" aria-expanded="false">Projets clients</a>
       <ul class="nav-dropdown-menu">
-        <li><a href="realisation-francisferret.php">Artiste</a></li>
-        <li><a href="realisation-libellules.php">Gîte</a></li>
-        <li><a href="realisation-betaconstruction.php">Artisan</a></li>
+        <li><a href="<?= $root ?>realisation-francisferret.php">Artiste</a></li>
+        <li><a href="<?= $root ?>realisation-libellules.php">Gîte</a></li>
+        <li><a href="<?= $root ?>realisation-betaconstruction.php">Artisan</a></li>
       </ul>
     </li>
     <li class="nav-dropdown">
       <a href="<?= $prefix ?>#realisations" class="nav-dropdown-trigger" aria-expanded="false">Démonstrations</a>
       <ul class="nav-dropdown-menu">
-        <li><a href="demo-zinc.php">Restaurant</a></li>
-        <li><a href="demo-pierrard.php">Artisan</a></li>
-        <li><a href="demo-terraloc.php">Commerce</a></li>
+        <li><a href="<?= $root ?>demo-zinc.php">Restaurant</a></li>
+        <li><a href="<?= $root ?>demo-pierrard.php">Artisan</a></li>
+        <li><a href="<?= $root ?>demo-terraloc.php">Commerce</a></li>
       </ul>
     </li>
     <li><a href="<?= $prefix ?>#profil">Profil</a></li>
-    <li><a href="blog.php">Blog</a></li>
+    <li><a href="<?= $root ?>blog/blog.php">Blog</a></li>
     <li><a href="<?= $prefix ?>#contact">Contact</a></li>
   </ul>
   <div class="toggle-wrap">
