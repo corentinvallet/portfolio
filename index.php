@@ -1531,20 +1531,20 @@
         <div>
           <div class="about-block-title">Parcours</div>
           <p class="about-text">
-            Ingénieur de formation (INSA, promotion 2015), j'ai passé plusieurs années en avant-ventes techniques — un poste qui m'a appris à écouter, à comprendre vite les enjeux d'un client, et à traduire des besoins complexes en solutions simples et convaincantes.
+            Ingénieur de formation (INSA, promotion 2015), je travaille en avant-ventes dans l'informatique depuis bientôt 10 ans. J'ai ainsi appris à comprendre mes clients, à me projeter dans leur activité et leurs besoins. Mon rôle est à la fois de garantir une base technique solide et fiable, tout en présentant simplement des fonctionnalités à des publics peu formés à l'informatique.
           </p>
           <p class="about-text">
-            Aujourd'hui, j'applique cette même rigueur à la conception de sites web pour les indépendants. Ma formation d'ingénieur garantit un code propre et fiable ; mon expérience commerciale m'a donné le sens du message et du client.
+            J'applique ces compétences à la création de sites web. Je prends en charge toute la partie technique, pour permettre à mes clients de ne parler que de résultats et du message qu'ils veulent porter.
           </p>
         </div>
 
         <div>
           <div class="about-block-title">Ce qui me différencie</div>
           <p class="about-text">
-            Je ne vends pas des heures de développement. Je vends un résultat : un site qui tourne, qui se présente bien, et qui vous aide à décrocher des clients. Pas de surprise, pas de devis qui s'allonge. Un projet cadré, un prix fixé, une livraison.
+            Je ne vends pas des heures de travail, je vends un résultat. Un site robuste, support à votre communication, qui vous aide à trouver des clients. Les conditions tarifaires sont claires, et fixées avant engagement.
           </p>
           <p class="about-text">
-            Et parce que je viens de l'avant-ventes, je peux aussi vous aider à formuler ce que vous faites, à trouver le bon angle pour vous adresser à votre public, à bâtir une cohérence entre votre site et votre communication globale.
+            Je ne me contente pas de concevoir un site, je m'appuie sur mon expérience avant-ventes pour vous aider à trouver votre angle pour vous adresser à votre public. Je ne fais pas qu'exécuter votre demande, je vous fais aussi des propositions pour structurer ensemble votre message.
           </p>
         </div>
 
