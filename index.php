@@ -1531,7 +1531,10 @@
         <div>
           <div class="about-block-title">Parcours</div>
           <p class="about-text">
-            Ingénieur de formation (INSA, promotion 2015), je travaille en avant-ventes dans l'informatique depuis bientôt 10 ans. J'ai ainsi appris à comprendre mes clients, à me projeter dans leur activité et leurs besoins. Mon rôle est à la fois de garantir une base technique solide et fiable, tout en présentant simplement des fonctionnalités à des publics peu formés à l'informatique.
+            Ingénieur de formation (INSA, promotion 2015), je travaille en avant-ventes dans l'informatique depuis bientôt 10 ans. J'ai ainsi appris à comprendre mes clients, à me projeter dans leur activité et leurs besoins.
+          </p>
+          <p class="about-text">
+            Mon rôle est à la fois de garantir une base technique solide et fiable, tout en présentant simplement des fonctionnalités à des publics peu formés à l'informatique.
           </p>
           <p class="about-text">
             J'applique ces compétences à la création de sites web. Je prends en charge toute la partie technique, pour permettre à mes clients de ne parler que de résultats et du message qu'ils veulent porter.
