@@ -315,7 +315,22 @@ $sites = $st->fetchAll();
 
     drawChart(d);
 
-    loadTraffic(d.range.from, d.range.to);
+    {
+      // Les visites sont mesurées en direct : si la période se termine au dernier jour
+      // disponible chez Google, on la décale pour qu'elle aille jusqu'à aujourd'hui.
+      const pad = n => String(n).padStart(2, '0');
+      const ymd = x => x.getFullYear() + '-' + pad(x.getMonth() + 1) + '-' + pad(x.getDate());
+      const today = new Date(); today.setHours(0, 0, 0, 0);
+      const limit = new Date(today); limit.setDate(limit.getDate() - 3);
+      let f = d.range.from, t = d.range.to;
+      if (t >= ymd(limit)) {
+        const a = new Date(f + 'T00:00:00'), b = new Date(t + 'T00:00:00');
+        const n = Math.round((b - a) / 864e5);
+        const start = new Date(today); start.setDate(start.getDate() - n);
+        f = ymd(start); t = ymd(today);
+      }
+      loadTraffic(f, t);
+    }
 
     const tb = $('queries');
     tb.replaceChildren();
