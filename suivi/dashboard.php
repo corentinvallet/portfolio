@@ -105,7 +105,7 @@ $sites = $st->fetchAll();
   </div>
 
   <section class="panel">
-    <h2>Évolution</h2>
+    <h2>Google</h2>
     <div class="chart"><canvas id="chart" role="img" aria-label="Courbe des visites et des apparitions dans Google"></canvas></div>
     <p class="note" id="chartNote"></p>
   </section>
