@@ -64,5 +64,6 @@ $posts = blog_published_posts();
 </main>
 
 <?php include __DIR__ . '/../inc/blog-footer.php'; ?>
+<script defer src="https://suivi.corentinvallet.fr/t.js" data-site="d8e51bc47ed570be"></script>
 </body>
 </html>
