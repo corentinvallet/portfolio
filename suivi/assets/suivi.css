@@ -102,3 +102,21 @@ td.empty{text-align:left;font:400 14.5px Syne,sans-serif;color:var(--text2)}
 .cards-3{grid-template-columns:repeat(3,1fr)}
 .value.down{color:var(--down)}
 @media (max-width:900px){.cards-3{grid-template-columns:1fr}}
+
+/* Administration */
+.client-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}
+.client-head h2{margin:0}
+.client-head .note{margin:4px 0 0}
+.inline-form{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:18px}
+.inline-form input{flex:1 1 200px}
+td.left,th.left{text-align:left}
+.flash{border-left:3px solid var(--moss)}
+.flash.flash-err{border-left-color:var(--down)}
+.flash p{margin:0}
+.secret{margin:14px 0;padding:14px 16px;background:var(--bg);border:1px solid var(--border);border-radius:2px;display:grid;gap:6px;font-size:14px}
+.secret span{display:inline-block;min-width:110px;color:var(--text2)}
+.secret code{font:400 15px "DM Mono",monospace;letter-spacing:.04em;overflow-wrap:anywhere}
+.sa{font:400 14px "DM Mono",monospace;overflow-wrap:anywhere}
+.btn-sm{padding:8px 12px}
+.status-on{color:var(--up)}
+.status-off{color:var(--text2)}

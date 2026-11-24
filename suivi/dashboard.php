@@ -36,6 +36,7 @@ $sites = $st->fetchAll();
       <input type="hidden" id="site" value="<?= (int)$sites[0]['id'] ?>">
     <?php endif; ?>
     <button class="icon-btn" id="theme" type="button" aria-label="Basculer entre thème clair et sombre"></button>
+    <?php if (!empty($client['is_admin'])): ?><a class="nav-link" href="/admin.php">Clients</a><?php endif; ?>
     <a class="nav-link" href="/logout.php">Déconnexion</a>
   </div>
 </header>
