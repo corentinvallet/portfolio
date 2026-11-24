@@ -26,32 +26,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-theme="light">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex">
-  <title>Connexion – Suivi de mon site</title>
-  <style>
-    body{font-family:system-ui,sans-serif;background:#f4f4f2;display:flex;min-height:100vh;align-items:center;justify-content:center;margin:0}
-    form{background:#fff;padding:2rem;border-radius:12px;width:min(92vw,340px);box-shadow:0 2px 12px rgba(0,0,0,.08)}
-    h1{font-size:1.3rem;margin:0 0 1.2rem}
-    label{display:block;font-size:.9rem;margin:.8rem 0 .3rem}
-    input{width:100%;padding:.6rem;border:1px solid #ccc;border-radius:8px;box-sizing:border-box;font-size:1rem}
-    button{margin-top:1.2rem;width:100%;padding:.7rem;border:0;border-radius:8px;background:#222;color:#fff;font-size:1rem;cursor:pointer}
-    .err{color:#b00020;font-size:.9rem;margin-top:.8rem}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Connexion – Suivi de votre site</title>
+<script>try{var t=localStorage.getItem('cv-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Mono:wght@300;400&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/suivi.css?v=1">
 </head>
 <body>
-  <form method="post">
-    <h1>Suivi de mon site</h1>
+<button class="icon-btn auth-top" id="theme" type="button" aria-label="Basculer entre thème clair et sombre"></button>
+<main class="auth">
+  <form class="auth-card" method="post">
+    <a class="brand" href="https://www.corentinvallet.fr">
+      <img src="https://www.corentinvallet.fr/Photos/Logo%20sans%20texte.png" alt="">
+      <span>Corentin <em>Vallet</em></span>
+    </a>
+    <div class="eyebrow" style="margin-top:32px">Espace client</div>
+    <h1 class="auth-title">Suivi de <em>votre site</em></h1>
+
     <input type="hidden" name="csrf" value="<?= h(csrf_token()) ?>">
-    <label for="email">E-mail</label>
-    <input id="email" name="email" type="email" required autofocus>
-    <label for="password">Mot de passe</label>
-    <input id="password" name="password" type="password" required>
-    <button type="submit">Se connecter</button>
-    <?php if ($error): ?><p class="err"><?= h($error) ?></p><?php endif; ?>
+    <div class="field">
+      <label for="email">Adresse e-mail</label>
+      <input id="email" name="email" type="email" autocomplete="username" required autofocus>
+    </div>
+    <div class="field">
+      <label for="password">Mot de passe</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+    </div>
+    <?php if ($error): ?><p class="error" role="alert"><?= h($error) ?></p><?php endif; ?>
+    <button class="btn btn-primary btn-block" type="submit">Se connecter</button>
+    <a class="nav-link back" href="https://www.corentinvallet.fr">Retour au site</a>
   </form>
+</main>
+<script>
+  const r = document.documentElement, b = document.getElementById('theme');
+  const icon = () => { b.textContent = r.getAttribute('data-theme') === 'dark' ? '☀︎' : '☽'; };
+  b.addEventListener('click', () => {
+    const t = r.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    r.setAttribute('data-theme', t);
+    try { localStorage.setItem('cv-theme', t); } catch (e) {}
+    icon();
+  });
+  icon();
+</script>
 </body>
 </html>
