@@ -14,8 +14,13 @@ $client = current_client();
 if (!$client) out(401, ['error' => 'Non connecté']);
 
 $siteId = (int)($_GET['site'] ?? 0);
-$st = db()->prepare('SELECT id, ssl_expires FROM sites WHERE id = ? AND client_id = ? AND active = 1');
-$st->execute([$siteId, $client['id']]);
+if (!empty($client['is_admin'])) {
+  $st = db()->prepare('SELECT id, ssl_expires FROM sites WHERE id = ? AND active = 1');
+  $st->execute([$siteId]);
+} else {
+  $st = db()->prepare('SELECT id, ssl_expires FROM sites WHERE id = ? AND client_id = ? AND active = 1');
+  $st->execute([$siteId, $client['id']]);
+}
 $site = $st->fetch();
 if (!$site) out(404, ['error' => 'Site introuvable']);
 

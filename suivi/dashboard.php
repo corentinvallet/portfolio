@@ -2,8 +2,15 @@
 require __DIR__ . '/../../suivi/lib/auth.php';
 $client = require_login();
 
-$st = db()->prepare('SELECT id, domain FROM sites WHERE client_id = ? AND active = 1 ORDER BY domain');
-$st->execute([$client['id']]);
+if (!empty($client['is_admin'])) {
+  // L'administrateur voit les sites de tous les clients
+  $st = db()->query('SELECT s.id, s.domain, c.name AS owner
+                     FROM sites s JOIN clients c ON c.id = s.client_id
+                     WHERE s.active = 1 ORDER BY s.domain');
+} else {
+  $st = db()->prepare('SELECT id, domain, NULL AS owner FROM sites WHERE client_id = ? AND active = 1 ORDER BY domain');
+  $st->execute([$client['id']]);
+}
 $sites = $st->fetchAll();
 ?>
 <!doctype html>
@@ -29,7 +36,7 @@ $sites = $st->fetchAll();
     <?php if (count($sites) > 1): ?>
       <select id="site" aria-label="Site à afficher">
         <?php foreach ($sites as $s): ?>
-          <option value="<?= (int)$s['id'] ?>"><?= h($s['domain']) ?></option>
+          <option value="<?= (int)$s['id'] ?>"><?= h($s['domain']) ?><?= $s['owner'] ? ' (' . h($s['owner']) . ')' : '' ?></option>
         <?php endforeach; ?>
       </select>
     <?php elseif ($sites): ?>
