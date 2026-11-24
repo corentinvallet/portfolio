@@ -99,13 +99,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 
+/* ---------- Clé de suivi : une par site ---------- */
+db()->exec("UPDATE sites SET track_key = LEFT(MD5(CONCAT(id, RAND(), UUID())), 16) WHERE track_key IS NULL");
+
 /* ---------- Données de la page ---------- */
 $flash = $_SESSION['flash'] ?? null;
 unset($_SESSION['flash']);
 
 $clients = db()->query('SELECT id, name, email, is_admin FROM clients ORDER BY name')->fetchAll();
 $sitesBy = [];
-foreach (db()->query('SELECT id, client_id, domain, gsc_property, active FROM sites ORDER BY domain') as $s) {
+foreach (db()->query('SELECT id, client_id, domain, gsc_property, active, track_key FROM sites ORDER BY domain') as $s) {
   $sitesBy[$s['client_id']][] = $s;
 }
 
@@ -201,7 +204,8 @@ $token = csrf_token();
       <tbody>
       <?php foreach ($mine as $s): ?>
         <tr>
-          <td><?= h($s['domain']) ?> <small>(n° <?= (int)$s['id'] ?>)</small></td>
+          <td><?= h($s['domain']) ?> <small>(n° <?= (int)$s['id'] ?>)</small>
+            <?php if (!empty($s['track_key'])): ?><br><button type="button" class="btn btn-ghost btn-sm copy-btn" style="margin-top:8px" data-text="<?= h('<script defer src="https://suivi.corentinvallet.fr/t.js" data-site="' . $s['track_key'] . '"></script>') ?>">Copier le code de suivi</button><?php endif; ?></td>
           <td class="left sa"><?= h($s['gsc_property'] ?? '') ?></td>
           <td class="<?= $s['active'] ? 'status-on' : 'status-off' ?>"><?= $s['active'] ? 'Actif' : 'Désactivé' ?></td>
           <td>
@@ -242,6 +246,10 @@ $token = csrf_token();
     icon();
   });
   icon();
+
+  document.querySelectorAll('.copy-btn').forEach(b => b.addEventListener('click', () => {
+    navigator.clipboard.writeText(b.dataset.text).then(() => { b.textContent = 'Code copié'; });
+  }));
 
   ['copy-access', 'copy-sa'].forEach(id => {
     const b = document.getElementById(id);
