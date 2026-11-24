@@ -1,6 +1,6 @@
 {
   "name": "Suivi de votre site – Corentin Vallet",
-  "short_name": "Mon site",
+  "short_name": "Statistiques",
   "description": "Suivez les visites, le référencement et la santé de votre site.",
   "start_url": "/dashboard.php",
   "scope": "/",
