@@ -109,6 +109,28 @@ $sites = $st->fetchAll();
     </table>
   </section>
 
+  <h2 class="section-title">Santé du site</h2>
+  <div class="cards cards-3">
+    <div class="card">
+      <div class="label">Site en ligne</div>
+      <div class="value" id="h-up">–</div>
+      <div class="delta" id="h-up-d"></div>
+      <p class="hint" id="h-up-h"></p>
+    </div>
+    <div class="card">
+      <div class="label">Vitesse sur mobile</div>
+      <div class="value" id="h-sp">–</div>
+      <div class="delta" id="h-sp-d"></div>
+      <p class="hint" id="h-sp-h"></p>
+    </div>
+    <div class="card">
+      <div class="label">Certificat HTTPS</div>
+      <div class="value" id="h-ssl">–</div>
+      <div class="delta" id="h-ssl-d"></div>
+      <p class="hint" id="h-ssl-h"></p>
+    </div>
+  </div>
+
   <p class="foot">Chiffres issus de la Search Console de Google, mis à jour chaque matin.
     Les 3 derniers jours ne sont pas encore disponibles.</p>
 
@@ -259,7 +281,74 @@ $sites = $st->fetchAll();
     });
   }
 
-  async function load(params = {}) {
+  /* Santé du site */
+  const fmtDateFr = s => new Date(s.replace(' ', 'T')).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
+  const periodTxt = first => {
+    const days = (Date.now() - new Date(first.replace(' ', 'T')).getTime()) / 864e5;
+    return days < 29 ? 'depuis le ' + fmtDateFr(first) : 'sur 30 jours';
+  };
+
+  function renderHealth(h) {
+    // Site en ligne
+    const u = h.uptime, vu = $('h-up');
+    if (!u) {
+      vu.textContent = '–'; vu.className = 'value';
+      setDelta('h-up-d', '', '');
+      $('h-up-h').textContent = 'Le suivi vient de démarrer : les premiers résultats arrivent dans quelques minutes.';
+    } else {
+      const period = u.first_at ? periodTxt(u.first_at) : 'sur 30 jours';
+      vu.textContent = u.ok ? 'En ligne' : 'Hors ligne';
+      vu.className = 'value' + (u.ok ? '' : ' down');
+      if (u.pct !== null) {
+        setDelta('h-up-d', u.pct.toFixed(2).replace('.', ',') + ' % de disponibilité ' + period,
+                 u.pct >= 99.5 ? 'up' : u.pct >= 98 ? '' : 'down');
+      } else setDelta('h-up-d', '', '');
+      let hint = u.avg_ms !== null ? 'Temps de réponse moyen : ' + nf.format(u.avg_ms) + ' ms. ' : '';
+      hint += u.last_down ? 'Dernière interruption : le ' + fmtDateFr(u.last_down) + '.' : 'Aucune interruption ' + period + '.';
+      $('h-up-h').textContent = hint;
+    }
+
+    // Vitesse sur mobile
+    const s = h.speed, vs = $('h-sp');
+    if (!s) {
+      vs.textContent = '–';
+      setDelta('h-sp-d', '', '');
+      $('h-sp-h').textContent = 'Première mesure demain matin.';
+    } else {
+      vs.textContent = s.score;
+      const label = s.score >= 90 ? 'Très rapide' : s.score >= 50 ? 'À améliorer' : 'Lent';
+      const diff = s.previous_score === null ? 0 : s.score - s.previous_score;
+      setDelta('h-sp-d', label + (diff ? ` (${diff > 0 ? '+' : ''}${diff} depuis la dernière mesure)` : ''),
+               s.score >= 90 ? 'up' : s.score >= 50 ? '' : 'down');
+      $('h-sp-h').textContent = 'Note sur 100 de Google PageSpeed. Contenu principal affiché en '
+        + String(s.lcp).replace('.', ',') + ' s sur mobile (mesure du ' + fmtDateFr(s.checked_at) + ').';
+    }
+
+    // Certificat HTTPS
+    const c = h.ssl, vc = $('h-ssl');
+    if (!c) {
+      vc.textContent = '–'; vc.className = 'value';
+      setDelta('h-ssl-d', '', '');
+      $('h-ssl-h').textContent = 'Certificat non lisible pour le moment.';
+    } else {
+      vc.textContent = c.days < 0 ? 'Expiré' : c.days + (c.days > 1 ? ' jours' : ' jour');
+      vc.className = 'value' + (c.days < 0 ? ' down' : '');
+      setDelta('h-ssl-d',
+               c.days <= 14 ? 'À renouveler au plus vite' : 'Valide jusqu\'au ' + dayLong(c.expires, true),
+               c.days <= 14 ? 'down' : c.days <= 30 ? '' : 'up');
+      $('h-ssl-h').textContent = 'Garantit la connexion sécurisée (le cadenas) de votre site.';
+    }
+  }
+
+  async function loadHealth() {
+    try {
+      const r = await fetch('/api/health.php?site=' + encodeURIComponent($('site').value), { credentials: 'same-origin' });
+      if (!r.ok) return;
+      renderHealth(await r.json());
+    } catch (e) { /* la section reste vide, le reste du tableau de bord fonctionne */ }
+  }
+
+  async function load(params = {}) {    
     $('error').textContent = '';
     const q = new URLSearchParams({ site: $('site').value, ...params });
     try {
@@ -280,8 +369,9 @@ $sites = $st->fetchAll();
   $('apply').addEventListener('click', () => {
     if ($('from').value && $('to').value) load({ from: $('from').value, to: $('to').value });
   });
-  $('site').addEventListener('change', () => load());
+  $('site').addEventListener('change', () => { load(); loadHealth(); });
   load();
+  loadHealth();
   </script>
 <?php endif; ?>
 </main>

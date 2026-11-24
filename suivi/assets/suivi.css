@@ -97,3 +97,8 @@ td.empty{text-align:left;font:400 14.5px Syne,sans-serif;color:var(--text2)}
   .auth-card{padding:32px 24px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* Santé du site */
+.section-title{margin:40px 0 16px;font:300 1.6rem/1.2 Fraunces,serif;letter-spacing:-.025em}
+.cards-3{grid-template-columns:repeat(3,1fr)}
+.value.down{color:var(--down)}
+@media (max-width:900px){.cards-3{grid-template-columns:1fr}}
