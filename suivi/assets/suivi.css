@@ -120,3 +120,4 @@ td.left,th.left{text-align:left}
 .btn-sm{padding:8px 12px}
 .status-on{color:var(--up)}
 .status-off{color:var(--text2)}
+.cards-2{grid-template-columns:repeat(2,1fr)}

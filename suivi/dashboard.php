@@ -118,6 +118,49 @@ $sites = $st->fetchAll();
     </table>
   </section>
 
+  <div id="traffic" hidden>
+    <h2 class="section-title">Fréquentation du site</h2>
+    <p class="note" id="t-off" hidden>Le suivi des visites totales n'est pas activé sur ce site. Contactez-moi pour l'installer.</p>
+    <div id="t-body" hidden>
+      <p class="note" id="t-note" hidden></p>
+      <div class="cards cards-2">
+        <div class="card">
+          <div class="label">Visites</div>
+          <div class="value" id="v-visits">–</div>
+          <div class="delta" id="d-visits"></div>
+          <p class="hint">Une personne qui vient sur le site un jour donné compte pour une visite.</p>
+        </div>
+        <div class="card">
+          <div class="label">Pages vues</div>
+          <div class="value" id="v-views">–</div>
+          <div class="delta" id="d-views"></div>
+          <p class="hint">Nombre total de pages consultées.</p>
+        </div>
+      </div>
+
+      <section class="panel">
+        <h2>Évolution des visites</h2>
+        <div class="chart"><canvas id="chart2" role="img" aria-label="Courbe des visites et des pages vues"></canvas></div>
+      </section>
+
+      <section class="panel">
+        <h2>D'où viennent vos visiteurs</h2>
+        <table>
+          <thead><tr><th>Origine</th><th>Visites</th><th>Part</th></tr></thead>
+          <tbody id="t-sources"></tbody>
+        </table>
+      </section>
+
+      <section class="panel">
+        <h2>Pages les plus consultées</h2>
+        <table>
+          <thead><tr><th>Page</th><th>Vues</th></tr></thead>
+          <tbody id="t-pages"></tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+
   <h2 class="section-title">Santé du site</h2>
   <div class="cards cards-3">
     <div class="card">
@@ -148,7 +191,7 @@ $sites = $st->fetchAll();
   const $ = id => document.getElementById(id);
   const root = document.documentElement;
   const nf = new Intl.NumberFormat('fr-FR');
-  let chart = null, maxTo = null, last = null;
+  let chart = null, chart2 = null, maxTo = null, last = null, lastT = null;
 
   const css = n => getComputedStyle(root).getPropertyValue(n).trim();
   const addDays = (s, n) => {
@@ -169,6 +212,7 @@ $sites = $st->fetchAll();
     try { localStorage.setItem('cv-theme', t); } catch (e) {}
     icon();
     if (last) drawChart(last);
+    if (lastT && lastT.installed) drawTrafficChart(lastT);
   });
   icon();
 
@@ -271,6 +315,8 @@ $sites = $st->fetchAll();
 
     drawChart(d);
 
+    loadTraffic(d.range.from, d.range.to);
+
     const tb = $('queries');
     tb.replaceChildren();
     if (!d.queries.length) {
@@ -288,6 +334,101 @@ $sites = $st->fetchAll();
       });
       tb.appendChild(tr);
     });
+  }
+
+  /* Fréquentation (visites totales) */
+  const SRC = { search: 'Moteurs de recherche', direct: 'Accès direct', social: 'Réseaux sociaux', other: 'Autres sites' };
+
+  function drawTrafficChart(t) {
+    const long = t.days > 92;
+    const labels = t.series.map(r => dayShort(r.date, long));
+    const c1 = css('--accent'), c2 = css('--moss'), txt = css('--text2'), grid = css('--border');
+    const pr = labels.length > 45 ? 0 : 3;
+    Chart.defaults.font.family = 'Syne, sans-serif';
+    Chart.defaults.color = txt;
+    if (chart2) chart2.destroy();
+    chart2 = new Chart($('chart2'), {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          { label: 'Visites', data: t.series.map(r => r.visits),
+            borderColor: c1, backgroundColor: c1, borderWidth: 2, tension: .3, pointRadius: pr, pointHoverRadius: 4 },
+          { label: 'Pages vues', data: t.series.map(r => r.views),
+            borderColor: c2, backgroundColor: c2, borderWidth: 2, borderDash: [5, 4], tension: .3, pointRadius: pr, pointHoverRadius: 4 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { position: 'top', align: 'start', labels: { usePointStyle: true, boxWidth: 8, color: txt } },
+          tooltip: { backgroundColor: css('--surface'), titleColor: css('--text'), bodyColor: txt,
+                     borderColor: grid, borderWidth: 1, cornerRadius: 2, padding: 12 }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: txt, maxTicksLimit: 8, maxRotation: 0 } },
+          y: { beginAtZero: true, grid: { color: grid }, border: { display: false }, ticks: { precision: 0, color: txt } }
+        }
+      }
+    });
+  }
+
+  function fillRows(tbody, rows) {
+    tbody.replaceChildren();
+    rows.forEach(cells => {
+      const tr = document.createElement('tr');
+      cells.forEach(v => {
+        const td = document.createElement('td');
+        td.textContent = v;          // textContent : jamais de HTML venant des visiteurs
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
+
+  function renderTraffic(t) {
+    lastT = t;
+    $('traffic').hidden = false;
+    $('t-off').hidden = !!t.installed;
+    $('t-body').hidden = !t.installed;
+    if (!t.installed) return;
+
+    const c = t.current, p = t.previous;
+    $('v-visits').textContent = nf.format(c.visits);
+    $('v-views').textContent = nf.format(c.views);
+    if (t.previous_complete) {
+      pctDelta('d-visits', c.visits, p.visits);
+      pctDelta('d-views', c.views, p.views);
+    } else {
+      setDelta('d-visits', 'vs période précédente : –', '');
+      setDelta('d-views', 'vs période précédente : –', '');
+    }
+
+    const partial = t.first_day > t.from;
+    $('t-note').hidden = !partial;
+    $('t-note').textContent = partial
+      ? 'Le suivi des visites est actif depuis le ' + dayLong(t.first_day, true) + ' : les jours précédents ne sont pas comptés.'
+      : '';
+
+    drawTrafficChart(t);
+
+    const total = t.sources.reduce((a, r) => a + r.visits, 0);
+    fillRows($('t-sources'), t.sources.length
+      ? t.sources.map(r => [SRC[r.source] || r.source, nf.format(r.visits), total ? Math.round(r.visits / total * 100) + ' %' : '–'])
+      : [['Aucune visite sur cette période.', '', '']]);
+    fillRows($('t-pages'), t.pages.length
+      ? t.pages.map(r => [r.path === '/' ? 'Accueil (/)' : r.path, nf.format(r.views)])
+      : [['Aucune page vue sur cette période.', '']]);
+  }
+
+  async function loadTraffic(from, to) {
+    try {
+      const q = new URLSearchParams({ site: $('site').value, from, to });
+      const r = await fetch('/api/traffic.php?' + q, { credentials: 'same-origin' });
+      if (!r.ok) return;
+      renderTraffic(await r.json());
+    } catch (e) { /* la section reste masquée, le reste du tableau de bord fonctionne */ }
   }
 
   /* Santé du site */
